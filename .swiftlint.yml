@@ -1,0 +1,74 @@
+disabled_rules:
+  - trailing_whitespace
+  # - force_try
+  - for_where
+  - large_tuple
+
+included: # paths to include during linting. `--path` is ignored if present.
+  - KPIHubIOS
+
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+  - KPIHubIOS/Resources
+
+opt_in_rules:
+  - attributes
+  - closure_end_indentation
+  - conditional_returns_on_newline
+
+  - explicit_init
+  - fatal_error_message
+  - first_where
+  - operator_usage_whitespace
+  - vertical_parameter_alignment_on_call
+  - let_var_whitespace
+  - switch_case_on_newline
+  - closure_spacing
+  - discouraged_direct_init
+  - unneeded_parentheses_in_closure_argument
+  - nesting
+  - nimble_operator
+
+force_cast: warning
+force_try:
+  severity: warning
+line_length: 180
+
+nesting:
+  type_level:
+    warning: 3
+  statement_level:
+    warning: 10
+
+type_name:
+  min_length: 2
+  max_length:
+    warning: 50
+
+identifier_name:
+  min_length:
+    warning: 2
+
+vertical_whitespace:
+  max_empty_lines: 2
+
+  excluded:
+  - id
+  - ID
+  - URL
+  - iv
+  - cc
+  - ad
+  - up
+  - preferredInterfaceOrientationForPresentation
+
+closure_end_indentation: error
+conditional_returns_on_newline: error
+explicit_init: error
+fatal_error_message: error
+operator_usage_whitespace: warning
+vertical_parameter_alignment_on_call: warning
+switch_case_on_newline: warning
+
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle)
