@@ -13,7 +13,40 @@ struct MainView: View {
     let store: Store<Main.State, Main.Action>
 
     var body: some View {
-        Text("Main")
+        WithViewStore(store) { _ in
+            TabView {
+                RozkladView(
+                    store: store.scope(
+                        state: \Main.State.rozklad,
+                        action: Main.Action.rozklad
+                    )
+                )
+                .tabItem {
+                    Text("Rozklad")
+                }
+
+                CampusView(
+                    store: store.scope(
+                        state: \Main.State.campus,
+                        action: Main.Action.campus
+                    )
+                )
+                .tabItem {
+                    Text("Campus")
+                }
+
+                ProfileView(
+                    store: store.scope(
+                        state: \Main.State.profile,
+                        action: Main.Action.profile
+                    )
+                )
+                .tabItem {
+                    Text("Profile")
+                }
+
+            }
+        }
     }
 
 }
