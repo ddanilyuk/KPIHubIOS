@@ -15,10 +15,15 @@ struct GroupPickerView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             List {
-                ForEach(viewStore.groups, id: \.id) { group in
+                ForEach(viewStore.searchedGroups, id: \.id) { group in
                     Text(group.name)
                 }
             }
+            .searchable(
+                text: viewStore.binding(\.$searchedText),
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Пошук")
+            )
             .onAppear { viewStore.send(.onAppear) }
             .navigationTitle("Групи")
         }

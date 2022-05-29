@@ -14,13 +14,22 @@ struct GroupPicker {
 
     struct State: Equatable {
         var groups: [Group]
+        var searchedGroups: [Group]
+        @BindableState var searchedText: String
+
+        init() {
+            groups = []
+            searchedGroups = []
+            searchedText = ""
+        }
     }
 
     // MARK: - Action
 
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
         case onAppear
         case allGroupsResponse(Result<[Group], NSError>)
+        case binding(BindingAction<State>)
     }
 
     // MARK: - Environment
@@ -48,13 +57,30 @@ struct GroupPicker {
 
         case let .allGroupsResponse(.success(groups)):
             state.groups = groups
+            state.searchedGroups = groups
             return .none
 
         case let .allGroupsResponse(.failure(error)):
             print(error.localizedDescription)
             return .none
-        }
 
+        case .binding(\.$searchedText):
+            if state.searchedText.isEmpty {
+                state.searchedGroups = state.groups
+            } else {
+                let filtered = state.groups.filter { group in
+                    let groupName = group.name.lowercased()
+                    let searchedText = state.searchedText.lowercased()
+                    return groupName.contains(searchedText)
+                }
+                state.searchedGroups = filtered
+            }
+            return .none
+
+        case .binding:
+            return .none
+        }
     }
+    .binding()
 
 }

@@ -40,7 +40,7 @@ struct Login {
     static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .routeAction(_, .onboarding(.pickGroup)):
-            let groupPickerState = GroupPicker.State(groups: [])
+            let groupPickerState = GroupPicker.State()
             state.routes.push(.groupPicker(groupPickerState))
             return .none
 
