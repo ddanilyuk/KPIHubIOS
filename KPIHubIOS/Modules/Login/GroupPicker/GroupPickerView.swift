@@ -26,6 +26,7 @@ struct GroupPickerView: View {
             )
             .onAppear { viewStore.send(.onAppear) }
             .navigationTitle("Групи")
+            .loadable(viewStore.binding(\.$isLoading))
         }
     }
 

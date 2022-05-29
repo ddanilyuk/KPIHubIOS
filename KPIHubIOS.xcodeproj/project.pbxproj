@@ -25,6 +25,8 @@
 		5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDF2843B26500514263 /* OnboardingStore.swift */; };
 		5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE12843B26D00514263 /* OnboardingView.swift */; };
 		5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE32843B3F800514263 /* LoginScreenProvider.swift */; };
+		5F137EE62844022800514263 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE52844022800514263 /* Loader.swift */; };
+		5F137EE9284403F200514263 /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE8284403F200514263 /* Loadable.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C1283677C200350368 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3C0283677C200350368 /* ContentView.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
@@ -76,6 +78,8 @@
 		5F137EDF2843B26500514263 /* OnboardingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStore.swift; sourceTree = "<group>"; };
 		5F137EE12843B26D00514263 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5F137EE32843B3F800514263 /* LoginScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenProvider.swift; sourceTree = "<group>"; };
+		5F137EE52844022800514263 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		5F137EE8284403F200514263 /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C0283677C200350368 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 		5F137EBD2843A30600514263 /* SharedViews */ = {
 			isa = PBXGroup;
 			children = (
+				5F137EE7284403ED00514263 /* Loader */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -224,6 +229,15 @@
 				5F137EE12843B26D00514263 /* OnboardingView.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		5F137EE7284403ED00514263 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				5F137EE8284403F200514263 /* Loadable.swift */,
+				5F137EE52844022800514263 /* Loader.swift */,
+			);
+			path = Loader;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -552,8 +566,10 @@
 				5F137ED32843A3E200514263 /* MainView.swift in Sources */,
 				5F137EC22843A35D00514263 /* AppStore.swift in Sources */,
 				5F137EDD2843A87700514263 /* Group.swift in Sources */,
+				5F137EE62844022800514263 /* Loader.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
+				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F97B3C1283677C200350368 /* ContentView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,

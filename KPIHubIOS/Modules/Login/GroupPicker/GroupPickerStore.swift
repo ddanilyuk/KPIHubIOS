@@ -16,11 +16,13 @@ struct GroupPicker {
         var groups: [Group]
         var searchedGroups: [Group]
         @BindableState var searchedText: String
+        @BindableState var isLoading: Bool
 
         init() {
             groups = []
             searchedGroups = []
             searchedText = ""
+            isLoading = true
         }
     }
 
@@ -56,11 +58,13 @@ struct GroupPicker {
                 .catchToEffect(Action.allGroupsResponse)
 
         case let .allGroupsResponse(.success(groups)):
+            state.isLoading = false
             state.groups = groups
             state.searchedGroups = groups
             return .none
 
         case let .allGroupsResponse(.failure(error)):
+            state.isLoading = false
             print(error.localizedDescription)
             return .none
 
