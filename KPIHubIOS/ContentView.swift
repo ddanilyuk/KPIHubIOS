@@ -9,14 +9,9 @@ import SwiftUI
 import Routes
 import URLRouting
 
-struct GroupResponse: Codable {
-    var groups: [Group]
-}
 
-struct Group: Codable {
-    let id: String
-    let name: String
-}
+
+
 
 class ViewModel: ObservableObject {
     @Published var groups: [Group] = []
