@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import Routes
 
 @main
 struct KPIHubIOSApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(
+                viewModel: ViewModel(
+                    apiClient: .live(router: rootRouter.baseURL("http://167.172.189.121:8080"))
+                )
+            )
         }
     }
 }

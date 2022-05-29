@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EAD28439EA100514263 /* ComposableArchitecture */; };
+		5F137EB128439EC800514263 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB028439EC800514263 /* TCACoordinators */; };
+		5F137EB428439F2400514263 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB328439F2400514263 /* Introspect */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C1283677C200350368 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3C0283677C200350368 /* ContentView.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
@@ -14,6 +17,7 @@
 		5F97B3D0283677C600350368 /* KPIHubIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3CF283677C600350368 /* KPIHubIOSTests.swift */; };
 		5F97B3DA283677C600350368 /* KPIHubIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */; };
 		5F97B3DC283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */; };
+		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,8 @@
 		5F97B3D5283677C600350368 /* KPIHubIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITests.swift; sourceTree = "<group>"; };
 		5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5FD570B2283680CE00D8E869 /* KPIHubServer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = KPIHubServer; path = ../KPIHubServer; sourceTree = "<group>"; };
+		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +57,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */,
+				5F137EB428439F2400514263 /* Introspect in Frameworks */,
+				5F137EB128439EC800514263 /* TCACoordinators in Frameworks */,
+				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,10 +84,12 @@
 		5F97B3B2283677C200350368 = {
 			isa = PBXGroup;
 			children = (
+				5FD570B2283680CE00D8E869 /* KPIHubServer */,
 				5F97B3BD283677C200350368 /* KPIHubIOS */,
 				5F97B3CE283677C600350368 /* KPIHubIOSTests */,
 				5F97B3D8283677C600350368 /* KPIHubIOSUITests */,
 				5F97B3BC283677C200350368 /* Products */,
+				5FD570AF2836809500D8E869 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -94,6 +106,7 @@
 		5F97B3BD283677C200350368 /* KPIHubIOS */ = {
 			isa = PBXGroup;
 			children = (
+				5FD570B3283680D200D8E869 /* Info.plist */,
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
 				5F97B3C0283677C200350368 /* ContentView.swift */,
 				5F97B3C2283677C500350368 /* Assets.xcassets */,
@@ -127,6 +140,13 @@
 			path = KPIHubIOSUITests;
 			sourceTree = "<group>";
 		};
+		5FD570AF2836809500D8E869 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +163,12 @@
 			dependencies = (
 			);
 			name = KPIHubIOS;
+			packageProductDependencies = (
+				5FD570B4283680DA00D8E869 /* Routes */,
+				5F137EAD28439EA100514263 /* ComposableArchitecture */,
+				5F137EB028439EC800514263 /* TCACoordinators */,
+				5F137EB328439F2400514263 /* Introspect */,
+			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +241,11 @@
 				Base,
 			);
 			mainGroup = 5F97B3B2283677C200350368;
+			packageReferences = (
+				5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -420,6 +451,7 @@
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KPIHubIOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -449,6 +481,7 @@
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = KPIHubIOS/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -583,6 +616,55 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.35.0;
+			};
+		};
+		5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.2;
+			};
+		};
+		5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5F137EAD28439EA100514263 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		5F137EB028439EC800514263 /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
+		};
+		5F137EB328439F2400514263 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
+		5FD570B4283680DA00D8E869 /* Routes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Routes;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5F97B3B3283677C200350368 /* Project object */;
 }
