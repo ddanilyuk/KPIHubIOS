@@ -6,24 +6,6 @@
 //
 
 import ComposableArchitecture
-import TCACoordinators
-
-protocol Routable {
-
-    associatedtype ID
-    associatedtype ScreenProvider: Equatable & Identifiable
-    associatedtype RouteState: Equatable
-
-    static var id: ID { get }
-    static var statePath: CasePath<ScreenProvider, RouteState> { get }
-}
-
-extension Routable {
-    static var id: String {
-        return String(describing: self)
-    }
-}
-
 
 extension Login {
 
@@ -33,30 +15,14 @@ extension Login {
 
 extension Login.ScreenProvider {
 
-    // MARK: - Routes
-
-    struct OnboardingRoute: Routable {
-        static var statePath = /State.onboarding
-    }
-
-    struct GroupPickerRoute: Routable {
-        static var statePath = /State.groupPicker
-    }
-
     // MARK: - State handling
 
-    enum State: Equatable, Identifiable {
+    enum State: Equatable, CoordinatorStateIdentifiable {
+
+        static var module: Any.Type = Login.self
+
         case onboarding(Onboarding.State)
         case groupPicker(GroupPicker.State)
-
-        var id: String {
-            switch self {
-            case .onboarding:
-                return OnboardingRoute.id
-            case .groupPicker:
-                return GroupPickerRoute.id
-            }
-        }
     }
 
     // MARK: - Action handling

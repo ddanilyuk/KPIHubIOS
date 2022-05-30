@@ -15,30 +15,14 @@ extension Rozklad {
 
 extension Rozklad.ScreenProvider {
 
-    // MARK: - Routes
-
-    struct GroupLessonsRoute: Routable {
-        static var statePath = /State.groupLessons
-    }
-
-    struct LessonDetailsRoute: Routable {
-        static var statePath = /State.lessonDetails
-    }
-
     // MARK: - State handling
 
-    enum State: Equatable, Identifiable {
+    enum State: Equatable, CoordinatorStateIdentifiable {
+
+        static var module: Any.Type = Rozklad.self
+
         case groupLessons(GroupLessons.State)
         case lessonDetails(LessonDetails.State)
-
-        var id: String {
-            switch self {
-            case .groupLessons:
-                return GroupLessonsRoute.id
-            case .lessonDetails:
-                return LessonDetailsRoute.id
-            }
-        }
     }
 
     // MARK: - Action handling

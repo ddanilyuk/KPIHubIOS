@@ -90,12 +90,13 @@ struct App {
             ),
 
         reducerCore
-    ).debug()
+    )
+    .debug()
 
     static var reducerCore = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .appDelegate(.didFinishLaunching):
-            state.set(.main)
+            state.set(.login)
             return .none
 
         case .signOut:
