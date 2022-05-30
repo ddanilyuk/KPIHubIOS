@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */; };
+		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
+		5F06C23328450C000031BD5C /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* Lesson.swift */; };
 		5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EAD28439EA100514263 /* ComposableArchitecture */; };
 		5F137EB128439EC800514263 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB028439EC800514263 /* TCACoordinators */; };
 		5F137EB428439F2400514263 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB328439F2400514263 /* Introspect */; };
@@ -76,6 +78,8 @@
 		45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59000BB251097CFC2D11EF01 /* Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorSupport.swift; sourceTree = "<group>"; };
+		5F06C23028450BC60031BD5C /* LessonsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsResponse.swift; sourceTree = "<group>"; };
+		5F06C23228450C000031BD5C /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		5F137EC12843A35D00514263 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		5F137EC32843A36200514263 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EC52843A36C00514263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 			children = (
 				5F137EDA2843A85600514263 /* GroupResponse.swift */,
 				5F137EDC2843A87700514263 /* Group.swift */,
+				5F06C23028450BC60031BD5C /* LessonsResponse.swift */,
+				5F06C23228450C000031BD5C /* Lesson.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -640,6 +646,7 @@
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
 				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
+				5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */,
 				5F137EF428440A1100514263 /* CampusStore.swift in Sources */,
 				5F137EDB2843A85600514263 /* GroupResponse.swift in Sources */,
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
@@ -654,6 +661,7 @@
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
+				5F06C23328450C000031BD5C /* Lesson.swift in Sources */,
 				5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */,
 				5F97B3C1283677C200350368 /* ContentView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
