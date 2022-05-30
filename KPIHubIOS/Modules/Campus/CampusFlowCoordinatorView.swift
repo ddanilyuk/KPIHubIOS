@@ -1,5 +1,5 @@
 //
-//  CampusView.swift
+//  CampusFlowCoordinatorView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct CampusView: View {
+struct CampusFlowCoordinatorView: View {
 
     let store: Store<Campus.State, Campus.Action>
 

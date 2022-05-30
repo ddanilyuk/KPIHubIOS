@@ -1,5 +1,5 @@
 //
-//  RozkladView.swift
+//  RozkladFlowCoordinatorView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
 
-struct RozkladView: View {
+struct RozkladFlowCoordinatorView: View {
 
     let store: Store<Rozklad.State, Rozklad.Action>
 

@@ -12,13 +12,13 @@
 		5F137EB128439EC800514263 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB028439EC800514263 /* TCACoordinators */; };
 		5F137EB428439F2400514263 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB328439F2400514263 /* Introspect */; };
 		5F137EC22843A35D00514263 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppStore.swift */; };
-		5F137EC42843A36200514263 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppView.swift */; };
+		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
 		5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC52843A36C00514263 /* AppDelegate.swift */; };
 		5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC72843A37100514263 /* AppDelegateStore.swift */; };
 		5F137ECD2843A3C500514263 /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECC2843A3C500514263 /* LoginStore.swift */; };
-		5F137ECF2843A3CA00514263 /* LoginCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECE2843A3CA00514263 /* LoginCoordinatorView.swift */; };
+		5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */; };
 		5F137ED12843A3D500514263 /* MainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED02843A3D500514263 /* MainStore.swift */; };
-		5F137ED32843A3E200514263 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED22843A3E200514263 /* MainView.swift */; };
+		5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */; };
 		5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED52843A6FF00514263 /* GroupPickerStore.swift */; };
 		5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED72843A70600514263 /* GroupPickerView.swift */; };
 		5F137EDB2843A85600514263 /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDA2843A85600514263 /* GroupResponse.swift */; };
@@ -30,11 +30,11 @@
 		5F137EE9284403F200514263 /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE8284403F200514263 /* Loadable.swift */; };
 		5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */; };
 		5F137EF0284409F900514263 /* RozkladStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEF284409F900514263 /* RozkladStore.swift */; };
-		5F137EF228440A0900514263 /* RozkladCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF128440A0900514263 /* RozkladCoordinatorView.swift */; };
+		5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF128440A0900514263 /* RozkladFlowCoordinatorView.swift */; };
 		5F137EF428440A1100514263 /* CampusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF328440A1100514263 /* CampusStore.swift */; };
-		5F137EF628440A1700514263 /* CampusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF528440A1700514263 /* CampusView.swift */; };
+		5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */; };
 		5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF728440A1E00514263 /* ProfileStore.swift */; };
-		5F137EFA28440A2400514263 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF928440A2400514263 /* ProfileView.swift */; };
+		5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF928440A2400514263 /* ProfileFlowCoordinatorView.swift */; };
 		5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EFC28440DF500514263 /* GroupLessonsStore.swift */; };
 		5F137EFF28440DFD00514263 /* GroupLessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EFE28440DFD00514263 /* GroupLessonsView.swift */; };
 		5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137F0128440E6D00514263 /* LessonDetailsStore.swift */; };
@@ -77,13 +77,13 @@
 		59000BB251097CFC2D11EF01 /* Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorSupport.swift; sourceTree = "<group>"; };
 		5F137EC12843A35D00514263 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
-		5F137EC32843A36200514263 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		5F137EC32843A36200514263 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EC52843A36C00514263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F137EC72843A37100514263 /* AppDelegateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateStore.swift; sourceTree = "<group>"; };
 		5F137ECC2843A3C500514263 /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
-		5F137ECE2843A3CA00514263 /* LoginCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinatorView.swift; sourceTree = "<group>"; };
+		5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137ED02843A3D500514263 /* MainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStore.swift; sourceTree = "<group>"; };
-		5F137ED22843A3E200514263 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137ED52843A6FF00514263 /* GroupPickerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPickerStore.swift; sourceTree = "<group>"; };
 		5F137ED72843A70600514263 /* GroupPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPickerView.swift; sourceTree = "<group>"; };
 		5F137EDA2843A85600514263 /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
@@ -95,11 +95,11 @@
 		5F137EE8284403F200514263 /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladScreenProvider.swift; sourceTree = "<group>"; };
 		5F137EEF284409F900514263 /* RozkladStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladStore.swift; sourceTree = "<group>"; };
-		5F137EF128440A0900514263 /* RozkladCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladCoordinatorView.swift; sourceTree = "<group>"; };
+		5F137EF128440A0900514263 /* RozkladFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlowCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EF328440A1100514263 /* CampusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusStore.swift; sourceTree = "<group>"; };
-		5F137EF528440A1700514263 /* CampusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusView.swift; sourceTree = "<group>"; };
+		5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusFlowCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EF728440A1E00514263 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
-		5F137EF928440A2400514263 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		5F137EF928440A2400514263 /* ProfileFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileFlowCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EFC28440DF500514263 /* GroupLessonsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLessonsStore.swift; sourceTree = "<group>"; };
 		5F137EFE28440DFD00514263 /* GroupLessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLessonsView.swift; sourceTree = "<group>"; };
 		5F137F0128440E6D00514263 /* LessonDetailsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsStore.swift; sourceTree = "<group>"; };
@@ -206,7 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137EC12843A35D00514263 /* AppStore.swift */,
-				5F137EC32843A36200514263 /* AppView.swift */,
+				5F137EC32843A36200514263 /* AppCoordinatorView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -225,7 +225,7 @@
 			children = (
 				5F137ECC2843A3C500514263 /* LoginStore.swift */,
 				5F137EE32843B3F800514263 /* LoginScreenProvider.swift */,
-				5F137ECE2843A3CA00514263 /* LoginCoordinatorView.swift */,
+				5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */,
 				5F137EDE2843B25600514263 /* Onboarding */,
 				5F137ED42843A6EA00514263 /* GroupPicker */,
 			);
@@ -236,7 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137ED02843A3D500514263 /* MainStore.swift */,
-				5F137ED22843A3E200514263 /* MainView.swift */,
+				5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -273,7 +273,7 @@
 			children = (
 				5F137EEF284409F900514263 /* RozkladStore.swift */,
 				5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */,
-				5F137EF128440A0900514263 /* RozkladCoordinatorView.swift */,
+				5F137EF128440A0900514263 /* RozkladFlowCoordinatorView.swift */,
 				5F137EFB28440DD200514263 /* GroupLessons */,
 				5F137F0028440E5900514263 /* LessonDetails */,
 			);
@@ -284,7 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137EF328440A1100514263 /* CampusStore.swift */,
-				5F137EF528440A1700514263 /* CampusView.swift */,
+				5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */,
 			);
 			path = Campus;
 			sourceTree = "<group>";
@@ -293,7 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137EF728440A1E00514263 /* ProfileStore.swift */,
-				5F137EF928440A2400514263 /* ProfileView.swift */,
+				5F137EF928440A2400514263 /* ProfileFlowCoordinatorView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -638,32 +638,32 @@
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
-				5F137EC42843A36200514263 /* AppView.swift in Sources */,
+				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
 				5F137EF428440A1100514263 /* CampusStore.swift in Sources */,
 				5F137EDB2843A85600514263 /* GroupResponse.swift in Sources */,
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
 				5F137EF0284409F900514263 /* RozkladStore.swift in Sources */,
-				5F137EF628440A1700514263 /* CampusView.swift in Sources */,
+				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
-				5F137ED32843A3E200514263 /* MainView.swift in Sources */,
+				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
 				5F137EC22843A35D00514263 /* AppStore.swift in Sources */,
 				5F137EDD2843A87700514263 /* Group.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
-				5F137EFA28440A2400514263 /* ProfileView.swift in Sources */,
+				5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */,
 				5F97B3C1283677C200350368 /* ContentView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
-				5F137EF228440A0900514263 /* RozkladCoordinatorView.swift in Sources */,
+				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,
 				5F137EFF28440DFD00514263 /* GroupLessonsView.swift in Sources */,
 				5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */,
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
-				5F137ECF2843A3CA00514263 /* LoginCoordinatorView.swift in Sources */,
+				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

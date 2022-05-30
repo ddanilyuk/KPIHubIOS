@@ -22,7 +22,7 @@ struct KPIHubIOSApp: SwiftUI.App {
 
     var body: some Scene {
         WindowGroup {
-            AppView(store: KPIHubIOSApp.store)
+            AppCoordinatorView(store: KPIHubIOSApp.store)
         }
     }
 

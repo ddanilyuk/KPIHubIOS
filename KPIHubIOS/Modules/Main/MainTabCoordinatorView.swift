@@ -8,14 +8,14 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct MainView: View {
+struct MainTabCoordinatorView: View {
 
     let store: Store<Main.State, Main.Action>
 
     var body: some View {
         WithViewStore(store) { _ in
             TabView {
-                RozkladView(
+                RozkladFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.rozklad,
                         action: Main.Action.rozklad
@@ -25,7 +25,7 @@ struct MainView: View {
                     Text("Rozklad")
                 }
 
-                CampusView(
+                CampusFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.campus,
                         action: Main.Action.campus
@@ -35,7 +35,7 @@ struct MainView: View {
                     Text("Campus")
                 }
 
-                ProfileView(
+                ProfileFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.profile,
                         action: Main.Action.profile
