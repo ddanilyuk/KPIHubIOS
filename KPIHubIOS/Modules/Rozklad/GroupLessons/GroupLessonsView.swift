@@ -100,14 +100,28 @@ struct GroupLessonsView: View {
                                         .frame(height: 0.001)
 //                                        .background(Color.green.opacity(0.3))
                                         .listRowInsets(EdgeInsets())
+                                        .listRowSeparator(.hidden)
 
                                 } else {
                                     ForEach(scheduleDay.lessons, id: \.id) { lesson in
-                                        Text(lesson.names[0])
-                                            .frame(height: 50)
-                                            .frame(maxWidth: .infinity)
-                                            .background(Color.red.opacity(0.3))
-                                            .listRowInsets(EdgeInsets())
+
+                                        LessonCellView(
+                                            store: Store(
+                                                initialState: LessonCell.State(),
+                                                reducer: LessonCell.reducer,
+                                                environment: LessonCell.Environment()
+                                            )
+                                        )
+                                        .padding()
+                                        .listRowInsets(EdgeInsets())
+                                        .background(Color(.systemGroupedBackground))
+                                        .listRowSeparator(.hidden)
+
+
+//                                        Text(lesson.names[0])
+//                                            .frame(height: 50)
+//                                            .frame(maxWidth: .infinity)
+//                                            .background(Color.red.opacity(0.3))
 
                                     }
                                 }
@@ -116,17 +130,21 @@ struct GroupLessonsView: View {
                             header: {
                                 Text("\(scheduleDay.day.fullDescription). 1 тиждень")
                                     .font(.system(.headline))
-                                    .foregroundColor(.black.opacity(0.1))
-                                    .frame(maxWidth: .infinity)
+                                    .foregroundColor(.black)
+//                                    .frame(maxWidth: .infinity)
+                                    .padding(.horizontal)
+                                    .padding(.top)
+
                                     .frame(height: 44, alignment: .leading)
-                                    .multilineTextAlignment(.leading)
+//                                    .multilineTextAlignment(.leading)
                                     .textCase(nil)
-                                    .background(Color.red.opacity(0.3))
+//                                    .background(Color.red.opacity(0.3))
                                     .modifier(OffsetModifier())
                                     .onPreferenceChange(OffsetPreferenceKey.self) { value in
                                         offsets[scheduleDay.day] = value
                                     }
                                     .listRowInsets(EdgeInsets())
+                                    .listRowSeparator(.hidden)
 //                                    .listRowInsets(EdgeInsets())
 
 
@@ -141,7 +159,7 @@ struct GroupLessonsView: View {
 
                     }
                 }
-//                .interspe
+                //                .interspe
                 .environment(\.defaultMinListRowHeight, 0.0)
 //                .environment(\.defaultMinListHeaderHeight, 0.0)
 
@@ -180,7 +198,7 @@ struct OffsetModifier: ViewModifier {
         content
             .overlay(
                 GeometryReader { proxy in
-                    Color.blue.opacity(0.2).preference(
+                    Color.clear.opacity(0.2).preference(
                         key: OffsetPreferenceKey.self,
                         value: proxy.frame(in: .named("SCROLL")).minY
                     )
