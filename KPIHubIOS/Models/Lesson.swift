@@ -78,7 +78,7 @@ struct Lesson: Equatable {
 
     // MARK: - Week
 
-    enum Week: Int, Codable, Equatable {
+    enum Week: Int, Codable, Equatable, CaseIterable {
         case first = 1
         case second
 

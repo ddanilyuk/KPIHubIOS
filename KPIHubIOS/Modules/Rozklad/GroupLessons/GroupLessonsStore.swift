@@ -12,10 +12,10 @@ struct GroupLessons {
     // MARK: - State
 
     struct State: Equatable {
-        var schedule: Schedule
+        var scheduleDays: [ScheduleDay]
 
         init() {
-            self.schedule = Schedule(lessons: Lesson.mocked)
+            self.scheduleDays = .init(lessons: Lesson.mocked)
         }
     }
 

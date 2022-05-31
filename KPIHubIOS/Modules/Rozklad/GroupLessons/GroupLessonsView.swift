@@ -14,41 +14,22 @@ struct GroupLessonsView: View {
 
     init(store: Store<GroupLessons.State, GroupLessons.Action>) {
         self.store = store
-        UITableView.appearance().sectionHeaderTopPadding = 0.0
-        UITableView.appearance().sectionFooterHeight = 0.0
-
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.001))
-        UITableView.appearance().tableFooterView = view
-        UITableView.appearance().estimatedSectionFooterHeight = 0.001
-        UITableView.appearance().separatorStyle = .none
+//        UITableView.appearance().sectionHeaderTopPadding = 0.0
+//        UITableView.appearance().sectionFooterHeight = 0.0
+//
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.001))
+//        UITableView.appearance().tableFooterView = view
+//        UITableView.appearance().estimatedSectionFooterHeight = 0.001
+//        UITableView.appearance().separatorStyle = .none
     }
 
-    @State var selectedWeek: Lesson.Week = .first
-    @State var selectedDay: Lesson.Day = .monday
+    @State var selectedWeek: Lesson.Week?
+    @State var selectedDay: Lesson.Day?
 
     @State var displayedWeek: Lesson.Week = .first
     @State var displayedDay: Lesson.Day = .monday
 
-    @State var test: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
-
-    struct OffsetsTest: Equatable {
-        struct Offset: Equatable {
-            let scheduleDay: Schedule.ScheduleDay
-            var offset: CGFloat
-        }
-
-        var lower: Offset?
-        var current: Offset?
-        var higher: Offset?
-
-        var description: String {
-            return "\(lower?.scheduleDay.id ?? "no lower") \(lower?.offset ?? 0)"
-        }
-    }
-
-    @State var offsetTest = OffsetsTest()
-
-    @State var offsets: [Schedule.ScheduleDay: CGFloat] = [:]
+    @State var offsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -71,7 +52,7 @@ struct GroupLessonsView: View {
                     ScrollViewReader { proxy in
                         ScrollView {
                             LazyVStack(alignment: .leading, spacing: 0) {
-                                ForEach(viewStore.schedule.firstWeek, id: \.id) { scheduleDay in
+                                ForEach(viewStore.scheduleDays, id: \.id) { scheduleDay in
                                     Section(
                                         content: {
                                             if scheduleDay.lessons.isEmpty {
@@ -86,9 +67,7 @@ struct GroupLessonsView: View {
                                                         )
                                                     )
                                                     .padding()
-                                                    .listRowInsets(EdgeInsets())
                                                     .background(Color(.systemGroupedBackground))
-                                                    .listRowSeparator(.hidden)
                                                 }
                                             }
                                         },
@@ -96,150 +75,51 @@ struct GroupLessonsView: View {
                                             sectionHeader(scheduleDay: scheduleDay)
                                                 .modifier(OffsetModifier())
                                                 .onPreferenceChange(OffsetPreferenceKey.self) { value in
-    //                                                if let nextValue = test[safe: scheduleDay.index + 1],
-    //                                                   let nextValue = nextValue,
-    //                                                 value > nextValue {
-    //                                                    test[scheduleDay.index] = nil
-    //                                                    return
-    //                                                }
-                                                    test[scheduleDay.index] = value
-                                                    offsets[scheduleDay] = value
-                                                }
-                                                .onAppear {
-                                                    print("onAppear \(scheduleDay.index)")
+                                                    offsets[scheduleDay.index] = value
                                                 }
                                                 .onDisappear {
-                                                    test[scheduleDay.index] = nil
-                                                    print("onDisappear \(scheduleDay.index)")
+                                                    offsets[scheduleDay.index] = nil
                                                 }
-
-                                        },
-                                        footer: { sectionFooter }
+                                        }
                                     )
-
-    //                                .onDisappear {
-    //                                    print("DISAPPEAR \(scheduleDay.id)")
-    //                                    test[scheduleDay.index] = nil
-    //                                }
-                                    .listRowInsets(EdgeInsets())
                                 }
-                                .listRowInsets(EdgeInsets())
-
-                                ForEach(viewStore.schedule.secondWeek, id: \.id) { scheduleDay in
-                                    Section(
-                                        content: {
-                                            if scheduleDay.lessons.isEmpty {
-                                                emptyCell
-                                            } else {
-                                                ForEach(scheduleDay.lessons, id: \.id) { _ in
-                                                    LessonCellView(
-                                                        store: Store(
-                                                            initialState: LessonCell.State(),
-                                                            reducer: LessonCell.reducer,
-                                                            environment: LessonCell.Environment()
-                                                        )
-                                                    )
-                                                    .padding()
-                                                    .listRowInsets(EdgeInsets())
-                                                    .background(Color(.systemGroupedBackground))
-                                                    .listRowSeparator(.hidden)
-                                                }
-                                            }
-                                        },
-                                        header: {
-                                            sectionHeader(scheduleDay: scheduleDay)
-                                                .modifier(OffsetModifier())
-                                                .onPreferenceChange(OffsetPreferenceKey.self) { value in
-    //                                                if let nextValue = test[safe: scheduleDay.index + 1],
-    //                                                   let nextValue = nextValue,
-    //                                                   value > nextValue {
-    //                                                    test[scheduleDay.index] = nil
-    //                                                    return
-    //                                                }
-                                                    test[scheduleDay.index] = value
-                                                    offsets[scheduleDay] = value
-                                                }
-
-                                        },
-                                        footer: { sectionFooter }
-                                    )
-    //                                .onDisappear {
-    //                                    print("DISAPPEAR \(scheduleDay.id)")
-    //                                    test[scheduleDay.index] = nil
-    //                                }
-                                    .listRowInsets(EdgeInsets())
-                                }
-
-                                .listRowInsets(EdgeInsets())
 
                                 Rectangle()
                                     .fill(Color(.systemGroupedBackground))
                                     .frame(minHeight: geometryProxy.frame(in: .local).height - 44)
-                                    .listRowInsets(EdgeInsets())
-                                    .listRowSeparator(.hidden)
                             }
-                            .environment(\.defaultMinListRowHeight, 0.0)
-                            .listStyle(.grouped)
-                            .listRowSeparator(.hidden)
-                            .listRowInsets(EdgeInsets())
-                            .onChange(
-                                of: selectedDay,
-                                perform: { newValue in
-                                    withAnimation {
-                                        proxy.scrollTo(
-                                            Schedule.ScheduleDay.id(week: displayedWeek, day: newValue),
-                                            anchor: .top
-                                        )
-                                    }
+                            .onChange(of: selectedDay) { newValue in
+                                guard let newSelectedDay = newValue else {
+                                    return
                                 }
-                            )
-                            .onChange(of: selectedWeek) { newValue in
                                 withAnimation {
+                                    // If scrolling from bottom to top is lagging
                                     proxy.scrollTo(
-                                        Schedule.ScheduleDay.id(week: newValue, day: displayedDay),
+                                        ScheduleDay.id(week: displayedWeek, day: newSelectedDay),
                                         anchor: .top
                                     )
                                 }
+                                selectedDay = nil
+                            }
+                            .onChange(of: selectedWeek) { newValue in
+                                guard let newSelectedWeek = newValue else {
+                                    return
+                                }
+                                withAnimation {
+                                    proxy.scrollTo(
+                                        ScheduleDay.id(week: newSelectedWeek, day: displayedDay),
+                                        anchor: .top
+                                    )
+                                }
+                                selectedWeek = nil
                             }
                         }
                     }
                     .overlay(Text("\(geometryProxy.frame(in: .local).height)"))
-                    .onChange(of: offsets, perform: { newOffsets in
-                        return
-                        let list = newOffsets.sorted(by: { $0.1 > $1.1 })
-//                        print("----")
-//                        list.forEach { element in
-//                            print(element.value)
-//                        }
-//                        print("----")
-
-                        let list2 = newOffsets.sorted(by: { $0.1 < $1.1 })
-//                        print("")
-//                        print(list2.map { "\($0.key.id) \($0.value)" }.joined(separator: "\n"))
-//                        print("")
-//                        if let index = list2.firstIndex(where: { $0.1 > 169 }) {
-//                            print(index)
-//                        }
-
-
-//                        print(list.forR)
-                        //                let some = list.firstIndex(where: { $0.1 >= 192 })
-                        if let scheduleDay = list.first(where: { $0.1 <= 169 + 4 }) {
-                            displayedWeek = scheduleDay.key.week
-                            displayedDay = scheduleDay.key.day
-                        }
-
-                        /// []
-                        ///
-                        ///
-                        ///
-//                        offsets.removeAll()
-                    })
-                    .onChange(of: test, perform: { newValue in
+                    .onChange(of: offsets) { newValue in
                         print("")
                         print("\(UIScreen.main.bounds.height)")
                         print(newValue.map { "\(Int(($0 ?? 0).rounded()))" }.joined(separator: " | "))
-
                         let value: Int = {
                             if let firstIndex = newValue.firstIndex(where: { $0 ?? 0 > 169 + 3 }) {
                                 let result = max(firstIndex - 1, 0)
@@ -252,31 +132,19 @@ struct GroupLessonsView: View {
                                 return result
                             }
                         }()
-
                         switch value {
                         case (0..<6):
                             displayedWeek = .first
                             displayedDay = .init(rawValue: value + 1) ?? .monday
 
-//                            selectedWeek = .first
-//                            selectedDay = .init(rawValue: value + 1) ?? .monday
-
                         case (6...):
                             displayedWeek = .second
                             displayedDay = .init(rawValue: value - 5) ?? .monday
 
-//                            selectedWeek = .second
-//                            selectedDay = .init(rawValue: value - 5) ?? .monday
-
                         default:
                             return
                         }
-
-
-                    })
-                    .onChange(of: offsetTest, perform: { newValue in
-//                        print(newValue.description)
-                    })
+                    }
                     .background(Color(.systemGroupedBackground))
                     .coordinateSpace(name: "SCROLL")
                 }
@@ -285,9 +153,7 @@ struct GroupLessonsView: View {
         }
     }
 
-    let target = 169.0
-
-    func sectionHeader(scheduleDay: Schedule.ScheduleDay) -> some View {
+    func sectionHeader(scheduleDay: ScheduleDay) -> some View {
         Text("\(scheduleDay.day.fullDescription). \(scheduleDay.week.description)")
             .font(.system(.headline))
             .foregroundColor(.black)
@@ -295,23 +161,14 @@ struct GroupLessonsView: View {
             .padding(.top)
             .frame(height: 44, alignment: .leading)
             .textCase(nil)
-
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
             .background(Color.red.opacity(0.3))
     }
 
-    var sectionFooter: some View {
-        EmptyView()
-            .frame(height: 0.00001)
-            .background(Color.green.opacity(0.9))
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
-    }
-
     var emptyCell: some View {
         Rectangle()
-            .frame(height: 0.00001)
+            .frame(height: 0.0)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
     }
@@ -444,6 +301,14 @@ extension Lesson {
             day: .wednesday,
             week: .first
         ),
+        Lesson(
+            names: ["Ha ha"],
+            teachers: [],
+            locations: [],
+            position: .second,
+            day: .tuesday,
+            week: .second
+        )
     ]
 
 }
@@ -462,7 +327,7 @@ struct TitleView: View {
 
 struct WeekPicker: View {
 
-    @Binding var selectedWeek: Lesson.Week
+    @Binding var selectedWeek: Lesson.Week?
     @Binding var displayedWeek: Lesson.Week
 
     var body: some View {
@@ -494,7 +359,7 @@ struct WeekPicker: View {
 
 struct DayPicker: View {
 
-    @Binding var selectedDay: Lesson.Day
+    @Binding var selectedDay: Lesson.Day?
     @Binding var displayedDay: Lesson.Day
 
     var body: some View {
