@@ -22,7 +22,10 @@ struct MainTabCoordinatorView: View {
                     )
                 )
                 .tabItem {
-                    Text("Rozklad")
+                    VStack {
+                        Image(systemName: "list.bullet.rectangle")
+                        Text("Rozklad")
+                    }
                 }
 
                 CampusFlowCoordinatorView(
@@ -32,7 +35,10 @@ struct MainTabCoordinatorView: View {
                     )
                 )
                 .tabItem {
-                    Text("Campus")
+                    VStack {
+                        Image(systemName: "graduationcap")
+                        Text("Campus")
+                    }
                 }
 
                 ProfileFlowCoordinatorView(
@@ -42,7 +48,10 @@ struct MainTabCoordinatorView: View {
                     )
                 )
                 .tabItem {
-                    Text("Profile")
+                    VStack {
+                        Image(systemName: "person")
+                        Text("Profile")
+                    }
                 }
 
             }
