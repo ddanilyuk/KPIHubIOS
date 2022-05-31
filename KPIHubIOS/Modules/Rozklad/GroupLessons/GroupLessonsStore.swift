@@ -11,7 +11,13 @@ struct GroupLessons {
 
     // MARK: - State
 
-    struct State: Equatable { }
+    struct State: Equatable {
+        var schedule: Schedule
+
+        init() {
+            self.schedule = Schedule(lessons: Lesson.mocked)
+        }
+    }
 
     // MARK: - Action
 

@@ -81,6 +81,15 @@ struct Lesson: Equatable {
     enum Week: Int, Codable, Equatable {
         case first = 1
         case second
+
+        var description: String {
+            switch self {
+            case .first:
+                return "1 тиждень"
+            case .second:
+                return "2 тиждень"
+            }
+        }
     }
 
     let names: [String]
