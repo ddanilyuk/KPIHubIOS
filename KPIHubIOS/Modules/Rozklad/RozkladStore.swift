@@ -40,7 +40,7 @@ struct Rozklad {
     static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case let .routeAction(_, .groupLessons(.lessonCells(id, .onTap))):
-            let lessonDetailsState = LessonDetails.State(lesson: Lesson.mocked[0])
+            let lessonDetailsState = LessonDetails.State(lesson: LessonResponse.mocked[0])
             state.routes.push(.lessonDetails(lessonDetailsState))
             return .none
 

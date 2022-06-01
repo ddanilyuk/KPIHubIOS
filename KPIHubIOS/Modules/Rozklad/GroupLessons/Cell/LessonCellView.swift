@@ -17,15 +17,14 @@ struct LessonCellView: View {
             HStack(spacing: 16) {
 
                 VStack {
-                    Text("8:30")
+                    Text("\(viewStore.lesson.position.description.firstPartStart)")
 
                     RoundedRectangle(cornerRadius: 1)
                         .fill(Color.gray)
                         .frame(width: 2, alignment: .center)
                         .frame(minHeight: 20)
 
-                    Text("10:05")
-
+                    Text("\(viewStore.lesson.position.description.secondPartEnd)")
                 }
                 .frame(width: 35)
                 .font(.system(.footnote))
@@ -85,7 +84,9 @@ struct LessonCellView_Previews: PreviewProvider {
 //            Spacer()
             LessonCellView(
                 store: Store(
-                    initialState: LessonCell.State(lesson: Lesson.mocked[0]),
+                    initialState: LessonCell.State(
+                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+                    ),
                     reducer: LessonCell.reducer,
                     environment: LessonCell.Environment()
                 )

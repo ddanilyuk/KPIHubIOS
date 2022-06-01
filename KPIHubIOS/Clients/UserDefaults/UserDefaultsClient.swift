@@ -7,15 +7,13 @@
 
 import Foundation
 
-
-
 struct UserDefaultsClient {
 
     var setVerificationID: (String) -> Void
     var getVerificationID: () -> (String)
 
-    var setCoreLessons: ([Lesson]) -> Void
-    var getCoreLessons: () -> [Lesson]
+    var setCoreLessons: ([LessonsResponse]) -> Void
+    var getCoreLessons: () -> [LessonsResponse]
 
 }
 

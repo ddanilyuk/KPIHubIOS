@@ -17,11 +17,11 @@ struct LessonDetails {
         let teachers: [Teacher]
         let locations: [String]
 
-        let week: Lesson.Week
-        let day: Lesson.Day
-        let position: Lesson.Position
+        let week: LessonResponse.Week
+        let day: LessonResponse.Day
+        let position: LessonResponse.Position
 
-        init(lesson: Lesson) {
+        init(lesson: LessonResponse) {
             self.names = lesson.names
             self.teachers = lesson.teachers ?? []
             self.locations = lesson.locations ?? []

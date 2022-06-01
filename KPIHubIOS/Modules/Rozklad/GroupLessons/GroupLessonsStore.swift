@@ -19,7 +19,7 @@ struct GroupLessons {
         var lessonCells: [IdentifiedArrayOf<LessonCell.State>]
 
         init() {
-            scheduleDays = [ScheduleDay](lessons: Lesson.mocked)
+            scheduleDays = [ScheduleDay](lessons: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
             lessonCells = scheduleDays.map { day in
                 IdentifiedArrayOf(uniqueElements: day.lessons.map { LessonCell.State(lesson: $0) })
             }
@@ -30,7 +30,7 @@ struct GroupLessons {
 
     enum Action: Equatable {
         case onAppear
-        case lessonCells(id: Lesson.ID, action: LessonCell.Action)
+        case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
     }
 
     // MARK: - Environment

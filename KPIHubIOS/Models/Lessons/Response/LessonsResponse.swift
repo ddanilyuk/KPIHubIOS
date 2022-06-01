@@ -9,5 +9,5 @@ import Foundation
 
 struct LessonsResponse {
     let id: UUID
-    let lessons: [Lesson]
+    let lessons: [LessonResponse]
 }

@@ -222,7 +222,7 @@ struct LessonDetailsView_Previews: PreviewProvider {
             LessonDetailsView(
                 store: Store(
                     initialState: LessonDetails.State(
-                        lesson: Lesson.mocked[0]
+                        lesson: LessonResponse.mocked[0]
                     ),
                     reducer: LessonDetails.reducer,
                     environment: LessonDetails.Environment()
