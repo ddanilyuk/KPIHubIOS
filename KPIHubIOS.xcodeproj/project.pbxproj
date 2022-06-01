@@ -45,6 +45,7 @@
 		5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F462B284569E700202DA5 /* LessonCellView.swift */; };
 		5F5F462F28456D3B00202DA5 /* SmallTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F462E28456D3B00202DA5 /* SmallTagView.swift */; };
 		5F5F4631284625BB00202DA5 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4630284625BB00202DA5 /* Schedule.swift */; };
+		5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F46332847FFAC00202DA5 /* LargeTagView.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C1283677C200350368 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3C0283677C200350368 /* ContentView.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
@@ -116,6 +117,7 @@
 		5F5F462B284569E700202DA5 /* LessonCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellView.swift; sourceTree = "<group>"; };
 		5F5F462E28456D3B00202DA5 /* SmallTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTagView.swift; sourceTree = "<group>"; };
 		5F5F4630284625BB00202DA5 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
+		5F5F46332847FFAC00202DA5 /* LargeTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTagView.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C0283677C200350368 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 		5F137F0028440E5900514263 /* LessonDetails */ = {
 			isa = PBXGroup;
 			children = (
+				5F5F46322847FF9A00202DA5 /* Subviews */,
 				5F137F0128440E6D00514263 /* LessonDetailsStore.swift */,
 				5F137F0328440E7400514263 /* LessonDetailsView.swift */,
 			);
@@ -346,6 +349,14 @@
 			isa = PBXGroup;
 			children = (
 				5F5F462E28456D3B00202DA5 /* SmallTagView.swift */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		5F5F46322847FF9A00202DA5 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				5F5F46332847FFAC00202DA5 /* LargeTagView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -681,6 +692,7 @@
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
 				5F137EF0284409F900514263 /* RozkladStore.swift in Sources */,
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
+				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,

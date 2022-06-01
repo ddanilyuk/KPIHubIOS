@@ -17,14 +17,12 @@ struct GroupLessons {
         
         var scheduleDays: [ScheduleDay]
         var lessonCells: [IdentifiedArrayOf<LessonCell.State>]
-        var test: IdentifiedArrayOf<LessonCell.State>
 
         init() {
             scheduleDays = [ScheduleDay](lessons: Lesson.mocked)
             lessonCells = scheduleDays.map { day in
                 IdentifiedArrayOf(uniqueElements: day.lessons.map { LessonCell.State(lesson: $0) })
             }
-            test = IdentifiedArrayOf(uniqueElements: scheduleDays[0].lessons.map { LessonCell.State(lesson: $0) })
         }
     }
 
@@ -52,12 +50,16 @@ struct GroupLessons {
     }
 
     static let reducer = Reducer<State, Action, Environment>.combine(
-        LessonCell.reducer
-            .forEach(
-                state: \State.test,
-                action: /Action.lessonCells,
-                environment: { _ in LessonCell.Environment() }
-            ),
+        Reducer<State, Action, Environment>.combine(
+            (0..<12).map({ index in
+                LessonCell.reducer
+                    .forEach(
+                        state: \State.lessonCells[index],
+                        action: /Action.lessonCells,
+                        environment: { _ in LessonCell.Environment() }
+                    )
+            })
+        ),
         coreReducer
     )
 

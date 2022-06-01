@@ -53,7 +53,7 @@ struct GroupLessonsView: View {
                                             } else {
                                                 ForEachStore(
                                                     self.store.scope(
-                                                        state: { $0.test },
+                                                        state: { $0.lessonCells[scheduleDay.index] },
                                                         action: GroupLessons.Action.lessonCells(id:action:)
                                                     ),
                                                     content: {
@@ -236,63 +236,63 @@ extension Lesson {
             week: .first
         ),
 
-//        Lesson(
-//            names: ["First Tue"],
-//            teachers: [],
-//            locations: [],
-//            position: .first,
-//            day: .tuesday,
-//            week: .first
-//        ),
-//        Lesson(
-//            names: ["Third Tue"],
-//            teachers: [],
-//            locations: [],
-//            position: .third,
-//            day: .tuesday,
-//            week: .first
-//        ),
-//        Lesson(
-//            names: ["Fourth Tue"],
-//            teachers: [],
-//            locations: [],
-//            position: .fourth,
-//            day: .tuesday,
-//            week: .first
-//        ),
-//
-//        Lesson(
-//            names: ["Second Wed"],
-//            teachers: [],
-//            locations: [],
-//            position: .second,
-//            day: .wednesday,
-//            week: .first
-//        ),
-//        Lesson(
-//            names: ["Third Wed"],
-//            teachers: [],
-//            locations: [],
-//            position: .third,
-//            day: .wednesday,
-//            week: .first
-//        ),
-//        Lesson(
-//            names: ["Fourth Wed"],
-//            teachers: [],
-//            locations: [],
-//            position: .fourth,
-//            day: .wednesday,
-//            week: .first
-//        ),
-//        Lesson(
-//            names: ["Ha ha"],
-//            teachers: [],
-//            locations: [],
-//            position: .second,
-//            day: .tuesday,
-//            week: .second
-//        )
+        Lesson(
+            names: ["First Tue"],
+            teachers: [],
+            locations: [],
+            position: .first,
+            day: .tuesday,
+            week: .first
+        ),
+        Lesson(
+            names: ["Third Tue"],
+            teachers: [],
+            locations: [],
+            position: .third,
+            day: .tuesday,
+            week: .first
+        ),
+        Lesson(
+            names: ["Fourth Tue"],
+            teachers: [],
+            locations: [],
+            position: .fourth,
+            day: .tuesday,
+            week: .first
+        ),
+
+        Lesson(
+            names: ["Second Wed"],
+            teachers: [],
+            locations: [],
+            position: .second,
+            day: .wednesday,
+            week: .first
+        ),
+        Lesson(
+            names: ["Third Wed"],
+            teachers: [],
+            locations: [],
+            position: .third,
+            day: .wednesday,
+            week: .first
+        ),
+        Lesson(
+            names: ["Fourth Wed"],
+            teachers: [],
+            locations: [],
+            position: .fourth,
+            day: .wednesday,
+            week: .first
+        ),
+        Lesson(
+            names: ["Ha ha"],
+            teachers: [],
+            locations: [],
+            position: .second,
+            day: .tuesday,
+            week: .second
+        )
     ]
 
 }
