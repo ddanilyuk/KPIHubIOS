@@ -52,13 +52,16 @@ struct App {
 
     struct Environment {
         let apiClient: APIClient
+        let useDefaultsClient: UserDefaultsService
 
         static var live: Self {
             let apiClient: APIClient = .live(
-                router: rootRouter.baseURL("http://167.172.189.121:8080")
+                router: rootRouter.baseURL("http://kpihub.xyz")
             )
+            let useDefaultsClient: UserDefaultsService = .live()
             return Self(
-                apiClient: apiClient
+                apiClient: apiClient,
+                useDefaultsClient: useDefaultsClient
             )
         }
     }

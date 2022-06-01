@@ -11,3 +11,7 @@ struct LessonsResponse {
     let id: UUID
     let lessons: [LessonResponse]
 }
+
+extension LessonsResponse: Decodable {
+    
+}

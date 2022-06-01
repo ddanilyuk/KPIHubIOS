@@ -39,7 +39,11 @@ extension Rozklad.ScreenProvider {
             .pullback(
                 state: /State.groupLessons,
                 action: /Action.groupLessons,
-                environment: { _ in GroupLessons.Environment() }
+                environment: {
+                    GroupLessons.Environment(
+                        apiClient: $0.apiClient
+                    )
+                }
             ),
         LessonDetails.reducer
             .pullback(

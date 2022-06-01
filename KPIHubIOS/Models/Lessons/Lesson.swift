@@ -202,6 +202,13 @@ extension Lesson: Equatable {
 
 }
 
+// MARK: - Codable
+
+extension Lesson: Codable {
+
+}
+
+
 // MARK: - Identifiable
 
 extension Lesson: Identifiable {

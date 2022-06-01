@@ -14,10 +14,10 @@ import Foundation
 //        let encoder = JSONEncoder()
 //        let decoder = JSONDecoder()
 //        return UserDefaultsClient(
-//            setVerificationID: { setVerificationID(verificationID: $0, defaults: defaults) },
-//            getVerificationID: { getVerificationID(defaults: defaults) },
-//            setUser: { setUser(user: $0, defaults: defaults, encoder: encoder) },
-//            getUser: { getUser(defaults: defaults, decoder: decoder) }
+//            setGroup: { setGroup(verificationID: $0, defaults: defaults) },
+//            getGroup: { getGroup(defaults: defaults) },
+//            setLessons: { setLessons(user: $0, defaults: defaults, encoder: encoder) },
+//            getLessons: { getUser(defaults: defaults, decoder: decoder) }
 //        )
 //    }
 //
@@ -27,17 +27,17 @@ import Foundation
 //
 //    // MARK: - VerificationID
 //
-//    static func setVerificationID(
-//        verificationID: String,
+//    static func setGroup(
+//        group: Group,
 //        defaults: UserDefaults
 //    ) {
-//        defaults.set(verificationID, forKey: Key.authVerificationID.rawValue)
+//        defaults.set(group, forKey: Key.group.rawValue)
 //    }
 //
 //    static func getVerificationID(
 //        defaults: UserDefaults
 //    ) -> String {
-//        defaults.string(forKey: Key.authVerificationID.rawValue) ?? ""
+//        defaults.string(forKey: Key.group.rawValue) ?? ""
 //    }
 //
 //    // MARK: - User

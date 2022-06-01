@@ -139,6 +139,9 @@ struct GroupLessonsView: View {
                     .background(Color(.systemGroupedBackground))
                     .coordinateSpace(name: "SCROLL")
                 }
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
             }
             .navigationBarHidden(true)
         }
