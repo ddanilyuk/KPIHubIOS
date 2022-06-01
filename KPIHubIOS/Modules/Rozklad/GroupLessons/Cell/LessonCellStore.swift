@@ -11,7 +11,13 @@ struct LessonCell {
 
     // MARK: - State
 
-    struct State: Equatable { }
+    struct State: Equatable, Identifiable {
+        let lesson: Lesson
+
+        var id: Lesson.ID {
+            return lesson.id
+        }
+    }
 
     // MARK: - Action
 
@@ -25,7 +31,7 @@ struct LessonCell {
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    static let reducer = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .onTap:
             return .none

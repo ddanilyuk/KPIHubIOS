@@ -34,11 +34,13 @@ struct Main {
 
     // MARK: - Environment
 
-    struct Environment { }
+    struct Environment {
+        let apiClient: APIClient
+    }
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    static let coreReducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
         case .rozklad:
             return .none
@@ -49,6 +51,54 @@ struct Main {
         case .profile:
             return .none
         }
+    }
+
+    static let reducer = Reducer<State, Action, Environment>.combine(
+        Rozklad.reducer
+            .pullback(
+                state: \State.rozklad,
+                action: /Action.rozklad,
+                environment: { $0.rozklad }
+            ),
+
+        Campus.reducer
+            .pullback(
+                state: \State.campus,
+                action: /Action.campus,
+                environment: { $0.campus }
+            ),
+
+        Profile.reducer
+            .pullback(
+                state: \State.profile,
+                action: /Action.profile,
+                environment: { $0.profile }
+            ),
+
+        coreReducer
+    )
+
+}
+
+
+// MARK: App.Environment + Extensions
+
+extension Main.Environment {
+
+    var rozklad: Rozklad.Environment {
+        Rozklad.Environment(
+            apiClient: apiClient
+        )
+    }
+
+    var campus: Campus.Environment {
+        Campus.Environment(
+        )
+    }
+
+    var profile: Profile.Environment {
+        Profile.Environment(
+        )
     }
 
 }

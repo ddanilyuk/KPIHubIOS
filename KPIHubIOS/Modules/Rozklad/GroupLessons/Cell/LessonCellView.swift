@@ -36,22 +36,25 @@ struct LessonCellView: View {
                         .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
 
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("Title")
+                        Text("\(viewStore.lesson.names.joined(separator: ", "))")
                             .font(.system(.callout).bold())
+                            .lineLimit(2)
 
-                        SmallTagView(
-                            icon: Image(systemName: "person"),
-                            text: "доц. Долголенко О.М.",
-                            backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                            accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
-                        )
+                        ForEach(viewStore.lesson.teachers ?? [], id: \.self) { teacher in
+                            SmallTagView(
+                                icon: Image(systemName: "person"),
+                                text: teacher.shortName,
+                                backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
+                                accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                            )
+                        }
 
                         HStack {
                             SmallTagView(
                                 icon: Image(systemName: "location"),
                                 text: "Online",
-                                backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                                accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                                backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
+                                accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
                             )
 
                             SmallTagView(
@@ -66,6 +69,9 @@ struct LessonCellView: View {
                     .padding(16)
                 }
             }
+            .onTapGesture {
+                viewStore.send(.onTap)
+            }
         }
     }
 }
@@ -79,7 +85,7 @@ struct LessonCellView_Previews: PreviewProvider {
 //            Spacer()
             LessonCellView(
                 store: Store(
-                    initialState: LessonCell.State(),
+                    initialState: LessonCell.State(lesson: Lesson.mocked[0]),
                     reducer: LessonCell.reducer,
                     environment: LessonCell.Environment()
                 )

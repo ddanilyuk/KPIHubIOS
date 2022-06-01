@@ -131,6 +131,7 @@ extension App.Environment {
 
     var main: Main.Environment {
         Main.Environment(
+            apiClient: apiClient
         )
     }
 

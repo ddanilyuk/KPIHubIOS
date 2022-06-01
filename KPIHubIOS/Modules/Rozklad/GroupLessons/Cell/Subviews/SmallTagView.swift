@@ -28,11 +28,13 @@ struct SmallTagView: View {
 
             Text("\(text)")
                 .font(.system(.footnote))
+                .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
                 .padding(.vertical, 3)
                 .padding(.horizontal, 6)
         }
         .background(backgroundColor)
         .cornerRadius(12)
+        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
     }
 
 }

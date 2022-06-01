@@ -14,6 +14,8 @@ struct LessonDetailsView: View {
 
     var body: some View {
         Text("LessonDetails")
+            .navigationTitle("Деталі")
+            .navigationBarTitleDisplayMode(.inline)
     }
 
 }

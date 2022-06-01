@@ -14,13 +14,6 @@ struct GroupLessonsView: View {
 
     init(store: Store<GroupLessons.State, GroupLessons.Action>) {
         self.store = store
-//        UITableView.appearance().sectionHeaderTopPadding = 0.0
-//        UITableView.appearance().sectionFooterHeight = 0.0
-//
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.001))
-//        UITableView.appearance().tableFooterView = view
-//        UITableView.appearance().estimatedSectionFooterHeight = 0.001
-//        UITableView.appearance().separatorStyle = .none
     }
 
     @State var selectedWeek: Lesson.Week?
@@ -50,7 +43,7 @@ struct GroupLessonsView: View {
 
                 GeometryReader { geometryProxy in
                     ScrollViewReader { proxy in
-                        ScrollView {
+                        ScrollView(.vertical, showsIndicators: false) {
                             LazyVStack(alignment: .leading, spacing: 0) {
                                 ForEach(viewStore.scheduleDays, id: \.id) { scheduleDay in
                                     Section(
@@ -58,17 +51,17 @@ struct GroupLessonsView: View {
                                             if scheduleDay.lessons.isEmpty {
                                                 emptyCell
                                             } else {
-                                                ForEach(scheduleDay.lessons, id: \.id) { _ in
-                                                    LessonCellView(
-                                                        store: Store(
-                                                            initialState: LessonCell.State(),
-                                                            reducer: LessonCell.reducer,
-                                                            environment: LessonCell.Environment()
-                                                        )
-                                                    )
-                                                    .padding()
-                                                    .background(Color(.systemGroupedBackground))
-                                                }
+                                                ForEachStore(
+                                                    self.store.scope(
+                                                        state: { $0.test },
+                                                        action: GroupLessons.Action.lessonCells(id:action:)
+                                                    ),
+                                                    content: {
+                                                        LessonCellView(store: $0)
+                                                            .padding()
+                                                            .background(Color(.systemGroupedBackground))
+                                                    }
+                                                )
                                             }
                                         },
                                         header: {
@@ -115,10 +108,8 @@ struct GroupLessonsView: View {
                             }
                         }
                     }
-                    .overlay(Text("\(geometryProxy.frame(in: .local).height)"))
                     .onChange(of: offsets) { newValue in
                         print("")
-                        print("\(UIScreen.main.bounds.height)")
                         print(newValue.map { "\(Int(($0 ?? 0).rounded()))" }.joined(separator: " | "))
                         let value: Int = {
                             if let firstIndex = newValue.firstIndex(where: { $0 ?? 0 > 169 + 3 }) {
@@ -163,7 +154,6 @@ struct GroupLessonsView: View {
             .textCase(nil)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
-            .background(Color.red.opacity(0.3))
     }
 
     var emptyCell: some View {
@@ -177,8 +167,6 @@ struct GroupLessonsView: View {
 
 struct OffsetModifier: ViewModifier {
 
-    @State var offset: CGFloat = .zero
-
     func body(content: Content) -> some View {
         content
             .overlay(
@@ -189,13 +177,6 @@ struct OffsetModifier: ViewModifier {
                     )
                 }
             )
-            .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                offset = value
-            }
-            .overlay(
-                Text("\(offset)")
-            )
-
     }
 
 }
@@ -220,8 +201,11 @@ extension Lesson: Identifiable {
 extension Lesson {
     static let mocked: [Lesson] = [
         Lesson(
-            names: ["First Monday"],
-            teachers: [],
+            names: ["First Monday very long", "First 2213 very long", "First aallala very long"],
+            teachers: [
+                .init(fullName: "асистент Каплунов Артем Володимирович", shortName: "ас. Каплунов А. В."),
+                .init(fullName: "доцент Долголенко Олександр Миколайович", shortName: "доц. Долголенко О. М.")
+            ],
             locations: [],
             position: .first,
             day: .monday,
@@ -252,63 +236,63 @@ extension Lesson {
             week: .first
         ),
 
-        Lesson(
-            names: ["First Tue"],
-            teachers: [],
-            locations: [],
-            position: .first,
-            day: .tuesday,
-            week: .first
-        ),
-        Lesson(
-            names: ["Third Tue"],
-            teachers: [],
-            locations: [],
-            position: .third,
-            day: .tuesday,
-            week: .first
-        ),
-        Lesson(
-            names: ["Fourth Tue"],
-            teachers: [],
-            locations: [],
-            position: .fourth,
-            day: .tuesday,
-            week: .first
-        ),
-
-        Lesson(
-            names: ["Second Wed"],
-            teachers: [],
-            locations: [],
-            position: .second,
-            day: .wednesday,
-            week: .first
-        ),
-        Lesson(
-            names: ["Third Wed"],
-            teachers: [],
-            locations: [],
-            position: .third,
-            day: .wednesday,
-            week: .first
-        ),
-        Lesson(
-            names: ["Fourth Wed"],
-            teachers: [],
-            locations: [],
-            position: .fourth,
-            day: .wednesday,
-            week: .first
-        ),
-        Lesson(
-            names: ["Ha ha"],
-            teachers: [],
-            locations: [],
-            position: .second,
-            day: .tuesday,
-            week: .second
-        )
+//        Lesson(
+//            names: ["First Tue"],
+//            teachers: [],
+//            locations: [],
+//            position: .first,
+//            day: .tuesday,
+//            week: .first
+//        ),
+//        Lesson(
+//            names: ["Third Tue"],
+//            teachers: [],
+//            locations: [],
+//            position: .third,
+//            day: .tuesday,
+//            week: .first
+//        ),
+//        Lesson(
+//            names: ["Fourth Tue"],
+//            teachers: [],
+//            locations: [],
+//            position: .fourth,
+//            day: .tuesday,
+//            week: .first
+//        ),
+//
+//        Lesson(
+//            names: ["Second Wed"],
+//            teachers: [],
+//            locations: [],
+//            position: .second,
+//            day: .wednesday,
+//            week: .first
+//        ),
+//        Lesson(
+//            names: ["Third Wed"],
+//            teachers: [],
+//            locations: [],
+//            position: .third,
+//            day: .wednesday,
+//            week: .first
+//        ),
+//        Lesson(
+//            names: ["Fourth Wed"],
+//            teachers: [],
+//            locations: [],
+//            position: .fourth,
+//            day: .wednesday,
+//            week: .first
+//        ),
+//        Lesson(
+//            names: ["Ha ha"],
+//            teachers: [],
+//            locations: [],
+//            position: .second,
+//            day: .tuesday,
+//            week: .second
+//        )
     ]
 
 }

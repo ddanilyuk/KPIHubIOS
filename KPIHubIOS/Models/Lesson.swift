@@ -18,6 +18,10 @@ extension Teacher: Codable {
 
 }
 
+extension Teacher: Hashable {
+
+}
+
 struct Lesson: Equatable {
 
     // MARK: - Position
