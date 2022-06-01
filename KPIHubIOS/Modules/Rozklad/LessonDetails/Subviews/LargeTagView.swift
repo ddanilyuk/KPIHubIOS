@@ -29,8 +29,8 @@ struct LargeTagView: View {
             Text("\(text)")
                 .font(.system(.body))
                 .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
-                .padding(.vertical, 3)
-                .padding(.horizontal, 6)
+                .padding(.vertical, 4)
+                .padding(.horizontal, 8)
         }
         .background(backgroundColor)
         .cornerRadius(14)

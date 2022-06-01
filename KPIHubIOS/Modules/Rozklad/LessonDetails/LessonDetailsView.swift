@@ -14,111 +14,109 @@ struct LessonDetailsView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(spacing: 16) {
-                        Text("\(viewStore.names.joined(separator: ", "))")
-                            .font(.system(.title).bold())
+            ScrollView {
+                VStack(spacing: 16) {
+                    Text("\(viewStore.names.joined(separator: ", "))")
+                        .font(.system(.title).bold())
 
-                        DateAndTime()
+                    DateAndTime()
 
-                        VStack(alignment: .leading, spacing: 0) {
-                            sectionTitle("Тип")
+                    VStack(alignment: .leading, spacing: 0) {
+                        sectionTitle("Тип")
 
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white)
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.white)
 
+                            HStack {
+                                LargeTagView(
+                                    icon: Image(systemName: "graduationcap"),
+                                    text: "Практика",
+                                    backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
+                                    accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                                )
+                                Spacer()
+                            }
+                            .padding(16)
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 0) {
+                        sectionTitle("Викладач")
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.white)
+
+                            HStack {
+                                LargeTagView(
+                                    icon: Image(systemName: "person"),
+                                    text: viewStore.teachers[0].shortName,
+                                    backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
+                                    accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                                )
+                                Spacer()
+                            }
+                            .padding(16)
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 0) {
+                        sectionTitle("Локація")
+
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8)
+                                .fill(Color.white)
+
+                            VStack(spacing: 10) {
                                 HStack {
                                     LargeTagView(
-                                        icon: Image(systemName: "graduationcap"),
-                                        text: "Практика",
-                                        backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                                        accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                                        icon: Image(systemName: "location"),
+                                        text: "Online",
+                                        backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
+                                        accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
                                     )
                                     Spacer()
                                 }
-                                .padding(16)
-                            }
-                        }
+                                .padding(.top, 16)
+                                .padding(.horizontal, 16)
 
-                        VStack(alignment: .leading, spacing: 0) {
-                            sectionTitle("Викладач")
+                                RoundedRectangle(cornerRadius: 0.5)
+                                    .fill(Color(.separator))
+                                    .frame(height: 1)
+                                    .padding(.horizontal, 8)
 
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white)
-
-                                HStack {
-                                    LargeTagView(
-                                        icon: Image(systemName: "person"),
-                                        text: viewStore.teachers[0].shortName,
-                                        backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                                        accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                                    )
-                                    Spacer()
-                                }
-                                .padding(16)
-                            }
-                        }
-
-                        VStack(alignment: .leading, spacing: 0) {
-                            sectionTitle("Локація")
-
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white)
-
-                                VStack(spacing: 10) {
-                                    HStack {
-                                        LargeTagView(
-                                            icon: Image(systemName: "location"),
-                                            text: "Online",
-                                            backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                                            accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
-                                        )
+                                VStack {
+                                    HStack(spacing: 16) {
+                                        Circle()
+                                            .fill(Color.orange.opacity(0.2))
+                                            .frame(width: 24, height: 24)
+                                        Text("bbb.com")
                                         Spacer()
                                     }
-                                    .padding(.top, 16)
-                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 9)
 
                                     RoundedRectangle(cornerRadius: 0.5)
-                                        .fill(Color(.separator))
+                                        .fill(Color(.separator).opacity(0.5))
                                         .frame(height: 1)
-                                        .padding(.horizontal, 8)
 
-                                    VStack {
-                                        HStack(spacing: 16) {
-                                            Circle()
-                                                .fill(Color.orange.opacity(0.2))
-                                                .frame(width: 24, height: 24)
-                                            Text("bbb.com")
-                                            Spacer()
-                                        }
-                                        .padding(.vertical, 9)
+                                    HStack(spacing: 16) {
+                                        Circle()
+                                            .fill(Color.orange.opacity(0.2))
+                                            .frame(width: 24, height: 24)
+                                        Text("zoom.com")
+                                        Spacer()
 
-                                        RoundedRectangle(cornerRadius: 0.5)
-                                            .fill(Color(.separator).opacity(0.5))
-                                            .frame(height: 1)
-
-                                        HStack(spacing: 16) {
-                                            Circle()
-                                                .fill(Color.orange.opacity(0.2))
-                                                .frame(width: 24, height: 24)
-                                            Text("zoom.com")
-                                            Spacer()
-
-                                        }
-                                        .padding(.vertical, 9)
                                     }
-                                    .padding(.bottom, 8)
-                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 9)
                                 }
+                                .padding(.bottom, 8)
+                                .padding(.horizontal, 16)
                             }
                         }
                     }
-                    .padding(16)
                 }
+                .padding(16)
             }
         }
         .background(Color(.systemGroupedBackground))
