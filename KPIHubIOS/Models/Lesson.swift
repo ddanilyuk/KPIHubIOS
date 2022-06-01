@@ -22,6 +22,11 @@ extension Teacher: Hashable {
 
 }
 
+struct NewLesson {
+
+    let coreLesson: Lesson
+}
+
 struct Lesson: Equatable {
 
     // MARK: - Position
@@ -111,3 +116,13 @@ struct Lesson: Equatable {
 extension Lesson: Codable {
 
 }
+
+// MARK: - Identifiable
+
+extension Lesson: Identifiable {
+
+    var id: String {
+        "\(week.rawValue)\(day.rawValue)\(position.rawValue)"
+    }
+}
+

@@ -46,8 +46,9 @@
 		5F5F462F28456D3B00202DA5 /* SmallTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F462E28456D3B00202DA5 /* SmallTagView.swift */; };
 		5F5F4631284625BB00202DA5 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4630284625BB00202DA5 /* Schedule.swift */; };
 		5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F46332847FFAC00202DA5 /* LargeTagView.swift */; };
+		5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F463628480B2900202DA5 /* UserDefaultsClient.swift */; };
+		5F5F463A28480B4000202DA5 /* UserDefaultsClientLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F463928480B4000202DA5 /* UserDefaultsClientLive.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
-		5F97B3C1283677C200350368 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3C0283677C200350368 /* ContentView.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
 		5F97B3D0283677C600350368 /* KPIHubIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3CF283677C600350368 /* KPIHubIOSTests.swift */; };
@@ -118,9 +119,10 @@
 		5F5F462E28456D3B00202DA5 /* SmallTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTagView.swift; sourceTree = "<group>"; };
 		5F5F4630284625BB00202DA5 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		5F5F46332847FFAC00202DA5 /* LargeTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTagView.swift; sourceTree = "<group>"; };
+		5F5F463628480B2900202DA5 /* UserDefaultsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsClient.swift; sourceTree = "<group>"; };
+		5F5F463928480B4000202DA5 /* UserDefaultsClientLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsClientLive.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
-		5F97B3C0283677C200350368 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F97B3C5283677C500350368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5F97B3CB283677C600350368 /* KPIHubIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -361,6 +363,23 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
+		5F5F463528480B0C00202DA5 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				5F5F463828480B2D00202DA5 /* UserDefaults */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
+		5F5F463828480B2D00202DA5 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				5F5F463628480B2900202DA5 /* UserDefaultsClient.swift */,
+				5F5F463928480B4000202DA5 /* UserDefaultsClientLive.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
 		5F97B3B2283677C200350368 = {
 			isa = PBXGroup;
 			children = (
@@ -387,7 +406,7 @@
 		5F97B3BD283677C200350368 /* KPIHubIOS */ = {
 			isa = PBXGroup;
 			children = (
-				5F97B3C0283677C200350368 /* ContentView.swift */,
+				5F5F463528480B0C00202DA5 /* Clients */,
 				5F137EBA2843A2FC00514263 /* Modules */,
 				5F137EBB2843A30000514263 /* Models */,
 				5F97B3C4283677C500350368 /* Preview Content */,
@@ -691,6 +710,7 @@
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
 				5F137EF0284409F900514263 /* RozkladStore.swift in Sources */,
+				5F5F463A28480B4000202DA5 /* UserDefaultsClientLive.swift in Sources */,
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
@@ -702,12 +722,12 @@
 				5F137EDD2843A87700514263 /* Group.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
 				5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */,
+				5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F06C23328450C000031BD5C /* Lesson.swift in Sources */,
 				5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */,
-				5F97B3C1283677C200350368 /* ContentView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
 				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,

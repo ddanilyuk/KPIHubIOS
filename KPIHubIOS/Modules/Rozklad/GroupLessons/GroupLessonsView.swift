@@ -190,14 +190,6 @@ struct OffsetPreferenceKey: PreferenceKey {
     }
 }
 
-extension Lesson: Identifiable {
-
-    var id: String {
-        "\(week.rawValue)\(day.rawValue)\(position.rawValue)"
-    }
-}
-
-
 extension Lesson {
     static let mocked: [Lesson] = [
         Lesson(

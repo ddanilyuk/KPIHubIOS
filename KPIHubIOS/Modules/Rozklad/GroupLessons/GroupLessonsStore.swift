@@ -29,7 +29,7 @@ struct GroupLessons {
     // MARK: - Action
 
     enum Action: Equatable {
-        case start
+        case onAppear
         case lessonCells(id: Lesson.ID, action: LessonCell.Action)
     }
 
@@ -41,7 +41,7 @@ struct GroupLessons {
 
     static let coreReducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
-        case .start:
+        case .onAppear:
             return .none
 
         case .lessonCells:
