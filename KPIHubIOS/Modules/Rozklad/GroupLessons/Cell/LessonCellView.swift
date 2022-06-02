@@ -71,6 +71,8 @@ struct LessonCellView: View {
             .onTapGesture {
                 viewStore.send(.onTap)
             }
+            .padding()
+            .background(Color(.systemGroupedBackground))
         }
     }
 }

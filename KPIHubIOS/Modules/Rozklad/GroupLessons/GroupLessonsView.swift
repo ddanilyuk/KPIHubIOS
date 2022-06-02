@@ -25,8 +25,6 @@ struct GroupLessonsView: View {
     @State var savedOffsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
     @State var offsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
 
-//    @State var section: Int?
-
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack(spacing: 0) {
@@ -48,101 +46,34 @@ struct GroupLessonsView: View {
                     ScrollViewReader { proxy in
                         ScrollView(.vertical, showsIndicators: false) {
                             LazyVStack(alignment: .leading, spacing: 0) {
-                                ForEach(viewStore.scheduleDays, id: \.id) { scheduleDay in
+                                ForEach(viewStore.sectionStates, id: \.id) { section in
                                     VStack(spacing: 0) {
                                         Section(
                                             content: {
-                                                if scheduleDay.lessons.isEmpty {
-                                                    emptyCell
-                                                } else {
-                                                    ForEachStore(
-                                                        self.store.scope(
-                                                            state: { $0.lessonCells[scheduleDay.index] },
-                                                            action: GroupLessons.Action.lessonCells(id:action:)
-                                                        ),
-                                                        content: {
-                                                            LessonCellView(store: $0)
-                                                                .padding()
-                                                                .background(Color(.systemGroupedBackground))
-//                                                                .background(Color.green.opacity(0.2))
-
-                                                        }
-                                                    )
-//                                                    .overlay(EmptyView())
-                                                }
+                                                ForEachStore(
+                                                    self.store.scope(
+                                                        state: \.sectionStates[section.index].lessonCells,
+                                                        action: GroupLessons.Action.lessonCells(id:action:)
+                                                    ),
+                                                    content: LessonCellView.init(store:)
+                                                )
                                             },
                                             header: {
-                                                sectionHeader(scheduleDay: scheduleDay)
-                                                //                                                .modifier(OffsetModifier())
-                                                //                                                .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                                                //                                                    offsets[scheduleDay.index] = value
-                                                //                                                }
-//                                                    .onAppear {
-//                                                        print("!! onAppear")
-//                                                    }
-//                                                    .onDisappear {
-//                                                        print("!! onDisappear")
-//
-//                                                        offsets[scheduleDay.index] = nil
-//                                                        if offsets.compactMap { $0 }.isEmpty {
-//                                                            section = scheduleDay.index
-//                                                        } else {
-//                                                            section = nil
-//                                                        }
-//                                                    }
-
+                                                sectionHeader(
+                                                    day: section.day,
+                                                    week: section.week
+                                                )
                                             }
                                         )
-//                                        .onDisappear {
-//                                            print("! onDisappear \(scheduleDay.index)")
-//                                        }
-
-//                                        .overlay(
-//                                            ZStack {
-//                                                GeometryReader { proxy in
-//                                                    Color.red.opacity(0.2)
-//                                                        .overlay(
-//                                                            Text("\(proxy.frame(in: .global).minY)")
-//                                                        )
-//
-//                                                }
-//                                            }
-//                                        )
-//                                        .background(Color.orange.opacity(0.2))
-
-//                                    }
-
-//                                        .modifier(OffsetModifier())
-//                                        .onPreferenceChange(OffsetPreferenceKey.self) { value in
-////                                            print("SECTION \(scheduleDay.index) \(value)")
-//                                            offsets[scheduleDay.index] = value
+                                        .id(section.id)
                                     }
                                     .modifier(OffsetModifier())
                                     .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                                        print("SECTION \(scheduleDay.index) \(value)")
-                                        offsets[scheduleDay.index] = value
+                                        offsets[section.index] = value
                                     }
                                     .onDisappear {
-                                        print("!! onDisappear")
-
-                                        offsets[scheduleDay.index] = nil
-//                                        if offsets.compactMap { $0 }.isEmpty {
-//                                            section = scheduleDay.index
-//                                        } else {
-//                                            section = nil
-//                                        }
+                                        offsets[section.index] = nil
                                     }
-
-//                                    .overlay(
-////                                        ZStack {
-//                                            GeometryReader { proxy in
-//                                                Color.red.opacity(0.2)
-//                                                    .overlay(
-//                                                        Text("\(proxy.frame(in: .global).minY)")
-//                                                    )
-//                                            }
-////                                        }
-//                                    )
                                 }
 
                                 Rectangle()
@@ -156,7 +87,7 @@ struct GroupLessonsView: View {
                                 withAnimation {
                                     // If scrolling from bottom to top is lagging
                                     proxy.scrollTo(
-                                        ScheduleDay.id(week: displayedWeek, day: newSelectedDay),
+                                        GroupLessons.State.SectionState.id(week: displayedWeek, day: newSelectedDay),
                                         anchor: .top
                                     )
                                 }
@@ -168,7 +99,7 @@ struct GroupLessonsView: View {
                                 }
                                 withAnimation {
                                     proxy.scrollTo(
-                                        ScheduleDay.id(week: newSelectedWeek, day: displayedDay),
+                                        GroupLessons.State.SectionState.id(week: newSelectedWeek, day: displayedDay),
                                         anchor: .top
                                     )
                                 }
@@ -180,7 +111,7 @@ struct GroupLessonsView: View {
                         print("")
                         print(newValue.map { "\(Int(($0 ?? 0).rounded()))" }.joined(separator: " | "))
                         let value: Int = {
-                            if newValue.compactMap { $0 }.count <= 1, let index = newValue.firstIndex(where: { $0 != nil }) {
+                            if newValue.compactMap({ $0 }).count <= 1, let index = newValue.firstIndex(where: { $0 != nil }) {
                                 print("index \(index)")
                                 return index
 
@@ -189,7 +120,7 @@ struct GroupLessonsView: View {
                                 print("firstIndex \(result)")
                                 return result
 
-                            } else if let lastIndex = newValue.lastIndex(where: { $0 ?? CGFloat.infinity < 168 })  {
+                            } else if let lastIndex = newValue.lastIndex(where: { $0 ?? CGFloat.infinity < 168 }) {
                                 let result = min(lastIndex + 1, 11)
                                 print("lastIndex \(result)")
                                 return result
@@ -223,18 +154,16 @@ struct GroupLessonsView: View {
             .navigationBarHidden(true)
             .onAppear {
                 offsets = savedOffsets
-                print("!!!!! onAppear")
             }
             .onDisappear {
                 savedOffsets = offsets
-                print("!!!!! onDisappear")
             }
         }
     }
 
-    func sectionHeader(scheduleDay: ScheduleDay) -> some View {
+    func sectionHeader(day: Lesson.Day, week: Lesson.Week) -> some View {
         HStack {
-            Text("\(scheduleDay.day.fullDescription). \(scheduleDay.week.description)")
+            Text("\(day.fullDescription). \(week.description)")
                 .font(.system(.headline))
                 .foregroundColor(.black)
                 .padding(.horizontal)
@@ -246,14 +175,6 @@ struct GroupLessonsView: View {
             Spacer()
         }
         .frame(height: 44)
-//        .background(Color.pink.opacity(0.2))
-    }
-
-    var emptyCell: some View {
-        Rectangle()
-            .frame(height: 0.0)
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
     }
 
 }
