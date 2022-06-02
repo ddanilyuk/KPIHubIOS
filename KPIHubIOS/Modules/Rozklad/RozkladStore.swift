@@ -33,14 +33,17 @@ struct Rozklad {
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
-        case let .routeAction(_, .groupLessons(.lessonCells(id, .onTap))):
-            let lessonDetailsState = LessonDetails.State(lesson: LessonResponse.mocked[0])
+        case let .routeAction(_, .groupLessons(.routeAction(.openDetails(lesson)))):
+            let lessonDetailsState = LessonDetails.State(
+                lesson: lesson
+            )
             state.routes.push(.lessonDetails(lessonDetailsState))
             return .none
 

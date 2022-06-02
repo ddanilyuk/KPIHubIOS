@@ -41,7 +41,8 @@ extension Rozklad.ScreenProvider {
                 action: /Action.groupLessons,
                 environment: {
                     GroupLessons.Environment(
-                        apiClient: $0.apiClient
+                        apiClient: $0.apiClient,
+                        userDefaultsClient: $0.userDefaultsClient
                     )
                 }
             ),
@@ -49,7 +50,11 @@ extension Rozklad.ScreenProvider {
             .pullback(
                 state: /State.lessonDetails,
                 action: /Action.lessonDetails,
-                environment: { _ in LessonDetails.Environment() }
+                environment: {
+                    LessonDetails.Environment(
+                        userDefaultsClient: $0.userDefaultsClient
+                    )
+                }
             )
     )
 

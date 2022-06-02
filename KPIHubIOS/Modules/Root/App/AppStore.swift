@@ -52,16 +52,16 @@ struct App {
 
     struct Environment {
         let apiClient: APIClient
-        let useDefaultsClient: UserDefaultsService
+        let userDefaultsClient: UserDefaultsClient
 
         static var live: Self {
             let apiClient: APIClient = .live(
                 router: rootRouter.baseURL("http://kpihub.xyz")
             )
-            let useDefaultsClient: UserDefaultsService = .live()
+            let userDefaultsClient: UserDefaultsClient = .live()
             return Self(
                 apiClient: apiClient,
-                useDefaultsClient: useDefaultsClient
+                userDefaultsClient: userDefaultsClient
             )
         }
     }
@@ -134,7 +134,8 @@ extension App.Environment {
 
     var main: Main.Environment {
         Main.Environment(
-            apiClient: apiClient
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient
         )
     }
 

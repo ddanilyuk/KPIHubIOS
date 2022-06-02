@@ -15,11 +15,16 @@ struct LessonDetailsView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             ScrollView {
-                VStack(spacing: 16) {
-                    Text("\(viewStore.names.joined(separator: ", "))")
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("\(viewStore.lesson.names.joined(separator: ", "))")
                         .font(.system(.title).bold())
+                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-                    DateAndTime()
+                    DateAndTime(
+                        lessonPositionDescription: viewStore.lesson.position.description,
+                        lessonWeek: viewStore.lesson.week,
+                        lessonDay: viewStore.lesson.day
+                    )
 
                     VStack(alignment: .leading, spacing: 0) {
                         sectionTitle("Тип")
@@ -48,15 +53,25 @@ struct LessonDetailsView: View {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color.white)
 
-                            HStack {
-                                LargeTagView(
-                                    icon: Image(systemName: "person"),
-                                    text: viewStore.teachers[0].shortName,
-                                    backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                                    accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                                )
-                                Spacer()
+                            VStack(spacing: 16) {
+                                ForEach((viewStore.lesson.teachers ?? []), id: \.self) { teacher in
+                                    VStack(spacing: 16) {
+                                        HStack {
+                                            LargeTagView(
+                                                icon: Image(systemName: "person"),
+                                                text: teacher.shortName,
+                                                backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
+                                                accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                                            )
+                                            Spacer()
+                                        }
+                                        if teacher != (viewStore.lesson.teachers ?? []).last {
+                                            Divider()
+                                        }
+                                    }
+                                }
                             }
+
                             .padding(16)
                         }
                     }
@@ -141,6 +156,10 @@ struct DateAndTime: View {
         }
     }
 
+    let lessonPositionDescription: Lesson.Position.Description
+    let lessonWeek: Lesson.Week
+    let lessonDay: Lesson.Day
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Дата та час")
@@ -162,10 +181,10 @@ struct DateAndTime: View {
                         HStack(spacing: 16) {
                             VStack(spacing: 5) {
                                 HStack(alignment: .bottom) {
-                                    Text("8:30")
+                                    Text("\(lessonPositionDescription.firstPartStart)")
                                         .font(.footnote.bold())
                                     Spacer()
-                                    Text("9:15")
+                                    Text("\(lessonPositionDescription.firstPartEnd)")
                                         .font(.caption2)
                                 }
                                 .frame(height: 12)
@@ -185,10 +204,10 @@ struct DateAndTime: View {
                                     .frame(height: Constants.lineHeight)
 
                                 HStack(alignment: .top) {
-                                    Text("9:20")
+                                    Text("\(lessonPositionDescription.secondPartStart)")
                                         .font(.caption2)
                                     Spacer()
-                                    Text("10:05")
+                                    Text("\(lessonPositionDescription.secondPartEnd)")
                                         .font(.footnote.bold())
                                 }
                                 .frame(height: 12)
@@ -198,11 +217,11 @@ struct DateAndTime: View {
                     }
 
                     HStack {
-                        Text("Вівторок")
+                        Text("\(lessonDay.fullDescription)")
 
                         Spacer()
 
-                        Text("2 тиждень")
+                        Text("\(lessonWeek.description)")
                     }
                     .font(.system(.subheadline).weight(.regular))
 
@@ -222,10 +241,12 @@ struct LessonDetailsView_Previews: PreviewProvider {
             LessonDetailsView(
                 store: Store(
                     initialState: LessonDetails.State(
-                        lesson: LessonResponse.mocked[0]
+                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
                     reducer: LessonDetails.reducer,
-                    environment: LessonDetails.Environment()
+                    environment: LessonDetails.Environment(
+                        userDefaultsClient: .live()
+                    )
                 )
             )
         }

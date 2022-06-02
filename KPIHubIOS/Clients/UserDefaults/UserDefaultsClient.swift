@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol UserDefaultsServiceable {
+protocol UserDefaultsClientable {
 
     // MARK: - Set
 
@@ -41,10 +41,11 @@ protocol UserDefaultsServiceable {
     func remove<T: Codable>(for key: UserDefaultKey<T>)
 }
 
-final class UserDefaultsService: UserDefaultsServiceable {
 
-    static func live() -> UserDefaultsService {
-        return UserDefaultsService()
+final class UserDefaultsClient: UserDefaultsClientable {
+
+    static func live() -> UserDefaultsClient {
+        return UserDefaultsClient()
     }
     
     private init() { }
@@ -144,79 +145,3 @@ extension UserDefaultKey {
         "lessons"
     }
 }
-
-
-/*
-struct UserDefaultsServiceable {
-
-    // MARK: - Set
-
-    var set: (
-        _ value: T,
-        for defaultKey: UserDefaultKey<T>
-    ) -> Void
-
-    var set<T: Codable>(
-        _ value: T,
-        for defaultKey: UserDefaultKey<T>,
-        encoder: JSONEncoder
-    ) -> Void
-
-    // MARK: - Get
-
-    var get<T: Codable>(
-        for defaultKey: UserDefaultKey<T>
-    ) -> T?
-
-    var get<T: Codable>(
-        for defaultKey: UserDefaultKey<T?>
-    ) -> T?
-
-    func get(
-        for defaultKey: UserDefaultKey<Bool>
-    ) -> Bool
-
-    // MARK: - Remove
-
-    func remove<T: Codable>(for key: UserDefaultKey<T>)
-}
-
-// MARK: - UserDefaultKey
-
-struct UserDefaultKey<T: Codable> {
-
-    var key: String
-}
-
-// MARK: - UserDefaultKey + ExpressibleByStringLiteral
-
-extension UserDefaultKey: ExpressibleByStringLiteral {
-
-    init(stringLiteral value: String) {
-        self.key = value
-    }
-}
-
-
-
-struct UserDefaultsClient {
-
-    var setGroup: (Group) -> Void
-    var getGroup: () -> (Group)
-
-    var setLessons: ([Lesson]) -> Void
-    var getLessons: () -> [Lesson]
-
-}
-
-// MARK: - Key
-
-extension UserDefaultsClient {
-
-    enum Key: String {
-        case group
-        case lessons
-    }
-
-}
-*/

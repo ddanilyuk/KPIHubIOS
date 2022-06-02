@@ -33,12 +33,19 @@ struct GroupLessons {
         case lessonsResponse(Result<[Lesson], NSError>)
 
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
+
+        case routeAction(RouteAction)
+
+        enum RouteAction: Equatable {
+            case openDetails(Lesson)
+        }
     }
 
     // MARK: - Environment
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer
@@ -46,6 +53,14 @@ struct GroupLessons {
     static let coreReducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
+            if let lessons = environment.userDefaultsClient.get(for: .lessons) {
+                state.scheduleDays = [ScheduleDay](lessons: lessons)
+                state.lessonCells = state.scheduleDays.map { day in
+                    IdentifiedArrayOf(uniqueElements: day.lessons.map { LessonCell.State(lesson: $0) })
+                }
+            }
+            return .none
+
             let task: Effect<[Lesson], Error> = Effect.task {
                 let result = try await environment.apiClient.decodedResponse(
                     for: .api(.group(
@@ -62,6 +77,7 @@ struct GroupLessons {
                 .catchToEffect(Action.lessonsResponse)
 
         case let .lessonsResponse(.success(lessons)):
+            environment.userDefaultsClient.set(lessons, for: .lessons)
             state.scheduleDays = [ScheduleDay](lessons: lessons)
             state.lessonCells = state.scheduleDays.map { day in
                 IdentifiedArrayOf(uniqueElements: day.lessons.map { LessonCell.State(lesson: $0) })
@@ -69,6 +85,18 @@ struct GroupLessons {
             return .none
 
         case let .lessonsResponse(.failure(error)):
+            return .none
+
+        case let .lessonCells(id, .onTap):
+            guard
+                let lessons = environment.userDefaultsClient.get(for: .lessons),
+                let selectedLesson = IdentifiedArray(uniqueElements: lessons)[id: id]
+            else {
+                return .none
+            }
+            return Effect(value: .routeAction(.openDetails(selectedLesson)))
+
+        case .routeAction:
             return .none
 
         case .lessonCells:

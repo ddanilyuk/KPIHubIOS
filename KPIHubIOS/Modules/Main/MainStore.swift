@@ -36,6 +36,7 @@ struct Main {
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer
@@ -87,7 +88,8 @@ extension Main.Environment {
 
     var rozklad: Rozklad.Environment {
         Rozklad.Environment(
-            apiClient: apiClient
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient
         )
     }
 

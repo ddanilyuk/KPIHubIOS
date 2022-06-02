@@ -13,22 +13,14 @@ struct LessonDetails {
 
     struct State: Equatable {
 
-        let names: [String]
-        let teachers: [Teacher]
-        let locations: [String]
+        var lesson: Lesson
 
-        let week: LessonResponse.Week
-        let day: LessonResponse.Day
-        let position: LessonResponse.Position
+//        var names: String {
+//            re
+//        }
 
-        init(lesson: LessonResponse) {
-            self.names = lesson.names
-            self.teachers = lesson.teachers ?? []
-            self.locations = lesson.locations ?? []
-
-            self.week = lesson.week
-            self.day = lesson.day
-            self.position = lesson.position
+        init(lesson: Lesson) {
+            self.lesson = lesson
         }
     }
 
@@ -40,7 +32,9 @@ struct LessonDetails {
 
     // MARK: - Environment
 
-    struct Environment { }
+    struct Environment {
+        let userDefaultsClient: UserDefaultsClient
+    }
 
     // MARK: - Reducer
 

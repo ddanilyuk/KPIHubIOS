@@ -53,24 +53,24 @@ extension Lesson {
         case fifth
         case sixth
 
-        struct PositionDescription {
+        struct Description {
             let firstPartStart: String
             let firstPartEnd: String
             let secondPartStart: String
             let secondPartEnd: String
         }
 
-        var description: PositionDescription {
+        var description: Description {
             switch self {
             case .first:
-                return PositionDescription(
+                return Description(
                     firstPartStart: "8:30",
                     firstPartEnd: "9:15",
                     secondPartStart: "9:20",
                     secondPartEnd: "10:05"
                 )
             case .second:
-                return PositionDescription(
+                return Description(
                     firstPartStart: "10:25",
                     firstPartEnd: "11:10",
                     secondPartStart: "11:15",
@@ -78,7 +78,7 @@ extension Lesson {
                 )
 
             case .third:
-                return PositionDescription(
+                return Description(
                     firstPartStart: "12:20",
                     firstPartEnd: "13:05",
                     secondPartStart: "13:10",
@@ -86,7 +86,7 @@ extension Lesson {
                 )
 
             case .fourth:
-                return PositionDescription(
+                return Description(
                     firstPartStart: "14:15",
                     firstPartEnd: "15:00",
                     secondPartStart: "15:05",
@@ -94,7 +94,7 @@ extension Lesson {
                 )
 
             case .fifth:
-                return PositionDescription(
+                return Description(
                     firstPartStart: "16:10",
                     firstPartEnd: "16:55",
                     secondPartStart: "17:00",
@@ -102,7 +102,7 @@ extension Lesson {
                 )
 
             case .sixth:
-                return PositionDescription(
+                return Description(
                     firstPartStart: "18:05",
                     firstPartEnd: "18:50",
                     secondPartStart: "18:55",
