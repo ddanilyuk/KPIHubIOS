@@ -22,7 +22,10 @@ struct GroupLessonsView: View {
     @State var displayedWeek: Lesson.Week = .first
     @State var displayedDay: Lesson.Day = .monday
 
+    @State var savedOffsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
     @State var offsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
+
+//    @State var section: Int?
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -46,35 +49,100 @@ struct GroupLessonsView: View {
                         ScrollView(.vertical, showsIndicators: false) {
                             LazyVStack(alignment: .leading, spacing: 0) {
                                 ForEach(viewStore.scheduleDays, id: \.id) { scheduleDay in
-                                    Section(
-                                        content: {
-                                            if scheduleDay.lessons.isEmpty {
-                                                emptyCell
-                                            } else {
-                                                ForEachStore(
-                                                    self.store.scope(
-                                                        state: { $0.lessonCells[scheduleDay.index] },
-                                                        action: GroupLessons.Action.lessonCells(id:action:)
-                                                    ),
-                                                    content: {
-                                                        LessonCellView(store: $0)
-                                                            .padding()
-                                                            .background(Color(.systemGroupedBackground))
-                                                    }
-                                                )
+                                    VStack(spacing: 0) {
+                                        Section(
+                                            content: {
+                                                if scheduleDay.lessons.isEmpty {
+                                                    emptyCell
+                                                } else {
+                                                    ForEachStore(
+                                                        self.store.scope(
+                                                            state: { $0.lessonCells[scheduleDay.index] },
+                                                            action: GroupLessons.Action.lessonCells(id:action:)
+                                                        ),
+                                                        content: {
+                                                            LessonCellView(store: $0)
+                                                                .padding()
+                                                                .background(Color(.systemGroupedBackground))
+//                                                                .background(Color.green.opacity(0.2))
+
+                                                        }
+                                                    )
+//                                                    .overlay(EmptyView())
+                                                }
+                                            },
+                                            header: {
+                                                sectionHeader(scheduleDay: scheduleDay)
+                                                //                                                .modifier(OffsetModifier())
+                                                //                                                .onPreferenceChange(OffsetPreferenceKey.self) { value in
+                                                //                                                    offsets[scheduleDay.index] = value
+                                                //                                                }
+//                                                    .onAppear {
+//                                                        print("!! onAppear")
+//                                                    }
+//                                                    .onDisappear {
+//                                                        print("!! onDisappear")
+//
+//                                                        offsets[scheduleDay.index] = nil
+//                                                        if offsets.compactMap { $0 }.isEmpty {
+//                                                            section = scheduleDay.index
+//                                                        } else {
+//                                                            section = nil
+//                                                        }
+//                                                    }
+
                                             }
-                                        },
-                                        header: {
-                                            sectionHeader(scheduleDay: scheduleDay)
-                                                .modifier(OffsetModifier())
-                                                .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                                                    offsets[scheduleDay.index] = value
-                                                }
-                                                .onDisappear {
-                                                    offsets[scheduleDay.index] = nil
-                                                }
-                                        }
-                                    )
+                                        )
+//                                        .onDisappear {
+//                                            print("! onDisappear \(scheduleDay.index)")
+//                                        }
+
+//                                        .overlay(
+//                                            ZStack {
+//                                                GeometryReader { proxy in
+//                                                    Color.red.opacity(0.2)
+//                                                        .overlay(
+//                                                            Text("\(proxy.frame(in: .global).minY)")
+//                                                        )
+//
+//                                                }
+//                                            }
+//                                        )
+//                                        .background(Color.orange.opacity(0.2))
+
+//                                    }
+
+//                                        .modifier(OffsetModifier())
+//                                        .onPreferenceChange(OffsetPreferenceKey.self) { value in
+////                                            print("SECTION \(scheduleDay.index) \(value)")
+//                                            offsets[scheduleDay.index] = value
+                                    }
+                                    .modifier(OffsetModifier())
+                                    .onPreferenceChange(OffsetPreferenceKey.self) { value in
+                                        print("SECTION \(scheduleDay.index) \(value)")
+                                        offsets[scheduleDay.index] = value
+                                    }
+                                    .onDisappear {
+                                        print("!! onDisappear")
+
+                                        offsets[scheduleDay.index] = nil
+//                                        if offsets.compactMap { $0 }.isEmpty {
+//                                            section = scheduleDay.index
+//                                        } else {
+//                                            section = nil
+//                                        }
+                                    }
+
+//                                    .overlay(
+////                                        ZStack {
+//                                            GeometryReader { proxy in
+//                                                Color.red.opacity(0.2)
+//                                                    .overlay(
+//                                                        Text("\(proxy.frame(in: .global).minY)")
+//                                                    )
+//                                            }
+////                                        }
+//                                    )
                                 }
 
                                 Rectangle()
@@ -112,9 +180,18 @@ struct GroupLessonsView: View {
                         print("")
                         print(newValue.map { "\(Int(($0 ?? 0).rounded()))" }.joined(separator: " | "))
                         let value: Int = {
-                            if let firstIndex = newValue.firstIndex(where: { $0 ?? 0 > 169 + 3 }) {
+                            if newValue.compactMap { $0 }.count <= 1, let index = newValue.firstIndex(where: { $0 != nil }) {
+                                print("index \(index)")
+                                return index
+
+                            } else if let firstIndex = newValue.firstIndex(where: { $0 ?? 0 > 170 }) {
                                 let result = max(firstIndex - 1, 0)
-                                print(result)
+                                print("firstIndex \(result)")
+                                return result
+
+                            } else if let lastIndex = newValue.lastIndex(where: { $0 ?? CGFloat.infinity < 168 })  {
+                                let result = min(lastIndex + 1, 11)
+                                print("lastIndex \(result)")
                                 return result
 
                             } else {
@@ -144,19 +221,32 @@ struct GroupLessonsView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onAppear {
+                offsets = savedOffsets
+                print("!!!!! onAppear")
+            }
+            .onDisappear {
+                savedOffsets = offsets
+                print("!!!!! onDisappear")
+            }
         }
     }
 
     func sectionHeader(scheduleDay: ScheduleDay) -> some View {
-        Text("\(scheduleDay.day.fullDescription). \(scheduleDay.week.description)")
-            .font(.system(.headline))
-            .foregroundColor(.black)
-            .padding(.horizontal)
-            .padding(.top)
-            .frame(height: 44, alignment: .leading)
-            .textCase(nil)
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
+        HStack {
+            Text("\(scheduleDay.day.fullDescription). \(scheduleDay.week.description)")
+                .font(.system(.headline))
+                .foregroundColor(.black)
+                .padding(.horizontal)
+                .padding(.top)
+                .textCase(nil)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+
+            Spacer()
+        }
+        .frame(height: 44)
+//        .background(Color.pink.opacity(0.2))
     }
 
     var emptyCell: some View {
@@ -170,16 +260,32 @@ struct GroupLessonsView: View {
 
 struct OffsetModifier: ViewModifier {
 
+    @State var offset: CGFloat = .zero
+
     func body(content: Content) -> some View {
         content
             .overlay(
-                GeometryReader { proxy in
-                    Color.clear.opacity(0.2).preference(
-                        key: OffsetPreferenceKey.self,
-                        value: proxy.frame(in: .global).minY
-                    )
+                ZStack {
+                    GeometryReader { proxy in
+                        Color.clear.opacity(0.2).preference(
+                            key: OffsetPreferenceKey.self,
+                            value: proxy.frame(in: .global).minY
+                        )
+                    }
                 }
             )
+            .onPreferenceChange(OffsetPreferenceKey.self) { value in
+                offset = value
+            }
+//            .overlay(
+//                Color.red.opacity(0.2)
+//                    .overlay(Text("\(offset)"))
+//            )
+
+
+//            .overlay {
+//                Color.red.opacity(0.2)
+//            }
     }
 
 }
