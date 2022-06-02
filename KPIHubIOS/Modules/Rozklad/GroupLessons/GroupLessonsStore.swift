@@ -111,16 +111,16 @@ struct GroupLessons {
                 let week: Lesson.Week
                 let day: Lesson.Day
 
-                static var count: Int {
-                    return Lesson.Week.allCases.count * Lesson.Day.allCases.count
-                }
-
                 var id: Int {
                     return index
                 }
 
                 var index: Int {
                     Position.index(week: week, day: day)
+                }
+
+                static var count: Int {
+                    return Lesson.Week.allCases.count * Lesson.Day.allCases.count
                 }
 
                 static func index(week: Lesson.Week, day: Lesson.Day) -> Int {
@@ -130,14 +130,8 @@ struct GroupLessons {
         }
 
         init() {
-//            scheduleDays = [ScheduleDay](lessons: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
-//            lessonCells = scheduleDays.map { day in
-//                IdentifiedArrayOf(uniqueElements: day.lessons.map { LessonCell.State(lesson: $0) })
-//            }
-
-
-            self.lessons = IdentifiedArray(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
-            self.sections = [Section](lessons: lessons)
+            self.lessons = []
+            self.sections = [Section](lessons: [])
         }
     }
 
@@ -217,14 +211,8 @@ struct GroupLessons {
     static let reducer = Reducer<State, Action, Environment>.combine(
         Reducer<State, Action, Environment>.combine(
             (0..<State.Section.Position.count).map({ index in
-//                LessonCell.reducer
-//                    .forEach(
-//                        state: \State.lessonCells[index],
-//                        action: /Action.lessonCells,
-//                        environment: { _ in LessonCell.Environment() }
-//                    )
-
-                LessonCell.reducer
+                // TODO: Fix error with calling every reducer on lesson cells
+                return LessonCell.reducer
                     .forEach(
                         state: \State.sections[index].lessonCells,
                         action: /Action.lessonCells,
