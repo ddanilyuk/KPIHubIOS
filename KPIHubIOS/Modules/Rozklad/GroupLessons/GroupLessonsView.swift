@@ -22,8 +22,14 @@ struct GroupLessonsView: View {
     @State var displayedWeek: Lesson.Week = .first
     @State var displayedDay: Lesson.Day = .monday
 
-    @State var savedOffsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
-    @State var offsets: [CGFloat?] = Array(repeating: nil, count: 6 * 2)
+    @State var savedOffsets: [CGFloat?] = Array(
+        repeating: nil,
+        count: GroupLessons.State.Section.Position.count
+    )
+    @State var offsets: [CGFloat?] = Array(
+        repeating: nil,
+        count: GroupLessons.State.Section.Position.count
+    )
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -46,13 +52,13 @@ struct GroupLessonsView: View {
                     ScrollViewReader { proxy in
                         ScrollView(.vertical, showsIndicators: false) {
                             LazyVStack(alignment: .leading, spacing: 0) {
-                                ForEach(viewStore.sectionStates, id: \.id) { section in
+                                ForEach(viewStore.sections, id: \.id) { section in
                                     VStack(spacing: 0) {
                                         Section(
                                             content: {
                                                 ForEachStore(
                                                     self.store.scope(
-                                                        state: \.sectionStates[section.index].lessonCells,
+                                                        state: \.sections[section.index].lessonCells,
                                                         action: GroupLessons.Action.lessonCells(id:action:)
                                                     ),
                                                     content: LessonCellView.init(store:)
@@ -60,8 +66,8 @@ struct GroupLessonsView: View {
                                             },
                                             header: {
                                                 sectionHeader(
-                                                    day: section.day,
-                                                    week: section.week
+                                                    day: section.position.day,
+                                                    week: section.position.week
                                                 )
                                             }
                                         )
@@ -76,6 +82,7 @@ struct GroupLessonsView: View {
                                     }
                                 }
 
+                                // TODO: Handle if in last section.count != 0
                                 Rectangle()
                                     .fill(Color(.systemGroupedBackground))
                                     .frame(minHeight: geometryProxy.frame(in: .local).height - 44)
@@ -87,7 +94,7 @@ struct GroupLessonsView: View {
                                 withAnimation {
                                     // If scrolling from bottom to top is lagging
                                     proxy.scrollTo(
-                                        GroupLessons.State.SectionState.id(week: displayedWeek, day: newSelectedDay),
+                                        GroupLessons.State.Section.id(week: displayedWeek, day: newSelectedDay),
                                         anchor: .top
                                     )
                                 }
@@ -99,7 +106,7 @@ struct GroupLessonsView: View {
                                 }
                                 withAnimation {
                                     proxy.scrollTo(
-                                        GroupLessons.State.SectionState.id(week: newSelectedWeek, day: displayedDay),
+                                        GroupLessons.State.Section.id(week: newSelectedWeek, day: displayedDay),
                                         anchor: .top
                                     )
                                 }
@@ -110,49 +117,18 @@ struct GroupLessonsView: View {
                     .onChange(of: offsets) { newValue in
                         print("")
                         print(newValue.map { "\(Int(($0 ?? 0).rounded()))" }.joined(separator: " | "))
-                        let value: Int = {
-                            if newValue.compactMap({ $0 }).count <= 1, let index = newValue.firstIndex(where: { $0 != nil }) {
-                                print("index \(index)")
-                                return index
-
-                            } else if let firstIndex = newValue.firstIndex(where: { $0 ?? 0 > 170 }) {
-                                let result = max(firstIndex - 1, 0)
-                                print("firstIndex \(result)")
-                                return result
-
-                            } else if let lastIndex = newValue.lastIndex(where: { $0 ?? CGFloat.infinity < 168 }) {
-                                let result = min(lastIndex + 1, 11)
-                                print("lastIndex \(result)")
-                                return result
-
-                            } else {
-                                let result = newValue.count - 1
-                                print(result)
-                                return result
-                            }
-                        }()
-                        switch value {
-                        case (0..<6):
-                            displayedWeek = .first
-                            displayedDay = .init(rawValue: value + 1) ?? .monday
-
-                        case (6...):
-                            displayedWeek = .second
-                            displayedDay = .init(rawValue: value - 5) ?? .monday
-
-                        default:
-                            return
-                        }
+                        let topIndex = calculateTopIndex(offsets: newValue)
+                        let sectionPosition = GroupLessons.State.Section.Position(index: topIndex)
+                        displayedDay = sectionPosition.day
+                        displayedWeek = sectionPosition.week
                     }
                     .background(Color(.systemGroupedBackground))
                     .coordinateSpace(name: "SCROLL")
                 }
-                .onAppear {
-                    viewStore.send(.onAppear)
-                }
             }
             .navigationBarHidden(true)
             .onAppear {
+                viewStore.send(.onAppear)
                 offsets = savedOffsets
             }
             .onDisappear {
@@ -177,48 +153,29 @@ struct GroupLessonsView: View {
         .frame(height: 44)
     }
 
-}
+    func calculateTopIndex(offsets: [CGFloat?]) -> Int {
+        if offsets.compactMap({ $0 }).count <= 1, let index = offsets.firstIndex(where: { $0 != nil }) {
+            print("index \(index)")
+            return index
 
-struct OffsetModifier: ViewModifier {
+        } else if let firstIndex = offsets.firstIndex(where: { $0 ?? 0 > 170 }) {
+            let result = max(firstIndex - 1, 0)
+            print("firstIndex \(result)")
+            return result
 
-    @State var offset: CGFloat = .zero
+        } else if let lastIndex = offsets.lastIndex(where: { $0 ?? CGFloat.infinity < 168 }) {
+            let result = min(lastIndex + 1, 11)
+            print("lastIndex \(result)")
+            return result
 
-    func body(content: Content) -> some View {
-        content
-            .overlay(
-                ZStack {
-                    GeometryReader { proxy in
-                        Color.clear.opacity(0.2).preference(
-                            key: OffsetPreferenceKey.self,
-                            value: proxy.frame(in: .global).minY
-                        )
-                    }
-                }
-            )
-            .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                offset = value
-            }
-//            .overlay(
-//                Color.red.opacity(0.2)
-//                    .overlay(Text("\(offset)"))
-//            )
-
-
-//            .overlay {
-//                Color.red.opacity(0.2)
-//            }
-    }
-
-}
-
-struct OffsetPreferenceKey: PreferenceKey {
-
-    static var defaultValue: CGFloat = .zero
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
+        } else {
+            let result = offsets.count - 1
+            print(result)
+            return result
+        }
     }
 }
+
 
 
 struct TitleView: View {

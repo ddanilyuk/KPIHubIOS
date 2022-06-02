@@ -9,7 +9,29 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
-extension Array where Element == GroupLessons.State.SectionState {
+extension GroupLessons.State.Section.Position {
+
+    init(index: Int) {
+        switch index {
+        case (0..<6):
+            week = .first
+            day = Lesson.Day(rawValue: index + 1) ?? .monday
+
+        case (6..<12):
+            week = .second
+            day = Lesson.Day(rawValue: index - 5) ?? .monday
+
+        default:
+            assertionFailure("Invalid index")
+            week = .first
+            day = .monday
+        }
+    }
+
+}
+
+
+extension Array where Element == GroupLessons.State.Section {
 
     static func combine<T, V>(_ firsts: [T], _ seconds: [V]) -> [(T, V)] {
         var result: [(T, V)] = []
@@ -22,10 +44,13 @@ extension Array where Element == GroupLessons.State.SectionState {
     }
 
     init(lessons: IdentifiedArrayOf<Lesson>) {
-        let emptyScheduleDays = Array.combine(
-            Lesson.Week.allCases,
-            Lesson.Day.allCases
-        ).map { GroupLessons.State.SectionState(week: $0, day: $1, lessonCells: []) }
+        let emptyScheduleDays = Array.combine(Lesson.Week.allCases, Lesson.Day.allCases)
+            .map {
+                GroupLessons.State.Section(
+                    position: .init(week: $0, day: $1),
+                    lessonCells: []
+                )
+            }
         self = lessons.reduce(into: emptyScheduleDays) { partialResult, lesson in
             partialResult[
                 ScheduleDay.index(
@@ -37,10 +62,13 @@ extension Array where Element == GroupLessons.State.SectionState {
     }
 
     init(lessons: [Lesson]) {
-        let emptyScheduleDays = Array.combine(
-            Lesson.Week.allCases,
-            Lesson.Day.allCases
-        ).map { GroupLessons.State.SectionState(week: $0, day: $1, lessonCells: []) }
+        let emptyScheduleDays = Array.combine(Lesson.Week.allCases, Lesson.Day.allCases)
+            .map {
+                GroupLessons.State.Section(
+                    position: .init(week: $0, day: $1),
+                    lessonCells: []
+                )
+            }
         self = lessons.reduce(into: emptyScheduleDays) { partialResult, lesson in
             partialResult[
                 ScheduleDay.index(
@@ -58,34 +86,47 @@ struct GroupLessons {
     // MARK: - State
 
     struct State: Equatable {
-        
-//        var scheduleDays: [ScheduleDay]
-//        var lessonCells: [IdentifiedArrayOf<LessonCell.State>]
 
         var lessons: IdentifiedArrayOf<Lesson>
-        var sectionStates: [SectionState] = []
+        var sections: [Section] = []
 
-        struct SectionState: Equatable, Identifiable {
-            var id: String {
-                SectionState.id(week: week, day: day)
-            }
-            var index: Int {
-                SectionState.index(week: week, day: day)
-            }
+        struct Section: Equatable, Identifiable {
 
             static func id(week: Lesson.Week, day: Lesson.Day) -> String {
-                "\(SectionState.self)\(week.rawValue)\(day.rawValue)"
+                "\(Section.self)\(week.rawValue)\(day.rawValue)"
             }
 
-            let week: Lesson.Week
-            let day: Lesson.Day
-            
-            static func index(week: Lesson.Week, day: Lesson.Day) -> Int {
-                (week.rawValue - 1) * 6 + (day.rawValue - 1)
+            var id: String {
+                Section.id(week: position.week, day: position.day)
             }
 
+            var index: Int {
+                position.index
+            }
 
+            let position: Position
             var lessonCells: IdentifiedArrayOf<LessonCell.State>
+
+            struct Position: Equatable, Identifiable {
+                let week: Lesson.Week
+                let day: Lesson.Day
+
+                static var count: Int {
+                    return Lesson.Week.allCases.count * Lesson.Day.allCases.count
+                }
+
+                var id: Int {
+                    return index
+                }
+
+                var index: Int {
+                    Position.index(week: week, day: day)
+                }
+
+                static func index(week: Lesson.Week, day: Lesson.Day) -> Int {
+                    (week.rawValue - 1) * 6 + (day.rawValue - 1)
+                }
+            }
         }
 
         init() {
@@ -96,7 +137,7 @@ struct GroupLessons {
 
 
             self.lessons = IdentifiedArray(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
-            self.sectionStates = [SectionState](lessons: lessons)
+            self.sections = [Section](lessons: lessons)
         }
     }
 
@@ -129,7 +170,7 @@ struct GroupLessons {
         case .onAppear:
             if let lessons = environment.userDefaultsClient.get(for: .lessons) {
                 state.lessons = IdentifiedArray(uniqueElements: lessons)
-                state.sectionStates = [State.SectionState](lessons: lessons)
+                state.sections = [State.Section](lessons: lessons)
             }
             return .none
 
@@ -151,7 +192,7 @@ struct GroupLessons {
         case let .lessonsResponse(.success(lessons)):
             environment.userDefaultsClient.set(lessons, for: .lessons)
             state.lessons = IdentifiedArray(uniqueElements: lessons)
-            state.sectionStates = [State.SectionState](lessons: lessons)
+            state.sections = [State.Section](lessons: lessons)
             return .none
 
         case let .lessonsResponse(.failure(error)):
@@ -175,7 +216,7 @@ struct GroupLessons {
 
     static let reducer = Reducer<State, Action, Environment>.combine(
         Reducer<State, Action, Environment>.combine(
-            (0..<12).map({ index in
+            (0..<State.Section.Position.count).map({ index in
 //                LessonCell.reducer
 //                    .forEach(
 //                        state: \State.lessonCells[index],
@@ -185,7 +226,7 @@ struct GroupLessons {
 
                 LessonCell.reducer
                     .forEach(
-                        state: \State.sectionStates[index].lessonCells,
+                        state: \State.sections[index].lessonCells,
                         action: /Action.lessonCells,
                         environment: { _ in LessonCell.Environment() }
                     )

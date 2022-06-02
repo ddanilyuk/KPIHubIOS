@@ -49,6 +49,7 @@
 		5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F463628480B2900202DA5 /* UserDefaultsClient.swift */; };
 		5F5F463D284814E800202DA5 /* Lesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F463C284814E800202DA5 /* Lesson.swift */; };
 		5F5F46412848150900202DA5 /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F46402848150900202DA5 /* Teacher.swift */; };
+		5F5F46432848EDF700202DA5 /* OffsetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F46422848EDF600202DA5 /* OffsetModifier.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -123,6 +124,7 @@
 		5F5F463628480B2900202DA5 /* UserDefaultsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsClient.swift; sourceTree = "<group>"; };
 		5F5F463C284814E800202DA5 /* Lesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson.swift; sourceTree = "<group>"; };
 		5F5F46402848150900202DA5 /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
+		5F5F46422848EDF600202DA5 /* OffsetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetModifier.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137EE7284403ED00514263 /* Loader */,
+				5F5F46422848EDF600202DA5 /* OffsetModifier.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F5F46432848EDF700202DA5 /* OffsetModifier.swift in Sources */,
 				5F137ECD2843A3C500514263 /* LoginStore.swift in Sources */,
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
