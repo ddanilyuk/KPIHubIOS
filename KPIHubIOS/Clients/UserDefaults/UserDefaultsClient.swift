@@ -137,11 +137,34 @@ extension UserDefaultKey: ExpressibleByStringLiteral {
 
 extension UserDefaultKey {
 
-    static var group: UserDefaultKey<Group> {
+    static var group: UserDefaultKey<GroupResponse> {
         "group"
     }
 
     static var lessons: UserDefaultKey<[Lesson]> {
         "lessons"
     }
+
+    static var campusCredentials: UserDefaultKey<CampusCredentials> {
+        "campusCredentials"
+    }
+
+    static var campusUserInfo: UserDefaultKey<CampusUserInfo> {
+        "campusUserInfo"
+    }
+
 }
+
+
+struct CampusCredentials: Codable {
+    let username: String
+    let password: String
+}
+
+struct CampusUserInfo: Codable, Equatable {
+
+    let groupName: String
+
+}
+
+

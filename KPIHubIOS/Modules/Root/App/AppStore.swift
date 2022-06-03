@@ -9,8 +9,6 @@ import ComposableArchitecture
 import Routes
 import URLRouting
 
-typealias APIClient = URLRoutingClient<RootRoute>
-
 struct App {
 
     // MARK: - State
@@ -56,7 +54,8 @@ struct App {
 
         static var live: Self {
             let apiClient: APIClient = .live(
-                router: rootRouter.baseURL("http://kpihub.xyz")
+                router: rootRouter.baseURL("http://127.0.0.1:8080")
+//                router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
             return Self(
@@ -132,7 +131,8 @@ extension App.Environment {
 
     var login: Login.Environment {
         Login.Environment(
-            apiClient: apiClient
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient
         )
     }
 

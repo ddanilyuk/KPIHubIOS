@@ -13,8 +13,8 @@ struct GroupPicker {
     // MARK: - State
 
     struct State: Equatable {
-        var groups: [Group]
-        var searchedGroups: [Group]
+        var groups: [GroupResponse]
+        var searchedGroups: [GroupResponse]
         @BindableState var searchedText: String
         @BindableState var isLoading: Bool
 
@@ -30,7 +30,7 @@ struct GroupPicker {
 
     enum Action: Equatable, BindableAction {
         case onAppear
-        case allGroupsResponse(Result<[Group], NSError>)
+        case allGroupsResponse(Result<[GroupResponse], APIError>)
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
@@ -50,15 +50,16 @@ struct GroupPicker {
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
-            let task: Effect<[Group], Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
+            let task: Effect<[GroupResponse], Error> = Effect.task {
+                let result = try await environment.apiClient.request(
                     for: .api(.groups(.all)),
-                    as: GroupResponse.self
+                    as: AllGroupsResponse.self
                 )
-                return result.value.groups
+                return result.groups
             }
+
             return task
-                .mapError { $0 as NSError }
+                .mapError(APIError.init(error:))
                 .receive(on: DispatchQueue.main)
                 .catchToEffect(Action.allGroupsResponse)
 
@@ -70,7 +71,7 @@ struct GroupPicker {
 
         case let .allGroupsResponse(.failure(error)):
             state.isLoading = false
-            print(error.localizedDescription)
+            print("API: \(error)")
             return .none
 
         case .binding(\.$searchedText):

@@ -71,7 +71,8 @@ struct CampusLoginView_Previews: PreviewProvider {
                     initialState: CampusLogin.State(),
                     reducer: CampusLogin.reducer,
                     environment: CampusLogin.Environment(
-                        apiClient: .failing
+                        apiClient: .failing,
+                        userDefaultsClient: .live()
                     )
                 )
             )

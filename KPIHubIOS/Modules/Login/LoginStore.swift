@@ -39,6 +39,7 @@ struct Login {
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer

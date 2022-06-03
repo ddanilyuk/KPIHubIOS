@@ -1,5 +1,5 @@
 //
-//  Group.swift
+//  GroupResponse.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Group {
-    let id: String
+struct GroupResponse {
+    let id: UUID
     let name: String
 }
 
-extension Group: Codable {
+extension GroupResponse: Codable {
 
 }
 
-extension Group: Equatable {
+extension GroupResponse: Equatable {
 
 }

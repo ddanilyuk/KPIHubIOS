@@ -12,6 +12,14 @@ struct LessonsResponse {
     let lessons: [LessonResponse]
 }
 
+// MARK: - Decodable
+
 extension LessonsResponse: Decodable {
     
+}
+
+// MARK: - Equatable
+
+extension LessonsResponse: Equatable {
+
 }
