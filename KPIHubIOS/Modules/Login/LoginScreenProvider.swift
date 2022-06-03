@@ -22,6 +22,7 @@ extension Login.ScreenProvider {
         static var module: Any.Type = Login.self
 
         case onboarding(Onboarding.State)
+        case campusLogin(CampusLogin.State)
         case groupPicker(GroupPicker.State)
     }
 
@@ -29,6 +30,7 @@ extension Login.ScreenProvider {
 
     enum Action: Equatable {
         case onboarding(Onboarding.Action)
+        case campusLogin(CampusLogin.Action)
         case groupPicker(GroupPicker.Action)
     }
 
@@ -40,6 +42,16 @@ extension Login.ScreenProvider {
                 state: /State.onboarding,
                 action: /Action.onboarding,
                 environment: { _ in Onboarding.Environment() }
+            ),
+        CampusLogin.reducer
+            .pullback(
+                state: /State.campusLogin,
+                action: /Action.campusLogin,
+                environment: {
+                    CampusLogin.Environment(
+                        apiClient: $0.apiClient
+                    )
+                }
             ),
         GroupPicker.reducer
             .pullback(

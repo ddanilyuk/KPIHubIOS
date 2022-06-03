@@ -99,6 +99,10 @@ struct App {
     static var reducerCore = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .appDelegate(.didFinishLaunching):
+            state.set(.login)
+            return .none
+
+        case .login(.delegate(.done)):
             state.set(.main)
             return .none
 

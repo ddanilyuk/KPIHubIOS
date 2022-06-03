@@ -32,6 +32,11 @@ struct GroupPicker {
         case onAppear
         case allGroupsResponse(Result<[Group], NSError>)
         case binding(BindingAction<State>)
+        case routeAction(RouteAction)
+
+        enum RouteAction: Equatable {
+            case selected
+        }
     }
 
     // MARK: - Environment
@@ -82,6 +87,9 @@ struct GroupPicker {
             return .none
 
         case .binding:
+            return .none
+
+        case .routeAction:
             return .none
         }
     }

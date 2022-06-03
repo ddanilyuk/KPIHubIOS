@@ -54,6 +54,9 @@
 		5F5F4648284900A000202DA5 /* GroupLessonsWeekPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4647284900A000202DA5 /* GroupLessonsWeekPicker.swift */; };
 		5F5F464A284900C200202DA5 /* GroupLessonsDayPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4649284900C200202DA5 /* GroupLessonsDayPicker.swift */; };
 		5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F464B2849015500202DA5 /* Collection+Safe.swift */; };
+		5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */; };
+		5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */; };
+		5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -133,6 +136,9 @@
 		5F5F4647284900A000202DA5 /* GroupLessonsWeekPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLessonsWeekPicker.swift; sourceTree = "<group>"; };
 		5F5F4649284900C200202DA5 /* GroupLessonsDayPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLessonsDayPicker.swift; sourceTree = "<group>"; };
 		5F5F464B2849015500202DA5 /* Collection+Safe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Safe.swift"; sourceTree = "<group>"; };
+		5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginStore.swift; sourceTree = "<group>"; };
+		5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginView.swift; sourceTree = "<group>"; };
+		5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButtonStyle.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -222,6 +228,7 @@
 			children = (
 				5F137EE7284403ED00514263 /* Loader */,
 				5F5F46422848EDF600202DA5 /* OffsetModifier.swift */,
+				5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -260,6 +267,7 @@
 				5F137EE32843B3F800514263 /* LoginScreenProvider.swift */,
 				5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */,
 				5F137EDE2843B25600514263 /* Onboarding */,
+				5F69BBD2284AAC3300FED83D /* CampusLogin */,
 				5F137ED42843A6EA00514263 /* GroupPicker */,
 			);
 			path = Login;
@@ -420,6 +428,15 @@
 				5F5F4649284900C200202DA5 /* GroupLessonsDayPicker.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		5F69BBD2284AAC3300FED83D /* CampusLogin */ = {
+			isa = PBXGroup;
+			children = (
+				5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */,
+				5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */,
+			);
+			path = CampusLogin;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -762,6 +779,7 @@
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
 				5F137EC22843A35D00514263 /* AppStore.swift in Sources */,
+				5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */,
 				5F5F4631284625BB00202DA5 /* Schedule.swift in Sources */,
 				5F5F462F28456D3B00202DA5 /* SmallTagView.swift in Sources */,
 				5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */,
@@ -776,6 +794,7 @@
 				5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
 				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
+				5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,
 				5F137EFF28440DFD00514263 /* GroupLessonsView.swift in Sources */,
@@ -784,6 +803,7 @@
 				5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */,
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
+				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

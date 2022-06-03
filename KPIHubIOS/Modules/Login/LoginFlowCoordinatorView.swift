@@ -22,6 +22,11 @@ struct LoginFlowCoordinatorView: View {
                     then: OnboardingView.init
                 )
                 CaseLet(
+                    state: /Login.ScreenProvider.State.campusLogin,
+                    action: Login.ScreenProvider.Action.campusLogin,
+                    then: CampusLoginView.init
+                )
+                CaseLet(
                     state: /Login.ScreenProvider.State.groupPicker,
                     action: Login.ScreenProvider.Action.groupPicker,
                     then: GroupPickerView.init
