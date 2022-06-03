@@ -60,7 +60,8 @@ extension Login.ScreenProvider {
                 action: /Action.groupPicker,
                 environment: {
                     GroupPicker.Environment(
-                        apiClient: $0.apiClient
+                        apiClient: $0.apiClient,
+                        userDefaultsClient: $0.userDefaultsClient
                     )
                 }
             )

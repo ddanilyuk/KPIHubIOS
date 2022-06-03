@@ -32,7 +32,7 @@ struct CampusLogin {
 
         enum RouteAction {
             case groupPicker
-            case loggedIn
+            case done
         }
     }
 
@@ -73,24 +73,27 @@ struct CampusLogin {
                 .catchToEffect(Action.campusUserInfoResult)
 
         case let .campusUserInfoResult(.success(campusUserInfo)):
+
+            let groupSearchQuery = GroupSearchQuery(
+                groupName: campusUserInfo.groupName
+            )
+
             /// Saving user info
             environment.userDefaultsClient.set(campusUserInfo, for: .campusUserInfo)
 
-            /// Saving credentials
+            /// Saving credentials after finding group
             let campusCredentials = CampusCredentials(
                 username: state.username,
                 password: state.password
             )
             environment.userDefaultsClient.set(campusCredentials, for: .campusCredentials)
 
-            let groupSearchQuery = GroupSearchQuery(
-                groupName: campusUserInfo.groupName
-            )
             let task: Effect<GroupResponse, Error> = Effect.task {
-                try await environment.apiClient.request(
+                let result = try await environment.apiClient.request(
                     for: .api(.groups(.search(groupSearchQuery))),
                     as: GroupResponse.self
                 )
+                return result
             }
             return task
                 .mapError(APIError.init(error:))
@@ -98,12 +101,12 @@ struct CampusLogin {
                 .catchToEffect(Action.groupSearchResult)
 
         case let .groupSearchResult(.success(group)):
-            environment.userDefaultsClient.set(group, for: .group)
             let task: Effect<[Lesson], Error> = Effect.task {
                 let result = try await environment.apiClient.decodedResponse(
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
+                environment.userDefaultsClient.set(group, for: .group)
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -113,7 +116,7 @@ struct CampusLogin {
 
         case let .lessonsResult(.success(lessons)):
             environment.userDefaultsClient.set(lessons, for: .lessons)
-            return Effect(value: .routeAction(.loggedIn))
+            return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):
             switch error {

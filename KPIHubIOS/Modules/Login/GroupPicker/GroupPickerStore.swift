@@ -30,12 +30,16 @@ struct GroupPicker {
 
     enum Action: Equatable, BindableAction {
         case onAppear
-        case allGroupsResponse(Result<[GroupResponse], APIError>)
+        case groupSelected(GroupResponse)
+
+        case allGroupsResult(Result<[GroupResponse], NSError>)
+        case lessonsResult(Result<[Lesson], NSError>)
+
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
-            case selected
+            case done
         }
     }
 
@@ -43,6 +47,7 @@ struct GroupPicker {
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer
@@ -51,27 +56,46 @@ struct GroupPicker {
         switch action {
         case .onAppear:
             let task: Effect<[GroupResponse], Error> = Effect.task {
-                let result = try await environment.apiClient.request(
+                let result = try await environment.apiClient.decodedResponse(
                     for: .api(.groups(.all)),
                     as: AllGroupsResponse.self
                 )
-                return result.groups
+                return result.value.groups
             }
-
             return task
-                .mapError(APIError.init(error:))
+                .mapError { $0 as NSError }
                 .receive(on: DispatchQueue.main)
-                .catchToEffect(Action.allGroupsResponse)
+                .catchToEffect(Action.allGroupsResult)
 
-        case let .allGroupsResponse(.success(groups)):
+        case let .allGroupsResult(.success(groups)):
             state.isLoading = false
             state.groups = groups
             state.searchedGroups = groups
             return .none
 
-        case let .allGroupsResponse(.failure(error)):
+        case let .groupSelected(group):
+            state.isLoading = true
+            let task: Effect<[Lesson], Error> = Effect.task {
+                let result = try await environment.apiClient.decodedResponse(
+                    for: .api(.group(group.id, .lessons)),
+                    as: LessonsResponse.self
+                )
+                environment.userDefaultsClient.set(group, for: .group)
+                return result.value.lessons.map { Lesson(lessonResponse: $0) }
+            }
+            return task
+                .mapError { $0 as NSError }
+                .receive(on: DispatchQueue.main)
+                .catchToEffect(Action.lessonsResult)
+
+        case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            print("API: \(error)")
+            environment.userDefaultsClient.set(lessons, for: .lessons)
+            return Effect(value: .routeAction(.done))
+
+        case let .allGroupsResult(.failure(error)),
+             let .lessonsResult(.failure(error)):
+            state.isLoading = false
             return .none
 
         case .binding(\.$searchedText):

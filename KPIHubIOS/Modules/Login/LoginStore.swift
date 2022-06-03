@@ -61,10 +61,10 @@ struct Login {
             state.routes.push(.groupPicker(groupPickerState))
             return .none
 
-        case .routeAction(_, .campusLogin(.routeAction(.loggedIn))):
+        case .routeAction(_, .campusLogin(.routeAction(.done))):
             return Effect(value: .delegate(.done))
 
-        case .routeAction(_, .groupPicker(.routeAction(.selected))):
+        case .routeAction(_, .groupPicker(.routeAction(.done))):
             return Effect(value: .delegate(.done))
 
         case .routeAction:
