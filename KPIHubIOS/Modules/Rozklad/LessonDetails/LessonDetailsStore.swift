@@ -1,5 +1,5 @@
 //
-//  AppDelegateStore.swift
+//  LessonDetailsStore.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -7,28 +7,36 @@
 
 import ComposableArchitecture
 
-extension AppDelegate {
+struct LessonDetails {
 
     // MARK: - State
 
-    struct State: Equatable { }
+    struct State: Equatable {
+
+        var lesson: Lesson
+
+        init(lesson: Lesson) {
+            self.lesson = lesson
+        }
+    }
 
     // MARK: - Action
 
     enum Action: Equatable {
-        case didFinishLaunching
+        case start
     }
 
     // MARK: - Environment
 
     struct Environment {
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
-        case .didFinishLaunching:
+        case .start:
             return .none
         }
     }

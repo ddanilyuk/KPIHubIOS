@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  LoginFlowCoordinatorView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
 
-struct LoginView: View {
+struct LoginFlowCoordinatorView: View {
 
     let store: Store<Login.State, Login.Action>
 
@@ -20,6 +20,11 @@ struct LoginView: View {
                     state: /Login.ScreenProvider.State.onboarding,
                     action: Login.ScreenProvider.Action.onboarding,
                     then: OnboardingView.init
+                )
+                CaseLet(
+                    state: /Login.ScreenProvider.State.campusLogin,
+                    action: Login.ScreenProvider.Action.campusLogin,
+                    then: CampusLoginView.init
                 )
                 CaseLet(
                     state: /Login.ScreenProvider.State.groupPicker,

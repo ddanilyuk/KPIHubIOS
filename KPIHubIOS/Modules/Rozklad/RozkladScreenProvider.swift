@@ -1,5 +1,5 @@
 //
-//  LoginScreenProvider.swift
+//  RozkladScreenProvider.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -7,49 +7,55 @@
 
 import ComposableArchitecture
 
-extension Login {
+extension Rozklad {
 
     struct ScreenProvider {}
 
 }
 
-extension Login.ScreenProvider {
+extension Rozklad.ScreenProvider {
 
     // MARK: - State handling
 
     enum State: Equatable, CoordinatorStateIdentifiable {
 
-        static var module: Any.Type = Login.self
+        static var module: Any.Type = Rozklad.self
 
-        case onboarding(Onboarding.State)
-        case campusLogin(CampusLogin.State)
+        case empty(EmptyScreen.State)
         case groupPicker(GroupPicker.State)
+        case groupLessons(GroupLessons.State)
+        case lessonDetails(LessonDetails.State)
     }
 
     // MARK: - Action handling
 
     enum Action: Equatable {
-        case onboarding(Onboarding.Action)
-        case campusLogin(CampusLogin.Action)
+        case empty(EmptyScreen.Action)
         case groupPicker(GroupPicker.Action)
+        case groupLessons(GroupLessons.Action)
+        case lessonDetails(LessonDetails.Action)
     }
 
     // MARK: - Reducer handling
 
-    static let reducer = Reducer<State, Action, Login.Environment>.combine(
-        Onboarding.reducer
+    static let reducer = Reducer<State, Action, Rozklad.Environment>.combine(
+        GroupLessons.reducer
             .pullback(
-                state: /State.onboarding,
-                action: /Action.onboarding,
-                environment: { _ in Onboarding.Environment() }
-            ),
-        CampusLogin.reducer
-            .pullback(
-                state: /State.campusLogin,
-                action: /Action.campusLogin,
+                state: /State.groupLessons,
+                action: /Action.groupLessons,
                 environment: {
-                    CampusLogin.Environment(
+                    GroupLessons.Environment(
                         apiClient: $0.apiClient,
+                        userDefaultsClient: $0.userDefaultsClient
+                    )
+                }
+            ),
+        LessonDetails.reducer
+            .pullback(
+                state: /State.lessonDetails,
+                action: /Action.lessonDetails,
+                environment: {
+                    LessonDetails.Environment(
                         userDefaultsClient: $0.userDefaultsClient
                     )
                 }

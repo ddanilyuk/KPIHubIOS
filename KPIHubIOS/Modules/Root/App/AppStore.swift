@@ -9,8 +9,6 @@ import ComposableArchitecture
 import Routes
 import URLRouting
 
-typealias APIClient = URLRoutingClient<RootRoute>
-
 struct App {
 
     // MARK: - State
@@ -44,61 +42,50 @@ struct App {
         case appDelegate(AppDelegate.Action)
         case login(Login.Action)
         case main(Main.Action)
-
-        case signOut
     }
 
     // MARK: - Environment
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
+
+        let campusClient: CampusClient
+
 
         static var live: Self {
             let apiClient: APIClient = .live(
-                router: rootRouter.baseURL("http://167.172.189.121:8080")
+//                router: rootRouter.baseURL("http://127.0.0.1:8080")
+                router: rootRouter.baseURL("http://kpihub.xyz")
             )
+            let userDefaultsClient: UserDefaultsClient = .live()
+            let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
+            let campusClient: CampusClient = .live(userDefaultsClient: userDefaultsClient)
+
             return Self(
-                apiClient: apiClient
+                apiClient: apiClient,
+                userDefaultsClient: userDefaultsClient,
+                rozkladClient: rozkladClient,
+                campusClient: campusClient
             )
         }
     }
 
     // MARK: - Reducer
 
-    static var reducer = Reducer<State, Action, Environment>.combine(
-        AppDelegate.reducer
-            .pullback(
-                state: \State.appDelegate,
-                action: /Action.appDelegate,
-                environment: { $0.appDelegate }
-            ),
-
-        Login.reducer
-            .optional()
-            .pullback(
-                state: \State.login,
-                action: /Action.login,
-                environment: { $0.login }
-            ),
-
-        Main.reducer
-            .optional()
-            .pullback(
-                state: \State.main,
-                action: /Action.main,
-                environment: { $0.main }
-            ),
-
-        reducerCore
-    ).debug()
-
-    static var reducerCore = Reducer<State, Action, Environment> { state, action, _ in
+    static var reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .appDelegate(.didFinishLaunching):
-            state.set(.login)
+            if environment.userDefaultsClient.get(for: .onboardingPassed) {
+                state.set(.main)
+            } else {
+                state.set(.login)
+            }
             return .none
 
-        case .signOut:
+        case .login(.delegate(.done)):
+            state.set(.main)
             return .none
 
         case .appDelegate:
@@ -111,6 +98,32 @@ struct App {
             return .none
         }
     }
+
+    static var reducer = Reducer<State, Action, Environment>.combine(
+        AppDelegate.reducer
+            .pullback(
+                state: \State.appDelegate,
+                action: /Action.appDelegate,
+                environment: { $0.appDelegate }
+            ),
+        Login.reducer
+            .optional()
+            .pullback(
+                state: \State.login,
+                action: /Action.login,
+                environment: { $0.login }
+            ),
+        Main.reducer
+            .optional()
+            .pullback(
+                state: \State.main,
+                action: /Action.main,
+                environment: { $0.main }
+            ),
+        reducerCore
+    )
+    .debug()
+
 }
 
 // MARK: App.Environment + Extensions
@@ -118,18 +131,24 @@ struct App {
 extension App.Environment {
 
     var appDelegate: AppDelegate.Environment {
-        AppDelegate.Environment(
-        )
+        AppDelegate.Environment()
     }
 
     var login: Login.Environment {
         Login.Environment(
-            apiClient: apiClient
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient,
+            rozkladClient: rozkladClient,
+            campusClient: campusClient
         )
     }
 
     var main: Main.Environment {
         Main.Environment(
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient,
+            rozkladClient: rozkladClient,
+            campusClient: campusClient
         )
     }
 

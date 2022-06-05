@@ -16,7 +16,11 @@ struct GroupPickerView: View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.searchedGroups, id: \.id) { group in
-                    Text(group.name)
+                    HStack {
+                        Text(group.name)
+                        Spacer()
+                    }
+                    .onTapGesture { viewStore.send(.groupSelected(group)) }
                 }
             }
             .searchable(
@@ -25,7 +29,7 @@ struct GroupPickerView: View {
                 prompt: Text("Пошук")
             )
             .onAppear { viewStore.send(.onAppear) }
-            .navigationTitle("Групи")
+            .navigationTitle("Оберіть групу")
             .loadable(viewStore.binding(\.$isLoading))
         }
     }

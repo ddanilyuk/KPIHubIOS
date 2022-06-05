@@ -13,8 +13,8 @@ struct GroupPicker {
     // MARK: - State
 
     struct State: Equatable {
-        var groups: [Group]
-        var searchedGroups: [Group]
+        var groups: [GroupResponse]
+        var searchedGroups: [GroupResponse]
         @BindableState var searchedText: String
         @BindableState var isLoading: Bool
 
@@ -30,14 +30,24 @@ struct GroupPicker {
 
     enum Action: Equatable, BindableAction {
         case onAppear
-        case allGroupsResponse(Result<[Group], NSError>)
+        case groupSelected(GroupResponse)
+
+        case allGroupsResult(Result<[GroupResponse], NSError>)
+        case lessonsResult(Result<[Lesson], NSError>)
+
         case binding(BindingAction<State>)
+        case routeAction(RouteAction)
+
+        enum RouteAction: Equatable {
+            case done
+        }
     }
 
     // MARK: - Environment
 
     struct Environment {
         let apiClient: APIClient
+        let userDefaultsClient: UserDefaultsClient
     }
 
     // MARK: - Reducer
@@ -45,27 +55,47 @@ struct GroupPicker {
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
-            let task: Effect<[Group], Error> = Effect.task {
+            let task: Effect<[GroupResponse], Error> = Effect.task {
                 let result = try await environment.apiClient.decodedResponse(
                     for: .api(.groups(.all)),
-                    as: GroupResponse.self
+                    as: AllGroupsResponse.self
                 )
                 return result.value.groups
             }
             return task
                 .mapError { $0 as NSError }
                 .receive(on: DispatchQueue.main)
-                .catchToEffect(Action.allGroupsResponse)
+                .catchToEffect(Action.allGroupsResult)
 
-        case let .allGroupsResponse(.success(groups)):
+        case let .allGroupsResult(.success(groups)):
             state.isLoading = false
             state.groups = groups
             state.searchedGroups = groups
             return .none
 
-        case let .allGroupsResponse(.failure(error)):
+        case let .groupSelected(group):
+            state.isLoading = true
+            let task: Effect<[Lesson], Error> = Effect.task {
+                let result = try await environment.apiClient.decodedResponse(
+                    for: .api(.group(group.id, .lessons)),
+                    as: LessonsResponse.self
+                )
+                environment.userDefaultsClient.set(group, for: .group)
+                return result.value.lessons.map { Lesson(lessonResponse: $0) }
+            }
+            return task
+                .mapError { $0 as NSError }
+                .receive(on: DispatchQueue.main)
+                .catchToEffect(Action.lessonsResult)
+
+        case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            print(error.localizedDescription)
+            environment.userDefaultsClient.set(lessons, for: .lessons)
+            return Effect(value: .routeAction(.done))
+
+        case let .allGroupsResult(.failure(error)),
+             let .lessonsResult(.failure(error)):
+            state.isLoading = false
             return .none
 
         case .binding(\.$searchedText):
@@ -82,6 +112,9 @@ struct GroupPicker {
             return .none
 
         case .binding:
+            return .none
+
+        case .routeAction:
             return .none
         }
     }
