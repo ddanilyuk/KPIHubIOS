@@ -79,6 +79,10 @@
 		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
 		5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClient.swift */; };
 		5FDFBE2A284D48A2007E9F3A /* RozkladClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */; };
+		5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */; };
+		5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */; };
+		5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */; };
+		5FDFBE35284D5232007E9F3A /* StudySheetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE34284D5232007E9F3A /* StudySheetItem.swift */; };
 		6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */; };
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
@@ -180,6 +184,10 @@
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5FDFBE26284D46FD007E9F3A /* CampusClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClient.swift; sourceTree = "<group>"; };
 		5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClient.swift; sourceTree = "<group>"; };
+		5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusCredentials.swift; sourceTree = "<group>"; };
+		5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusUserInfo.swift; sourceTree = "<group>"; };
+		5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetResponse.swift; sourceTree = "<group>"; };
+		5FDFBE34284D5232007E9F3A /* StudySheetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetItem.swift; sourceTree = "<group>"; };
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9FB22C82EF9CED3A31FBD7 /* Pods-KPIHubIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE920022D9C94B235B666887 /* Pods-KPIHubIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +231,7 @@
 			children = (
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
 				5F137EBE2843A32800514263 /* Root */,
+				5FDFBE2F284D4F89007E9F3A /* Shared */,
 				5F137EC92843A3A500514263 /* Login */,
 				5F137ECA2843A3AC00514263 /* Main */,
 				5F137EEC284409CC00514263 /* Rozklad */,
@@ -235,11 +244,14 @@
 		5F137EBB2843A30000514263 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				5FDFBE30284D51E9007E9F3A /* StudySheet */,
 				5F5F463B284814D700202DA5 /* Lessons */,
 				5F137EDA2843A85600514263 /* AllGroupsResponse.swift */,
 				5F137EDC2843A87700514263 /* Group.swift */,
 				5F5F4630284625BB00202DA5 /* Schedule.swift */,
 				5F5F46402848150900202DA5 /* Teacher.swift */,
+				5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */,
+				5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -298,8 +310,6 @@
 				5F137EE32843B3F800514263 /* LoginScreenProvider.swift */,
 				5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */,
 				5F137EDE2843B25600514263 /* Onboarding */,
-				5F69BBD2284AAC3300FED83D /* CampusLogin */,
-				5F137ED42843A6EA00514263 /* GroupPicker */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -621,6 +631,32 @@
 			path = RozkladClient;
 			sourceTree = "<group>";
 		};
+		5FDFBE2F284D4F89007E9F3A /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5F69BBD2284AAC3300FED83D /* CampusLogin */,
+				5F137ED42843A6EA00514263 /* GroupPicker */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		5FDFBE30284D51E9007E9F3A /* StudySheet */ = {
+			isa = PBXGroup;
+			children = (
+				5FDFBE31284D51F5007E9F3A /* Response */,
+				5FDFBE34284D5232007E9F3A /* StudySheetItem.swift */,
+			);
+			path = StudySheet;
+			sourceTree = "<group>";
+		};
+		5FDFBE31284D51F5007E9F3A /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		FF0C919360EE4E6E309E3087 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -875,12 +911,14 @@
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
 				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
+				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
 				5F5F4648284900A000202DA5 /* GroupLessonsWeekPicker.swift in Sources */,
 				5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */,
 				5F69BBDB284ACC4100FED83D /* APIClient.swift in Sources */,
 				5F5F46462849007100202DA5 /* GroupTitleView.swift in Sources */,
 				5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */,
 				5F137EF428440A1100514263 /* CampusStore.swift in Sources */,
+				5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */,
 				5F137EDB2843A85600514263 /* AllGroupsResponse.swift in Sources */,
 				5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
@@ -907,6 +945,7 @@
 				5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */,
 				5F69BBDD284CBF7A00FED83D /* TCARouter+EmptyScreen.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
+				5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */,
@@ -929,6 +968,7 @@
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
+				5FDFBE35284D5232007E9F3A /* StudySheetItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

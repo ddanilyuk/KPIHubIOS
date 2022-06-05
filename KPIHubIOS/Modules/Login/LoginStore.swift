@@ -7,7 +7,6 @@
 
 import ComposableArchitecture
 import TCACoordinators
-import AVFoundation
 
 struct Login {
 
@@ -66,10 +65,12 @@ struct Login {
         case .routeAction(_, .campusLogin(.routeAction(.done))):
             environment.campusClient.updateState()
             environment.rozkladClient.updateState()
+            environment.userDefaultsClient.set(true, for: .onboardingPassed)
             return Effect(value: .delegate(.done))
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
             environment.rozkladClient.updateState()
+            environment.userDefaultsClient.set(true, for: .onboardingPassed)
             return Effect(value: .delegate(.done))
 
         case .routeAction:

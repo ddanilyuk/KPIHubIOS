@@ -81,23 +81,17 @@ struct LessonCellView: View {
 
 struct LessonCellView_Previews: PreviewProvider {
     static var previews: some View {
-
-//        VStack {
-//            Spacer()
-            LessonCellView(
-                store: Store(
-                    initialState: LessonCell.State(
-                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
-                    ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
-                )
+        LessonCellView(
+            store: Store(
+                initialState: LessonCell.State(
+                    lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+                ),
+                reducer: LessonCell.reducer,
+                environment: LessonCell.Environment()
             )
-            .previewLayout(.sizeThatFits)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(width: 375)
-//            Spacer()
-//        }
-
+        )
+        .previewLayout(.sizeThatFits)
+        .fixedSize(horizontal: false, vertical: true)
+        .frame(width: 375)
     }
 }

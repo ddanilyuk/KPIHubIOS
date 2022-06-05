@@ -13,6 +13,16 @@ struct CampusLogin {
     // MARK: - State
 
     struct State: Equatable {
+
+        // MARK: - Mode
+
+        enum Mode {
+            case onlyCampus
+            case campusAndGroup
+        }
+
+        // MARK: - Properties
+
         @BindableState var username: String = "dda77177"
         @BindableState var password: String = "4a78dd74"
         @BindableState var isLoading: Bool = false
@@ -20,11 +30,6 @@ struct CampusLogin {
         var loginButtonEnabled: Bool = true
 
         let mode: Mode
-
-        enum Mode {
-            case onlyCampus
-            case campusAndGroup
-        }
     }
 
     // MARK: - Action
@@ -146,7 +151,6 @@ struct CampusLogin {
 
         case let .campusUserInfoResult(.failure(error)),
              let .lessonsResult(.failure(error)):
-            print(error)
             state.isLoading = false
             return .none
 
@@ -158,6 +162,5 @@ struct CampusLogin {
         }
     }
     .binding()
-
 
 }

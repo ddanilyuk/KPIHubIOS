@@ -54,6 +54,7 @@ struct MainTabCoordinatorView: View {
                     }
                 }
             }
+            .accentColor(.orange)
             .onAppear {
                 viewStore.send(.rozklad(.onSetup))
                 viewStore.send(.campus(.onSetup))

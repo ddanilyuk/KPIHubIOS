@@ -41,14 +41,8 @@ protocol UserDefaultsClientable {
     func remove<T: Codable>(for key: UserDefaultKey<T>)
 }
 
-//import Combine
 
 final class UserDefaultsClient: UserDefaultsClientable {
-
-//    func test() -> AnyPublisher<CampusUserInfo?, Never> {
-//        let result = self.get(for: .campusUserInfo).publisher.eraseToAnyPublisher()
-//        return result
-//    }
 
     static func live() -> UserDefaultsClient {
         return UserDefaultsClient()
@@ -123,6 +117,7 @@ final class UserDefaultsClient: UserDefaultsClientable {
         defaults.removeObject(forKey: defaultKey.key)
         defaults.synchronize()
     }
+
 }
 
 // MARK: - UserDefaultKey
@@ -139,6 +134,7 @@ extension UserDefaultKey: ExpressibleByStringLiteral {
     init(stringLiteral value: String) {
         self.key = value
     }
+    
 }
 
 extension UserDefaultKey {
@@ -159,45 +155,8 @@ extension UserDefaultKey {
         "campusUserInfo"
     }
 
-}
-
-
-struct CampusCredentials: Codable {
-    let username: String
-    let password: String
-}
-
-struct CampusUserInfo: Codable, Equatable {
-
-    // MARK: - StudyGroup
-
-    struct InfoItem: Codable, Equatable {
-        let id: Int
-        let name: String
+    static var onboardingPassed: UserDefaultKey<Bool> {
+        "onboardingPassed"
     }
-
-    // MARK: - Profile
-
-    struct Profile: Codable, Equatable {
-        let id: Int
-        let profile: String
-        let subdivision: InfoItem
-    }
-
-    let modules: [String]
-    let position: [InfoItem]
-    let subdivision: [InfoItem]
-    let studyGroup: InfoItem
-    let sid: String
-    let email: String
-    let scientificInterest: String
-    let username: String
-    let tgAuthLinked: Bool
-    let profiles: [Profile]
-    let id: Int
-    let userIdentifier: String
-    let fullName: String
-    let photo: String
-    let credo: String
 
 }

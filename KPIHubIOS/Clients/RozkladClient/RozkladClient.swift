@@ -7,18 +7,18 @@
 
 import Combine
 
-class RozkladClient {
+final class RozkladClient {
+
+    // MARK: - State
 
     enum State {
         case selected
         case notSelected
     }
 
-    var userDefaultsClient: UserDefaultsClient
+    // MARK: - Properties
 
-    init(userDefaultsClient: UserDefaultsClient) {
-        self.userDefaultsClient = userDefaultsClient
-    }
+    private let userDefaultsClient: UserDefaultsClient
 
     lazy var state: CurrentValueSubject<State, Never> = {
         if userDefaultsClient.get(for: .group) != nil {
@@ -28,12 +28,22 @@ class RozkladClient {
         }
     }()
 
+    // MARK: - Lifecycle
+
+    static func live(userDefaultsClient: UserDefaultsClient) -> RozkladClient {
+        RozkladClient(userDefaultsClient: userDefaultsClient)
+    }
+
+    private init(userDefaultsClient: UserDefaultsClient) {
+        self.userDefaultsClient = userDefaultsClient
+    }
+
     func logOut() {
         state.value = .notSelected
     }
 
     func updateState() {
-        if userDefaultsClient.get(for: .campusUserInfo) != nil {
+        if userDefaultsClient.get(for: .group) != nil {
             state.value = .selected
         } else {
             state.value = .notSelected

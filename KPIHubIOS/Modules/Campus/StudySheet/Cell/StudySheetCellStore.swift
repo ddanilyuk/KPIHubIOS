@@ -15,7 +15,7 @@ struct StudySheetCell {
         let item: StudySheetItem
 
         var id: StudySheetItem.ID {
-            return item.id
+            item.id
         }
     }
 

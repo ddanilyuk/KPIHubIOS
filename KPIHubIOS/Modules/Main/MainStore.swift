@@ -43,7 +43,7 @@ struct Main {
 
     // MARK: - Reducer
 
-    static let coreReducer = Reducer<State, Action, Environment> { state, action, _ in
+    static let coreReducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
         case .rozklad:
             return .none

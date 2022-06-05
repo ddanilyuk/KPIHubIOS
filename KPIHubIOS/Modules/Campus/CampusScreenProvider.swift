@@ -69,10 +69,7 @@ extension Campus.ScreenProvider {
                 state: /State.studySheet,
                 action: /Action.studySheet,
                 environment: { _ in
-                    StudySheet.Environment(
-//                        apiClient: $0.apiClient,
-//                        userDefaultsClient: $0.userDefaultsClient
-                    )
+                    StudySheet.Environment()
                 }
             ),
         StudySheetItemDetail.reducer
@@ -80,10 +77,7 @@ extension Campus.ScreenProvider {
                 state: /State.studySheetItemDetail,
                 action: /Action.studySheetItemDetail,
                 environment: { _ in
-                    StudySheetItemDetail.Environment(
-                        //                        apiClient: $0.apiClient,
-                        //                        userDefaultsClient: $0.userDefaultsClient
-                    )
+                    StudySheetItemDetail.Environment()
                 }
             )
     )

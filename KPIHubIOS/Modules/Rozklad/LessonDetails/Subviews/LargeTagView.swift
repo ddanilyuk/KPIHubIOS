@@ -39,7 +39,6 @@ struct LargeTagView: View {
 
 }
 
-
 // MARK: - Preview
 
 struct LargeTagView_Previews: PreviewProvider {

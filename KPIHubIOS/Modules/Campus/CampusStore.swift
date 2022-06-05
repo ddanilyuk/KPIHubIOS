@@ -17,13 +17,7 @@ struct Campus {
         var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
 
         init() {
-            self.routes = [
-                .root(.empty(.init()))
-//                .root(
-//                    .campusHome(CampusHome.State()),
-//                    embedInNavigationView: true
-//                )
-            ]
+            self.routes = [.root(.empty(.init()))]
         }
     }
 

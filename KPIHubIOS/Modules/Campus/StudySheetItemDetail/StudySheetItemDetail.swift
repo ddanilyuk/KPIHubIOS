@@ -13,12 +13,12 @@ struct StudySheetItemDetail {
     // MARK: - State
 
     struct State: Equatable, Identifiable {
-        let item: StudySheetItem
 
+        let item: StudySheetItem
         var cells: IdentifiedArrayOf<StudySheetActivity.State>
 
         var id: StudySheetItem.ID {
-            return item.id
+            item.id
         }
 
         init(item: StudySheetItem) {
@@ -37,9 +37,7 @@ struct StudySheetItemDetail {
 
     // MARK: - Environment
 
-    struct Environment {
-        
-    }
+    struct Environment { }
 
     // MARK: - Reducer
 

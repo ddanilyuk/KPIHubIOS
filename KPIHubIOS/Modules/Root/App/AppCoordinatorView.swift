@@ -13,7 +13,7 @@ struct AppCoordinatorView: View {
     let store: Store<App.State, App.Action>
 
     var body: some View {
-        SwiftUI.Group {
+        Group {
             IfLetStore(
                 store.scope(state: \App.State.login, action: App.Action.login),
                 then: LoginFlowCoordinatorView.init

@@ -7,18 +7,18 @@
 
 import Combine
 
-class CampusClient {
+final class CampusClient {
+
+    // MARK: - State
 
     enum State {
         case loggedOut
         case loggedIn
     }
 
-    var userDefaultsClient: UserDefaultsClient
+    // MARK: - Properties
 
-    internal init(userDefaultsClient: UserDefaultsClient) {
-        self.userDefaultsClient = userDefaultsClient
-    }
+    private let userDefaultsClient: UserDefaultsClient
 
     lazy var state: CurrentValueSubject<State, Never> = {
         if userDefaultsClient.get(for: .campusUserInfo) != nil {
@@ -27,6 +27,16 @@ class CampusClient {
             return .init(.loggedOut)
         }
     }()
+
+    // MARK: - Lifecycle
+
+    static func live(userDefaultsClient: UserDefaultsClient) -> CampusClient {
+        CampusClient(userDefaultsClient: userDefaultsClient)
+    }
+
+    private init(userDefaultsClient: UserDefaultsClient) {
+        self.userDefaultsClient = userDefaultsClient
+    }
 
     func logOut() {
         state.value = .loggedOut
@@ -39,4 +49,5 @@ class CampusClient {
             state.value = .loggedOut
         }
     }
+    
 }

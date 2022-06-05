@@ -31,7 +31,7 @@ struct LessonCell {
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, _ in
+    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
         case .onTap:
             return .none

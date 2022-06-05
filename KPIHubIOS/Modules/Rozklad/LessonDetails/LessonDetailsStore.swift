@@ -15,10 +15,6 @@ struct LessonDetails {
 
         var lesson: Lesson
 
-//        var names: String {
-//            re
-//        }
-
         init(lesson: Lesson) {
             self.lesson = lesson
         }

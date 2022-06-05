@@ -169,7 +169,7 @@ struct GroupLessonsView: View {
             return result
 
         } else if let lastIndex = offsets.lastIndex(where: { $0 ?? CGFloat.infinity < target - 1 }) {
-            let result = min(lastIndex + 1, 11)
+            let result = min(lastIndex + 1, GroupLessons.State.Section.Position.count - 1)
             return result
 
         } else {

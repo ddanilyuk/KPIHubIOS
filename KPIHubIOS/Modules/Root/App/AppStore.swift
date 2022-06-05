@@ -60,8 +60,9 @@ struct App {
                 router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
-            let rozkladClient: RozkladClient = .init(userDefaultsClient: userDefaultsClient)
-            let campusClient: CampusClient = .init(userDefaultsClient: userDefaultsClient)
+            let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
+            let campusClient: CampusClient = .live(userDefaultsClient: userDefaultsClient)
+
             return Self(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
@@ -76,8 +77,7 @@ struct App {
     static var reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .appDelegate(.didFinishLaunching):
-            if environment.userDefaultsClient.get(for: .group) != nil ||
-               environment.userDefaultsClient.get(for: .campusUserInfo) != nil {
+            if environment.userDefaultsClient.get(for: .onboardingPassed) {
                 state.set(.main)
             } else {
                 state.set(.login)
@@ -106,7 +106,6 @@ struct App {
                 action: /Action.appDelegate,
                 environment: { $0.appDelegate }
             ),
-
         Login.reducer
             .optional()
             .pullback(
@@ -114,7 +113,6 @@ struct App {
                 action: /Action.login,
                 environment: { $0.login }
             ),
-
         Main.reducer
             .optional()
             .pullback(
@@ -122,7 +120,6 @@ struct App {
                 action: /Action.main,
                 environment: { $0.main }
             ),
-
         reducerCore
     )
     .debug()

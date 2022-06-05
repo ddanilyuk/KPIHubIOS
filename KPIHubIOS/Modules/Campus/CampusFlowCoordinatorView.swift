@@ -47,9 +47,6 @@ struct CampusFlowCoordinatorView: View {
                 )
             }
         }
-        .onAppear {
-//            ViewStore(store).send(.onAppear)
-        }
     }
 
 }
