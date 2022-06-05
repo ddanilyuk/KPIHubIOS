@@ -29,7 +29,7 @@ struct GroupPickerView: View {
                 prompt: Text("Пошук")
             )
             .onAppear { viewStore.send(.onAppear) }
-            .navigationTitle("Групи")
+            .navigationTitle("Оберіть групу")
             .loadable(viewStore.binding(\.$isLoading))
         }
     }

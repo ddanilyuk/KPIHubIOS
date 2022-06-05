@@ -56,7 +56,7 @@ struct CampusLoginView: View {
 
                 Spacer()
             }
-
+            .loadable(viewStore.binding(\.$isLoading))
         }
     }
 }
@@ -68,7 +68,7 @@ struct CampusLoginView_Previews: PreviewProvider {
         NavigationView {
             CampusLoginView(
                 store: Store(
-                    initialState: CampusLogin.State(),
+                    initialState: CampusLogin.State(mode: .onlyCampus),
                     reducer: CampusLogin.reducer,
                     environment: CampusLogin.Environment(
                         apiClient: .failing,

@@ -16,15 +16,16 @@ struct Rozklad {
         var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
 
         init() {
-            self.routes = [
-                .root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)
-            ]
+            self.routes = [.root(.empty(.init()))]
         }
     }
 
     // MARK: - Action
 
     enum Action: Equatable, IdentifiedRouterAction {
+
+        case onAppear
+
         case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
         case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
     }
@@ -38,13 +39,25 @@ struct Rozklad {
 
     // MARK: - Reducer
 
-    static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
+    static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
+        case .onAppear:
+            if environment.userDefaultsClient.get(for: .group) != nil {
+                state.routes = [.root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)]
+            } else {
+                state.routes = [.root(.groupPicker(GroupPicker.State()), embedInNavigationView: true)]
+            }
+            return .none
+
         case let .routeAction(_, .groupLessons(.routeAction(.openDetails(lesson)))):
             let lessonDetailsState = LessonDetails.State(
                 lesson: lesson
             )
             state.routes.push(.lessonDetails(lessonDetailsState))
+            return .none
+
+        case .routeAction(_, .groupPicker(.routeAction(.done))):
+            state.routes = [.root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)]
             return .none
 
         case .routeAction:

@@ -11,23 +11,31 @@ struct Profile {
 
     // MARK: - State
 
-    struct State: Equatable { }
+    struct State: Equatable {
+        var name: String = ""
+    }
 
     // MARK: - Action
 
     enum Action: Equatable {
-        case start
+        case onAppear
     }
 
     // MARK: - Environment
 
-    struct Environment { }
+    struct Environment {
+        let userDefaultsClient: UserDefaultsClient
+    }
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
-        case .start:
+        case .onAppear:
+            if let userInfo = environment.userDefaultsClient.get(for: .campusUserInfo) {
+                state.name = userInfo.fullName
+
+            }
             return .none
         }
     }

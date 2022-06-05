@@ -87,7 +87,8 @@ struct GroupLessons {
 
     struct State: Equatable {
 
-        var lessons: IdentifiedArrayOf<Lesson>
+        var groupName: String = ""
+        var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
 
         struct Section: Equatable, Identifiable {
@@ -139,7 +140,6 @@ struct GroupLessons {
 
     enum Action: Equatable {
         case onAppear
-        case lessonsResponse(Result<[Lesson], NSError>)
 
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
 
@@ -166,30 +166,9 @@ struct GroupLessons {
                 state.lessons = IdentifiedArray(uniqueElements: lessons)
                 state.sections = [State.Section](lessons: lessons)
             }
-            return .none
-
-            let task: Effect<[Lesson], Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
-                    for: .api(.group(
-                        UUID(uuidString: "930dc61d-dc94-4213-947c-3158708732fd")!,
-                        .lessons
-                    )),
-                    as: LessonsResponse.self
-                )
-                return result.value.lessons.map { Lesson(lessonResponse: $0) }
+            if let group = environment.userDefaultsClient.get(for: .group) {
+                state.groupName = group.name
             }
-            return task
-                .mapError { $0 as NSError }
-                .receive(on: DispatchQueue.main)
-                .catchToEffect(Action.lessonsResponse)
-
-        case let .lessonsResponse(.success(lessons)):
-            environment.userDefaultsClient.set(lessons, for: .lessons)
-            state.lessons = IdentifiedArray(uniqueElements: lessons)
-            state.sections = [State.Section](lessons: lessons)
-            return .none
-
-        case let .lessonsResponse(.failure(error)):
             return .none
 
         case let .lessonCells(id, .onTap):

@@ -95,11 +95,14 @@ extension Main.Environment {
 
     var campus: Campus.Environment {
         Campus.Environment(
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient
         )
     }
 
     var profile: Profile.Environment {
         Profile.Environment(
+            userDefaultsClient: userDefaultsClient
         )
     }
 

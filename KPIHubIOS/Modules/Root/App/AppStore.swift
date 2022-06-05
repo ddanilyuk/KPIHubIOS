@@ -54,8 +54,8 @@ struct App {
 
         static var live: Self {
             let apiClient: APIClient = .live(
-                router: rootRouter.baseURL("http://127.0.0.1:8080")
-//                router: rootRouter.baseURL("http://kpihub.xyz")
+//                router: rootRouter.baseURL("http://127.0.0.1:8080")
+                router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
             return Self(
@@ -66,6 +66,35 @@ struct App {
     }
 
     // MARK: - Reducer
+
+    static var reducerCore = Reducer<State, Action, Environment> { state, action, environment in
+        switch action {
+        case .appDelegate(.didFinishLaunching):
+            if environment.userDefaultsClient.get(for: .group) != nil ||
+               environment.userDefaultsClient.get(for: .campusUserInfo) != nil {
+                state.set(.main)
+            } else {
+                state.set(.login)
+            }
+            return .none
+
+        case .login(.delegate(.done)):
+            state.set(.main)
+            return .none
+
+        case .signOut:
+            return .none
+
+        case .appDelegate:
+            return .none
+
+        case .login:
+            return .none
+
+        case .main:
+            return .none
+        }
+    }
 
     static var reducer = Reducer<State, Action, Environment>.combine(
         AppDelegate.reducer
@@ -95,29 +124,6 @@ struct App {
     )
     .debug()
 
-    static var reducerCore = Reducer<State, Action, Environment> { state, action, _ in
-        switch action {
-        case .appDelegate(.didFinishLaunching):
-            state.set(.login)
-            return .none
-
-        case .login(.delegate(.done)):
-            state.set(.main)
-            return .none
-
-        case .signOut:
-            return .none
-
-        case .appDelegate:
-            return .none
-
-        case .login:
-            return .none
-
-        case .main:
-            return .none
-        }
-    }
 }
 
 // MARK: App.Environment + Extensions

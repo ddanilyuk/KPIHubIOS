@@ -7,13 +7,35 @@
 
 import SwiftUI
 import ComposableArchitecture
+import TCACoordinators
 
 struct CampusFlowCoordinatorView: View {
 
     let store: Store<Campus.State, Campus.Action>
 
     var body: some View {
-        Text("Campus")
+        TCARouter(store) { screen in
+            SwitchStore(screen) {
+                CaseLet(
+                    state: /Campus.ScreenProvider.State.empty,
+                    action: Campus.ScreenProvider.Action.empty,
+                    then: EmptyScreenView.init
+                )
+                CaseLet(
+                    state: /Campus.ScreenProvider.State.campusLogin,
+                    action: Campus.ScreenProvider.Action.campusLogin,
+                    then: CampusLoginView.init
+                )
+                CaseLet(
+                    state: /Campus.ScreenProvider.State.campusHome,
+                    action: Campus.ScreenProvider.Action.campusHome,
+                    then: CampusHomeView.init
+                )
+            }
+        }
+        .onAppear {
+            ViewStore(store).send(.onAppear)
+        }
     }
 
 }

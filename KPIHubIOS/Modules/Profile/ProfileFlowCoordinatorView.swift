@@ -13,7 +13,12 @@ struct ProfileFlowCoordinatorView: View {
     let store: Store<Profile.State, Profile.Action>
 
     var body: some View {
-        Text("Profile")
+        WithViewStore(store) { viewStore in
+            Text("Profile \(viewStore.name)")
+                .onAppear {
+                    viewStore.send(.onAppear)
+                }
+        }
     }
 
 }

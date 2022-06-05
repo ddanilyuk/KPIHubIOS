@@ -21,6 +21,8 @@ extension Rozklad.ScreenProvider {
 
         static var module: Any.Type = Rozklad.self
 
+        case empty(EmptyScreen.State)
+        case groupPicker(GroupPicker.State)
         case groupLessons(GroupLessons.State)
         case lessonDetails(LessonDetails.State)
     }
@@ -28,6 +30,9 @@ extension Rozklad.ScreenProvider {
     // MARK: - Action handling
 
     enum Action: Equatable {
+
+        case empty(EmptyScreen.Action)
+        case groupPicker(GroupPicker.Action)
         case groupLessons(GroupLessons.Action)
         case lessonDetails(LessonDetails.Action)
     }
@@ -52,6 +57,17 @@ extension Rozklad.ScreenProvider {
                 action: /Action.lessonDetails,
                 environment: {
                     LessonDetails.Environment(
+                        userDefaultsClient: $0.userDefaultsClient
+                    )
+                }
+            ),
+        GroupPicker.reducer
+            .pullback(
+                state: /State.groupPicker,
+                action: /Action.groupPicker,
+                environment: {
+                    GroupPicker.Environment(
+                        apiClient: $0.apiClient,
                         userDefaultsClient: $0.userDefaultsClient
                     )
                 }

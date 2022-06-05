@@ -36,7 +36,7 @@ struct GroupLessonsView: View {
             VStack(spacing: 0) {
                 VStack(spacing: 0) {
                     GroupTitleView(
-                        title: "ІВ-82"
+                        title: viewStore.groupName
                     )
 
                     GroupLessonsWeekPicker(

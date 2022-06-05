@@ -52,7 +52,7 @@ struct Login {
             return .none
 
         case .routeAction(_, .onboarding(.routeAction(.campusLogin))):
-            let campusLoginState = CampusLogin.State()
+            let campusLoginState = CampusLogin.State(mode: .campusAndGroup)
             state.routes.push(.campusLogin(campusLoginState))
             return .none
 
