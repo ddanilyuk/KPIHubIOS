@@ -69,6 +69,7 @@ struct GroupLessons {
 
     enum Action: Equatable {
         case onAppear
+        case updateLessons(IdentifiedArrayOf<Lesson>)
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
         case routeAction(RouteAction)
 
@@ -82,6 +83,7 @@ struct GroupLessons {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
@@ -96,6 +98,16 @@ struct GroupLessons {
             if let group = environment.userDefaultsClient.get(for: .group) {
                 state.groupName = group.name
             }
+            return Effect.run { subscriber in
+                environment.rozkladClient.lessons
+                    .sink { lessons in
+                        subscriber.send(.updateLessons(lessons))
+                    }
+            }
+
+        case let .updateLessons(lessons):
+            state.lessons = lessons
+            state.sections = [State.Section](lessons: state.lessons)
             return .none
 
         case let .lessonCells(id, .onTap):

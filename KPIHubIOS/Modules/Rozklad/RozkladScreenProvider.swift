@@ -25,6 +25,7 @@ extension Rozklad.ScreenProvider {
         case groupPicker(GroupPicker.State)
         case groupLessons(GroupLessons.State)
         case lessonDetails(LessonDetails.State)
+        case editLessonNames(EditLessonNames.State)
     }
 
     // MARK: - Action handling
@@ -34,11 +35,23 @@ extension Rozklad.ScreenProvider {
         case groupPicker(GroupPicker.Action)
         case groupLessons(GroupLessons.Action)
         case lessonDetails(LessonDetails.Action)
+        case editLessonNames(EditLessonNames.Action)
     }
 
     // MARK: - Reducer handling
 
     static let reducer = Reducer<State, Action, Rozklad.Environment>.combine(
+        GroupPicker.reducer
+            .pullback(
+                state: /State.groupPicker,
+                action: /Action.groupPicker,
+                environment: {
+                    GroupPicker.Environment(
+                        apiClient: $0.apiClient,
+                        userDefaultsClient: $0.userDefaultsClient
+                    )
+                }
+            ),
         GroupLessons.reducer
             .pullback(
                 state: /State.groupLessons,
@@ -46,7 +59,8 @@ extension Rozklad.ScreenProvider {
                 environment: {
                     GroupLessons.Environment(
                         apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient
+                        userDefaultsClient: $0.userDefaultsClient,
+                        rozkladClient: $0.rozkladClient
                     )
                 }
             ),
@@ -56,17 +70,17 @@ extension Rozklad.ScreenProvider {
                 action: /Action.lessonDetails,
                 environment: {
                     LessonDetails.Environment(
-                        userDefaultsClient: $0.userDefaultsClient
+                        userDefaultsClient: $0.userDefaultsClient,
+                        rozkladClient: $0.rozkladClient
                     )
                 }
             ),
-        GroupPicker.reducer
+        EditLessonNames.reducer
             .pullback(
-                state: /State.groupPicker,
-                action: /Action.groupPicker,
+                state: /State.editLessonNames,
+                action: /Action.editLessonNames,
                 environment: {
-                    GroupPicker.Environment(
-                        apiClient: $0.apiClient,
+                    EditLessonNames.Environment(
                         userDefaultsClient: $0.userDefaultsClient
                     )
                 }

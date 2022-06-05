@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import TCACoordinators
+import IdentifiedCollections
 
 struct Rozklad {
 
@@ -84,6 +85,27 @@ struct Rozklad {
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
             state.routes = [.root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)]
+            return .none
+
+        case let .routeAction(_, .lessonDetails(.routeAction(.editNames(oldNames, selected)))):
+            let editLessonNamesState = EditLessonNames.State(names: oldNames, selected: selected)
+            state.routes.presentSheet(.editLessonNames(editLessonNamesState), embedInNavigationView: true)
+            return .none
+
+        case let .routeAction(_, .editLessonNames(.routeAction(.save(selected)))):
+            guard var oldLesson = state.routes.first(where: /ScreenProvider.State.lessonDetails)?.lesson else {
+                return .none
+            }
+            var lessons = IdentifiedArray(uniqueElements: environment.userDefaultsClient.get(for: .lessons) ?? [])
+            oldLesson.names = selected
+            lessons[id: oldLesson.id] = oldLesson
+            environment.userDefaultsClient.set(lessons.elements, for: .lessons)
+            environment.rozkladClient.updateLessons()
+            state.routes.dismiss()
+            return .none
+
+        case .routeAction(_, .editLessonNames(.routeAction(.cancel))):
+            state.routes.dismiss()
             return .none
 
         case .routeAction:
