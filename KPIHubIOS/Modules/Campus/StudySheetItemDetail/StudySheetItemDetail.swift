@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import IdentifiedCollections
 
 struct StudySheetItemDetail {
 
@@ -14,39 +15,24 @@ struct StudySheetItemDetail {
     struct State: Equatable, Identifiable {
         let item: StudySheetItem
 
+        var cells: IdentifiedArrayOf<StudySheetActivity.State>
+
         var id: StudySheetItem.ID {
             return item.id
         }
 
-//        init() {
-//            let lesson = StudySheetLesson(
-//                year: "2018-2019",
-//                semester: .first,
-//                name: "Англійська мова",
-//                teacher: "Грабар Ольга володимирівна"
-//            )
-//            let activity1 = StudySheetActivity(
-//                date: "09-12-2018",
-//                mark: "28",
-//                type: "Диференційований залік",
-//                teacher: "Блажієвська Ірина Петрівна",
-//                note: ""
-//            )
-//            let activity2 = StudySheetActivity(
-//                date: "09-12-2018",
-//                mark: "95",
-//                type: "Модульна контрольна робота",
-//                teacher: "Блажієвська Ірина Петрівна",
-//                note: ""
-//            )
-//            self.item = .init(lesson: lesson, activities: [activity1, activity2])
-//        }
+        init(item: StudySheetItem) {
+            self.item = item
+            self.cells = IdentifiedArray(
+                uniqueElements: item.activities.map(StudySheetActivity.State.init(activity:))
+            )
+        }
     }
 
     // MARK: - Action
 
     enum Action: Equatable {
-        case start
+        case cells(id: StudySheetActivity.State.ID, action: StudySheetActivity.Action)
     }
 
     // MARK: - Environment
@@ -59,7 +45,7 @@ struct StudySheetItemDetail {
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
-        case .start:
+        case .cells:
             return .none
         }
     }

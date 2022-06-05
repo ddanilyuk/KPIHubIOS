@@ -60,7 +60,14 @@ struct StudySheetItem: Identifiable, Equatable {
                 link: "",
                 name: "Англійська мова",
                 teachers: ["Грабар Ольга володимирівна", "Сергеєва Оксана Олексіївна"],
-                activities: []
+                activities: [
+                    .init(
+                        date: "2018-2019",
+                        mark: "15", type: "Test",
+                        teacher: "Сергеєва Оксана Олексіївна",
+                        note: ""
+                    )
+                ]
             )
         )
     }
@@ -107,14 +114,23 @@ struct StudySheetItem: Identifiable, Equatable {
         )
     }
 
-    struct Activity: Codable, Equatable {
+    struct Activity: Codable, Equatable, Identifiable {
 
+        let id: Int
         let date: String
         let mark: String
         let type: String
         let teacher: String
         let note: String
 
+        init(id: Int, studySheetActivityResponse: StudySheetActivityResponse) {
+            self.id = id
+            self.date = studySheetActivityResponse.date
+            self.mark = studySheetActivityResponse.mark
+            self.type = studySheetActivityResponse.type
+            self.teacher = studySheetActivityResponse.teacher
+            self.note = studySheetActivityResponse.note
+        }
     }
 }
 
@@ -127,7 +143,9 @@ extension StudySheetItem {
         self.name = studySheetItemResponse.name
         self.teachers = studySheetItemResponse.teachers
 
-        self.activities = []
+        self.activities = studySheetItemResponse.activities
+            .enumerated()
+            .map { Activity(id: $0, studySheetActivityResponse: $1) }
 
         self.studySheetItemResponse = studySheetItemResponse
     }
@@ -149,16 +167,16 @@ struct StudySheet {
         var possibleYears: [String] = []
         var possibleSemesters: [Int] = []
 
-        var items: [StudySheetItem]
-        var sortedItems: [StudySheetItem]
+        var items: IdentifiedArrayOf<StudySheetItem>
+        var sortedItems: IdentifiedArrayOf<StudySheetItem>
         var cells: IdentifiedArrayOf<StudySheetCell.State>
 
         @BindableState var selectedYear: String?
         @BindableState var selectedSemester: Int?
 
         init(items: [StudySheetItem]) {
-            self.items = items
-            self.sortedItems = items
+            self.items = IdentifiedArray(uniqueElements: items)
+            self.sortedItems = IdentifiedArray(uniqueElements: items)
             self.cells = IdentifiedArray(uniqueElements: sortedItems.map { StudySheetCell.State(item: $0) })
 
             possibleYears = Set(items.map { $0.year }).sorted(by: <)
@@ -177,7 +195,7 @@ struct StudySheet {
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
-            case itemDetail
+            case openDetail(StudySheetItem)
         }
     }
 
@@ -225,8 +243,10 @@ struct StudySheet {
             return .none
 
         case let .cells(id, .onTap):
-            print("Tapped id")
-            return .none
+            guard let selectedItem = state.items[id: id] else {
+                return .none
+            }
+            return Effect(value: .routeAction(.openDetail(selectedItem)))
 
         case .binding:
             return .none
