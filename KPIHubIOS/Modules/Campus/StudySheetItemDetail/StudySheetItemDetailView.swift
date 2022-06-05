@@ -60,7 +60,7 @@ struct StudySheetItemDetailView: View {
                     Spacer(minLength: 0)
                 }
                 .padding()
-                .navigationBarTitle("\(viewStore.item.lesson.name)")
+                .navigationBarTitle("\(viewStore.item.name)")
                 .navigationBarTitleDisplayMode(.inline)
 
             }
@@ -72,22 +72,22 @@ struct StudySheetItemDetailView: View {
 
 // MARK: - Preview
 
-struct StudySheetItemDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            StudySheetItemDetailView(
-                store: Store(
-                    initialState: StudySheetItemDetail.State(
-                        //                        possibleYears:
-                        //                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
-                    ),
-                    reducer: StudySheetItemDetail.reducer,
-                    environment: StudySheetItemDetail.Environment(
-                        //                        userDefaultsClient: .live()
-                    )
-                )
-            )
-        }
-    }
-}
+//struct StudySheetItemDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            StudySheetItemDetailView(
+//                store: Store(
+//                    initialState: StudySheetItemDetail.State(
+//                        //                        possibleYears:
+//                        //                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+//                    ),
+//                    reducer: StudySheetItemDetail.reducer,
+//                    environment: StudySheetItemDetail.Environment(
+//                        //                        userDefaultsClient: .live()
+//                    )
+//                )
+//            )
+//        }
+//    }
+//}
 

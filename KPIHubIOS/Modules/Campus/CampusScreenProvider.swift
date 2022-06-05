@@ -57,10 +57,10 @@ extension Campus.ScreenProvider {
             .pullback(
                 state: /State.campusHome,
                 action: /Action.campusHome,
-                environment: { _ in
+                environment: {
                     CampusHome.Environment(
-//                        apiClient: $0.apiClient,
-//                        userDefaultsClient: $0.userDefaultsClient
+                        apiClient: $0.apiClient,
+                        userDefaultsClient: $0.userDefaultsClient
                     )
                 }
             ),

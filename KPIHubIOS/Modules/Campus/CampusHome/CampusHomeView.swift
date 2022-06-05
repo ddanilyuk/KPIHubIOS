@@ -45,13 +45,17 @@ struct CampusHomeView: View {
                         .padding(16)
                     }
                     .onTapGesture {
-                        viewStore.send(.routeAction(.studySheet))
+                        viewStore.send(.studySheetTap)
                     }
                 }
                 .padding(24)
             }
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
             .background(Color.screenBackground)
             .navigationTitle("Кампус")
+            .loadable(viewStore.binding(\.$isLoading))
         }
     }
 
@@ -72,10 +76,13 @@ struct CampusHomeView_Previews: PreviewProvider {
             CampusHomeView(
                 store: Store(
                     initialState: CampusHome.State(
+//                        studySheetItems:
 //                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
                     reducer: CampusHome.reducer,
                     environment: CampusHome.Environment(
+                        apiClient: .failing,
+                        userDefaultsClient: .live()
 //                        userDefaultsClient: .live()
                     )
                 )

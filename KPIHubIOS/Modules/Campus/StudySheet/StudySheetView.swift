@@ -20,8 +20,8 @@ struct StudySheetView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            VStack {
-                HStack(spacing: 16) {
+            VStack(alignment: .center, spacing: 0) {
+                HStack(alignment: .center, spacing: 16) {
                     Menu {
                         ForEach(viewStore.possibleYears, id: \.self) { year in
                             Button {
@@ -48,12 +48,12 @@ struct StudySheetView: View {
                     }
 
                     Menu {
-                        ForEach(StudySheetLesson.Semester.allCases, id: \.self) { semester in
+                        ForEach(viewStore.possibleSemesters, id: \.self) { semester in
                             Button {
-                                viewStore.send(.binding(.set(\.$selectedSemester, semester.rawValue)))
+                                viewStore.send(.binding(.set(\.$selectedSemester, semester)))
                             } label: {
-                                Text("\(semester.rawValue)")
-                                Image(systemName: "\(semester.rawValue).square")
+                                Text("\(semester)")
+                                Image(systemName: "\(semester).square")
                             }
                         }
                         Button(
@@ -73,55 +73,29 @@ struct StudySheetView: View {
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
                     }
-
                 }
-                .padding()
+                .frame(height: 50)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
 
-                ScrollView {
-                    LazyVStack {
-                        // ITEM
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
-                                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text("name")
-                                    .font(.system(.callout).bold())
-                                    .lineLimit(2)
-
-                                ForEach(["Teacher1", "Teacher2"], id: \.self) { teacher in
-                                    SmallTagView(
-                                        icon: Image(systemName: "person"),
-                                        text: teacher,
-                                        backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                                        accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                                    )
-                                }
-
-                                SmallTagView(
-                                    icon: Image(systemName: "calendar"),
-                                    text: "2018-2019 | 1 семетр",
-                                    backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                                    accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
-                                )
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(16)
-                        }
-                        .onTapGesture {
-                            viewStore.send(.routeAction(.itemDetail))
-                        }
-
-                        Spacer(minLength: 0)
+                ScrollView(.vertical) {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEachStore(
+                            self.store.scope(
+                                state: \StudySheet.State.cells,
+                                action: StudySheet.Action.cells(id:action:)
+                            ),
+                            content: StudySheetCellView.init(store:)
+                        )
                     }
-                    .padding()
                 }
+                .animation(Animation.default, value: viewStore.cells)
+                .padding(.horizontal, 16)
             }
-            .background(Color.screenBackground)
-            .navigationBarTitle("Поточний контроль")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationBarTitle("Поточний контроль")
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.screenBackground)
     }
 
 }
@@ -130,19 +104,22 @@ struct StudySheetView: View {
 
 struct StudySheetView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            StudySheetView(
-                store: Store(
-                    initialState: StudySheet.State(
-//                        possibleYears: 
-                        //                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
-                    ),
-                    reducer: StudySheet.reducer,
-                    environment: StudySheet.Environment(
-                        //                        userDefaultsClient: .live()
+        TabView {
+            NavigationView {
+                StudySheetView(
+                    store: Store(
+                        initialState: StudySheet.State(
+                            items: [StudySheetItem.mock1, .mock2, .mock3, .mock4]
+                        ),
+                        reducer: StudySheet.reducer,
+                        environment: StudySheet.Environment()
                     )
                 )
-            )
+            }
+            .tabItem {
+                Text("test")
+            }
         }
+
     }
 }

@@ -16,7 +16,13 @@ struct Campus {
         var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
 
         init() {
-            self.routes = [.root(.empty(.init()))]
+            self.routes = [
+//                .root(.empty(.init()))
+                .root(
+                    .campusHome(CampusHome.State()),
+                    embedInNavigationView: true
+                )
+            ]
         }
     }
 
@@ -41,21 +47,21 @@ struct Campus {
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
-            if environment.userDefaultsClient.get(for: .campusUserInfo) != nil {
-                state.routes = [
-                    .root(
-                        .campusHome(CampusHome.State()),
-                        embedInNavigationView: true
-                    )
-                ]
-            } else {
-                state.routes = [
-                    .root(
-                        .campusLogin(CampusLogin.State(mode: .onlyCampus)),
-                        embedInNavigationView: true
-                    )
-                ]
-            }
+//            if environment.userDefaultsClient.get(for: .campusUserInfo) != nil {
+//                state.routes = [
+//                    .root(
+//                        .campusHome(CampusHome.State()),
+//                        embedInNavigationView: true
+//                    )
+//                ]
+//            } else {
+//                state.routes = [
+//                    .root(
+//                        .campusLogin(CampusLogin.State(mode: .onlyCampus)),
+//                        embedInNavigationView: true
+//                    )
+//                ]
+//            }
             return .none
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
@@ -67,14 +73,14 @@ struct Campus {
             ]
             return .none
 
-        case .routeAction(_, action: .campusHome(.routeAction(.studySheet))):
-            let studySheetState = StudySheet.State()
+        case let .routeAction(_, action: .campusHome(.routeAction(.studySheet(items)))):
+            let studySheetState = StudySheet.State(items: items)
             state.routes.push(.studySheet(studySheetState))
             return .none
 
         case .routeAction(_, .studySheet(.routeAction(.itemDetail))):
-            let studySheetItemDetailState = StudySheetItemDetail.State()
-            state.routes.push(.studySheetItemDetail(studySheetItemDetailState))
+//            let studySheetItemDetailState = StudySheetItemDetail.State()
+//            state.routes.push(.studySheetItemDetail(studySheetItemDetailState))
             return .none
 
         case .routeAction:

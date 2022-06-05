@@ -66,6 +66,8 @@
 		5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE8284CCA7600FED83D /* StudySheetView.swift */; };
 		5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBEC284CD7E000FED83D /* StudySheetItemDetail.swift */; };
 		5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBEE284CD7F500FED83D /* StudySheetItemDetailView.swift */; };
+		5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBF1284CEBF100FED83D /* StudySheetCellStore.swift */; };
+		5F69BBF4284CEC1600FED83D /* StudySheetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBF3284CEC1600FED83D /* StudySheetCellView.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -157,6 +159,8 @@
 		5F69BBE8284CCA7600FED83D /* StudySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetView.swift; sourceTree = "<group>"; };
 		5F69BBEC284CD7E000FED83D /* StudySheetItemDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetItemDetail.swift; sourceTree = "<group>"; };
 		5F69BBEE284CD7F500FED83D /* StudySheetItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetItemDetailView.swift; sourceTree = "<group>"; };
+		5F69BBF1284CEBF100FED83D /* StudySheetCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetCellStore.swift; sourceTree = "<group>"; };
+		5F69BBF3284CEC1600FED83D /* StudySheetCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetCellView.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -485,6 +489,7 @@
 			children = (
 				5F69BBE6284CCA6E00FED83D /* StudySheet.swift */,
 				5F69BBE8284CCA7600FED83D /* StudySheetView.swift */,
+				5F69BBF0284CEBCE00FED83D /* Cell */,
 			);
 			path = StudySheet;
 			sourceTree = "<group>";
@@ -496,6 +501,15 @@
 				5F69BBEE284CD7F500FED83D /* StudySheetItemDetailView.swift */,
 			);
 			path = StudySheetItemDetail;
+			sourceTree = "<group>";
+		};
+		5F69BBF0284CEBCE00FED83D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5F69BBF1284CEBF100FED83D /* StudySheetCellStore.swift */,
+				5F69BBF3284CEC1600FED83D /* StudySheetCellView.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -817,6 +831,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F5F46432848EDF700202DA5 /* OffsetModifier.swift in Sources */,
+				5F69BBF4284CEC1600FED83D /* StudySheetCellView.swift in Sources */,
 				5F137ECD2843A3C500514263 /* LoginStore.swift in Sources */,
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
@@ -846,6 +861,7 @@
 				5F5F462F28456D3B00202DA5 /* SmallTagView.swift in Sources */,
 				5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */,
 				5F137EDD2843A87700514263 /* Group.swift in Sources */,
+				5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
 				5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */,
 				5F69BBE4284CC12800FED83D /* CampusHomeView.swift in Sources */,
