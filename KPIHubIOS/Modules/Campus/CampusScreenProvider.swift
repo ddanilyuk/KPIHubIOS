@@ -24,6 +24,7 @@ extension Campus.ScreenProvider {
         case empty(EmptyScreen.State)
         case campusLogin(CampusLogin.State)
         case campusHome(CampusHome.State)
+        case studySheet(StudySheet.State)
     }
 
     // MARK: - Action handling
@@ -33,6 +34,7 @@ extension Campus.ScreenProvider {
         case empty(EmptyScreen.Action)
         case campusLogin(CampusLogin.Action)
         case campusHome(CampusHome.Action)
+        case studySheet(StudySheet.Action)
     }
 
     // MARK: - Reducer handling
@@ -55,6 +57,17 @@ extension Campus.ScreenProvider {
                 action: /Action.campusHome,
                 environment: { _ in
                     CampusHome.Environment(
+//                        apiClient: $0.apiClient,
+//                        userDefaultsClient: $0.userDefaultsClient
+                    )
+                }
+            ),
+        StudySheet.reducer
+            .pullback(
+                state: /State.studySheet,
+                action: /Action.studySheet,
+                environment: { _ in
+                    StudySheet.Environment(
 //                        apiClient: $0.apiClient,
 //                        userDefaultsClient: $0.userDefaultsClient
                     )

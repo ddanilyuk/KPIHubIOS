@@ -16,7 +16,12 @@ struct CampusHome {
     // MARK: - Action
 
     enum Action: Equatable {
-        case start
+
+        case routeAction(RouteAction)
+
+        enum RouteAction {
+            case studySheet
+        }
     }
 
     // MARK: - Environment
@@ -27,7 +32,7 @@ struct CampusHome {
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
-        case .start:
+        case .routeAction:
             return .none
         }
     }

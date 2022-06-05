@@ -67,6 +67,11 @@ struct Campus {
             ]
             return .none
 
+        case .routeAction(_, action: .campusHome(.routeAction(.studySheet))):
+            let studySheetState = StudySheet.State()
+            state.routes.push(.studySheet(studySheetState))
+            return .none
+
         case .routeAction:
             return .none
 

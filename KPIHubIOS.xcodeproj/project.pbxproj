@@ -62,6 +62,8 @@
 		5F69BBDF284CC0C900FED83D /* CampusScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBDE284CC0C900FED83D /* CampusScreenProvider.swift */; };
 		5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE1284CC12300FED83D /* CampusHome.swift */; };
 		5F69BBE4284CC12800FED83D /* CampusHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE3284CC12800FED83D /* CampusHomeView.swift */; };
+		5F69BBE7284CCA6E00FED83D /* StudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE6284CCA6E00FED83D /* StudySheet.swift */; };
+		5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE8284CCA7600FED83D /* StudySheetView.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -149,6 +151,8 @@
 		5F69BBDE284CC0C900FED83D /* CampusScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusScreenProvider.swift; sourceTree = "<group>"; };
 		5F69BBE1284CC12300FED83D /* CampusHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusHome.swift; sourceTree = "<group>"; };
 		5F69BBE3284CC12800FED83D /* CampusHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusHomeView.swift; sourceTree = "<group>"; };
+		5F69BBE6284CCA6E00FED83D /* StudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheet.swift; sourceTree = "<group>"; };
+		5F69BBE8284CCA7600FED83D /* StudySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetView.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -339,6 +343,7 @@
 				5F69BBDE284CC0C900FED83D /* CampusScreenProvider.swift */,
 				5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */,
 				5F69BBE0284CC0F900FED83D /* CampusHome */,
+				5F69BBE5284CCA4B00FED83D /* StudySheet */,
 			);
 			path = Campus;
 			sourceTree = "<group>";
@@ -468,6 +473,15 @@
 				5F69BBE3284CC12800FED83D /* CampusHomeView.swift */,
 			);
 			path = CampusHome;
+			sourceTree = "<group>";
+		};
+		5F69BBE5284CCA4B00FED83D /* StudySheet */ = {
+			isa = PBXGroup;
+			children = (
+				5F69BBE6284CCA6E00FED83D /* StudySheet.swift */,
+				5F69BBE8284CCA7600FED83D /* StudySheetView.swift */,
+			);
+			path = StudySheet;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -827,8 +841,10 @@
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */,
 				5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */,
+				5F69BBE7284CCA6E00FED83D /* StudySheet.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
 				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
+				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
 				5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,

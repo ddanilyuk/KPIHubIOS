@@ -44,6 +44,9 @@ struct CampusHomeView: View {
                         }
                         .padding(16)
                     }
+                    .onTapGesture {
+                        viewStore.send(.routeAction(.studySheet))
+                    }
                 }
                 .padding(24)
             }
