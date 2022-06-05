@@ -72,7 +72,7 @@ struct LessonCellView: View {
                 viewStore.send(.onTap)
             }
             .padding()
-            .background(Color(.systemGroupedBackground))
+            .background(Color.screenBackground)
         }
     }
 }
@@ -96,8 +96,6 @@ struct LessonCellView_Previews: PreviewProvider {
             .previewLayout(.sizeThatFits)
             .fixedSize(horizontal: false, vertical: true)
             .frame(width: 375)
-            .padding()
-            .background(Color(.systemGroupedBackground))
 //            Spacer()
 //        }
 

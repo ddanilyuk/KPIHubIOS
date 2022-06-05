@@ -134,7 +134,7 @@ struct LessonDetailsView: View {
                 .padding(16)
             }
         }
-        .background(Color(.systemGroupedBackground))
+        .background(Color.screenBackground)
         .navigationTitle("Деталі")
         .navigationBarTitleDisplayMode(.inline)
     }

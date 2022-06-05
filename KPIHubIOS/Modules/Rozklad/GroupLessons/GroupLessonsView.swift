@@ -86,7 +86,7 @@ struct GroupLessonsView: View {
 
                                 // TODO: Handle if in last section.count != 0
                                 Rectangle()
-                                    .fill(Color(.systemGroupedBackground))
+                                    .background(Color.screenBackground)
                                     .frame(minHeight: geometryProxy.frame(in: .local).height - 44)
                             }
                             .onChange(of: selectedDay) { newValue in
@@ -128,7 +128,7 @@ struct GroupLessonsView: View {
                         displayedDay = sectionPosition.day
                         displayedWeek = sectionPosition.week
                     }
-                    .background(Color(.systemGroupedBackground))
+                    .background(Color.screenBackground)
                 }
             }
             .navigationBarHidden(true)
