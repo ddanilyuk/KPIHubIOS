@@ -64,6 +64,8 @@
 		5F69BBE4284CC12800FED83D /* CampusHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE3284CC12800FED83D /* CampusHomeView.swift */; };
 		5F69BBE7284CCA6E00FED83D /* StudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE6284CCA6E00FED83D /* StudySheet.swift */; };
 		5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE8284CCA7600FED83D /* StudySheetView.swift */; };
+		5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBEC284CD7E000FED83D /* StudySheetItemDetail.swift */; };
+		5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBEE284CD7F500FED83D /* StudySheetItemDetailView.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -153,6 +155,8 @@
 		5F69BBE3284CC12800FED83D /* CampusHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusHomeView.swift; sourceTree = "<group>"; };
 		5F69BBE6284CCA6E00FED83D /* StudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheet.swift; sourceTree = "<group>"; };
 		5F69BBE8284CCA7600FED83D /* StudySheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetView.swift; sourceTree = "<group>"; };
+		5F69BBEC284CD7E000FED83D /* StudySheetItemDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetItemDetail.swift; sourceTree = "<group>"; };
+		5F69BBEE284CD7F500FED83D /* StudySheetItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetItemDetailView.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 				5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */,
 				5F69BBE0284CC0F900FED83D /* CampusHome */,
 				5F69BBE5284CCA4B00FED83D /* StudySheet */,
+				5F69BBEB284CD7D400FED83D /* StudySheetItemDetail */,
 			);
 			path = Campus;
 			sourceTree = "<group>";
@@ -482,6 +487,15 @@
 				5F69BBE8284CCA7600FED83D /* StudySheetView.swift */,
 			);
 			path = StudySheet;
+			sourceTree = "<group>";
+		};
+		5F69BBEB284CD7D400FED83D /* StudySheetItemDetail */ = {
+			isa = PBXGroup;
+			children = (
+				5F69BBEC284CD7E000FED83D /* StudySheetItemDetail.swift */,
+				5F69BBEE284CD7F500FED83D /* StudySheetItemDetailView.swift */,
+			);
+			path = StudySheetItemDetail;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -810,6 +824,7 @@
 				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
 				5F5F4648284900A000202DA5 /* GroupLessonsWeekPicker.swift in Sources */,
+				5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */,
 				5F69BBDB284ACC4100FED83D /* APIClient.swift in Sources */,
 				5F5F46462849007100202DA5 /* GroupTitleView.swift in Sources */,
 				5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */,
@@ -852,6 +867,7 @@
 				5F5F464A284900C200202DA5 /* GroupLessonsDayPicker.swift in Sources */,
 				5F5F463D284814E800202DA5 /* Lesson.swift in Sources */,
 				5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */,
+				5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */,
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,

@@ -25,6 +25,7 @@ extension Campus.ScreenProvider {
         case campusLogin(CampusLogin.State)
         case campusHome(CampusHome.State)
         case studySheet(StudySheet.State)
+        case studySheetItemDetail(StudySheetItemDetail.State)
     }
 
     // MARK: - Action handling
@@ -35,6 +36,7 @@ extension Campus.ScreenProvider {
         case campusLogin(CampusLogin.Action)
         case campusHome(CampusHome.Action)
         case studySheet(StudySheet.Action)
+        case studySheetItemDetail(StudySheetItemDetail.Action)
     }
 
     // MARK: - Reducer handling
@@ -70,6 +72,17 @@ extension Campus.ScreenProvider {
                     StudySheet.Environment(
 //                        apiClient: $0.apiClient,
 //                        userDefaultsClient: $0.userDefaultsClient
+                    )
+                }
+            ),
+        StudySheetItemDetail.reducer
+            .pullback(
+                state: /State.studySheetItemDetail,
+                action: /Action.studySheetItemDetail,
+                environment: { _ in
+                    StudySheetItemDetail.Environment(
+                        //                        apiClient: $0.apiClient,
+                        //                        userDefaultsClient: $0.userDefaultsClient
                     )
                 }
             )

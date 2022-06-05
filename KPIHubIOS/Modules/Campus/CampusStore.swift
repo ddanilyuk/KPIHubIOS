@@ -72,6 +72,11 @@ struct Campus {
             state.routes.push(.studySheet(studySheetState))
             return .none
 
+        case .routeAction(_, .studySheet(.routeAction(.itemDetail))):
+            let studySheetItemDetailState = StudySheetItemDetail.State()
+            state.routes.push(.studySheetItemDetail(studySheetItemDetailState))
+            return .none
+
         case .routeAction:
             return .none
 

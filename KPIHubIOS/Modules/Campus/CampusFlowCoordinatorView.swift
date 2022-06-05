@@ -36,6 +36,11 @@ struct CampusFlowCoordinatorView: View {
                     action: Campus.ScreenProvider.Action.studySheet,
                     then: StudySheetView.init
                 )
+                CaseLet(
+                    state: /Campus.ScreenProvider.State.studySheetItemDetail,
+                    action: Campus.ScreenProvider.Action.studySheetItemDetail,
+                    then: StudySheetItemDetailView.init
+                )
             }
         }
         .onAppear {

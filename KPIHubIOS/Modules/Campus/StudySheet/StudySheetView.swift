@@ -109,6 +109,9 @@ struct StudySheetView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(16)
                         }
+                        .onTapGesture {
+                            viewStore.send(.routeAction(.itemDetail))
+                        }
 
                         Spacer(minLength: 0)
                     }

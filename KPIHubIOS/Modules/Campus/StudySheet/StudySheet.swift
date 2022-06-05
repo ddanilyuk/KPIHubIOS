@@ -7,12 +7,12 @@
 
 import ComposableArchitecture
 
-struct StudySheetItem: Codable {
+struct StudySheetItem: Codable, Equatable {
     let lesson: StudySheetLesson
     let activities: [StudySheetActivity]
 }
 
-struct StudySheetLesson: Codable {
+struct StudySheetLesson: Codable, Equatable {
 
     let year: String
     let semester: Semester
@@ -26,7 +26,7 @@ struct StudySheetLesson: Codable {
     }
 }
 
-struct StudySheetActivity: Codable {
+struct StudySheetActivity: Codable, Equatable {
 
     let date: String
     let mark: String
@@ -61,7 +61,11 @@ struct StudySheet {
     enum Action: Equatable, BindableAction {
         case start
         case binding(BindingAction<State>)
+        case routeAction(RouteAction)
 
+        enum RouteAction: Equatable {
+            case itemDetail
+        }
     }
 
     // MARK: - Environment
@@ -76,6 +80,9 @@ struct StudySheet {
             return .none
 
         case .binding:
+            return .none
+
+        case .routeAction:
             return .none
         }
     }
