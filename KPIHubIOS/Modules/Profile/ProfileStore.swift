@@ -18,14 +18,16 @@ struct Profile {
     // MARK: - Action
 
     enum Action: Equatable {
-        case logOutCampus
         case onAppear
+        case logOutCampus
+        case logOutGroup
     }
 
     // MARK: - Environment
 
     struct Environment {
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
         let campusClient: CampusClient
     }
 
@@ -41,6 +43,10 @@ struct Profile {
 
         case .logOutCampus:
             environment.campusClient.logOut()
+            return .none
+
+        case .logOutGroup:
+            environment.rozkladClient.logOut()
             return .none
         }
     }

@@ -31,10 +31,9 @@ struct Campus {
 
     enum Action: Equatable, IdentifiedRouterAction {
         case onSetup
-        case onAppear
 
-        case setlogOutState
-        case setLoginState
+        case setCampusLogin
+        case setCampusHome
 
         case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
         case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
@@ -58,32 +57,14 @@ struct Campus {
                     .sink { state in
                         switch state {
                         case .loggedOut:
-                            subscriber.send(.setlogOutState)
+                            subscriber.send(.setCampusLogin)
                         case .loggedIn:
-                            subscriber.send(.setLoginState)
+                            subscriber.send(.setCampusHome)
                         }
                     }
             }
 
-        case .onAppear:
-//            if environment.userDefaultsClient.get(for: .campusUserInfo) != nil {
-//                state.routes = [
-//                    .root(
-//                        .campusHome(CampusHome.State()),
-//                        embedInNavigationView: true
-//                    )
-//                ]
-//            } else {
-//                state.routes = [
-//                    .root(
-//                        .campusLogin(CampusLogin.State(mode: .onlyCampus)),
-//                        embedInNavigationView: true
-//                    )
-//                ]
-//            }
-            return .none
-
-        case .setlogOutState:
+        case .setCampusLogin:
             state.routes = [
                 .root(
                     .campusLogin(CampusLogin.State(mode: .onlyCampus)),
@@ -92,7 +73,7 @@ struct Campus {
             ]
             return .none
 
-        case .setLoginState:
+        case .setCampusHome:
             state.routes = [
                 .root(
                     .campusHome(CampusHome.State()),

@@ -37,6 +37,7 @@ struct Main {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
         let campusClient: CampusClient
     }
 
@@ -45,7 +46,6 @@ struct Main {
     static let coreReducer = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .rozklad:
-//            state.rozklad.
             return .none
             
         case .campus:
@@ -83,15 +83,15 @@ struct Main {
 
 }
 
-
-// MARK: App.Environment + Extensions
+// MARK: Main.Environment + Extensions
 
 extension Main.Environment {
 
     var rozklad: Rozklad.Environment {
         Rozklad.Environment(
             apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient
+            userDefaultsClient: userDefaultsClient,
+            rozkladClient: rozkladClient
         )
     }
 
@@ -106,6 +106,7 @@ extension Main.Environment {
     var profile: Profile.Environment {
         Profile.Environment(
             userDefaultsClient: userDefaultsClient,
+            rozkladClient: rozkladClient,
             campusClient: campusClient
         )
     }

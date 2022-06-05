@@ -30,7 +30,6 @@ extension Rozklad.ScreenProvider {
     // MARK: - Action handling
 
     enum Action: Equatable {
-
         case empty(EmptyScreen.Action)
         case groupPicker(GroupPicker.Action)
         case groupLessons(GroupLessons.Action)

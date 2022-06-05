@@ -38,9 +38,6 @@ struct RozkladFlowCoordinatorView: View {
                 )
             }
         }
-        .onAppear {
-            ViewStore(store).send(.onAppear)
-        }
     }
 
 }

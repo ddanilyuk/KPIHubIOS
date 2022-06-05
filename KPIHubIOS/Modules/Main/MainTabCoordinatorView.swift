@@ -55,7 +55,7 @@ struct MainTabCoordinatorView: View {
                 }
             }
             .onAppear {
-                print("Appear")
+                viewStore.send(.rozklad(.onSetup))
                 viewStore.send(.campus(.onSetup))
             }
         }

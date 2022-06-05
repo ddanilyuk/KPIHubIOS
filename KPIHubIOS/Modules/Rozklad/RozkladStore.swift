@@ -24,7 +24,9 @@ struct Rozklad {
 
     enum Action: Equatable, IdentifiedRouterAction {
 
-        case onAppear
+        case onSetup
+        case setGroupLessons
+        case setGroupPicker
 
         case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
         case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
@@ -35,18 +37,42 @@ struct Rozklad {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
-        case .onAppear:
-            if environment.userDefaultsClient.get(for: .group) != nil {
-                state.routes = [.root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)]
-            } else {
-                state.routes = [.root(.groupPicker(GroupPicker.State()), embedInNavigationView: true)]
+        case .onSetup:
+            return Effect.run { subscriber in
+                environment.rozkladClient.state
+                    .sink { state in
+                        switch state {
+                        case .selected:
+                            subscriber.send(.setGroupLessons)
+                        case .notSelected:
+                            subscriber.send(.setGroupPicker)
+                        }
+                    }
             }
+
+        case .setGroupLessons:
+            state.routes = [
+                .root(
+                    .groupLessons(GroupLessons.State()),
+                    embedInNavigationView: true
+                )
+            ]
+            return .none
+
+        case .setGroupPicker:
+            state.routes = [
+                .root(
+                    .groupPicker(GroupPicker.State()),
+                    embedInNavigationView: true
+                )
+            ]
             return .none
 
         case let .routeAction(_, .groupLessons(.routeAction(.openDetails(lesson)))):

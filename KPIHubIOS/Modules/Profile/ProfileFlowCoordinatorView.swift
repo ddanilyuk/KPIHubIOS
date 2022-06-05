@@ -27,6 +27,14 @@ struct ProfileFlowCoordinatorView: View {
                         Text("Log out camapus")
                     }
                 )
+                Button(
+                    action: {
+                        viewStore.send(.logOutGroup)
+                    },
+                    label: {
+                        Text("Log out group")
+                    }
+                )
             }
 
         }

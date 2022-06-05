@@ -40,6 +40,7 @@ struct Login {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
         let campusClient: CampusClient
     }
 
@@ -64,9 +65,11 @@ struct Login {
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
             environment.campusClient.updateState()
+            environment.rozkladClient.updateState()
             return Effect(value: .delegate(.done))
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
+            environment.rozkladClient.updateState()
             return Effect(value: .delegate(.done))
 
         case .routeAction:

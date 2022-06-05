@@ -42,11 +42,6 @@ struct App {
         case appDelegate(AppDelegate.Action)
         case login(Login.Action)
         case main(Main.Action)
-
-
-        case debug
-
-        case signOut
     }
 
     // MARK: - Environment
@@ -54,7 +49,10 @@ struct App {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
+
         let campusClient: CampusClient
+
 
         static var live: Self {
             let apiClient: APIClient = .live(
@@ -62,10 +60,12 @@ struct App {
                 router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
+            let rozkladClient: RozkladClient = .init(userDefaultsClient: userDefaultsClient)
             let campusClient: CampusClient = .init(userDefaultsClient: userDefaultsClient)
             return Self(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
+                rozkladClient: rozkladClient,
                 campusClient: campusClient
             )
         }
@@ -82,20 +82,10 @@ struct App {
             } else {
                 state.set(.login)
             }
-
-            return Effect(value: .debug)
-                .deferred(for: 10, scheduler: DispatchQueue.main)
+            return .none
 
         case .login(.delegate(.done)):
             state.set(.main)
-            return .none
-
-        case .debug:
-//            environment.userDefaultsClient.remove(for: .campusUserInfo)
-//            environment.campusClient.updateState()
-            return .none
-
-        case .signOut:
             return .none
 
         case .appDelegate:
@@ -144,14 +134,14 @@ struct App {
 extension App.Environment {
 
     var appDelegate: AppDelegate.Environment {
-        AppDelegate.Environment(
-        )
+        AppDelegate.Environment()
     }
 
     var login: Login.Environment {
         Login.Environment(
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
+            rozkladClient: rozkladClient,
             campusClient: campusClient
         )
     }
@@ -160,6 +150,7 @@ extension App.Environment {
         Main.Environment(
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
+            rozkladClient: rozkladClient,
             campusClient: campusClient
         )
     }
