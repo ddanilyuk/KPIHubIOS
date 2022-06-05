@@ -20,41 +20,43 @@ struct CampusLoginView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            VStack {
-                VStack(spacing: 24) {
-                    TextField("Username", text: viewStore.binding(\.$username))
-                        .focused($focusedField, equals: .username)
-                        .onSubmit { focusedField = .password }
-                        .keyboardType(.default)
+            ScrollView {
+                VStack {
+                    VStack(spacing: 24) {
+                        TextField("Username", text: viewStore.binding(\.$username))
+                            .focused($focusedField, equals: .username)
+                            .onSubmit { focusedField = .password }
+                            .keyboardType(.default)
 
-                    SecureField("password", text: viewStore.binding(\.$password))
-                        .focused($focusedField, equals: .password)
-                }
-                .multilineTextAlignment(.center)
-                .textFieldStyle(PlainTextFieldStyle())
-                .font(.system(size: 24, weight: .bold, design: .monospaced))
-                .disableAutocorrection(true)
-                .toolbar {
-                    ToolbarItem(placement: .keyboard) {
-                        HStack {
-                            Spacer()
-                            Button("Done") { focusedField = nil }
+                        SecureField("password", text: viewStore.binding(\.$password))
+                            .focused($focusedField, equals: .password)
+                    }
+                    .multilineTextAlignment(.center)
+                    .textFieldStyle(PlainTextFieldStyle())
+                    .font(.system(size: 24, weight: .bold, design: .monospaced))
+                    .disableAutocorrection(true)
+                    .toolbar {
+                        ToolbarItem(placement: .keyboard) {
+                            HStack {
+                                Spacer()
+                                Button("Done") { focusedField = nil }
+                            }
                         }
                     }
-                }
 
-                HStack(spacing: 20.0) {
-                    Button(
-                        action: { viewStore.send(.login) },
-                        label: { Text("Login") }
-                    )
-                    .buttonStyle(BigButtonStyle())
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .disabled(!viewStore.loginButtonEnabled)
-                }
-                .padding(20)
+                    HStack(spacing: 20.0) {
+                        Button(
+                            action: { viewStore.send(.login) },
+                            label: { Text("Login") }
+                        )
+                        .buttonStyle(BigButtonStyle())
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .disabled(!viewStore.loginButtonEnabled)
+                    }
+                    .padding(20)
 
-                Spacer()
+                    Spacer()
+                }
             }
             .loadable(viewStore.binding(\.$isLoading))
         }

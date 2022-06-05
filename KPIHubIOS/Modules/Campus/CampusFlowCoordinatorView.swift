@@ -13,6 +13,10 @@ struct CampusFlowCoordinatorView: View {
 
     let store: Store<Campus.State, Campus.Action>
 
+    init(store: Store<Campus.State, Campus.Action>) {
+        self.store = store
+    }
+
     var body: some View {
         TCARouter(store) { screen in
             SwitchStore(screen) {
@@ -44,7 +48,7 @@ struct CampusFlowCoordinatorView: View {
             }
         }
         .onAppear {
-            ViewStore(store).send(.onAppear)
+//            ViewStore(store).send(.onAppear)
         }
     }
 

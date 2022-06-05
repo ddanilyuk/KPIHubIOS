@@ -13,7 +13,7 @@ struct MainTabCoordinatorView: View {
     let store: Store<Main.State, Main.Action>
 
     var body: some View {
-        WithViewStore(store) { _ in
+        WithViewStore(store) { viewStore in
             TabView {
                 RozkladFlowCoordinatorView(
                     store: store.scope(
@@ -53,7 +53,10 @@ struct MainTabCoordinatorView: View {
                         Text("Profile")
                     }
                 }
-
+            }
+            .onAppear {
+                print("Appear")
+                viewStore.send(.campus(.onSetup))
             }
         }
     }

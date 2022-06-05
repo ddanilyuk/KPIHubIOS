@@ -77,6 +77,7 @@
 		5F97B3DA283677C600350368 /* KPIHubIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */; };
 		5F97B3DC283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */; };
 		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
+		5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClient.swift */; };
 		6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */; };
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
@@ -176,6 +177,7 @@
 		5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5FD570B2283680CE00D8E869 /* KPIHubServer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = KPIHubServer; path = ../KPIHubServer; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5FDFBE26284D46FD007E9F3A /* CampusClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClient.swift; sourceTree = "<group>"; };
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC9FB22C82EF9CED3A31FBD7 /* Pods-KPIHubIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE920022D9C94B235B666887 /* Pods-KPIHubIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			children = (
 				5F69BBD9284ACC3600FED83D /* APIClient */,
 				5F5F463828480B2D00202DA5 /* UserDefaults */,
+				5FDFBE25284D46EC007E9F3A /* CampusClient */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -597,6 +600,14 @@
 				45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5FDFBE25284D46EC007E9F3A /* CampusClient */ = {
+			isa = PBXGroup;
+			children = (
+				5FDFBE26284D46FD007E9F3A /* CampusClient.swift */,
+			);
+			path = CampusClient;
 			sourceTree = "<group>";
 		};
 		FF0C919360EE4E6E309E3087 /* Pods */ = {
@@ -859,6 +870,7 @@
 				5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */,
 				5F137EF428440A1100514263 /* CampusStore.swift in Sources */,
 				5F137EDB2843A85600514263 /* AllGroupsResponse.swift in Sources */,
+				5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F69BBF7284D163C00FED83D /* StudySheetActivityCellStore.swift in Sources */,
 				5F5F46412848150900202DA5 /* Teacher.swift in Sources */,

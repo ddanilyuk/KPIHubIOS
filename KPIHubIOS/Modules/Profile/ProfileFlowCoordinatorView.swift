@@ -14,10 +14,21 @@ struct ProfileFlowCoordinatorView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            Text("Profile \(viewStore.name)")
-                .onAppear {
-                    viewStore.send(.onAppear)
-                }
+            VStack {
+                Text("Profile \(viewStore.name)")
+                    .onAppear {
+                        viewStore.send(.onAppear)
+                    }
+                Button(
+                    action: {
+                        viewStore.send(.logOutCampus)
+                    },
+                    label: {
+                        Text("Log out camapus")
+                    }
+                )
+            }
+
         }
     }
 

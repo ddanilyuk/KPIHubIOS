@@ -40,11 +40,12 @@ struct Login {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let campusClient: CampusClient
     }
 
     // MARK: - Reducer
 
-    static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
+    static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
             let groupPickerState = GroupPicker.State()
@@ -62,6 +63,7 @@ struct Login {
             return .none
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
+            environment.campusClient.updateState()
             return Effect(value: .delegate(.done))
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):

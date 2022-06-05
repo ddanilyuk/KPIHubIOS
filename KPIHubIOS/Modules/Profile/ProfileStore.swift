@@ -18,6 +18,7 @@ struct Profile {
     // MARK: - Action
 
     enum Action: Equatable {
+        case logOutCampus
         case onAppear
     }
 
@@ -25,6 +26,7 @@ struct Profile {
 
     struct Environment {
         let userDefaultsClient: UserDefaultsClient
+        let campusClient: CampusClient
     }
 
     // MARK: - Reducer
@@ -34,8 +36,11 @@ struct Profile {
         case .onAppear:
             if let userInfo = environment.userDefaultsClient.get(for: .campusUserInfo) {
                 state.name = userInfo.fullName
-
             }
+            return .none
+
+        case .logOutCampus:
+            environment.campusClient.logOut()
             return .none
         }
     }

@@ -43,6 +43,9 @@ struct App {
         case login(Login.Action)
         case main(Main.Action)
 
+
+        case debug
+
         case signOut
     }
 
@@ -51,16 +54,19 @@ struct App {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let campusClient: CampusClient
 
         static var live: Self {
             let apiClient: APIClient = .live(
-                router: rootRouter.baseURL("http://127.0.0.1:8080")
-//                router: rootRouter.baseURL("http://kpihub.xyz")
+//                router: rootRouter.baseURL("http://127.0.0.1:8080")
+                router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
+            let campusClient: CampusClient = .init(userDefaultsClient: userDefaultsClient)
             return Self(
                 apiClient: apiClient,
-                userDefaultsClient: userDefaultsClient
+                userDefaultsClient: userDefaultsClient,
+                campusClient: campusClient
             )
         }
     }
@@ -76,10 +82,17 @@ struct App {
             } else {
                 state.set(.login)
             }
-            return .none
+
+            return Effect(value: .debug)
+                .deferred(for: 10, scheduler: DispatchQueue.main)
 
         case .login(.delegate(.done)):
             state.set(.main)
+            return .none
+
+        case .debug:
+//            environment.userDefaultsClient.remove(for: .campusUserInfo)
+//            environment.campusClient.updateState()
             return .none
 
         case .signOut:
@@ -138,14 +151,16 @@ extension App.Environment {
     var login: Login.Environment {
         Login.Environment(
             apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient
+            userDefaultsClient: userDefaultsClient,
+            campusClient: campusClient
         )
     }
 
     var main: Main.Environment {
         Main.Environment(
             apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient
+            userDefaultsClient: userDefaultsClient,
+            campusClient: campusClient
         )
     }
 

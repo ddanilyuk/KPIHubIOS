@@ -41,8 +41,14 @@ protocol UserDefaultsClientable {
     func remove<T: Codable>(for key: UserDefaultKey<T>)
 }
 
+//import Combine
 
 final class UserDefaultsClient: UserDefaultsClientable {
+
+//    func test() -> AnyPublisher<CampusUserInfo?, Never> {
+//        let result = self.get(for: .campusUserInfo).publisher.eraseToAnyPublisher()
+//        return result
+//    }
 
     static func live() -> UserDefaultsClient {
         return UserDefaultsClient()
