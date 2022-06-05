@@ -52,7 +52,8 @@ struct StudySheetCellView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(16)
             }
-//            .padding(16)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
             .onTapGesture {
                 viewStore.send(.onTap)
             }

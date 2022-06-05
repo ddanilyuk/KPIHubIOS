@@ -90,7 +90,6 @@ struct StudySheetView: View {
                     }
                 }
                 .animation(Animation.default, value: viewStore.cells)
-                .padding(.horizontal, 16)
             }
         }
         .navigationBarTitle("Поточний контроль")

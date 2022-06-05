@@ -41,6 +41,10 @@ struct CampusHomeView: View {
 
                                 Spacer()
                             }
+
+                            let some = viewStore.state.studySheetLoadedState != .loaded ? "Loading.." : viewStore
+                                .state.studySheetItems.count.stringValue
+                            Text("\(some)")
                         }
                         .padding(16)
                     }

@@ -24,11 +24,10 @@ struct StudySheetItemDetailView: View {
                         content: StudySheetActivityCellView.init(store:)
                     )
                 }
-                .padding()
-                .navigationBarTitle("\(viewStore.item.name)")
-                .navigationBarTitleDisplayMode(.inline)
-
+//                .padding()
             }
+            .navigationBarTitle("\(viewStore.item.name)")
+            .navigationBarTitleDisplayMode(.inline)
             .background(Color.screenBackground)
         }
     }

@@ -54,6 +54,9 @@ struct CampusHome {
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
+            guard state.studySheetLoadedState == .notLoading else {
+                return .none
+            }
             guard let campusCredentials = environment.userDefaultsClient.get(for: .campusCredentials) else {
                 return .none
             }

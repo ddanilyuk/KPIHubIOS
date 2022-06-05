@@ -29,17 +29,17 @@ struct StudySheetActivityCellView: View {
                         .lineLimit(2)
 
                     SmallTagView(
-                        icon: Image(systemName: "person"),
-                        text: "teacher",
-                        backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                        accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                    )
-
-                    SmallTagView(
                         icon: Image(systemName: "calendar"),
                         text: "\(viewStore.activity.date)",
                         backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
                         accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                    )
+
+                    SmallTagView(
+                        icon: Image(systemName: "person"),
+                        text: viewStore.activity.teacher,
+                        backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
+                        accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
                     )
 
                     if !viewStore.activity.note.isEmpty {
@@ -54,6 +54,8 @@ struct StudySheetActivityCellView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(16)
             }
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
             .onTapGesture {
                 viewStore.send(.onTap)
             }
