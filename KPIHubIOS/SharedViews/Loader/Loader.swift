@@ -69,8 +69,8 @@ struct GrowingArc: Shape {
         }
         if hh > lag + 1 {
             let coeff = 1 / (1 - lag)
-            let n = hh - 1 - lag
-            length = (1 - n * coeff) * maxLength
+            let nn = hh - 1 - lag
+            length = (1 - nn * coeff) * maxLength
         }
 
         let first = Double.pi / 2

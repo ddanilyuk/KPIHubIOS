@@ -29,10 +29,3 @@ extension Teacher: Codable {
 extension Teacher: Hashable {
 
 }
-
-//// MARK: - Identifiable
-//
-//extension Teacher: Identifiable {
-//
-//}
-

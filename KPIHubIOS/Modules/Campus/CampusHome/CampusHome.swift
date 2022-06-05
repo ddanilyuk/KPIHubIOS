@@ -17,7 +17,7 @@ struct CampusHome {
         @BindableState var isLoading: Bool = false
 
         var studySheetItems: [StudySheetItem] = []
-        var studySheetLoadedState: LoadingState<[StudySheetItem]> = .loaded
+        var studySheetLoadedState: LoadingState<[StudySheetItem]> = .notLoading
 
         enum LoadingState<T: Equatable>: Equatable {
             case notLoading
