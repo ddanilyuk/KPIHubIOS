@@ -20,44 +20,50 @@ struct CampusLoginView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            ScrollView {
-                VStack {
-                    VStack(spacing: 24) {
-                        TextField("Username", text: viewStore.binding(\.$username))
-                            .focused($focusedField, equals: .username)
-                            .onSubmit { focusedField = .password }
-                            .keyboardType(.default)
+            GeometryReader { proxy in
+                ScrollView {
+                    VStack {
+                        Spacer()
+                        VStack(spacing: 24) {
+                            TextField("Логін", text: viewStore.binding(\.$username))
+                                .focused($focusedField, equals: .username)
+                                .onSubmit { focusedField = .password }
+                                .keyboardType(.default)
 
-                        SecureField("password", text: viewStore.binding(\.$password))
-                            .focused($focusedField, equals: .password)
-                    }
-                    .multilineTextAlignment(.center)
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .font(.system(size: 24, weight: .bold, design: .monospaced))
-                    .disableAutocorrection(true)
-                    .toolbar {
-                        ToolbarItem(placement: .keyboard) {
-                            HStack {
-                                Spacer()
-                                Button("Done") { focusedField = nil }
+                            SecureField("Пароль", text: viewStore.binding(\.$password))
+                                .focused($focusedField, equals: .password)
+                        }
+                        .multilineTextAlignment(.center)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.system(size: 24, weight: .bold, design: .monospaced))
+                        .disableAutocorrection(true)
+                        .toolbar {
+                            ToolbarItem(placement: .keyboard) {
+                                HStack {
+                                    Spacer()
+                                    Button("Готово") { focusedField = nil }
+                                }
                             }
                         }
-                    }
 
-                    HStack(spacing: 20.0) {
-                        Button(
-                            action: { viewStore.send(.login) },
-                            label: { Text("Login") }
-                        )
-                        .buttonStyle(BigButtonStyle())
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .disabled(!viewStore.loginButtonEnabled)
-                    }
-                    .padding(20)
+                        Spacer()
 
-                    Spacer()
+                        HStack(spacing: 20.0) {
+                            Button(
+                                action: { viewStore.send(.login) },
+                                label: { Text("Увійти") }
+                            )
+                            .buttonStyle(BigButtonStyle())
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .disabled(!viewStore.loginButtonEnabled)
+                        }
+                        .padding(20)
+                    }
+                    .frame(minHeight: proxy.size.height)
+
                 }
             }
+            .background(Color.screenBackground)
             .loadable(viewStore.binding(\.$isLoading))
         }
     }

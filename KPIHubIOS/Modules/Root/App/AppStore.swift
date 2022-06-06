@@ -89,6 +89,7 @@ struct App {
             return .none
 
         case .login(.delegate(.done)):
+            environment.campusClient.startLoading()
             state.set(.main)
             return .none
 

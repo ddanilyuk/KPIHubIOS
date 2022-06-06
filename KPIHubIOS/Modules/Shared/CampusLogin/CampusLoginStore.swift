@@ -23,8 +23,8 @@ struct CampusLogin {
 
         // MARK: - Properties
 
-        @BindableState var username: String = "dda77177"
-        @BindableState var password: String = "4a78dd74"
+        @BindableState var username: String = ""
+        @BindableState var password: String = ""
         @BindableState var isLoading: Bool = false
 
         var loginButtonEnabled: Bool = true
