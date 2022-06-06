@@ -24,7 +24,7 @@ struct MainTabCoordinatorView: View {
                 .tabItem {
                     VStack {
                         Image(systemName: "list.bullet.rectangle")
-                        Text("Rozklad")
+                        Text("Розклад")
                     }
                 }
 
@@ -37,7 +37,7 @@ struct MainTabCoordinatorView: View {
                 .tabItem {
                     VStack {
                         Image(systemName: "graduationcap")
-                        Text("Campus")
+                        Text("Кампус")
                     }
                 }
 
@@ -50,7 +50,7 @@ struct MainTabCoordinatorView: View {
                 .tabItem {
                     VStack {
                         Image(systemName: "person")
-                        Text("Profile")
+                        Text("Профіль")
                     }
                 }
             }
