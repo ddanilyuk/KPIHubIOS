@@ -80,6 +80,8 @@
 		5F69BBF4284CEC1600FED83D /* StudySheetCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBF3284CEC1600FED83D /* StudySheetCellView.swift */; };
 		5F69BBF7284D163C00FED83D /* StudySheetActivityCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBF6284D163C00FED83D /* StudySheetActivityCellStore.swift */; };
 		5F69BBF9284D164600FED83D /* StudySheetActivityCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBF8284D164600FED83D /* StudySheetActivityCellView.swift */; };
+		5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F79DEB3284EB8A40040C14A /* RozkladSectionView.swift */; };
+		5F79DEB6284EB8BD0040C14A /* CampusSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F79DEB5284EB8BD0040C14A /* CampusSectionView.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -198,6 +200,8 @@
 		5F69BBF3284CEC1600FED83D /* StudySheetCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetCellView.swift; sourceTree = "<group>"; };
 		5F69BBF6284D163C00FED83D /* StudySheetActivityCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetActivityCellStore.swift; sourceTree = "<group>"; };
 		5F69BBF8284D164600FED83D /* StudySheetActivityCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetActivityCellView.swift; sourceTree = "<group>"; };
+		5F79DEB3284EB8A40040C14A /* RozkladSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladSectionView.swift; sourceTree = "<group>"; };
+		5F79DEB5284EB8BD0040C14A /* CampusSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusSectionView.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -539,6 +543,8 @@
 			isa = PBXGroup;
 			children = (
 				5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */,
+				5F79DEB3284EB8A40040C14A /* RozkladSectionView.swift */,
+				5F79DEB5284EB8BD0040C14A /* CampusSectionView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1016,6 +1022,7 @@
 				5F137EF0284409F900514263 /* RozkladStore.swift in Sources */,
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
+				5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
@@ -1033,6 +1040,7 @@
 				5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */,
 				5F69BBE4284CC12800FED83D /* CampusHomeView.swift in Sources */,
 				5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */,
+				5F79DEB6284EB8BD0040C14A /* CampusSectionView.swift in Sources */,
 				5F69BBDD284CBF7A00FED83D /* TCARouter+EmptyScreen.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */,

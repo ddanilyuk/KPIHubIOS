@@ -16,10 +16,14 @@ struct GroupPickerView: View {
         WithViewStore(store) { viewStore in
             List {
                 ForEach(viewStore.searchedGroups, id: \.id) { group in
-                    HStack {
-                        Text(group.name)
-                        Spacer()
+                    ZStack {
+                        HStack {
+                            Text(group.name)
+                            Spacer()
+                        }
                     }
+                    .frame(height: 44)
+                    .frame(maxWidth: .infinity)
                     .onTapGesture { viewStore.send(.groupSelected(group)) }
                 }
             }

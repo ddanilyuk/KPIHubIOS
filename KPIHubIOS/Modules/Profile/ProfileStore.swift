@@ -48,10 +48,10 @@ struct Profile {
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
-        case .routeAction(_, .profileHome(.routeAction(.logoutRozklad))):
+        case .routeAction(_, .profileHome(.routeAction(.rozklad))):
             return Effect(value: .delegate(.logoutRozklad))
 
-        case .routeAction(_, .profileHome(.routeAction(.logoutCampus))):
+        case .routeAction(_, .profileHome(.routeAction(.campus))):
             return Effect(value: .delegate(.logoutCampus))
 
         case .routeAction:

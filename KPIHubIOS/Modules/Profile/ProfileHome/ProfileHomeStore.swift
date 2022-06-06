@@ -12,11 +12,10 @@ struct ProfileHome {
     // MARK: - State
 
     struct State: Equatable {
-        var groupName: String = ""
-        var lastUpdated: Date = Date()
 
-        var cathedraName: String = ""
-        var name: String = ""
+        var rozkladState: RozkladClient.State = .notSelected
+        var campusState: CampusClient.State = .loggedOut
+        
     }
 
     // MARK: - Action
@@ -28,13 +27,16 @@ struct ProfileHome {
         case setCampusState(CampusClient.State)
 
         case changeGroup
+        case selectGroup
+
         case campusLogout
+        case campusLogin
 
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
-            case logoutRozklad
-            case logoutCampus
+            case rozklad
+            case campus
         }
     }
 
@@ -67,33 +69,26 @@ struct ProfileHome {
             )
 
         case let .setRozkladState(rozkladState):
-            switch rozkladState {
-            case let .selected(group):
-                state.groupName = group.name
-            case .notSelected:
-                state.groupName = "-"
-            }
+            state.rozkladState = rozkladState
             return .none
 
         case let .setCampusState(campusState):
-            switch campusState {
-            case let .loggedIn(campusUserInfo):
-                state.cathedraName = campusUserInfo.subdivision.first?.name ?? "-"
-                state.name = campusUserInfo.fullName
-
-            case .loggedOut:
-                state.cathedraName = "-"
-                state.name = "-"
-            }
+            state.campusState = campusState
             return .none
 
         case .changeGroup:
             environment.rozkladClient.logOut()
-            return Effect(value: .routeAction(.logoutRozklad))
+            return Effect(value: .routeAction(.rozklad))
+
+        case .selectGroup:
+            return Effect(value: .routeAction(.rozklad))
 
         case .campusLogout:
             environment.campusClient.logOut()
-            return Effect(value: .routeAction(.logoutCampus))
+            return Effect(value: .routeAction(.campus))
+
+        case .campusLogin:
+            return Effect(value: .routeAction(.campus))
 
         case .routeAction:
             return .none
