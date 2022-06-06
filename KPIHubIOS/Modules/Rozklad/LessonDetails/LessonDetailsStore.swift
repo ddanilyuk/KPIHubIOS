@@ -30,9 +30,6 @@ struct LessonDetails {
 
         case updateLesson(Lesson)
 
-        case edit
-        case editingDone
-
         case editNames
         case editTeachers
 
@@ -70,10 +67,6 @@ struct LessonDetails {
             state.lesson = lesson
             return .none
 
-        case .edit:
-            return .none
-            return Effect(value: .routeAction(.editNames(state.lesson)))
-
         case .editNames:
             guard state.isEditing else {
                 return .none
@@ -85,10 +78,6 @@ struct LessonDetails {
                 return .none
             }
             return Effect(value: .routeAction(.editTeachers(state.lesson)))
-
-        case .editingDone:
-            state.isEditing = false
-            return .none
 
         case .binding:
             return .none

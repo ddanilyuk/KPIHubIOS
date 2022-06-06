@@ -43,8 +43,8 @@ final class CampusClient {
     var studySheetCancellable: Cancellable?
 
     func startLoading() {
-
         guard let credentials = userDefaultsClient.get(for: .campusCredentials) else {
+            studySheetSubject.send(.notLoading)
             return
         }
         let campusLoginQuery = CampusLoginQuery(
@@ -62,12 +62,17 @@ final class CampusClient {
             return result.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
         }
         studySheetSubject.send(.loading)
+        studySheetCancellable?.cancel()
         studySheetCancellable = task.sink(
-            receiveCompletion: { completion in
-                print("!!!! completion")
+            receiveCompletion: { [weak self] completion in
+                switch completion {
+                case .finished:
+                    return
+                case .failure:
+                    self?.studySheetSubject.send(.notLoading)
+                }
             },
             receiveValue: { [weak self] value in
-                print("!!!! value")
                 self?.studySheetSubject.send(.loaded(value))
             }
         )

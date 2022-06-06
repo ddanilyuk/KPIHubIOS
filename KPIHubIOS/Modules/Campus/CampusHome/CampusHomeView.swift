@@ -19,6 +19,11 @@ struct CampusHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack {
+                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+                        // do your stuff when pulled
+                        viewStore.send(.refresh)
+                    }
+
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(backgroundColor)
@@ -42,9 +47,10 @@ struct CampusHomeView: View {
                                 Spacer()
                             }
 
-                            view(for: viewStore.state.studySheetState)
+                            studySheetDescription(for: viewStore.state.studySheetState)
                                 .font(.system(.callout))
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(height: 25)
                                 .padding(.leading, 40 + 16)
                         }
                         .padding(16)
@@ -55,6 +61,7 @@ struct CampusHomeView: View {
                 }
                 .padding(24)
             }
+            .coordinateSpace(name: "pullToRefresh")
             .onAppear {
                 viewStore.send(.onAppear)
             }
@@ -66,7 +73,7 @@ struct CampusHomeView: View {
     }
 
     @ViewBuilder
-    func view(for state: CampusClient.StudySheetState) -> some View {
+    func studySheetDescription(for state: CampusClient.StudySheetState) -> some View {
         switch state {
         case .loading:
             HStack(spacing: 10) {
@@ -74,20 +81,16 @@ struct CampusHomeView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                 Text("Завантаження")
             }
+
         case .notLoading:
-            Text("Не завантажується")
+            Text("Помилка")
+
         case let .loaded(items):
             Text("Завантажено \(items.count)")
+
         }
     }
 
-}
-
-
-extension Color {
-    static var screenBackground: Color {
-        return Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)
-    }
 }
 
 // MARK: - Preview

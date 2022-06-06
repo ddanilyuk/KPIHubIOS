@@ -121,9 +121,7 @@ struct LessonDetailsView: View {
                                 .padding(.top, 16)
                                 .padding(.horizontal, 16)
 
-                                RoundedRectangle(cornerRadius: 0.5)
-                                    .fill(Color(.separator))
-                                    .frame(height: 1)
+                                Divider()
                                     .padding(.horizontal, 8)
 
                                 VStack {
@@ -136,9 +134,8 @@ struct LessonDetailsView: View {
                                     }
                                     .padding(.vertical, 9)
 
-                                    RoundedRectangle(cornerRadius: 0.5)
-                                        .fill(Color(.separator).opacity(0.5))
-                                        .frame(height: 1)
+                                    Divider()
+                                        .opacity(0.5)
 
                                     HStack(spacing: 16) {
                                         Circle()
@@ -162,33 +159,23 @@ struct LessonDetailsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if viewStore.state.isEditing {
                         Button(
-                            action: {
-                                viewStore.send(.editingDone)
-                            },
-                            label: {
-                                Text("Готово")
-                            }
+                            action: { viewStore.send(.binding(.set(\.$isEditing, false))) },
+                            label: { Text("Готово") }
                         )
                     } else {
                         Menu(
                             content: {
                                 Button(
-                                    action: {
-                                        viewStore.send(.binding(.set(\.$isEditing, true)))
-                                    },
+                                    action: { viewStore.send(.binding(.set(\.$isEditing, true))) },
                                     label: {
                                         Text("Редагувати")
                                         Image(systemName: "pencil")
                                     }
                                 )
                             },
-                            label: {
-                                Image(systemName: "ellipsis")
-                            }
+                            label: { Image(systemName: "ellipsis") }
                         )
                     }
-
-
                 }
             }
             .animation(.default, value: viewStore.state.isEditing)

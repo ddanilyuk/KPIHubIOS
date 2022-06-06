@@ -72,7 +72,7 @@ struct EditLessonTeachersView: View {
                     )
                 }
             }
-            .navigationTitle("Редагувати назву")
+            .navigationTitle("Редагувати вчителів")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.screenBackground)
         }
