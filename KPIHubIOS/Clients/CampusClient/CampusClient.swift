@@ -13,9 +13,9 @@ final class CampusClient {
 
     // MARK: - State
 
-    enum State {
+    enum State: Equatable {
+        case loggedIn(CampusUserInfo)
         case loggedOut
-        case loggedIn
     }
 
     // MARK: - Properties
@@ -23,8 +23,8 @@ final class CampusClient {
     private let userDefaultsClient: UserDefaultsClient
 
     lazy var stateSubject: CurrentValueSubject<State, Never> = {
-        if userDefaultsClient.get(for: .campusUserInfo) != nil {
-            return .init(.loggedIn)
+        if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+            return .init(.loggedIn(campusUserInfo))
         } else {
             return .init(.loggedOut)
         }
@@ -97,11 +97,13 @@ final class CampusClient {
 
     func logOut() {
         stateSubject.value = .loggedOut
+        userDefaultsClient.remove(for: .campusUserInfo)
+        userDefaultsClient.remove(for: .campusCredentials)
     }
 
     func updateState() {
-        if userDefaultsClient.get(for: .campusUserInfo) != nil {
-            stateSubject.value = .loggedIn
+        if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+            stateSubject.value = .loggedIn(campusUserInfo)
         } else {
             stateSubject.value = .loggedOut
         }

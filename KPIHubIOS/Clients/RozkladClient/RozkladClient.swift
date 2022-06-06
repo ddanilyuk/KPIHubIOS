@@ -13,14 +13,14 @@ final class RozkladClient {
 
     // MARK: - State
 
-    enum State {
-        case selected
+    enum State: Equatable {
+        case selected(GroupResponse)
         case notSelected
     }
 
     lazy var stateSubject: CurrentValueSubject<State, Never> = {
-        if userDefaultsClient.get(for: .group) != nil {
-            return .init(.selected)
+        if let group = userDefaultsClient.get(for: .group) {
+            return .init(.selected(group))
         } else {
             return .init(.notSelected)
         }
@@ -35,11 +35,12 @@ final class RozkladClient {
 
     func logOut() {
         stateSubject.value = .notSelected
+        userDefaultsClient.remove(for: .group)
     }
 
     func updateState() {
-        if userDefaultsClient.get(for: .group) != nil {
-            stateSubject.value = .selected
+        if let group = userDefaultsClient.get(for: .group) {
+            stateSubject.value = .selected(group)
         } else {
             stateSubject.value = .notSelected
         }
