@@ -39,6 +39,7 @@ struct Campus {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let campusClient: CampusClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
@@ -47,7 +48,7 @@ struct Campus {
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
-                environment.campusClient.state
+                environment.campusClient.stateSubject
                     .sink { state in
                         switch state {
                         case .loggedOut:

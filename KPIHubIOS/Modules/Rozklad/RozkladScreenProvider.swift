@@ -48,7 +48,8 @@ extension Rozklad.ScreenProvider {
                 environment: {
                     GroupPicker.Environment(
                         apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient
+                        userDefaultsClient: $0.userDefaultsClient,
+                        rozkladClient: $0.rozkladClient
                     )
                 }
             ),

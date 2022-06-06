@@ -91,6 +91,7 @@ struct GroupLessons {
     static let coreReducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
+            // TODO: Change 
             if let lessons = environment.userDefaultsClient.get(for: .lessons) {
                 state.lessons = IdentifiedArray(uniqueElements: lessons)
                 state.sections = [State.Section](lessons: state.lessons)
@@ -99,7 +100,7 @@ struct GroupLessons {
                 state.groupName = group.name
             }
             return Effect.run { subscriber in
-                environment.rozkladClient.lessons
+                environment.rozkladClient.lessonsSubject
                     .sink { lessons in
                         subscriber.send(.updateLessons(lessons))
                     }

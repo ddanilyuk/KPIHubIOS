@@ -20,7 +20,7 @@ final class CampusClient {
 
     private let userDefaultsClient: UserDefaultsClient
 
-    lazy var state: CurrentValueSubject<State, Never> = {
+    lazy var stateSubject: CurrentValueSubject<State, Never> = {
         if userDefaultsClient.get(for: .campusUserInfo) != nil {
             return .init(.loggedIn)
         } else {
@@ -39,14 +39,14 @@ final class CampusClient {
     }
 
     func logOut() {
-        state.value = .loggedOut
+        stateSubject.value = .loggedOut
     }
 
     func updateState() {
         if userDefaultsClient.get(for: .campusUserInfo) != nil {
-            state.value = .loggedIn
+            stateSubject.value = .loggedIn
         } else {
-            state.value = .loggedOut
+            stateSubject.value = .loggedOut
         }
     }
     

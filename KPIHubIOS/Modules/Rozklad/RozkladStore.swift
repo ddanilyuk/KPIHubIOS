@@ -47,7 +47,7 @@ struct Rozklad {
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
-                environment.rozkladClient.state
+                environment.rozkladClient.stateSubject
                     .sink { state in
                         switch state {
                         case .selected:
@@ -96,11 +96,8 @@ struct Rozklad {
             guard var oldLesson = state.routes.first(where: /ScreenProvider.State.lessonDetails)?.lesson else {
                 return .none
             }
-            var lessons = IdentifiedArray(uniqueElements: environment.userDefaultsClient.get(for: .lessons) ?? [])
             oldLesson.names = selected
-            lessons[id: oldLesson.id] = oldLesson
-            environment.userDefaultsClient.set(lessons.elements, for: .lessons)
-            environment.rozkladClient.updateLessons()
+            environment.rozkladClient.modified(lesson: oldLesson)
             state.routes.dismiss()
             return .none
 

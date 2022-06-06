@@ -99,7 +99,8 @@ extension Main.Environment {
         Campus.Environment(
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
-            campusClient: campusClient
+            campusClient: campusClient,
+            rozkladClient: rozkladClient
         )
     }
 

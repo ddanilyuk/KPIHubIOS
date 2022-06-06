@@ -54,6 +54,7 @@ struct CampusLogin {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
@@ -135,7 +136,7 @@ struct CampusLogin {
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):
-            environment.userDefaultsClient.set(lessons, for: .lessons)
+            environment.rozkladClient.set(lessons: lessons)
             return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):

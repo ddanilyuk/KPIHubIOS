@@ -48,6 +48,7 @@ struct GroupPicker {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
@@ -90,7 +91,7 @@ struct GroupPicker {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.userDefaultsClient.set(lessons, for: .lessons)
+            environment.rozkladClient.set(lessons: lessons)
             return Effect(value: .routeAction(.done))
 
         case let .allGroupsResult(.failure(error)),
