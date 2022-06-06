@@ -14,7 +14,7 @@ struct MainTabCoordinatorView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            TabView {
+            TabView(selection: viewStore.binding(\.$selectedTab)) {
                 RozkladFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.rozklad,
@@ -27,6 +27,7 @@ struct MainTabCoordinatorView: View {
                         Text("Розклад")
                     }
                 }
+                .tag(Main.State.Tab.rozklad)
 
                 CampusFlowCoordinatorView(
                     store: store.scope(
@@ -40,6 +41,7 @@ struct MainTabCoordinatorView: View {
                         Text("Кампус")
                     }
                 }
+                .tag(Main.State.Tab.campus)
 
                 ProfileFlowCoordinatorView(
                     store: store.scope(
@@ -53,6 +55,7 @@ struct MainTabCoordinatorView: View {
                         Text("Профіль")
                     }
                 }
+                .tag(Main.State.Tab.profile)
             }
             .accentColor(.orange)
             .onAppear {

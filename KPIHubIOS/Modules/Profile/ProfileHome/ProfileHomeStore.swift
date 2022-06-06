@@ -29,6 +29,13 @@ struct ProfileHome {
 
         case changeGroup
         case campusLogout
+
+        case routeAction(RouteAction)
+
+        enum RouteAction: Equatable {
+            case logoutRozklad
+            case logoutCampus
+        }
     }
 
     // MARK: - Environment
@@ -82,10 +89,13 @@ struct ProfileHome {
 
         case .changeGroup:
             environment.rozkladClient.logOut()
-            return .none
+            return Effect(value: .routeAction(.logoutRozklad))
 
         case .campusLogout:
             environment.campusClient.logOut()
+            return Effect(value: .routeAction(.logoutCampus))
+
+        case .routeAction:
             return .none
         }
     }
