@@ -61,7 +61,10 @@ struct App {
             )
             let userDefaultsClient: UserDefaultsClient = .live()
             let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
-            let campusClient: CampusClient = .live(userDefaultsClient: userDefaultsClient)
+            let campusClient: CampusClient = .live(
+                apiClient: apiClient,
+                userDefaultsClient: userDefaultsClient
+            )
 
             return Self(
                 apiClient: apiClient,
@@ -82,6 +85,7 @@ struct App {
             } else {
                 state.set(.login)
             }
+            environment.campusClient.startLoading()
             return .none
 
         case .login(.delegate(.done)):

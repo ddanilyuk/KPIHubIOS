@@ -53,7 +53,6 @@ struct StudySheetView: View {
                                 viewStore.send(.binding(.set(\.$selectedSemester, semester)))
                             } label: {
                                 Text("\(semester)")
-                                Image(systemName: "\(semester).square")
                             }
                         }
                         Button(

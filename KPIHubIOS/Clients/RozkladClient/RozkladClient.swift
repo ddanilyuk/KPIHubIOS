@@ -26,6 +26,13 @@ final class RozkladClient {
         }
     }()
 
+    func set(group: GroupResponse, withUpdating: Bool = true) {
+        userDefaultsClient.set(group, for: .group)
+        if withUpdating {
+            updateState()
+        }
+    }
+
     func logOut() {
         stateSubject.value = .notSelected
     }
@@ -39,7 +46,6 @@ final class RozkladClient {
     }
 
     // MARK: - Lessons
-
 
     lazy var lessonsSubject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never> = {
         if let lessons = userDefaultsClient.get(for: .lessons) {

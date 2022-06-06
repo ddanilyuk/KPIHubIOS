@@ -42,9 +42,10 @@ struct CampusHomeView: View {
                                 Spacer()
                             }
 
-                            let some = viewStore.state.studySheetLoadedState != .loaded ? "Loading.." : viewStore
-                                .state.studySheetItems.count.stringValue
-                            Text("\(some)")
+                            view(for: viewStore.state.studySheetState)
+                                .font(.system(.callout))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, 40 + 16)
                         }
                         .padding(16)
                     }
@@ -60,6 +61,23 @@ struct CampusHomeView: View {
             .background(Color.screenBackground)
             .navigationTitle("Кампус")
             .loadable(viewStore.binding(\.$isLoading))
+        }
+
+    }
+
+    @ViewBuilder
+    func view(for state: CampusClient.StudySheetState) -> some View {
+        switch state {
+        case .loading:
+            HStack(spacing: 10) {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                Text("Завантаження")
+            }
+        case .notLoading:
+            Text("Не завантажується")
+        case let .loaded(items):
+            Text("Завантажено \(items.count)")
         }
     }
 
@@ -80,14 +98,12 @@ struct CampusHomeView_Previews: PreviewProvider {
             CampusHomeView(
                 store: Store(
                     initialState: CampusHome.State(
-//                        studySheetItems:
-//                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
                     reducer: CampusHome.reducer,
                     environment: CampusHome.Environment(
                         apiClient: .failing,
-                        userDefaultsClient: .live()
-//                        userDefaultsClient: .live()
+                        userDefaultsClient: .live(),
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live())
                     )
                 )
             )

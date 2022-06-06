@@ -26,11 +26,31 @@ struct StudySheet {
 
         init(items: [StudySheetItem]) {
             self.items = IdentifiedArray(uniqueElements: items)
-            self.sortedItems = IdentifiedArray(uniqueElements: items)
-            self.cells = IdentifiedArray(uniqueElements: sortedItems.map { StudySheetCell.State(item: $0) })
 
             possibleYears = Set(items.map { $0.year }).sorted(by: <)
             possibleSemesters = Set(items.map { $0.semester }).sorted(by: <)
+
+            selectedYear = possibleYears.last
+            selectedSemester = nil
+
+            sortedItems = []
+            cells = []
+
+            sortedItems = self.items.filter { item in
+                switch (selectedYear, selectedSemester) {
+                case (.none, .none):
+                    return true
+                case let (.some(selectedYear), .none):
+                    return item.year == selectedYear
+                case let (.none, .some(selectedSemester)):
+                    return item.semester == selectedSemester
+                case let (.some(selectedYear), .some(selectedSemester)):
+                    return item.year == selectedYear && item.semester == selectedSemester
+                }
+            }
+            cells = IdentifiedArray(
+                uniqueElements: sortedItems.map { StudySheetCell.State(item: $0) }
+            )
         }
     }
 

@@ -61,7 +61,8 @@ extension Campus.ScreenProvider {
                 environment: {
                     CampusHome.Environment(
                         apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient
+                        userDefaultsClient: $0.userDefaultsClient,
+                        campusClient: $0.campusClient
                     )
                 }
             ),

@@ -81,7 +81,7 @@ struct GroupPicker {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.userDefaultsClient.set(group, for: .group)
+                environment.rozkladClient.set(group: group, withUpdating: false)
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task

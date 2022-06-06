@@ -84,7 +84,7 @@ struct Rozklad {
             return .none
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
-            state.routes = [.root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)]
+            environment.rozkladClient.updateState()
             return .none
 
         case let .routeAction(_, .lessonDetails(.routeAction(.editNames(oldNames, selected)))):

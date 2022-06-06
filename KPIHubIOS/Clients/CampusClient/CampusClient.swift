@@ -6,6 +6,8 @@
 //
 
 import Combine
+import Routes
+import ComposableArchitecture
 
 final class CampusClient {
 
@@ -28,13 +30,63 @@ final class CampusClient {
         }
     }()
 
-    // MARK: - Lifecycle
-
-    static func live(userDefaultsClient: UserDefaultsClient) -> CampusClient {
-        CampusClient(userDefaultsClient: userDefaultsClient)
+    enum StudySheetState: Equatable {
+        case notLoading
+        case loading
+        case loaded([StudySheetItem])
     }
 
-    private init(userDefaultsClient: UserDefaultsClient) {
+    var studySheetSubject: CurrentValueSubject<StudySheetState, Never> = .init(.notLoading)
+
+    let apiClient: APIClient
+
+    var studySheetCancellable: Cancellable?
+
+    func startLoading() {
+
+        guard let credentials = userDefaultsClient.get(for: .campusCredentials) else {
+            return
+        }
+        let campusLoginQuery = CampusLoginQuery(
+            username: credentials.username,
+            password: credentials.password
+        )
+        let task: Effect<[StudySheetItem], Error> = Effect.task { [weak self] in
+            guard let self = self else {
+                throw APIError.unknown
+            }
+            let result = try await self.apiClient.decodedResponse(
+                for: .api(.campus(.studySheet(campusLoginQuery))),
+                as: StudySheetResponse.self
+            )
+            return result.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
+        }
+        studySheetSubject.send(.loading)
+        studySheetCancellable = task.sink(
+            receiveCompletion: { completion in
+                print("!!!! completion")
+            },
+            receiveValue: { [weak self] value in
+                print("!!!! value")
+                self?.studySheetSubject.send(.loaded(value))
+            }
+        )
+    }
+
+    // MARK: - Lifecycle
+
+    static func live(
+        apiClient: APIClient,
+        userDefaultsClient: UserDefaultsClient
+    ) -> CampusClient {
+        CampusClient(
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient
+        )
+    }
+
+    private init(apiClient: APIClient, userDefaultsClient: UserDefaultsClient) {
+        self.apiClient = apiClient
         self.userDefaultsClient = userDefaultsClient
     }
 
