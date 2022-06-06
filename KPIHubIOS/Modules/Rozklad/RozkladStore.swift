@@ -87,21 +87,27 @@ struct Rozklad {
             environment.rozkladClient.updateState()
             return .none
 
-        case let .routeAction(_, .lessonDetails(.routeAction(.editNames(oldNames, selected)))):
-            let editLessonNamesState = EditLessonNames.State(names: oldNames, selected: selected)
-            state.routes.presentSheet(.editLessonNames(editLessonNamesState), embedInNavigationView: true)
+        case let .routeAction(_, .lessonDetails(.routeAction(.editNames(lesson)))):
+            let editLessonNamesState = EditLessonNames.State(lesson: lesson)
+            state.routes.presentSheet(
+                .editLessonNames(editLessonNamesState),
+                embedInNavigationView: true
+            )
             return .none
 
-        case let .routeAction(_, .editLessonNames(.routeAction(.save(selected)))):
-            guard var oldLesson = state.routes.first(where: /ScreenProvider.State.lessonDetails)?.lesson else {
-                return .none
-            }
-            oldLesson.names = selected
-            environment.rozkladClient.modified(lesson: oldLesson)
+        case let .routeAction(_, .lessonDetails(.routeAction(.editTeachers(lesson)))):
+            let editLessonTeachersState = EditLessonTeachers.State(lesson: lesson)
+            state.routes.presentSheet(
+                .editLessonTeachers(editLessonTeachersState),
+                embedInNavigationView: true
+            )
+            return .none
+
+        case .routeAction(_, .editLessonNames(.routeAction(.dismiss))):
             state.routes.dismiss()
             return .none
 
-        case .routeAction(_, .editLessonNames(.routeAction(.cancel))):
+        case .routeAction(_, .editLessonTeachers(.routeAction(.dismiss))):
             state.routes.dismiss()
             return .none
 

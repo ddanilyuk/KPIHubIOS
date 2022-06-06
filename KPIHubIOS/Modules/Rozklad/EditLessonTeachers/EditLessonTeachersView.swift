@@ -1,5 +1,5 @@
 //
-//  EditLessonNamesView.swift
+//  EditLessonTeachersView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 06.06.2022.
@@ -8,16 +8,16 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct EditLessonNamesView: View {
+struct EditLessonTeachersView: View {
 
-    let store: Store<EditLessonNames.State, EditLessonNames.Action>
+    let store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>
 
     var body: some View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack {
-                    ForEach(viewStore.names, id: \.self) { name in
-                        let isSelected = viewStore.selected.contains(name)
+                    ForEach(viewStore.teachers, id: \.self) { teacher in
+                        let isSelected = viewStore.selected.contains(teacher)
                         ZStack {
                             RoundedRectangle(cornerRadius: 8)
                                 .fill(Color.white)
@@ -34,8 +34,13 @@ struct EditLessonNamesView: View {
                                 )
                                 .foregroundColor(isSelected ? .orange : .gray)
 
-                                Text("\(name)")
-
+                                LargeTagView(
+                                    icon: Image(systemName: "person"),
+                                    text: teacher.fullName,
+                                    backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
+                                    accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                                )
+                                
                                 Spacer()
                             }
                             .padding(16)
@@ -44,7 +49,7 @@ struct EditLessonNamesView: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 4)
                         .onTapGesture {
-                            viewStore.send(.toggle(name))
+                            viewStore.send(.toggle(teacher))
                         }
                     }
                 }
@@ -72,21 +77,21 @@ struct EditLessonNamesView: View {
             .background(Color.screenBackground)
         }
     }
-    
+
 }
 
 // MARK: - Preview
 
-struct EditLessonNamesView_Previews: PreviewProvider {
+struct EditLessonTeachersView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EditLessonNamesView(
+            EditLessonTeachersView(
                 store: Store(
-                    initialState: EditLessonNames.State(
+                    initialState: EditLessonTeachers.State(
                         lesson: .init(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: EditLessonNames.reducer,
-                    environment: EditLessonNames.Environment(
+                    reducer: EditLessonTeachers.reducer,
+                    environment: EditLessonTeachers.Environment(
                         userDefaultsClient: .live(),
                         rozkladClient: .live(userDefaultsClient: .live())
                     )

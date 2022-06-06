@@ -79,6 +79,8 @@
 		5F97F118284D552900DB0576 /* DateAndTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F117284D552900DB0576 /* DateAndTime.swift */; };
 		5F97F11B284D5A5800DB0576 /* EditLessonNamesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F11A284D5A5800DB0576 /* EditLessonNamesStore.swift */; };
 		5F97F11D284D5A6200DB0576 /* EditLessonNamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F11C284D5A6200DB0576 /* EditLessonNamesView.swift */; };
+		5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */; };
+		5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */; };
 		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
 		5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClient.swift */; };
 		5FDFBE2A284D48A2007E9F3A /* RozkladClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */; };
@@ -186,6 +188,8 @@
 		5F97F117284D552900DB0576 /* DateAndTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateAndTime.swift; sourceTree = "<group>"; };
 		5F97F11A284D5A5800DB0576 /* EditLessonNamesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonNamesStore.swift; sourceTree = "<group>"; };
 		5F97F11C284D5A6200DB0576 /* EditLessonNamesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonNamesView.swift; sourceTree = "<group>"; };
+		5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonTeachersStore.swift; sourceTree = "<group>"; };
+		5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonTeachersView.swift; sourceTree = "<group>"; };
 		5FD570B2283680CE00D8E869 /* KPIHubServer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = KPIHubServer; path = ../KPIHubServer; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5FDFBE26284D46FD007E9F3A /* CampusClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClient.swift; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 				5F137EFB28440DD200514263 /* GroupLessons */,
 				5F137F0028440E5900514263 /* LessonDetails */,
 				5F97F119284D5A3E00DB0576 /* EditLessonNames */,
+				5F97F11F284E1EEA00DB0576 /* EditLessonTeachers */,
 			);
 			path = Rozklad;
 			sourceTree = "<group>";
@@ -620,6 +625,15 @@
 				5F97F11C284D5A6200DB0576 /* EditLessonNamesView.swift */,
 			);
 			path = EditLessonNames;
+			sourceTree = "<group>";
+		};
+		5F97F11F284E1EEA00DB0576 /* EditLessonTeachers */ = {
+			isa = PBXGroup;
+			children = (
+				5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */,
+				5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */,
+			);
+			path = EditLessonTeachers;
 			sourceTree = "<group>";
 		};
 		5FD570AF2836809500D8E869 /* Frameworks */ = {
@@ -971,9 +985,11 @@
 				5F137EFD28440DF500514263 /* GroupLessonsStore.swift in Sources */,
 				5F69BBE7284CCA6E00FED83D /* StudySheet.swift in Sources */,
 				5F69BBF9284D164600FED83D /* StudySheetActivityCellView.swift in Sources */,
+				5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
 				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
 				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
+				5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */,
 				5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,

@@ -26,6 +26,8 @@ extension Rozklad.ScreenProvider {
         case groupLessons(GroupLessons.State)
         case lessonDetails(LessonDetails.State)
         case editLessonNames(EditLessonNames.State)
+        case editLessonTeachers(EditLessonTeachers.State)
+
     }
 
     // MARK: - Action handling
@@ -36,6 +38,7 @@ extension Rozklad.ScreenProvider {
         case groupLessons(GroupLessons.Action)
         case lessonDetails(LessonDetails.Action)
         case editLessonNames(EditLessonNames.Action)
+        case editLessonTeachers(EditLessonTeachers.Action)
     }
 
     // MARK: - Reducer handling
@@ -82,7 +85,19 @@ extension Rozklad.ScreenProvider {
                 action: /Action.editLessonNames,
                 environment: {
                     EditLessonNames.Environment(
-                        userDefaultsClient: $0.userDefaultsClient
+                        userDefaultsClient: $0.userDefaultsClient,
+                        rozkladClient: $0.rozkladClient
+                    )
+                }
+            ),
+        EditLessonTeachers.reducer
+            .pullback(
+                state: /State.editLessonTeachers,
+                action: /Action.editLessonTeachers,
+                environment: {
+                    EditLessonTeachers.Environment(
+                        userDefaultsClient: $0.userDefaultsClient,
+                        rozkladClient: $0.rozkladClient
                     )
                 }
             )

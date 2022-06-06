@@ -15,6 +15,8 @@ struct LessonDetails {
 
         var lesson: Lesson
 
+        @BindableState var isEditing: Bool = false
+
         init(lesson: Lesson) {
             self.lesson = lesson
         }
@@ -22,16 +24,24 @@ struct LessonDetails {
 
     // MARK: - Action
 
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
+
         case onAppear
 
         case updateLesson(Lesson)
 
+        case edit
+        case editingDone
+
         case editNames
+        case editTeachers
+
+        case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
-            case editNames(_ names: [String], _ selected: [String])
+            case editNames(_ lesson: Lesson)
+            case editTeachers(_ lesson: Lesson)
         }
     }
 
@@ -60,14 +70,33 @@ struct LessonDetails {
             state.lesson = lesson
             return .none
 
+        case .edit:
+            return .none
+            return Effect(value: .routeAction(.editNames(state.lesson)))
+
         case .editNames:
-            let allNames = state.lesson.lessonResponse.names
-            let selected = state.lesson.names
-            return Effect(value: .routeAction(.editNames(allNames, selected)))
+            guard state.isEditing else {
+                return .none
+            }
+            return Effect(value: .routeAction(.editNames(state.lesson)))
+
+        case .editTeachers:
+            guard state.isEditing else {
+                return .none
+            }
+            return Effect(value: .routeAction(.editTeachers(state.lesson)))
+
+        case .editingDone:
+            state.isEditing = false
+            return .none
+
+        case .binding:
+            return .none
 
         case .routeAction:
             return .none
         }
     }
+    .binding()
 
 }

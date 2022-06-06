@@ -1,5 +1,5 @@
 //
-//  EditLessonNamesStore.swift
+//  EditLessonTeachersStore.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 06.06.2022.
@@ -7,19 +7,19 @@
 
 import ComposableArchitecture
 
-struct EditLessonNames {
+struct EditLessonTeachers {
 
     // MARK: - State
 
     struct State: Equatable {
         let lesson: Lesson
-        let names: [String]
-        var selected: [String]
+        let teachers: [Teacher]
+        var selected: [Teacher]
 
         init(lesson: Lesson) {
             self.lesson = lesson
-            self.names = lesson.lessonResponse.names
-            self.selected = lesson.names
+            self.teachers = lesson.lessonResponse.teachers ?? []
+            self.selected = lesson.teachers ?? []
         }
     }
 
@@ -29,7 +29,7 @@ struct EditLessonNames {
         case save
         case cancel
 
-        case toggle(String)
+        case toggle(Teacher)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
@@ -50,7 +50,7 @@ struct EditLessonNames {
         switch action {
         case .save:
             var newLesson = state.lesson
-            newLesson.names = state.selected
+            newLesson.teachers = state.selected
             environment.rozkladClient.modified(lesson: newLesson)
             return Effect(value: .routeAction(.dismiss))
 

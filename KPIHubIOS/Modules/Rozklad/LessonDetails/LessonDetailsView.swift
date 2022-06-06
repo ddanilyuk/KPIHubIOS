@@ -16,9 +16,21 @@ struct LessonDetailsView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("\(viewStore.lesson.names.joined(separator: ", "))")
-                        .font(.system(.title).bold())
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    HStack {
+                        if viewStore.state.isEditing {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.system(size: 25))
+                                .foregroundColor(Color.orange)
+                        }
+
+
+                        Text("\(viewStore.lesson.names.joined(separator: ", "))")
+                            .font(.system(.title).bold())
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                    }
+                    .onTapGesture {
+                        viewStore.send(.editNames)
+                    }
 
                     DateAndTime(
                         lessonPositionDescription: viewStore.lesson.position.description,
@@ -46,34 +58,47 @@ struct LessonDetailsView: View {
                         }
                     }
 
-                    VStack(alignment: .leading, spacing: 0) {
-                        sectionTitle("Викладач")
+                    HStack {
+                        if viewStore.state.isEditing {
+                            Image(systemName: "pencil.circle.fill")
+                                .font(.system(size: 25))
+                                .foregroundColor(Color.orange)
+                                .offset(x: 0, y: 0)
+                        }
 
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
 
-                            VStack(spacing: 16) {
-                                ForEach((viewStore.lesson.teachers ?? []), id: \.self) { teacher in
-                                    VStack(spacing: 16) {
-                                        HStack {
-                                            LargeTagView(
-                                                icon: Image(systemName: "person"),
-                                                text: teacher.shortName,
-                                                backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                                                accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                                            )
-                                            Spacer()
-                                        }
-                                        if teacher != (viewStore.lesson.teachers ?? []).last {
-                                            Divider()
+                        VStack(alignment: .leading, spacing: 0) {
+                            sectionTitle("Викладач")
+
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(Color.white)
+
+                                VStack(spacing: 16) {
+                                    ForEach((viewStore.lesson.teachers ?? []), id: \.self) { teacher in
+                                        VStack(spacing: 16) {
+                                            HStack {
+                                                LargeTagView(
+                                                    icon: Image(systemName: "person"),
+                                                    text: teacher.shortName,
+                                                    backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
+                                                    accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                                                )
+                                                Spacer()
+                                            }
+                                            if teacher != (viewStore.lesson.teachers ?? []).last {
+                                                Divider()
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            .padding(16)
+                                .padding(16)
+                            }
                         }
+                    }
+                    .onTapGesture {
+                        viewStore.send(.editTeachers)
                     }
 
                     VStack(alignment: .leading, spacing: 0) {
@@ -135,17 +160,38 @@ struct LessonDetailsView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(
-                        action: {
-                            //
-                            viewStore.send(.editNames)
-                        },
-                        label: {
-                            Image(systemName: "pencil")
-                        }
-                    )
+                    if viewStore.state.isEditing {
+                        Button(
+                            action: {
+                                viewStore.send(.editingDone)
+                            },
+                            label: {
+                                Text("Готово")
+                            }
+                        )
+                    } else {
+                        Menu(
+                            content: {
+                                Button(
+                                    action: {
+                                        viewStore.send(.binding(.set(\.$isEditing, true)))
+                                    },
+                                    label: {
+                                        Text("Редагувати")
+                                        Image(systemName: "pencil")
+                                    }
+                                )
+                            },
+                            label: {
+                                Image(systemName: "ellipsis")
+                            }
+                        )
+                    }
+
+
                 }
             }
+            .animation(.default, value: viewStore.state.isEditing)
             .onAppear {
                 viewStore.send(.onAppear)
             }
