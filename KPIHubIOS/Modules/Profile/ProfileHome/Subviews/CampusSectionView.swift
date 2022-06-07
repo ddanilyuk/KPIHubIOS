@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CampusSectionView: View {
 
-    let campusState: CampusClient.State
+    let campusState: CampusClient.StateModule.State
     let onLogoutCampus: () -> Void
     let onLoginCampus: () -> Void
 

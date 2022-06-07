@@ -54,6 +54,7 @@ struct CampusLogin {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let campusClient: CampusClient
         let rozkladClient: RozkladClient
     }
 
@@ -92,16 +93,16 @@ struct CampusLogin {
             let groupSearchQuery = GroupSearchQuery(
                 groupName: campusUserInfo.studyGroup.name
             )
-
-            /// Saving user info
-            environment.userDefaultsClient.set(campusUserInfo, for: .campusUserInfo)
-
             /// Saving credentials after finding group
             let campusCredentials = CampusCredentials(
                 username: state.username,
                 password: state.password
             )
-            environment.userDefaultsClient.set(campusCredentials, for: .campusCredentials)
+            environment.campusClient.state.login(
+                credentials: campusCredentials,
+                userInfo: campusUserInfo,
+                commitChanges: false
+            )
 
             switch state.mode {
             case .onlyCampus:

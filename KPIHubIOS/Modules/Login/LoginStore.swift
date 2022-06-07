@@ -63,7 +63,8 @@ struct Login {
             return .none
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
-            environment.campusClient.updateState()
+            environment.campusClient.state.commit()
+            environment.campusClient.studySheet.load()
             environment.rozkladClient.state.commit()
             environment.rozkladClient.lessons.commit()
             environment.userDefaultsClient.set(true, for: .onboardingPassed)

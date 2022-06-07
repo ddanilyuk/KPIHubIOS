@@ -73,7 +73,7 @@ struct CampusHomeView: View {
     }
 
     @ViewBuilder
-    func studySheetDescription(for state: CampusClient.StudySheetState) -> some View {
+    func studySheetDescription(for state: CampusClient.StudySheetModule.State) -> some View {
         switch state {
         case .loading:
             HStack(spacing: 10) {
@@ -85,9 +85,8 @@ struct CampusHomeView: View {
         case .notLoading:
             Text("Помилка")
 
-        case let .loaded(items):
-            Text("Завантажено \(items.count)")
-
+        case .loaded:
+            Text("Завантажено")
         }
     }
 

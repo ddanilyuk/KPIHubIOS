@@ -85,11 +85,11 @@ struct App {
             } else {
                 state.set(.login)
             }
-            environment.campusClient.startLoading()
+            environment.campusClient.studySheet.load()
             return .none
 
         case .login(.delegate(.done)):
-            environment.campusClient.startLoading()
+            environment.campusClient.studySheet.load()
             state.set(.main)
             return .none
 

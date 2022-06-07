@@ -17,7 +17,7 @@ struct CampusHome {
         @BindableState var isLoading: Bool = false
 
         var openSheet: Bool = false
-        var studySheetState: CampusClient.StudySheetState = .notLoading
+        var studySheetState: CampusClient.StudySheetModule.State = .notLoading
 
         enum LoadingState<T: Equatable>: Equatable {
             case notLoading
@@ -33,7 +33,7 @@ struct CampusHome {
         case onAppear
         case refresh
         case studySheetTap
-        case setStudySheetState(CampusClient.StudySheetState)
+        case setStudySheetState(CampusClient.StudySheetModule.State)
 
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
@@ -57,7 +57,7 @@ struct CampusHome {
         switch action {
         case .onAppear:
             return Effect.run { subscriber in
-                environment.campusClient.studySheetSubject
+                environment.campusClient.studySheet.subject
                     .sink { state in
                         subscriber.send(.setStudySheetState(state))
                     }
@@ -67,7 +67,7 @@ struct CampusHome {
             switch state.studySheetState {
             case .notLoading,
                  .loaded:
-                environment.campusClient.startLoading()
+                environment.campusClient.studySheet.load()
                 return .none
 
             case .loading:

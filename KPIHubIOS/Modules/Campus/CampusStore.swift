@@ -48,7 +48,7 @@ struct Campus {
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
-                environment.campusClient.stateSubject
+                environment.campusClient.state.subject
                     .sink { state in
                         switch state {
                         case .loggedOut:
@@ -78,7 +78,8 @@ struct Campus {
             return .none
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
-            environment.campusClient.updateState()
+            environment.campusClient.state.commit()
+            environment.campusClient.studySheet.load()
             return .none
 
         case let .routeAction(_, action: .campusHome(.routeAction(.studySheet(items)))):

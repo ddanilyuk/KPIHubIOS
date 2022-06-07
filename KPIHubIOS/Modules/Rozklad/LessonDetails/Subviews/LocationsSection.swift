@@ -39,8 +39,6 @@ struct LocationsSection: View {
                         }
                     }
                     .padding(16)
-
-                    //LinksView()
                 }
             }
         }

@@ -29,9 +29,13 @@ struct CampusLoginView: View {
                                 .focused($focusedField, equals: .username)
                                 .onSubmit { focusedField = .password }
                                 .keyboardType(.default)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
 
                             SecureField("Пароль", text: viewStore.binding(\.$password))
                                 .focused($focusedField, equals: .password)
+                                .autocapitalization(.none)
+                                .disableAutocorrection(true)
                         }
                         .multilineTextAlignment(.center)
                         .textFieldStyle(PlainTextFieldStyle())
@@ -81,6 +85,7 @@ struct CampusLoginView_Previews: PreviewProvider {
                     environment: CampusLogin.Environment(
                         apiClient: .failing,
                         userDefaultsClient: .live(),
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live()),
                         rozkladClient: .live(userDefaultsClient: .live())
                     )
                 )

@@ -13,70 +13,126 @@ final class CampusClient {
 
     // MARK: - State
 
-    enum State: Equatable {
-        case loggedIn(CampusUserInfo)
-        case loggedOut
-    }
+    final class StateModule {
 
-    // MARK: - Properties
-
-    private let userDefaultsClient: UserDefaultsClient
-
-    lazy var stateSubject: CurrentValueSubject<State, Never> = {
-        if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
-            return .init(.loggedIn(campusUserInfo))
-        } else {
-            return .init(.loggedOut)
+        enum State: Equatable {
+            case loggedIn(CampusUserInfo)
+            case loggedOut
         }
-    }()
 
-    enum StudySheetState: Equatable {
-        case notLoading
-        case loading
-        case loaded([StudySheetItem])
-    }
+        private let userDefaultsClient: UserDefaultsClient
 
-    var studySheetSubject: CurrentValueSubject<StudySheetState, Never> = .init(.notLoading)
-
-    let apiClient: APIClient
-
-    var studySheetCancellable: Cancellable?
-
-    func startLoading() {
-        guard let credentials = userDefaultsClient.get(for: .campusCredentials) else {
-            studySheetSubject.send(.notLoading)
-            return
-        }
-        let campusLoginQuery = CampusLoginQuery(
-            username: credentials.username,
-            password: credentials.password
-        )
-        let task: Effect<[StudySheetItem], Error> = Effect.task { [weak self] in
-            guard let self = self else {
-                throw APIError.unknown
+        lazy var subject: CurrentValueSubject<State, Never> = {
+            if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+                return .init(.loggedIn(campusUserInfo))
+            } else {
+                return .init(.loggedOut)
             }
-            let result = try await self.apiClient.decodedResponse(
-                for: .api(.campus(.studySheet(campusLoginQuery))),
-                as: StudySheetResponse.self
+        }()
+
+        init(userDefaultsClient: UserDefaultsClient) {
+            self.userDefaultsClient = userDefaultsClient
+        }
+
+        func login(
+            credentials: CampusCredentials,
+            userInfo: CampusUserInfo,
+            commitChanges: Bool
+        ) {
+            userDefaultsClient.set(userInfo, for: .campusUserInfo)
+            userDefaultsClient.set(credentials, for: .campusCredentials)
+            if commitChanges {
+                commit()
+            }
+        }
+
+        func logOut(commitChanges: Bool) {
+            userDefaultsClient.remove(for: .campusUserInfo)
+            userDefaultsClient.remove(for: .campusCredentials)
+            if commitChanges {
+                commit()
+            }
+        }
+
+        func commit() {
+            if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+                subject.send(.loggedIn(campusUserInfo))
+            } else {
+                subject.send(.loggedOut)
+            }
+        }
+    }
+
+    var state: StateModule
+
+    // MARK: - StudySheet
+
+    final class StudySheetModule {
+
+        enum State: Equatable {
+            case notLoading
+            case loading
+            case loaded([StudySheetItem])
+        }
+
+        private let userDefaultsClient: UserDefaultsClient
+        private let apiClient: APIClient
+        private var studySheetCancellable: Cancellable?
+
+        var subject: CurrentValueSubject<State, Never> = .init(.notLoading)
+
+        init(
+            userDefaultsClient: UserDefaultsClient,
+            apiClient: APIClient
+        ) {
+            self.userDefaultsClient = userDefaultsClient
+            self.apiClient = apiClient
+        }
+
+        func load() {
+            guard let credentials = userDefaultsClient.get(for: .campusCredentials) else {
+                subject.send(.notLoading)
+                return
+            }
+            let campusLoginQuery = CampusLoginQuery(
+                username: credentials.username,
+                password: credentials.password
             )
-            return result.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
-        }
-        studySheetSubject.send(.loading)
-        studySheetCancellable?.cancel()
-        studySheetCancellable = task.sink(
-            receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    return
-                case .failure:
-                    self?.studySheetSubject.send(.notLoading)
+            let task: Effect<[StudySheetItem], Error> = Effect.task { [weak self] in
+                guard let self = self else {
+                    throw APIError.unknown
                 }
-            },
-            receiveValue: { [weak self] value in
-                self?.studySheetSubject.send(.loaded(value))
+                let result = try await self.apiClient.decodedResponse(
+                    for: .api(.campus(.studySheet(campusLoginQuery))),
+                    as: StudySheetResponse.self
+                )
+                return result.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
             }
-        )
+            subject.send(.loading)
+            studySheetCancellable?.cancel()
+            studySheetCancellable = task.sink(
+                receiveCompletion: { [weak self] completion in
+                    switch completion {
+                    case .finished:
+                        return
+                    case .failure:
+                        self?.subject.send(.notLoading)
+                    }
+                },
+                receiveValue: { [weak self] value in
+                    self?.subject.send(.loaded(value))
+                }
+            )
+        }
+
+        func removeLoaded() {
+            studySheetCancellable?.cancel()
+            subject.send(.notLoading)
+        }
+
     }
+
+    var studySheet: StudySheetModule
 
     // MARK: - Lifecycle
 
@@ -91,22 +147,8 @@ final class CampusClient {
     }
 
     private init(apiClient: APIClient, userDefaultsClient: UserDefaultsClient) {
-        self.apiClient = apiClient
-        self.userDefaultsClient = userDefaultsClient
+        self.state = StateModule(userDefaultsClient: userDefaultsClient)
+        self.studySheet = StudySheetModule(userDefaultsClient: userDefaultsClient, apiClient: apiClient)
     }
 
-    func logOut() {
-        stateSubject.value = .loggedOut
-        userDefaultsClient.remove(for: .campusUserInfo)
-        userDefaultsClient.remove(for: .campusCredentials)
-    }
-
-    func updateState() {
-        if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
-            stateSubject.value = .loggedIn(campusUserInfo)
-        } else {
-            stateSubject.value = .loggedOut
-        }
-    }
-    
 }

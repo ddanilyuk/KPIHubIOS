@@ -14,7 +14,7 @@ struct ProfileHome {
     struct State: Equatable {
 
         var rozkladState: RozkladClient.StateModule.State = .notSelected
-        var campusState: CampusClient.State = .loggedOut
+        var campusState: CampusClient.StateModule.State = .loggedOut
         
     }
 
@@ -24,7 +24,7 @@ struct ProfileHome {
         case onAppear
 
         case setRozkladState(RozkladClient.StateModule.State)
-        case setCampusState(CampusClient.State)
+        case setCampusState(CampusClient.StateModule.State)
 
         case changeGroup
         case selectGroup
@@ -61,7 +61,7 @@ struct ProfileHome {
                         }
                 },
                 Effect.run { subscriber in
-                    environment.campusClient.stateSubject
+                    environment.campusClient.state.subject
                         .sink { campusState in
                             subscriber.send(.setCampusState(campusState))
                         }
@@ -84,7 +84,8 @@ struct ProfileHome {
             return Effect(value: .routeAction(.rozklad))
 
         case .campusLogout:
-            environment.campusClient.logOut()
+            environment.campusClient.state.logOut(commitChanges: true)
+            environment.campusClient.studySheet.removeLoaded()
             return Effect(value: .routeAction(.campus))
 
         case .campusLogin:

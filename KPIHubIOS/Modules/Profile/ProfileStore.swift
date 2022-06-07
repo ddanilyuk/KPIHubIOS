@@ -31,8 +31,8 @@ struct Profile {
         case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
 
         enum Delegate: Equatable {
-            case logoutRozklad
-            case logoutCampus
+            case selectRozkladTab
+            case selectCampusTab
         }
     }
 
@@ -46,13 +46,13 @@ struct Profile {
 
     // MARK: - Reducer
 
-    static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
+    static let reducerCore = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
         case .routeAction(_, .profileHome(.routeAction(.rozklad))):
-            return Effect(value: .delegate(.logoutRozklad))
+            return Effect(value: .delegate(.selectRozkladTab))
 
         case .routeAction(_, .profileHome(.routeAction(.campus))):
-            return Effect(value: .delegate(.logoutCampus))
+            return Effect(value: .delegate(.selectCampusTab))
 
         case .routeAction:
             return .none

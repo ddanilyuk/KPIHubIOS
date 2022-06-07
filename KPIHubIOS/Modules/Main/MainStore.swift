@@ -58,11 +58,11 @@ struct Main {
 
     static let coreReducer = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
-        case .profile(.delegate(.logoutRozklad)):
+        case .profile(.delegate(.selectRozkladTab)):
             state.selectedTab = .rozklad
             return .none
 
-        case .profile(.delegate(.logoutCampus)):
+        case .profile(.delegate(.selectCampusTab)):
             state.selectedTab = .campus
             return .none
 
