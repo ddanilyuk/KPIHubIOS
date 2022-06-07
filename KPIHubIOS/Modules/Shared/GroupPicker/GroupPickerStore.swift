@@ -91,7 +91,7 @@ struct GroupPicker {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.set(lessons: lessons)
+            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
             return Effect(value: .routeAction(.done))
 
         case let .allGroupsResult(.failure(error)),

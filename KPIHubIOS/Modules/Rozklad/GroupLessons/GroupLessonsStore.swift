@@ -100,7 +100,7 @@ struct GroupLessons {
                 state.groupName = group.name
             }
             return Effect.run { subscriber in
-                environment.rozkladClient.lessonsSubject
+                environment.rozkladClient.lessons.subject
                     .sink { lessons in
                         subscriber.send(.updateLessons(lessons))
                     }

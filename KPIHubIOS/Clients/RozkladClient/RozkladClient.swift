@@ -11,7 +11,9 @@ import Foundation
 
 final class RozkladClient {
 
-    class StateModule {
+    // MARK: - State
+
+    final class StateModule {
 
         private let userDefaultsClient: UserDefaultsClient
         
@@ -53,74 +55,56 @@ final class RozkladClient {
                 subject.send(.notSelected)
             }
         }
+        
     }
 
     var state: StateModule
 
-    // MARK: - State
-
-//    enum State: Equatable {
-//        case selected(GroupResponse)
-//        case notSelected
-//    }
-//
-//    lazy var stateSubject: CurrentValueSubject<State, Never> = {
-//        if let group = userDefaultsClient.get(for: .group) {
-//            return .init(.selected(group))
-//        } else {
-//            return .init(.notSelected)
-//        }
-//    }()
-//
-//    func set(group: GroupResponse, withUpdating: Bool = true) {
-//        userDefaultsClient.set(group, for: .group)
-//        if withUpdating {
-//            updateState()
-//        }
-//    }
-//
-//    func logOut() {
-//        stateSubject.value = .notSelected
-//        userDefaultsClient.remove(for: .group)
-//    }
-//
-//    func updateState() {
-//        if let group = userDefaultsClient.get(for: .group) {
-//            stateSubject.value = .selected(group)
-//        } else {
-//            stateSubject.value = .notSelected
-//        }
-//    }
-
     // MARK: - Lessons
 
-    lazy var lessonsSubject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never> = {
-        if let lessons = userDefaultsClient.get(for: .lessons) {
-            return .init(IdentifiedArray(uniqueElements: lessons))
-        } else {
-            return .init([])
+    final class LessonsModule {
+
+        private let userDefaultsClient: UserDefaultsClient
+
+        init(userDefaultsClient: UserDefaultsClient) {
+            self.userDefaultsClient = userDefaultsClient
         }
-    }()
 
-    func set(lessons: [Lesson]) {
-        userDefaultsClient.set(lessons, for: .lessons)
-        updateLessons()
-    }
+        lazy var subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never> = {
+            if let lessons = userDefaultsClient.get(for: .lessons) {
+                return .init(IdentifiedArray(uniqueElements: lessons))
+            } else {
+                return .init([])
+            }
+        }()
 
-    func updateLessons() {
-        if let lessons = userDefaultsClient.get(for: .lessons) {
-            self.lessonsSubject.value = IdentifiedArray(uniqueElements: lessons)
-        } else {
-            self.lessonsSubject.value = []
+        func set(lessons: [Lesson], commitChanges: Bool) {
+            userDefaultsClient.set(lessons, for: .lessons)
+            if commitChanges {
+                commit()
+            }
         }
+
+        func modify(with lesson: Lesson, commitChanges: Bool) {
+            var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
+            lessons[id: lesson.id] = lesson
+            userDefaultsClient.set(lessons.elements, for: .lessons)
+            if commitChanges {
+                commit()
+            }
+        }
+
+        func commit() {
+            if let lessons = userDefaultsClient.get(for: .lessons) {
+                subject.send(IdentifiedArray(uniqueElements: lessons))
+            } else {
+                subject.send([])
+            }
+        }
+
     }
 
-    func modified(lesson: Lesson) {
-        var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
-        lessons[id: lesson.id] = lesson
-        userDefaultsClient.set(lessons.elements, for: .lessons)
-        lessonsSubject.value = lessons
-    }
+    var lessons: LessonsModule
 
     // MARK: - Lifecycle
 
@@ -128,10 +112,8 @@ final class RozkladClient {
         RozkladClient(userDefaultsClient: userDefaultsClient)
     }
 
-    private let userDefaultsClient: UserDefaultsClient
-
     private init(userDefaultsClient: UserDefaultsClient) {
-        self.userDefaultsClient = userDefaultsClient
         self.state = StateModule(userDefaultsClient: userDefaultsClient)
+        self.lessons = LessonsModule(userDefaultsClient: userDefaultsClient)
     }
 }

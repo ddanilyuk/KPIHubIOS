@@ -56,7 +56,7 @@ struct LessonDetails {
         case .onAppear:
             let lessonId = state.lesson.id
             return Effect.run { subscriber in
-                environment.rozkladClient.lessonsSubject
+                environment.rozkladClient.lessons.subject
                     .compactMap { $0[id: lessonId] }
                     .sink { lesson in
                         subscriber.send(.updateLesson(lesson))

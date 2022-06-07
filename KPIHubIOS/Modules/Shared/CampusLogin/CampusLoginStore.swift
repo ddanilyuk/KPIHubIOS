@@ -136,7 +136,7 @@ struct CampusLogin {
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):
-            environment.rozkladClient.set(lessons: lessons)
+            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
             return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):

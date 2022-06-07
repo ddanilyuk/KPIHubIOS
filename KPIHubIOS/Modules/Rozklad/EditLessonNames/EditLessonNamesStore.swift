@@ -51,7 +51,7 @@ struct EditLessonNames {
         case .save:
             var newLesson = state.lesson
             newLesson.names = state.selected
-            environment.rozkladClient.modified(lesson: newLesson)
+            environment.rozkladClient.lessons.modify(with: newLesson, commitChanges: true)
             return Effect(value: .routeAction(.dismiss))
 
         case .cancel:

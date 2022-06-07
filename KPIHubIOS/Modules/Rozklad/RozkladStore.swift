@@ -85,6 +85,7 @@ struct Rozklad {
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
             environment.rozkladClient.state.commit()
+            environment.rozkladClient.lessons.commit()
             return .none
 
         case let .routeAction(_, .lessonDetails(.routeAction(.editNames(lesson)))):

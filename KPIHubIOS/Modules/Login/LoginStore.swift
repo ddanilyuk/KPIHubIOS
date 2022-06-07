@@ -65,11 +65,13 @@ struct Login {
         case .routeAction(_, .campusLogin(.routeAction(.done))):
             environment.campusClient.updateState()
             environment.rozkladClient.state.commit()
+            environment.rozkladClient.lessons.commit()
             environment.userDefaultsClient.set(true, for: .onboardingPassed)
             return Effect(value: .delegate(.done))
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
             environment.rozkladClient.state.commit()
+            environment.rozkladClient.lessons.commit()
             environment.userDefaultsClient.set(true, for: .onboardingPassed)
             return Effect(value: .delegate(.done))
 
