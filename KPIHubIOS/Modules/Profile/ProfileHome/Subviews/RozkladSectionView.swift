@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RozkladSectionView: View {
 
-    let rozkladState: RozkladClient.State
+    let rozkladState: RozkladClient.StateModule.State
     let onChangeGroup: () -> Void
     let onSelectGroup: () -> Void
 

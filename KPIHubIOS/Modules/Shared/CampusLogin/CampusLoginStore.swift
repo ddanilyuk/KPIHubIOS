@@ -127,7 +127,7 @@ struct CampusLogin {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.set(group: group)
+                environment.rozkladClient.state.select(group: group, commitChanges: false)
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task

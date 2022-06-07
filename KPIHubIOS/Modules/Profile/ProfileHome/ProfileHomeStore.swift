@@ -13,7 +13,7 @@ struct ProfileHome {
 
     struct State: Equatable {
 
-        var rozkladState: RozkladClient.State = .notSelected
+        var rozkladState: RozkladClient.StateModule.State = .notSelected
         var campusState: CampusClient.State = .loggedOut
         
     }
@@ -23,7 +23,7 @@ struct ProfileHome {
     enum Action: Equatable {
         case onAppear
 
-        case setRozkladState(RozkladClient.State)
+        case setRozkladState(RozkladClient.StateModule.State)
         case setCampusState(CampusClient.State)
 
         case changeGroup
@@ -55,7 +55,7 @@ struct ProfileHome {
         case .onAppear:
             return .merge(
                 Effect.run { subscriber in
-                    environment.rozkladClient.stateSubject
+                    environment.rozkladClient.state.subject
                         .sink { rozkladState in
                             subscriber.send(.setRozkladState(rozkladState))
                         }
@@ -77,7 +77,7 @@ struct ProfileHome {
             return .none
 
         case .changeGroup:
-            environment.rozkladClient.logOut()
+            environment.rozkladClient.state.deselect(commitChanges: true)
             return Effect(value: .routeAction(.rozklad))
 
         case .selectGroup:

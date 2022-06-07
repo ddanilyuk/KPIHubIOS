@@ -11,40 +11,86 @@ import Foundation
 
 final class RozkladClient {
 
+    class StateModule {
+
+        private let userDefaultsClient: UserDefaultsClient
+        
+        init(userDefaultsClient: UserDefaultsClient) {
+            self.userDefaultsClient = userDefaultsClient
+        }
+
+        enum State: Equatable {
+            case selected(GroupResponse)
+            case notSelected
+        }
+
+        lazy var subject: CurrentValueSubject<State, Never> = {
+            if let group = userDefaultsClient.get(for: .group) {
+                return .init(.selected(group))
+            } else {
+                return .init(.notSelected)
+            }
+        }()
+
+        func select(group: GroupResponse, commitChanges: Bool) {
+            userDefaultsClient.set(group, for: .group)
+            if commitChanges {
+                commit()
+            }
+        }
+
+        func deselect(commitChanges: Bool) {
+            userDefaultsClient.remove(for: .group)
+            if commitChanges {
+                commit()
+            }
+        }
+
+        func commit() {
+            if let group = userDefaultsClient.get(for: .group) {
+                subject.send(.selected(group))
+            } else {
+                subject.send(.notSelected)
+            }
+        }
+    }
+
+    var state: StateModule
+
     // MARK: - State
 
-    enum State: Equatable {
-        case selected(GroupResponse)
-        case notSelected
-    }
-
-    lazy var stateSubject: CurrentValueSubject<State, Never> = {
-        if let group = userDefaultsClient.get(for: .group) {
-            return .init(.selected(group))
-        } else {
-            return .init(.notSelected)
-        }
-    }()
-
-    func set(group: GroupResponse, withUpdating: Bool = true) {
-        userDefaultsClient.set(group, for: .group)
-        if withUpdating {
-            updateState()
-        }
-    }
-
-    func logOut() {
-        stateSubject.value = .notSelected
-        userDefaultsClient.remove(for: .group)
-    }
-
-    func updateState() {
-        if let group = userDefaultsClient.get(for: .group) {
-            stateSubject.value = .selected(group)
-        } else {
-            stateSubject.value = .notSelected
-        }
-    }
+//    enum State: Equatable {
+//        case selected(GroupResponse)
+//        case notSelected
+//    }
+//
+//    lazy var stateSubject: CurrentValueSubject<State, Never> = {
+//        if let group = userDefaultsClient.get(for: .group) {
+//            return .init(.selected(group))
+//        } else {
+//            return .init(.notSelected)
+//        }
+//    }()
+//
+//    func set(group: GroupResponse, withUpdating: Bool = true) {
+//        userDefaultsClient.set(group, for: .group)
+//        if withUpdating {
+//            updateState()
+//        }
+//    }
+//
+//    func logOut() {
+//        stateSubject.value = .notSelected
+//        userDefaultsClient.remove(for: .group)
+//    }
+//
+//    func updateState() {
+//        if let group = userDefaultsClient.get(for: .group) {
+//            stateSubject.value = .selected(group)
+//        } else {
+//            stateSubject.value = .notSelected
+//        }
+//    }
 
     // MARK: - Lessons
 
@@ -86,5 +132,6 @@ final class RozkladClient {
 
     private init(userDefaultsClient: UserDefaultsClient) {
         self.userDefaultsClient = userDefaultsClient
+        self.state = StateModule(userDefaultsClient: userDefaultsClient)
     }
 }

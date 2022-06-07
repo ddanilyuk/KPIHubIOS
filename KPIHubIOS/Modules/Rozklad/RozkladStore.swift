@@ -47,7 +47,7 @@ struct Rozklad {
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
-                environment.rozkladClient.stateSubject
+                environment.rozkladClient.state.subject
                     .sink { state in
                         switch state {
                         case .selected:
@@ -84,7 +84,7 @@ struct Rozklad {
             return .none
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
-            environment.rozkladClient.updateState()
+            environment.rozkladClient.state.commit()
             return .none
 
         case let .routeAction(_, .lessonDetails(.routeAction(.editNames(lesson)))):
