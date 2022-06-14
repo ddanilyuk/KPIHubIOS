@@ -57,6 +57,7 @@ struct LessonDetails {
             let lessonId = state.lesson.id
             return Effect.run { subscriber in
                 environment.rozkladClient.lessons.subject
+                    .receive(on: DispatchQueue.main)
                     .compactMap { $0[id: lessonId] }
                     .sink { lesson in
                         subscriber.send(.updateLesson(lesson))

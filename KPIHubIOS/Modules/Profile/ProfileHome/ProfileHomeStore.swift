@@ -56,12 +56,14 @@ struct ProfileHome {
             return .merge(
                 Effect.run { subscriber in
                     environment.rozkladClient.state.subject
+                        .receive(on: DispatchQueue.main)
                         .sink { rozkladState in
                             subscriber.send(.setRozkladState(rozkladState))
                         }
                 },
                 Effect.run { subscriber in
                     environment.campusClient.state.subject
+                        .receive(on: DispatchQueue.main)
                         .sink { campusState in
                             subscriber.send(.setCampusState(campusState))
                         }

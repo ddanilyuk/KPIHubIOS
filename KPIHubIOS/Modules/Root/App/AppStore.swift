@@ -129,7 +129,7 @@ struct App {
             ),
         reducerCore
     )
-    .debug()
+//    .debug()
 
 }
 

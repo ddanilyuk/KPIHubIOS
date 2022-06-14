@@ -49,6 +49,7 @@ struct Campus {
         case .onSetup:
             return Effect.run { subscriber in
                 environment.campusClient.state.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { state in
                         switch state {
                         case .loggedOut:

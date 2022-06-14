@@ -58,6 +58,7 @@ struct CampusHome {
         case .onAppear:
             return Effect.run { subscriber in
                 environment.campusClient.studySheet.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { state in
                         subscriber.send(.setStudySheetState(state))
                     }

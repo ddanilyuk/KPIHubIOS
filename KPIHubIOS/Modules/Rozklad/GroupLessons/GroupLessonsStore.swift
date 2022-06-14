@@ -101,6 +101,7 @@ struct GroupLessons {
             }
             return Effect.run { subscriber in
                 environment.rozkladClient.lessons.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { lessons in
                         subscriber.send(.updateLessons(lessons))
                     }

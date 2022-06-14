@@ -48,6 +48,7 @@ struct Rozklad {
         case .onSetup:
             return Effect.run { subscriber in
                 environment.rozkladClient.state.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { state in
                         switch state {
                         case .selected:
