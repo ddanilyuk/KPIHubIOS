@@ -60,10 +60,12 @@ struct App {
                 router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
+            let keychainClient: KeychainClientable = KeychainClient.live()
             let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
             let campusClient: CampusClient = .live(
                 apiClient: apiClient,
-                userDefaultsClient: userDefaultsClient
+                userDefaultsClient: userDefaultsClient,
+                keychainClient: keychainClient
             )
 
             return Self(

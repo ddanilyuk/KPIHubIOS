@@ -41,6 +41,8 @@
 		5F137EFF28440DFD00514263 /* GroupLessonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EFE28440DFD00514263 /* GroupLessonsView.swift */; };
 		5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137F0128440E6D00514263 /* LessonDetailsStore.swift */; };
 		5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137F0328440E7400514263 /* LessonDetailsView.swift */; };
+		5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5F28FB8C2858D55B00579A75 /* KeychainAccess */; };
+		5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28FB8F2858D65500579A75 /* KeychainClient.swift */; };
 		5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4629284569DD00202DA5 /* LessonCellStore.swift */; };
 		5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F462B284569E700202DA5 /* LessonCellView.swift */; };
 		5F5F462F28456D3B00202DA5 /* SmallTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F462E28456D3B00202DA5 /* SmallTagView.swift */; };
@@ -162,6 +164,7 @@
 		5F137EFE28440DFD00514263 /* GroupLessonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupLessonsView.swift; sourceTree = "<group>"; };
 		5F137F0128440E6D00514263 /* LessonDetailsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsStore.swift; sourceTree = "<group>"; };
 		5F137F0328440E7400514263 /* LessonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsView.swift; sourceTree = "<group>"; };
+		5F28FB8F2858D65500579A75 /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		5F5F4629284569DD00202DA5 /* LessonCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellStore.swift; sourceTree = "<group>"; };
 		5F5F462B284569E700202DA5 /* LessonCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellView.swift; sourceTree = "<group>"; };
 		5F5F462E28456D3B00202DA5 /* SmallTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTagView.swift; sourceTree = "<group>"; };
@@ -241,6 +244,7 @@
 			files = (
 				5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */,
 				5F137EB428439F2400514263 /* Introspect in Frameworks */,
+				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
 				5F137EB128439EC800514263 /* TCACoordinators in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
@@ -452,6 +456,14 @@
 			path = LessonDetails;
 			sourceTree = "<group>";
 		};
+		5F28FB8E2858D64100579A75 /* Keychain */ = {
+			isa = PBXGroup;
+			children = (
+				5F28FB8F2858D65500579A75 /* KeychainClient.swift */,
+			);
+			path = Keychain;
+			sourceTree = "<group>";
+		};
 		5F5F4628284569CC00202DA5 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -490,6 +502,7 @@
 			children = (
 				5F69BBD9284ACC3600FED83D /* APIClient */,
 				5F5F463828480B2D00202DA5 /* UserDefaults */,
+				5F28FB8E2858D64100579A75 /* Keychain */,
 				5FDFBE28284D4894007E9F3A /* RozkladClient */,
 				5FDFBE25284D46EC007E9F3A /* CampusClient */,
 			);
@@ -785,6 +798,7 @@
 				5F137EAD28439EA100514263 /* ComposableArchitecture */,
 				5F137EB028439EC800514263 /* TCACoordinators */,
 				5F137EB328439F2400514263 /* Introspect */,
+				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -864,6 +878,7 @@
 				5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -1068,6 +1083,7 @@
 				5F5F464A284900C200202DA5 /* GroupLessonsDayPicker.swift in Sources */,
 				5F667CFA284E3E78006D3AB7 /* LocationsSection.swift in Sources */,
 				5F5F463D284814E800202DA5 /* Lesson.swift in Sources */,
+				5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */,
 				5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */,
 				5FA2AC02284E30950041FE74 /* PullToRefresh.swift in Sources */,
 				5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */,
@@ -1439,6 +1455,14 @@
 				minimumVersion = 0.1.4;
 			};
 		};
+		5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1456,6 +1480,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
+		};
+		5F28FB8C2858D55B00579A75 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		5FD570B4283680DA00D8E869 /* Routes */ = {
 			isa = XCSwiftPackageProductDependency;

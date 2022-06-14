@@ -56,7 +56,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                     environment: ProfileHome.Environment(
                         userDefaultsClient: .live(),
                         rozkladClient: .live(userDefaultsClient: .live()),
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live())
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
                     )
                 )
             )

@@ -147,10 +147,6 @@ extension UserDefaultKey {
         "lessons"
     }
 
-    static var campusCredentials: UserDefaultKey<CampusCredentials> {
-        "campusCredentials"
-    }
-
     static var campusUserInfo: UserDefaultKey<CampusUserInfo> {
         "campusUserInfo"
     }

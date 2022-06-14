@@ -85,7 +85,7 @@ struct CampusLoginView_Previews: PreviewProvider {
                     environment: CampusLogin.Environment(
                         apiClient: .failing,
                         userDefaultsClient: .live(),
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live()),
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live()),
                         rozkladClient: .live(userDefaultsClient: .live())
                     )
                 )
