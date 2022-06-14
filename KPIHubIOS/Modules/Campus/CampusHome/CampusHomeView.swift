@@ -19,6 +19,11 @@ struct CampusHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack {
+                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
+                        // do your stuff when pulled
+                        viewStore.send(.refresh)
+                    }
+
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(backgroundColor)
@@ -42,9 +47,11 @@ struct CampusHomeView: View {
                                 Spacer()
                             }
 
-                            let some = viewStore.state.studySheetLoadedState != .loaded ? "Loading.." : viewStore
-                                .state.studySheetItems.count.stringValue
-                            Text("\(some)")
+                            studySheetDescription(for: viewStore.state.studySheetState)
+                                .font(.system(.callout))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .frame(height: 25)
+                                .padding(.leading, 40 + 16)
                         }
                         .padding(16)
                     }
@@ -54,6 +61,7 @@ struct CampusHomeView: View {
                 }
                 .padding(24)
             }
+            .coordinateSpace(name: "pullToRefresh")
             .onAppear {
                 viewStore.send(.onAppear)
             }
@@ -61,15 +69,27 @@ struct CampusHomeView: View {
             .navigationTitle("Кампус")
             .loadable(viewStore.binding(\.$isLoading))
         }
+
     }
 
-}
+    @ViewBuilder
+    func studySheetDescription(for state: CampusClient.StudySheetModule.State) -> some View {
+        switch state {
+        case .loading:
+            HStack(spacing: 10) {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                Text("Завантаження")
+            }
 
+        case .notLoading:
+            Text("Помилка")
 
-extension Color {
-    static var screenBackground: Color {
-        return Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)
+        case .loaded:
+            Text("Завантажено")
+        }
     }
+
 }
 
 // MARK: - Preview
@@ -80,14 +100,12 @@ struct CampusHomeView_Previews: PreviewProvider {
             CampusHomeView(
                 store: Store(
                     initialState: CampusHome.State(
-//                        studySheetItems:
-//                        lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
                     reducer: CampusHome.reducer,
                     environment: CampusHome.Environment(
                         apiClient: .failing,
-                        userDefaultsClient: .live()
-//                        userDefaultsClient: .live()
+                        userDefaultsClient: .live(),
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live())
                     )
                 )
             )

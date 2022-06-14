@@ -14,35 +14,59 @@ struct OnboardingView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            VStack(spacing: 20) {
-                Text("Onboarding")
 
-                Spacer()
+            VStack {
+                ZStack {
+                    Color.white
 
-                VStack(spacing: 20) {
-                    Button(
-                        "Увійти через кампус",
-                        action: {
-                            viewStore.send(
-                                .routeAction(.campusLogin)
-                            )
-                        }
-                    )
-
-                    Button(
-                        "Обрати группу",
-                        action: {
-                            viewStore.send(
-                                .routeAction(.groupPicker)
-                            )
-                        }
-                    )
+                    Image("kpiHubLogo")
+                        .resizable()
+                        .frame(width: 200, height: 200, alignment: .center)
                 }
-                .buttonStyle(BigButtonStyle())
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding(20)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity
+                )
+                .ignoresSafeArea()
 
+                Rectangle()
+                    .fill(Color.screenBackground)
+                    .frame(
+                        maxWidth: .infinity,
+                        maxHeight: .infinity
+                    )
+                    .overlay(
+                        VStack(spacing: 20) {
+                            VStack(spacing: 20) {
+                                Button(
+                                    "Увійти через кампус",
+                                    action: {
+                                        viewStore.send(
+                                            .routeAction(.campusLogin)
+                                        )
+                                    }
+                                )
+
+                                Button(
+                                    "Обрати группу",
+                                    action: {
+                                        viewStore.send(
+                                            .routeAction(.groupPicker)
+                                        )
+                                    }
+                                )
+                            }
+                            .buttonStyle(BigButtonStyle())
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding(20)
+                        }
+                        .padding(20)
+                        .cornerRadius(20)
+                    )
+                    .ignoresSafeArea()
             }
+            .navigationBarHidden(true)
+            .background(Color.screenBackground)
         }
     }
 

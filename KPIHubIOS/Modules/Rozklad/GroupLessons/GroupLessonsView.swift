@@ -86,7 +86,7 @@ struct GroupLessonsView: View {
 
                                 // TODO: Handle if in last section.count != 0
                                 Rectangle()
-                                    .background(Color.screenBackground)
+                                    .fill(Color.screenBackground)
                                     .frame(minHeight: geometryProxy.frame(in: .local).height - 44)
                             }
                             .onChange(of: selectedDay) { newValue in

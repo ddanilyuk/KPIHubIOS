@@ -36,6 +36,16 @@ struct RozkladFlowCoordinatorView: View {
                     action: Rozklad.ScreenProvider.Action.groupPicker,
                     then: GroupPickerView.init
                 )
+                CaseLet(
+                    state: /Rozklad.ScreenProvider.State.editLessonNames,
+                    action: Rozklad.ScreenProvider.Action.editLessonNames,
+                    then: EditLessonNamesView.init
+                )
+                CaseLet(
+                    state: /Rozklad.ScreenProvider.State.editLessonTeachers,
+                    action: Rozklad.ScreenProvider.Action.editLessonTeachers,
+                    then: EditLessonTeachersView.init
+                )
             }
         }
     }

@@ -15,6 +15,8 @@ struct LessonDetails {
 
         var lesson: Lesson
 
+        @BindableState var isEditing: Bool = false
+
         init(lesson: Lesson) {
             self.lesson = lesson
         }
@@ -22,23 +24,68 @@ struct LessonDetails {
 
     // MARK: - Action
 
-    enum Action: Equatable {
-        case start
+    enum Action: Equatable, BindableAction {
+
+        case onAppear
+
+        case updateLesson(Lesson)
+
+        case editNames
+        case editTeachers
+
+        case binding(BindingAction<State>)
+        case routeAction(RouteAction)
+
+        enum RouteAction: Equatable {
+            case editNames(_ lesson: Lesson)
+            case editTeachers(_ lesson: Lesson)
+        }
     }
 
     // MARK: - Environment
 
     struct Environment {
         let userDefaultsClient: UserDefaultsClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
-        case .start:
+        case .onAppear:
+            let lessonId = state.lesson.id
+            return Effect.run { subscriber in
+                environment.rozkladClient.lessons.subject
+                    .compactMap { $0[id: lessonId] }
+                    .sink { lesson in
+                        subscriber.send(.updateLesson(lesson))
+                    }
+            }
+
+        case let .updateLesson(lesson):
+            state.lesson = lesson
+            return .none
+
+        case .editNames:
+            guard state.isEditing else {
+                return .none
+            }
+            return Effect(value: .routeAction(.editNames(state.lesson)))
+
+        case .editTeachers:
+            guard state.isEditing else {
+                return .none
+            }
+            return Effect(value: .routeAction(.editTeachers(state.lesson)))
+
+        case .binding:
+            return .none
+
+        case .routeAction:
             return .none
         }
     }
+    .binding()
 
 }

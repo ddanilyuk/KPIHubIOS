@@ -6,21 +6,34 @@
 //
 
 import ComposableArchitecture
+import TCACoordinators
+import Combine
 
 struct Profile {
 
     // MARK: - State
 
-    struct State: Equatable {
-        var name: String = ""
+    struct State: Equatable, IdentifiedRouterState {
+        var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
+
+        init() {
+            self.routes = [.root(.profileHome(.init()), embedInNavigationView: true)]
+        }
     }
 
     // MARK: - Action
 
-    enum Action: Equatable {
-        case onAppear
-        case logOutCampus
-        case logOutGroup
+    enum Action: Equatable, IdentifiedRouterAction {
+
+        case delegate(Delegate)
+
+        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
+        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
+
+        enum Delegate: Equatable {
+            case selectRozkladTab
+            case selectCampusTab
+        }
     }
 
     // MARK: - Environment
@@ -33,22 +46,29 @@ struct Profile {
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
+    static let reducerCore = Reducer<State, Action, Environment> { _, action, _ in
         switch action {
-        case .onAppear:
-            if let userInfo = environment.userDefaultsClient.get(for: .campusUserInfo) {
-                state.name = userInfo.fullName
-            }
+        case .routeAction(_, .profileHome(.routeAction(.rozklad))):
+            return Effect(value: .delegate(.selectRozkladTab))
+
+        case .routeAction(_, .profileHome(.routeAction(.campus))):
+            return Effect(value: .delegate(.selectCampusTab))
+
+        case .routeAction:
             return .none
 
-        case .logOutCampus:
-            environment.campusClient.logOut()
+        case .updateRoutes:
             return .none
 
-        case .logOutGroup:
-            environment.rozkladClient.logOut()
+        case .delegate:
             return .none
         }
     }
+
+    static let reducer = Reducer<State, Action, Environment>.combine(
+        ScreenProvider.reducer
+            .forEachIdentifiedRoute(environment: { $0 })
+            .withRouteReducer(reducerCore)
+    )
 
 }

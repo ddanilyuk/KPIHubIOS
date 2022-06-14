@@ -13,6 +13,15 @@ struct Main {
     // MARK: - State
 
     struct State: Equatable {
+
+        @BindableState var selectedTab: Tab
+
+        enum Tab: Hashable {
+            case rozklad
+            case campus
+            case profile
+        }
+
         var rozklad: Rozklad.State
         var campus: Campus.State
         var profile: Profile.State
@@ -21,15 +30,19 @@ struct Main {
             rozklad = Rozklad.State()
             campus = Campus.State()
             profile = Profile.State()
+
+            selectedTab = .rozklad
         }
     }
 
     // MARK: - Action
 
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
         case rozklad(Rozklad.Action)
         case campus(Campus.Action)
         case profile(Profile.Action)
+
+        case binding(BindingAction<State>)
     }
 
     // MARK: - Environment
@@ -43,8 +56,16 @@ struct Main {
 
     // MARK: - Reducer
 
-    static let coreReducer = Reducer<State, Action, Environment> { _, action, _ in
+    static let coreReducer = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
+        case .profile(.delegate(.selectRozkladTab)):
+            state.selectedTab = .rozklad
+            return .none
+
+        case .profile(.delegate(.selectCampusTab)):
+            state.selectedTab = .campus
+            return .none
+
         case .rozklad:
             return .none
             
@@ -53,8 +74,12 @@ struct Main {
 
         case .profile:
             return .none
+
+        case .binding:
+            return .none
         }
     }
+    .binding()
 
     static let reducer = Reducer<State, Action, Environment>.combine(
         Rozklad.reducer
@@ -99,7 +124,8 @@ extension Main.Environment {
         Campus.Environment(
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
-            campusClient: campusClient
+            campusClient: campusClient,
+            rozkladClient: rozkladClient
         )
     }
 

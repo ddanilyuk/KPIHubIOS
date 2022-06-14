@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import TCACoordinators
+import IdentifiedCollections
 
 struct Rozklad {
 
@@ -46,7 +47,7 @@ struct Rozklad {
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
-                environment.rozkladClient.state
+                environment.rozkladClient.state.subject
                     .sink { state in
                         switch state {
                         case .selected:
@@ -83,7 +84,32 @@ struct Rozklad {
             return .none
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
-            state.routes = [.root(.groupLessons(GroupLessons.State()), embedInNavigationView: true)]
+            environment.rozkladClient.state.commit()
+            environment.rozkladClient.lessons.commit()
+            return .none
+
+        case let .routeAction(_, .lessonDetails(.routeAction(.editNames(lesson)))):
+            let editLessonNamesState = EditLessonNames.State(lesson: lesson)
+            state.routes.presentSheet(
+                .editLessonNames(editLessonNamesState),
+                embedInNavigationView: true
+            )
+            return .none
+
+        case let .routeAction(_, .lessonDetails(.routeAction(.editTeachers(lesson)))):
+            let editLessonTeachersState = EditLessonTeachers.State(lesson: lesson)
+            state.routes.presentSheet(
+                .editLessonTeachers(editLessonTeachersState),
+                embedInNavigationView: true
+            )
+            return .none
+
+        case .routeAction(_, .editLessonNames(.routeAction(.dismiss))):
+            state.routes.dismiss()
+            return .none
+
+        case .routeAction(_, .editLessonTeachers(.routeAction(.dismiss))):
+            state.routes.dismiss()
             return .none
 
         case .routeAction:

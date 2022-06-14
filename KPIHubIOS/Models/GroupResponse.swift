@@ -2,7 +2,7 @@
 //  GroupResponse.swift
 //  KPIHubIOS
 //
-//  Created by Denys Danyliuk on 29.05.2022.
+//  Created by Denys Danyliuk on 07.06.2022.
 //
 
 import Foundation

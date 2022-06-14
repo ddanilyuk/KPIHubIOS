@@ -7,36 +7,21 @@
 
 import SwiftUI
 import ComposableArchitecture
+import TCACoordinators
 
 struct ProfileFlowCoordinatorView: View {
 
     let store: Store<Profile.State, Profile.Action>
 
     var body: some View {
-        WithViewStore(store) { viewStore in
-            VStack {
-                Text("Profile \(viewStore.name)")
-                    .onAppear {
-                        viewStore.send(.onAppear)
-                    }
-                Button(
-                    action: {
-                        viewStore.send(.logOutCampus)
-                    },
-                    label: {
-                        Text("Log out camapus")
-                    }
-                )
-                Button(
-                    action: {
-                        viewStore.send(.logOutGroup)
-                    },
-                    label: {
-                        Text("Log out group")
-                    }
+        TCARouter(store) { screen in
+            SwitchStore(screen) {
+                CaseLet(
+                    state: /Profile.ScreenProvider.State.profileHome,
+                    action: Profile.ScreenProvider.Action.profileHome,
+                    then: ProfileHomeView.init
                 )
             }
-
         }
     }
 

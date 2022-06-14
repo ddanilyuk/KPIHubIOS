@@ -63,13 +63,16 @@ struct Login {
             return .none
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
-            environment.campusClient.updateState()
-            environment.rozkladClient.updateState()
+            environment.campusClient.state.commit()
+            environment.campusClient.studySheet.load()
+            environment.rozkladClient.state.commit()
+            environment.rozkladClient.lessons.commit()
             environment.userDefaultsClient.set(true, for: .onboardingPassed)
             return Effect(value: .delegate(.done))
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
-            environment.rozkladClient.updateState()
+            environment.rozkladClient.state.commit()
+            environment.rozkladClient.lessons.commit()
             environment.userDefaultsClient.set(true, for: .onboardingPassed)
             return Effect(value: .delegate(.done))
 

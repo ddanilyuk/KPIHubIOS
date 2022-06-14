@@ -16,9 +16,12 @@ struct LessonDetailsView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("\(viewStore.lesson.names.joined(separator: ", "))")
-                        .font(.system(.title).bold())
-                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+
+                    TitleView(
+                        title: viewStore.lesson.names.joined(separator: ", "),
+                        isEditing: viewStore.isEditing,
+                        onTap: { viewStore.send(.editNames) }
+                    )
 
                     DateAndTime(
                         lessonPositionDescription: viewStore.lesson.position.description,
@@ -26,112 +29,31 @@ struct LessonDetailsView: View {
                         lessonDay: viewStore.lesson.day
                     )
 
-                    VStack(alignment: .leading, spacing: 0) {
-                        sectionTitle("Тип")
+                    TeacherSection(
+                        teachers: viewStore.lesson.teachers ?? [],
+                        isEditing: viewStore.isEditing,
+                        onTap: { viewStore.send(.editTeachers) }
+                    )
 
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
+                    TypeSection(
+                        type: "Практика"
+                    )
 
-                            HStack {
-                                LargeTagView(
-                                    icon: Image(systemName: "graduationcap"),
-                                    text: "Практика",
-                                    backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                                    accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
-                                )
-                                Spacer()
-                            }
-                            .padding(16)
-                        }
-                    }
-
-                    VStack(alignment: .leading, spacing: 0) {
-                        sectionTitle("Викладач")
-
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
-
-                            VStack(spacing: 16) {
-                                ForEach((viewStore.lesson.teachers ?? []), id: \.self) { teacher in
-                                    VStack(spacing: 16) {
-                                        HStack {
-                                            LargeTagView(
-                                                icon: Image(systemName: "person"),
-                                                text: teacher.shortName,
-                                                backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                                                accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                                            )
-                                            Spacer()
-                                        }
-                                        if teacher != (viewStore.lesson.teachers ?? []).last {
-                                            Divider()
-                                        }
-                                    }
-                                }
-                            }
-
-                            .padding(16)
-                        }
-                    }
-
-                    VStack(alignment: .leading, spacing: 0) {
-                        sectionTitle("Локація")
-
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
-
-                            VStack(spacing: 10) {
-                                HStack {
-                                    LargeTagView(
-                                        icon: Image(systemName: "location"),
-                                        text: "Online",
-                                        backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                                        accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
-                                    )
-                                    Spacer()
-                                }
-                                .padding(.top, 16)
-                                .padding(.horizontal, 16)
-
-                                RoundedRectangle(cornerRadius: 0.5)
-                                    .fill(Color(.separator))
-                                    .frame(height: 1)
-                                    .padding(.horizontal, 8)
-
-                                VStack {
-                                    HStack(spacing: 16) {
-                                        Circle()
-                                            .fill(Color.orange.opacity(0.2))
-                                            .frame(width: 24, height: 24)
-                                        Text("bbb.com")
-                                        Spacer()
-                                    }
-                                    .padding(.vertical, 9)
-
-                                    RoundedRectangle(cornerRadius: 0.5)
-                                        .fill(Color(.separator).opacity(0.5))
-                                        .frame(height: 1)
-
-                                    HStack(spacing: 16) {
-                                        Circle()
-                                            .fill(Color.orange.opacity(0.2))
-                                            .frame(width: 24, height: 24)
-                                        Text("zoom.com")
-                                        Spacer()
-
-                                    }
-                                    .padding(.vertical, 9)
-                                }
-                                .padding(.bottom, 8)
-                                .padding(.horizontal, 16)
-                            }
-                        }
-                    }
+                    LocationsSection(
+                        locations: viewStore.lesson.locations ?? [],
+                        onTap: {}
+                    )
                 }
                 .padding(16)
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    toolbar(store: store)
+                }
+            }
+            .animation(.default, value: viewStore.state.isEditing)
+            .onAppear {
+                viewStore.send(.onAppear)
             }
         }
         .background(Color.screenBackground)
@@ -139,98 +61,32 @@ struct LessonDetailsView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    func sectionTitle(_ title: String) -> some View {
-        Text("\(title)")
-            .font(.system(.subheadline).weight(.regular))
-            .padding(.horizontal, 16)
-            .frame(height: 25)
-    }
-}
+    func toolbar(store: Store<LessonDetails.State, LessonDetails.Action>) -> some View {
+        WithViewStore(store) { viewStore in
+            switch viewStore.state.isEditing {
+            case true:
+                Button(
+                    action: { viewStore.send(.binding(.set(\.$isEditing, false))) },
+                    label: { Text("Готово") }
+                )
 
-struct DateAndTime: View {
-
-    enum Constants {
-        static let lineHeight: CGFloat = 4
-        static var lineCornerRadius: CGFloat {
-            return Constants.lineHeight / 2
-        }
-    }
-
-    let lessonPositionDescription: Lesson.Position.Description
-    let lessonWeek: Lesson.Week
-    let lessonDay: Lesson.Day
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text("Дата та час")
-                .font(.system(.subheadline).weight(.regular))
-                .padding(.horizontal, 16)
-                .frame(height: 25)
-
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-
-                VStack(spacing: 16) {
-
-                    ZStack(alignment: .center) {
-                        RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                            .fill(Color.orange.opacity(0.2))
-                            .frame(height: Constants.lineHeight)
-
-                        HStack(spacing: 16) {
-                            VStack(spacing: 5) {
-                                HStack(alignment: .bottom) {
-                                    Text("\(lessonPositionDescription.firstPartStart)")
-                                        .font(.footnote.bold())
-                                    Spacer()
-                                    Text("\(lessonPositionDescription.firstPartEnd)")
-                                        .font(.caption2)
-                                }
-                                .frame(height: 12)
-
-                                RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                                    .fill(Color.orange)
-                                    .frame(height: Constants.lineHeight)
-
-                                Spacer(minLength: 12)
+            case false:
+                Menu(
+                    content: {
+                        Button(
+                            action: { viewStore.send(.binding(.set(\.$isEditing, true))) },
+                            label: {
+                                Text("Редагувати")
+                                Image(systemName: "pencil")
                             }
-
-                            VStack(spacing: 5) {
-                                Spacer(minLength: 12)
-
-                                RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                                    .fill(Color.orange)
-                                    .frame(height: Constants.lineHeight)
-
-                                HStack(alignment: .top) {
-                                    Text("\(lessonPositionDescription.secondPartStart)")
-                                        .font(.caption2)
-                                    Spacer()
-                                    Text("\(lessonPositionDescription.secondPartEnd)")
-                                        .font(.footnote.bold())
-                                }
-                                .frame(height: 12)
-
-                            }
-                        }
-                    }
-
-                    HStack {
-                        Text("\(lessonDay.fullDescription)")
-
-                        Spacer()
-
-                        Text("\(lessonWeek.description)")
-                    }
-                    .font(.system(.subheadline).weight(.regular))
-
-                }
-                .padding(16)
+                        )
+                    },
+                    label: { Image(systemName: "ellipsis") }
+                )
             }
         }
     }
-
+    
 }
 
 // MARK: - Preview
@@ -245,7 +101,8 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     ),
                     reducer: LessonDetails.reducer,
                     environment: LessonDetails.Environment(
-                        userDefaultsClient: .live()
+                        userDefaultsClient: .live(),
+                        rozkladClient: .live(userDefaultsClient: .live())
                     )
                 )
             )

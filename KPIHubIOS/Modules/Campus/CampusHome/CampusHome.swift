@@ -16,8 +16,8 @@ struct CampusHome {
 
         @BindableState var isLoading: Bool = false
 
-        var studySheetItems: [StudySheetItem] = []
-        var studySheetLoadedState: LoadingState<[StudySheetItem]> = .notLoading
+        var openSheet: Bool = false
+        var studySheetState: CampusClient.StudySheetModule.State = .notLoading
 
         enum LoadingState<T: Equatable>: Equatable {
             case notLoading
@@ -31,8 +31,9 @@ struct CampusHome {
 
     enum Action: Equatable, BindableAction {
         case onAppear
+        case refresh
         case studySheetTap
-        case studySheetResult(Result<[StudySheetItem], NSError>)
+        case setStudySheetState(CampusClient.StudySheetModule.State)
 
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
@@ -47,6 +48,7 @@ struct CampusHome {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let campusClient: CampusClient
     }
 
     // MARK: - Reducer
@@ -54,64 +56,62 @@ struct CampusHome {
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
-            guard state.studySheetLoadedState == .notLoading else {
+            return Effect.run { subscriber in
+                environment.campusClient.studySheet.subject
+                    .sink { state in
+                        subscriber.send(.setStudySheetState(state))
+                    }
+            }
+
+        case .refresh:
+            switch state.studySheetState {
+            case .notLoading,
+                 .loaded:
+                environment.campusClient.studySheet.load()
+                return .none
+
+            case .loading:
                 return .none
             }
-            guard let campusCredentials = environment.userDefaultsClient.get(for: .campusCredentials) else {
+
+        case let .setStudySheetState(studySheetState):
+            state.studySheetState = studySheetState
+
+            switch studySheetState {
+            case .notLoading:
+                state.isLoading = false
                 return .none
+
+            case .loading:
+                return .none
+
+            case let .loaded(items):
+                state.isLoading = false
+                if state.openSheet {
+                    return Effect(value: .routeAction(
+                        .studySheet(items)
+                    ))
+                } else {
+                    return .none
+                }
             }
-            let campusLoginQuery = CampusLoginQuery(
-                username: campusCredentials.username,
-                password: campusCredentials.password
-            )
-            let task: Effect<[StudySheetItem], Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
-                    for: .api(.campus(.studySheet(campusLoginQuery))),
-                    as: StudySheetResponse.self
-                )
-                return result.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
-            }
-            state.studySheetLoadedState = .loading
-            return task
-                .mapError { $0 as NSError }
-                .receive(on: DispatchQueue.main)
-                .catchToEffect(Action.studySheetResult)
 
         case .studySheetTap:
-            switch state.studySheetLoadedState {
+            switch state.studySheetState {
+            case .notLoading:
+                return .none
+
             case .loading:
                 state.isLoading = true
-                state.studySheetLoadedState = .openAfterLoading
+                state.openSheet = true
                 return .none
 
-            case .loaded:
+            case let .loaded(items):
+                state.isLoading = false
                 return Effect(value: .routeAction(
-                    .studySheet(state.studySheetItems)
+                    .studySheet(items)
                 ))
-
-            case .openAfterLoading, .notLoading:
-                return .none
             }
-
-        case let .studySheetResult(.success(items)):
-            state.studySheetItems = items
-            state.isLoading = false
-            switch state.studySheetLoadedState {
-            case .openAfterLoading:
-                state.studySheetLoadedState = .loaded
-                return Effect(value: .routeAction(
-                    .studySheet(state.studySheetItems)
-                ))
-                
-            case .loading,
-                 .notLoading,
-                 .loaded:
-                state.studySheetLoadedState = .loaded
-                return .none
-            }
-
-        case let .studySheetResult(.failure(error)):
-            return .none
 
         case .binding:
             return .none

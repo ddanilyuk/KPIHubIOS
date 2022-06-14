@@ -23,8 +23,8 @@ struct CampusLogin {
 
         // MARK: - Properties
 
-        @BindableState var username: String = "dda77177"
-        @BindableState var password: String = "4a78dd74"
+        @BindableState var username: String = ""
+        @BindableState var password: String = ""
         @BindableState var isLoading: Bool = false
 
         var loginButtonEnabled: Bool = true
@@ -54,6 +54,8 @@ struct CampusLogin {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
+        let campusClient: CampusClient
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer
@@ -91,16 +93,16 @@ struct CampusLogin {
             let groupSearchQuery = GroupSearchQuery(
                 groupName: campusUserInfo.studyGroup.name
             )
-
-            /// Saving user info
-            environment.userDefaultsClient.set(campusUserInfo, for: .campusUserInfo)
-
             /// Saving credentials after finding group
             let campusCredentials = CampusCredentials(
                 username: state.username,
                 password: state.password
             )
-            environment.userDefaultsClient.set(campusCredentials, for: .campusCredentials)
+            environment.campusClient.state.login(
+                credentials: campusCredentials,
+                userInfo: campusUserInfo,
+                commitChanges: false
+            )
 
             switch state.mode {
             case .onlyCampus:
@@ -126,7 +128,7 @@ struct CampusLogin {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.userDefaultsClient.set(group, for: .group)
+                environment.rozkladClient.state.select(group: group, commitChanges: false)
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -135,7 +137,7 @@ struct CampusLogin {
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):
-            environment.userDefaultsClient.set(lessons, for: .lessons)
+            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
             return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):
