@@ -8,6 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
+var animationModel: GroupLessonsView.AnimationViewModel = .init()
+
 struct GroupLessonsView: View {
 
     @State var selectedWeek: Lesson.Week?
@@ -36,8 +38,8 @@ struct GroupLessonsView: View {
     class AnimationViewModel: ObservableObject {
 
         @Published var position: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
-
         var renderedPosition: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
+
         var offsets: [CGFloat?] = Array(
             repeating: nil,
             count: GroupLessons.State.Section.Position.count
@@ -46,25 +48,6 @@ struct GroupLessonsView: View {
             repeating: nil,
             count: GroupLessons.State.Section.Position.count
         )
-        var visibleSections: [Bool] = Array(
-            repeating: false,
-            count: GroupLessons.State.Section.Position.count
-        )
-
-        var task: Task<(), Never>?
-
-//        func debounced(_ string: String) {
-//            task?.cancel()
-//
-//            task = Task {
-//                do {
-//                    try await Task.sleep(nanoseconds: 1)
-//                    logger.log("result \(string)")
-//                } catch {
-//                    logger.log("canceled \(string)")
-//                }
-//            }
-//        }
 
         func save() {
             savedOffsets = offsets
@@ -76,8 +59,6 @@ struct GroupLessonsView: View {
         }
 
         func setOffset(for index: Int, value: CGFloat?) {
-
-//            print(Date().timeIntervalSince1970)
             if offsets[index] == value {
                 return
             }
@@ -128,66 +109,66 @@ struct GroupLessonsView: View {
 //            }
 //        }
 
-        var lastElement: (Int, CGFloat)?
-
-        func v2() -> Int {
-            let target: CGFloat = 169.0 // 125
-            let offsets = offsets
-            let numberOfElements = offsets.compactMap { $0 }.count
-
-            if numberOfElements != 0 {
-                let index = offsets.firstIndex(where: { $0 != nil })!
-                let element = offsets[index]!
-                if numberOfElements == 1 {
-                    lastElement = (index, element)
-                    if element < target {
-                        return index
-                    } else {
-                        return index - 1
-                    }
-                }
-                if element < target {
-                    print("First")
-                    let index = offsets.lastIndex(where: { value in
-                        if let value = value {
-                            return value < target
-                        } else {
-                            return false
-                        }
-                    })!
-                    return index
-                } else {
-                    print("Second")
-                    return index - 1
-                    if let next = offsets[safe: index + 1], let value = next {
-                        print(value)
-                        if value <= target {
-                            return index + 1
-                        } else {
-                            return index
-                        }
-                    }
-
-                }
-//                switch element {
-//                case (target - 44...target):
-//                    return index
-//                case ...(target - 44):
-//                    return index + 1
-//                default:
-//                    return index - 1
+//        var lastElement: (Int, CGFloat)?
+//
+//        func v2() -> Int {
+//            let target: CGFloat = 169.0 // 125
+//            let offsets = offsets
+//            let numberOfElements = offsets.compactMap { $0 }.count
+//
+//            if numberOfElements != 0 {
+//                let index = offsets.firstIndex(where: { $0 != nil })!
+//                let element = offsets[index]!
+//                if numberOfElements == 1 {
+//                    lastElement = (index, element)
+//                    if element < target {
+//                        return index
+//                    } else {
+//                        return index - 1
+//                    }
 //                }
-
-            } else if let lastElement = lastElement {
-                if lastElement.1 < target {
-                    return lastElement.0
-                } else {
-                    return lastElement.0 - 1
-                }
-            }
-
-            return 0
-        }
+//                if element < target {
+//                    print("First")
+//                    let index = offsets.lastIndex(where: { value in
+//                        if let value = value {
+//                            return value < target
+//                        } else {
+//                            return false
+//                        }
+//                    })!
+//                    return index
+//                } else {
+//                    print("Second")
+//                    return index - 1
+//                    if let next = offsets[safe: index + 1], let value = next {
+//                        print(value)
+//                        if value <= target {
+//                            return index + 1
+//                        } else {
+//                            return index
+//                        }
+//                    }
+//
+//                }
+////                switch element {
+////                case (target - 44...target):
+////                    return index
+////                case ...(target - 44):
+////                    return index + 1
+////                default:
+////                    return index - 1
+////                }
+//
+//            } else if let lastElement = lastElement {
+//                if lastElement.1 < target {
+//                    return lastElement.0
+//                } else {
+//                    return lastElement.0 - 1
+//                }
+//            }
+//
+//            return 0
+//        }
 
         struct LastShownElement {
             var index: Int
@@ -231,7 +212,6 @@ struct GroupLessonsView: View {
 
     }
 
-    var animationModel: AnimationViewModel = .init()
 
     init(store: Store<GroupLessons.State, GroupLessons.Action>) {
         self.store = store
