@@ -11,8 +11,12 @@ struct LessonCell {
 
     // MARK: - State
 
-    struct State: Equatable, Identifiable {
+    struct State: Equatable, Identifiable, Hashable {
         let lesson: Lesson
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
 
         var id: Lesson.ID {
             return lesson.id

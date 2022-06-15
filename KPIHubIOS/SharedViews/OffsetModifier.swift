@@ -9,7 +9,9 @@ import SwiftUI
 
 struct OffsetModifier: ViewModifier {
 
-    @State var offset: CGFloat = .zero
+//    @State var offset: CGFloat = .zero
+
+    var onChange: (CGFloat) -> Void
 
     func body(content: Content) -> some View {
         content
@@ -24,15 +26,15 @@ struct OffsetModifier: ViewModifier {
                 }
             )
             .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                offset = value
+                onChange(value)
             }
-        //            .overlay(
-        //                Color.red.opacity(0.2)
-        //                    .overlay(Text("\(offset)"))
-        //            )
-        //            .overlay {
-        //                Color.red.opacity(0.2)
-        //            }
+//            .overlay(
+//                Color.red.opacity(0.2)
+//                    .overlay(Text("\(offset)"))
+//            )
+//            .overlay {
+//                Color.red.opacity(0.2)
+//            }
     }
 
 }

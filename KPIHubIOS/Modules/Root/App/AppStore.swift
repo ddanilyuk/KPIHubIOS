@@ -56,7 +56,7 @@ struct App {
 
         static var live: Self {
             let apiClient: APIClient = .live(
-//                router: rootRouter.baseURL("http://127.0.0.1:8080")
+//                router: rootRouter.baseURL("httrp://192.168.31.30:8080")
                 router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
