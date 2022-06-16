@@ -26,7 +26,7 @@ struct Rozklad {
     enum Action: Equatable, IdentifiedRouterAction {
 
         case onSetup
-        case setGroupLessons
+        case setGroupRozklad
         case setGroupPicker
 
         case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
@@ -52,17 +52,17 @@ struct Rozklad {
                     .sink { state in
                         switch state {
                         case .selected:
-                            subscriber.send(.setGroupLessons)
+                            subscriber.send(.setGroupRozklad)
                         case .notSelected:
                             subscriber.send(.setGroupPicker)
                         }
                     }
             }
 
-        case .setGroupLessons:
+        case .setGroupRozklad:
             state.routes = [
                 .root(
-                    .groupLessons(GroupLessons.State()),
+                    .groupRozklad(GroupRozklad.State()),
                     embedInNavigationView: true
                 )
             ]
@@ -77,7 +77,7 @@ struct Rozklad {
             ]
             return .none
 
-        case let .routeAction(_, .groupLessons(.routeAction(.openDetails(lesson)))):
+        case let .routeAction(_, .groupRozklad(.routeAction(.openDetails(lesson)))):
             let lessonDetailsState = LessonDetails.State(
                 lesson: lesson
             )

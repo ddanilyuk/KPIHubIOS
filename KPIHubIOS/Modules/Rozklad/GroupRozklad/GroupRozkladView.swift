@@ -1,5 +1,5 @@
 //
-//  GroupLessonsView.swift
+//  GroupRozkladView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -8,11 +8,11 @@
 import SwiftUI
 import ComposableArchitecture
 
-// We need to set in root of the file because we don't need to recreate it with GroupLessonsView
-// and we don't need to body in GroupLessonsView when AnimationViewModel changes.
-private var animationModel: AnimationViewModel = .init()
+// We need to set in root of the file because we don't need to recreate it with GroupRozkladView
+// and we don't need to body in GroupRozkladView when GroupRozkladAnimationViewModel changes.
+private var animationModel: GroupRozkladAnimationViewModel = .init()
 
-struct GroupLessonsView: View {
+struct GroupRozkladView: View {
 
     @State var selectedWeek: Lesson.Week?
     @State var selectedDay: Lesson.Day?
@@ -22,9 +22,9 @@ struct GroupLessonsView: View {
 
     @State var lastSection: [CGFloat] = []
 
-    let store: Store<GroupLessons.State, GroupLessons.Action>
+    let store: Store<GroupRozklad.State, GroupRozklad.Action>
 
-    init(store: Store<GroupLessons.State, GroupLessons.Action>) {
+    init(store: Store<GroupRozklad.State, GroupRozklad.Action>) {
         self.store = store
 
         UITableView.appearance().sectionHeaderTopPadding = 0
@@ -33,7 +33,7 @@ struct GroupLessonsView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             VStack(spacing: 0) {
-                GroupLessonsHeaderView(
+                GroupRozkladHeaderView(
                     animation: animationModel,
                     groupName: viewStore.groupName,
                     selectedWeek: $selectedWeek,
@@ -83,13 +83,13 @@ struct GroupLessonsView: View {
         }
     }
 
-    func sectionView(for section: GroupLessons.State.Section) -> some View {
+    func sectionView(for section: GroupRozklad.State.Section) -> some View {
         Section(
             content: {
                 ForEachStore(
                     self.store.scope(
                         state: \.sections[section.index].lessonCells,
-                        action: GroupLessons.Action.lessonCells(id:action:)
+                        action: GroupRozklad.Action.lessonCells(id:action:)
                     ),
                     content: { store in
                         LessonCellView(store: store)
@@ -153,7 +153,7 @@ struct GroupLessonsView: View {
         withAnimation {
             // If scrolling from bottom to top is lagging
             proxy.scrollTo(
-                GroupLessons.State.Section.id(
+                GroupRozklad.State.Section.id(
                     week: displayedWeek,
                     day: newSelectedDay
                 ),
@@ -169,7 +169,7 @@ struct GroupLessonsView: View {
         }
         withAnimation {
             proxy.scrollTo(
-                GroupLessons.State.Section.id(
+                GroupRozklad.State.Section.id(
                     week: newSelectedWeek,
                     day: displayedDay
                 ),
@@ -181,39 +181,4 @@ struct GroupLessonsView: View {
 
 }
 
-struct GroupLessonsHeaderView: View {
 
-    @ObservedObject var animation: AnimationViewModel
-    let groupName: String
-
-    @Binding var selectedWeek: Lesson.Week?
-    @Binding var selectedDay: Lesson.Day?
-
-    @Binding var displayedWeek: Lesson.Week
-    @Binding var displayedDay: Lesson.Day
-
-    var body: some View {
-        VStack(spacing: 0) {
-            GroupTitleView(
-                title: groupName
-            )
-
-            GroupLessonsWeekPicker(
-                selectedWeek: $selectedWeek,
-                displayedWeek: $displayedWeek
-            )
-
-            GroupLessonsDayPicker(
-                selectedDay: $selectedDay,
-                displayedDay: $displayedDay
-            )
-        }
-        .onChange(of: animation.position) { newValue in
-            DispatchQueue.main.async {
-                displayedDay = newValue.day
-                displayedWeek = newValue.week
-            }
-        }
-    }
-
-}

@@ -1,5 +1,5 @@
 //
-//  GroupLessonsWeekPicker.swift
+//  GroupRozkladDayPicker.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 02.06.2022.
@@ -7,27 +7,27 @@
 
 import SwiftUI
 
-struct GroupLessonsWeekPicker: View {
+struct GroupRozkladDayPicker: View {
 
-    @Binding var selectedWeek: Lesson.Week?
-    @Binding var displayedWeek: Lesson.Week
+    @Binding var selectedDay: Lesson.Day?
+    @Binding var displayedDay: Lesson.Day
 
     var body: some View {
         HStack {
-            ForEach(Lesson.Week.allCases, id: \.self) { element in
+            ForEach(Lesson.Day.allCases, id: \.self) { element in
                 Button(
-                    action: { selectedWeek = element },
+                    action: { selectedDay = element },
                     label: {
-                        Text("\(element.description)")
+                        Text("\(element.shortDescription)")
                             .font(.system(.body).bold())
                     }
                 )
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .foregroundColor(element == displayedWeek ? .black : .secondary)
+                .foregroundColor(element == displayedDay ? .black : .secondary)
             }
         }
         .padding(.horizontal, 16)
         .frame(height: 40)
     }
-
+    
 }

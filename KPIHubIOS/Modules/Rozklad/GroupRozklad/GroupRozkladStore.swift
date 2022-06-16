@@ -1,5 +1,5 @@
 //
-//  GroupLessonsStore.swift
+//  GroupRozkladStore.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -9,7 +9,7 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
-struct GroupLessons {
+struct GroupRozklad {
 
     // MARK: - State
 
@@ -145,9 +145,9 @@ struct GroupLessons {
 
 }
 
-// MARK: - GroupLessons.State.Section.Position
+// MARK: - GroupRozklad.State.Section.Position
 
-extension GroupLessons.State.Section.Position {
+extension GroupRozklad.State.Section.Position {
 
     init(index: Int) {
         switch index {
@@ -168,9 +168,9 @@ extension GroupLessons.State.Section.Position {
 
 }
 
-// MARK: - Array + GroupLessons.State.Section
+// MARK: - Array + GroupRozklad.State.Section
 
-extension Array where Element == GroupLessons.State.Section {
+extension Array where Element == GroupRozklad.State.Section {
 
     static func combine<T, V>(_ firsts: [T], _ seconds: [V]) -> [(T, V)] {
         var result: [(T, V)] = []
@@ -185,7 +185,7 @@ extension Array where Element == GroupLessons.State.Section {
     init(lessons: IdentifiedArrayOf<Lesson>) {
         let emptyScheduleDays = Array.combine(Lesson.Week.allCases, Lesson.Day.allCases)
             .map {
-                GroupLessons.State.Section(
+                GroupRozklad.State.Section(
                     position: .init(week: $0, day: $1),
                     lessonCells: []
                 )

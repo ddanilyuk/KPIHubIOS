@@ -1,5 +1,5 @@
 //
-//  GroupTitleView.swift
+//  GroupRozkladTitleView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 02.06.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GroupTitleView: View {
+struct GroupRozkladTitleView: View {
 
     let title: String
 

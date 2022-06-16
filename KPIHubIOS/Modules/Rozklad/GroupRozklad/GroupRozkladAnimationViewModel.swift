@@ -1,5 +1,5 @@
 //
-//  AnimationViewModel.swift
+//  GroupRozkladAnimationViewModel.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 16.06.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class AnimationViewModel: ObservableObject {
+final class GroupRozkladAnimationViewModel: ObservableObject {
 
     // MARK: - LastShownElement
 
@@ -18,19 +18,19 @@ final class AnimationViewModel: ObservableObject {
 
     // MARK: - Public properties
 
-    @Published var position = GroupLessons.State.Section.Position(week: .first, day: .monday)
+    @Published var position = GroupRozklad.State.Section.Position(week: .first, day: .monday)
     var lastShownElement: LastShownElement?
 
     // MARK: - Private properties
 
-    private var renderedPosition = GroupLessons.State.Section.Position(week: .first, day: .monday)
+    private var renderedPosition = GroupRozklad.State.Section.Position(week: .first, day: .monday)
     private var offsets: [CGFloat?] = Array(
         repeating: nil,
-        count: GroupLessons.State.Section.Position.count
+        count: GroupRozklad.State.Section.Position.count
     )
     private var savedOffsets: [CGFloat?] = Array(
         repeating: nil,
-        count: GroupLessons.State.Section.Position.count
+        count: GroupRozklad.State.Section.Position.count
     )
 
     // MARK: - Public methods
@@ -56,7 +56,7 @@ final class AnimationViewModel: ObservableObject {
 
     private func render() {
         DispatchQueue.global(qos: .userInteractive).async { [self] in
-            let newPosition = GroupLessons.State.Section.Position(
+            let newPosition = GroupRozklad.State.Section.Position(
                 index: min(max(0, calculateIndex()), 11)
             )
             if newPosition != renderedPosition {

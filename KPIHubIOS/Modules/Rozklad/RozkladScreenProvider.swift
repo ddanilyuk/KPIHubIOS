@@ -23,7 +23,7 @@ extension Rozklad.ScreenProvider {
 
         case empty(EmptyScreen.State)
         case groupPicker(GroupPicker.State)
-        case groupLessons(GroupLessons.State)
+        case groupRozklad(GroupRozklad.State)
         case lessonDetails(LessonDetails.State)
         case editLessonNames(EditLessonNames.State)
         case editLessonTeachers(EditLessonTeachers.State)
@@ -35,7 +35,7 @@ extension Rozklad.ScreenProvider {
     enum Action: Equatable {
         case empty(EmptyScreen.Action)
         case groupPicker(GroupPicker.Action)
-        case groupLessons(GroupLessons.Action)
+        case groupRozklad(GroupRozklad.Action)
         case lessonDetails(LessonDetails.Action)
         case editLessonNames(EditLessonNames.Action)
         case editLessonTeachers(EditLessonTeachers.Action)
@@ -56,12 +56,12 @@ extension Rozklad.ScreenProvider {
                     )
                 }
             ),
-        GroupLessons.reducer
+        GroupRozklad.reducer
             .pullback(
-                state: /State.groupLessons,
-                action: /Action.groupLessons,
+                state: /State.groupRozklad,
+                action: /Action.groupRozklad,
                 environment: {
-                    GroupLessons.Environment(
+                    GroupRozklad.Environment(
                         apiClient: $0.apiClient,
                         userDefaultsClient: $0.userDefaultsClient,
                         rozkladClient: $0.rozkladClient
