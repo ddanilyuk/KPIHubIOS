@@ -112,6 +112,29 @@ extension Lesson {
             }
         }
 
+        static var lessonDuration: Int = 95
+
+        var minutesFromDayStart: Int {
+            func calculate(hour: Int, minute: Int) -> Int {
+                return hour * 60 + minute
+            }
+            switch self {
+            case .first:
+                return calculate(hour: 8, minute: 30)
+            case .second:
+                return calculate(hour: 10, minute: 25)
+            case .third:
+                return calculate(hour: 12, minute: 20)
+            case .fourth:
+                return calculate(hour: 14, minute: 15)
+            case .fifth:
+                return calculate(hour: 16, minute: 10)
+            case .sixth:
+                return calculate(hour: 18, minute: 05)
+
+            }
+        }
+
         init(lessonResponsePosition: LessonResponse.Position) {
             self = .init(rawValue: lessonResponsePosition.rawValue) ?? .first
         }

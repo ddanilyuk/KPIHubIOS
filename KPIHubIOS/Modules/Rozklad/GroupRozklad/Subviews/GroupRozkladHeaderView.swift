@@ -18,6 +18,9 @@ struct GroupRozkladHeaderView: View {
     @Binding var displayedWeek: Lesson.Week
     @Binding var displayedDay: Lesson.Day
 
+    var currentWeek: Int
+    var currentDay: Int
+
     var body: some View {
         VStack(spacing: 0) {
             GroupRozkladTitleView(
@@ -26,12 +29,14 @@ struct GroupRozkladHeaderView: View {
 
             GroupRozkladWeekPicker(
                 selectedWeek: $selectedWeek,
-                displayedWeek: $displayedWeek
+                displayedWeek: $displayedWeek,
+                currentWeek: currentWeek
             )
 
             GroupRozkladDayPicker(
                 selectedDay: $selectedDay,
-                displayedDay: $displayedDay
+                displayedDay: $displayedDay,
+                currentDay: currentDay
             )
         }
         .onChange(of: animation.position) { newValue in

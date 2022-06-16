@@ -9,15 +9,21 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
+var toggleWeek: Bool = true
+
 struct GroupRozklad {
 
     // MARK: - State
 
     struct State: Equatable {
 
+        var currentDay: Int = 1
+        var currentWeek: Int = 1
         var groupName: String = ""
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
+        var alreadyAppeared: Bool = false
+        var scrollTo: String?
         var lessonCells: IdentifiedArrayOf<LessonCell.State> {
             get {
                 sections
@@ -85,6 +91,8 @@ struct GroupRozklad {
     enum Action: Equatable {
         case onAppear
         case updateLessons(IdentifiedArrayOf<Lesson>)
+        case updateDate(Date)
+        case scrollToNeeded
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
         case routeAction(RouteAction)
 
@@ -109,7 +117,12 @@ struct GroupRozklad {
         switch action {
         case .onAppear:
             state.groupName = environment.userDefaultsClient.get(for: .group)?.name ?? "-"
+//            if !state.alreadyAppeared {
+//                state.scrollTo = State.Section.id(week: .first, day: .init(rawValue: state.currentDay) ?? .monday)
+//                //                state.alreadyAppeared = true
+//            }
             return Effect.concatenate(
+                Effect(value: .updateDate(Date())),
                 Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
                 Effect.run { subscriber in
                     environment.rozkladClient.lessons.subject
@@ -120,6 +133,15 @@ struct GroupRozklad {
                             subscriber.send(.updateLessons(lessons))
                         }
                 }
+                .cancellable(id: SubscriberCancelId.self, cancelInFlight: true),
+                Effect.run { subscriber in
+                    Timer.publish(every: 1, on: .main, in: .default)
+                        .autoconnect()
+                        .receive(on: DispatchQueue.main)
+                        .sink { date in
+                            subscriber.send(.updateDate(date))
+                        }
+                }
                 .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
             )
 
@@ -127,6 +149,42 @@ struct GroupRozklad {
             print("Updating lessons: \(lessons.count)")
             state.lessons = lessons
             state.sections = [State.Section](lessons: state.lessons)
+
+            return Effect(value: .scrollToNeeded)
+                .delay(for: 0.2, scheduler: DispatchQueue.main)
+                .eraseToEffect()
+
+        case .scrollToNeeded:
+            if !state.alreadyAppeared {
+                state.scrollTo = State.Section.id(
+                    week: .init(rawValue: state.currentWeek) ?? .first,
+                    day: .init(rawValue: state.currentDay) ?? .monday
+                )
+                state.alreadyAppeared = true
+            }
+            return .none
+
+        case let .updateDate(date):
+            let calendar = Calendar(identifier: .gregorian)
+            let components = calendar.dateComponents([.hour, .minute, .weekOfYear, .weekday], from: Date())
+            let some = components.weekday
+            let hour = components.hour ?? 0
+            let minute = components.minute ?? 0
+            var weekOfYear = components.weekOfYear ?? 0
+//            let week2 = components.yearForWeekOfYear ?? 0
+
+            var minutesFromStart = hour * 60 + minute
+            print(minutesFromStart)
+
+            var day = components.weekday! - 1
+            if day == 0 {
+                day = 7
+            }
+            state.currentDay = day
+            if toggleWeek {
+                weekOfYear += 1
+            }
+            state.currentWeek = weekOfYear % 2 + 1
             return .none
 
         case let .lessonCells(id, .onTap):

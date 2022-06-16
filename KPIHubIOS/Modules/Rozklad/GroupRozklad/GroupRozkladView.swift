@@ -39,7 +39,9 @@ struct GroupRozkladView: View {
                     selectedWeek: $selectedWeek,
                     selectedDay: $selectedDay,
                     displayedWeek: $displayedWeek,
-                    displayedDay: $displayedDay
+                    displayedDay: $displayedDay,
+                    currentWeek: viewStore.currentWeek,
+                    currentDay: viewStore.currentDay
                 )
 
                 scrollView
@@ -76,6 +78,17 @@ struct GroupRozkladView: View {
                     }
                     .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
                     .onChange(of: selectedWeek) { changeSelectedWeek($0, proxy: proxy) }
+                    .onChange(of: viewStore.scrollTo) { newValue in
+                        print(newValue)
+                        guard let scrollPosition = newValue else {
+                            return
+                        }
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+                        withAnimation {
+                            proxy.scrollTo(scrollPosition, anchor: .top)
+                        }
+//                        }
+                    }
                 }
                 .listStyle(.grouped)
                 .background(Color.screenBackground)

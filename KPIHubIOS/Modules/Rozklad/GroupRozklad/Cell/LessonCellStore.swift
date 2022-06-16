@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import CoreGraphics
 
 struct LessonCell {
 
@@ -13,6 +14,12 @@ struct LessonCell {
 
     struct State: Equatable, Identifiable, Hashable {
         let lesson: Lesson
+
+        enum Mode: Equatable {
+            case current(CGFloat)
+            case next
+            case `default`
+        }
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(id)
@@ -27,6 +34,9 @@ struct LessonCell {
 
     enum Action: Equatable {
         case onTap
+        case onAppear
+        case onDisappear
+        case updateDate(Date)
     }
 
     // MARK: - Environment
@@ -36,10 +46,55 @@ struct LessonCell {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+        enum SubscriberCancelId {}
         switch action {
         case .onTap:
+            return .none
+
+        case .onAppear:
+            return Effect.fireAndSubscribe(<#T##currentValueSubject: CurrentValueSubject<_, Never>##CurrentValueSubject<_, Never>#>, transform: <#T##(_) -> T#>)
+            return Effect.concatenate(
+                Effect(value: .updateDate(Date())),
+
+                Effect.run { subscriber in
+                    Timer.publish(every: 1, on: .main, in: .default)
+                        .autoconnect()
+                        .receive(on: DispatchQueue.main)
+                        .sink { date in
+                            subscriber.send(.updateDate(date))
+                        }
+                }
+                    .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+            )
+
+        case .onDisappear:
+            return .cancel(id: SubscriberCancelId.self)
+
+        case let .updateDate(date):
+            let calendar = Calendar(identifier: .gregorian)
+            let components = calendar.dateComponents([.hour, .minute], from: date)
+            let hour = components.hour ?? 0
+            let minute = components.minute ?? 0
+            var minutesFromStart = hour * 60 + minute
+            print(minutesFromStart)
+//            let lessonMinutesFromStart
+
             return .none
         }
     }
 
+}
+
+import Combine
+
+extension Effect {
+
+    static func fireAndSubscribe<T>(
+        _ currentValueSubject: CurrentValueSubject<Output, Never>,
+        transform: @escaping (Output) -> T
+    ) -> Effect<T, Never> {
+//        let trans = transform(out)
+//        Effect(value: l)
+//        Effect(value: .)
+    }
 }
