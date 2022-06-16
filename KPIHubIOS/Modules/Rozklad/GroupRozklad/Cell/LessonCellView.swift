@@ -77,68 +77,6 @@ struct LessonCellView: View {
     }
 }
 
-struct TestCell: View {
-
-    var body: some View {
-        HStack(spacing: 16) {
-
-            VStack {
-                Text("8:30")
-
-                RoundedRectangle(cornerRadius: 1)
-                    .fill(Color.gray)
-                    .frame(width: 2, alignment: .center)
-                    .frame(minHeight: 20)
-
-                Text("12:00")
-            }
-            .frame(width: 35)
-            .font(.system(.footnote))
-
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-                //                        .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Назва предмету")
-                        .font(.system(.callout).bold())
-                        .lineLimit(2)
-
-                    ForEach([Teacher(fullName: "Повне ", shortName: "Короткий тест")], id: \.self) { teacher in
-                        SmallTagView(
-                            icon: Image(systemName: "person"),
-                            text: teacher.shortName,
-                            backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                            accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
-                        )
-                    }
-
-                    HStack {
-                        SmallTagView(
-                            icon: Image(systemName: "location"),
-                            text: "Online",
-                            backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                            accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
-                        )
-
-                        SmallTagView(
-                            icon: Image(systemName: "graduationcap"),
-                            text: "Практика",
-                            backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                            accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
-                        )
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(16)
-            }
-        }
-        .padding()
-        .background(Color.screenBackground)
-    }
-}
-
 // MARK: - Preview
 
 struct LessonCellView_Previews: PreviewProvider {
