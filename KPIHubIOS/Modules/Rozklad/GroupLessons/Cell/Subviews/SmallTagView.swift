@@ -34,6 +34,7 @@ struct SmallTagView: View {
         }
         .background(backgroundColor)
         .cornerRadius(12)
+//        .shadow(radius: 4)
 //        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
     }
 

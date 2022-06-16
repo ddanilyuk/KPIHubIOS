@@ -8,7 +8,118 @@
 import SwiftUI
 import ComposableArchitecture
 
-var animationModel: GroupLessonsView.AnimationViewModel = .init()
+extension View {
+    @ViewBuilder func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
+}
+
+// We need to set in root of the file because we don't need to recreate it with GroupLessonsView
+// and we don't need to body in GroupLessonsView when AnimationViewModel changes.
+private var animationModel: AnimationViewModel = .init()
+
+class AnimationViewModel: ObservableObject {
+
+    @Published var position: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
+    var renderedPosition: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
+
+    var offsets: [CGFloat?] = Array(
+        repeating: nil,
+        count: GroupLessons.State.Section.Position.count
+    )
+    var savedOffsets: [CGFloat?] = Array(
+        repeating: nil,
+        count: GroupLessons.State.Section.Position.count
+    )
+
+    func save() {
+        savedOffsets = offsets
+    }
+
+    func restore() {
+        offsets = savedOffsets
+        render()
+    }
+
+    func setOffset(for index: Int, value: CGFloat?) {
+        if offsets[index] == value {
+            return
+        }
+        offsets[index] = value
+        render()
+    }
+
+    func render() {
+        DispatchQueue.global(qos: .userInteractive).async { [self] in
+            let newPosition = GroupLessons.State.Section.Position(
+                index: min(max(0, calculateIndex()), 11)
+            )
+            if newPosition != renderedPosition {
+                DispatchQueue.main.async { [self] in
+                    position = newPosition
+                }
+            }
+            renderedPosition = newPosition
+        }
+    }
+
+    func debug() {
+        let debug = offsets.map { optionalFloat in
+            if let float = optionalFloat {
+                return "\(float.rounded())"
+            } else {
+                return "nil"
+            }
+        }
+        .joined(separator: " | ")
+        print(debug)
+    }
+
+    struct LastShownElement {
+        var index: Int
+        var value: CGFloat
+    }
+
+    var lastShownElement: LastShownElement?
+
+    func calculateIndex() -> Int {
+        let target: CGFloat = 169.0 + 1 // 125
+        let offsets = offsets
+        let numberOfElements = offsets.compactMap { $0 }.count
+
+        func compareWithTarget(element: CGFloat, index: Int) -> Int {
+            element < target ? index : index - 1
+        }
+
+        switch numberOfElements {
+        case 1:
+            let index = offsets.firstIndex(where: { $0 != nil })!
+            let element = offsets[index]!
+            lastShownElement = LastShownElement(index: index, value: element)
+            return compareWithTarget(element: element, index: index)
+
+        case 0:
+            guard let lastShownElement = lastShownElement else {
+                return 0
+            }
+            return compareWithTarget(element: lastShownElement.value, index: lastShownElement.index)
+
+        default:
+            let index = offsets.firstIndex(where: { $0 != nil })!
+            let element = offsets[index]!
+            if element < target {
+                return offsets.lastIndex(where: { $0 != nil ? $0! < target : false }) ?? index
+            } else {
+                return index - 1
+            }
+        }
+    }
+
+}
 
 struct GroupLessonsView: View {
 
@@ -18,200 +129,7 @@ struct GroupLessonsView: View {
     @State var displayedWeek: Lesson.Week = .first
     @State var displayedDay: Lesson.Day = .monday
 
-//    @State var savedOffsets: [CGFloat?] = Array(
-//        repeating: nil,
-//        count: GroupLessons.State.Section.Position.count
-//    )
-//    @State var offsets: [CGFloat?] = Array(
-//        repeating: nil,
-//        count: GroupLessons.State.Section.Position.count
-//    )
-//    @State var visibleSections: [Bool] = Array(
-//        repeating: false,
-//        count: GroupLessons.State.Section.Position.count
-//    )
-//    @State var renderedPosition: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
-
     let store: Store<GroupLessons.State, GroupLessons.Action>
-
-
-    class AnimationViewModel: ObservableObject {
-
-        @Published var position: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
-        var renderedPosition: GroupLessons.State.Section.Position = .init(week: .first, day: .monday)
-
-        var offsets: [CGFloat?] = Array(
-            repeating: nil,
-            count: GroupLessons.State.Section.Position.count
-        )
-        var savedOffsets: [CGFloat?] = Array(
-            repeating: nil,
-            count: GroupLessons.State.Section.Position.count
-        )
-
-        func save() {
-            savedOffsets = offsets
-        }
-
-        func restore() {
-            offsets = savedOffsets
-            render()
-        }
-
-        func setOffset(for index: Int, value: CGFloat?) {
-            if offsets[index] == value {
-                return
-            }
-            offsets[index] = value
-            render()
-        }
-
-        func render() {
-            let debug = offsets.map { optionalFloat in
-                if let float = optionalFloat {
-                    return "\(float.rounded())"
-                } else {
-                    return "nil"
-                }
-            }
-                .joined(separator: " | ")
-            print(debug)
-            DispatchQueue.global(qos: .userInteractive).async { [self] in
-                let value = min(max(0, v3()), 11)
-                print(value)
-                let newPosition = GroupLessons.State.Section.Position(index: value)
-                if newPosition != renderedPosition {
-                    DispatchQueue.main.async { [self] in
-                        position = newPosition
-                    }
-                }
-                renderedPosition = newPosition
-            }
-        }
-
-//        func calculateTopIndex(offsets: [CGFloat?]) -> Int {
-//            let target: CGFloat = 169.0
-//
-//            if offsets.compactMap({ $0 }).count <= 1, let index = offsets.firstIndex(where: { $0 != nil }) {
-//                return index
-//
-//            } else if let firstIndex = offsets.firstIndex(where: { $0 ?? 0 > target + 1 }) {
-//                let result = max(firstIndex - 1, 0)
-//                return result
-//
-//            } else if let lastIndex = offsets.lastIndex(where: { $0 ?? CGFloat.infinity < target - 1 }) {
-//                let result = min(lastIndex + 1, GroupLessons.State.Section.Position.count - 1)
-//                return result
-//
-//            } else {
-//                let result = offsets.count - 1
-//                return result
-//            }
-//        }
-
-//        var lastElement: (Int, CGFloat)?
-//
-//        func v2() -> Int {
-//            let target: CGFloat = 169.0 // 125
-//            let offsets = offsets
-//            let numberOfElements = offsets.compactMap { $0 }.count
-//
-//            if numberOfElements != 0 {
-//                let index = offsets.firstIndex(where: { $0 != nil })!
-//                let element = offsets[index]!
-//                if numberOfElements == 1 {
-//                    lastElement = (index, element)
-//                    if element < target {
-//                        return index
-//                    } else {
-//                        return index - 1
-//                    }
-//                }
-//                if element < target {
-//                    print("First")
-//                    let index = offsets.lastIndex(where: { value in
-//                        if let value = value {
-//                            return value < target
-//                        } else {
-//                            return false
-//                        }
-//                    })!
-//                    return index
-//                } else {
-//                    print("Second")
-//                    return index - 1
-//                    if let next = offsets[safe: index + 1], let value = next {
-//                        print(value)
-//                        if value <= target {
-//                            return index + 1
-//                        } else {
-//                            return index
-//                        }
-//                    }
-//
-//                }
-////                switch element {
-////                case (target - 44...target):
-////                    return index
-////                case ...(target - 44):
-////                    return index + 1
-////                default:
-////                    return index - 1
-////                }
-//
-//            } else if let lastElement = lastElement {
-//                if lastElement.1 < target {
-//                    return lastElement.0
-//                } else {
-//                    return lastElement.0 - 1
-//                }
-//            }
-//
-//            return 0
-//        }
-
-        struct LastShownElement {
-            var index: Int
-            var value: CGFloat
-        }
-
-        var lastShownElement: LastShownElement?
-
-        func v3() -> Int {
-            let target: CGFloat = 169.0 + 1 // 125
-            let offsets = offsets
-            let numberOfElements = offsets.compactMap { $0 }.count
-
-            func compareWithTarget(element: CGFloat, index: Int) -> Int {
-                element < target ? index : index - 1
-            }
-
-            switch numberOfElements {
-            case 1:
-                let index = offsets.firstIndex(where: { $0 != nil })!
-                let element = offsets[index]!
-                lastShownElement = LastShownElement(index: index, value: element)
-                return compareWithTarget(element: element, index: index)
-
-            case 0:
-                guard let lastShownElement = lastShownElement else {
-                    return 0
-                }
-                return compareWithTarget(element: lastShownElement.value, index: lastShownElement.index)
-
-            default:
-                let index = offsets.firstIndex(where: { $0 != nil })!
-                let element = offsets[index]!
-                if element < target {
-                    return offsets.lastIndex(where: { $0 != nil ? $0! < target : false }) ?? index
-                } else {
-                    return index - 1
-                }
-            }
-        }
-
-    }
-
 
     init(store: Store<GroupLessons.State, GroupLessons.Action>) {
         self.store = store
@@ -240,12 +158,14 @@ struct GroupLessonsView: View {
             }
             .onDisappear {
                 animationModel.save()
-                print("Screen disapper")
+                print("Screen disappear")
             }
         }
     }
 
-//    var header:
+    @State var lastHeaderBottom: CGFloat?
+    @State var lastFooterTop: CGFloat?
+    @State var lastSection: [CGFloat] = []
 
     var scrollView: some View {
         WithViewStore(store) { viewStore in
@@ -254,24 +174,6 @@ struct GroupLessonsView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVStack(alignment: .leading, spacing: 0) {
                             ForEach(viewStore.sections, id: \.id) { section in
-
-//                                VStack(spacing: 0) {
-//                                    sectionHeader(
-//                                        day: section.position.day,
-//                                        week: section.position.week
-//                                    )
-//                                    .listRowInsets(EdgeInsets())
-//                                    .listRowSeparator(.hidden)
-////                                    .id(section.id)
-//
-//                                    ForEachStore(
-//                                        self.store.scope(
-//                                            state: \.sections[section.index].lessonCells,
-//                                            action: GroupLessons.Action.lessonCells(id:action:)
-//                                        ),
-//                                        content: LessonCellView.init(store:)
-//                                    )
-//                                }
                                 Section(
                                     content: {
                                         ForEachStore(
@@ -279,7 +181,19 @@ struct GroupLessonsView: View {
                                                 state: \.sections[section.index].lessonCells,
                                                 action: GroupLessons.Action.lessonCells(id:action:)
                                             ),
-                                            content: LessonCellView.init(store:)
+                                            content: { store in
+                                                LessonCellView(store: store)
+                                                    .if(section.index == 11, transform: { view in
+                                                        view.modifier(
+                                                            SizeModifier {
+                                                                lastSectionOffsetModifiers(
+                                                                    index: ViewStore(store).state.lesson.position.rawValue,
+                                                                    height: $0.height
+                                                                )
+                                                            }
+                                                        )
+                                                    })
+                                            }
                                         )
                                     },
                                     header: {
@@ -287,126 +201,96 @@ struct GroupLessonsView: View {
                                             day: section.position.day,
                                             week: section.position.week
                                         )
-                                        .overlay(
-                                            ZStack {
-                                                GeometryReader { proxy in
-                                                    Color.clear//.red.opacity(0.2)
-                                                        .onChange(of: proxy.frame(in: .global).minY) { value in
-//                                                            print("\(section.index) \(value)")
-//                                                            DispatchQueue.global(qos: .userInteractive).async { [self] in
-//                                                            print(value - proxy.frame(in: .global).minY)
-                                                            DispatchQueue.main.async {
-                                                                animationModel.setOffset(for: section.index, value: value)
-                                                            }
-                                                        }
-                                                }
-                                            }
-                                        )
-//                                        .onAppear {
-////                                            print("onAppear \(section.index)")
-//                                            animationModel.visibleSections[section.index] = true
-//                                        }
-                                        .onDisappear {
-//                                            print("onDisappear \(section.index)")
+                                        .modifier(OffsetModifier { value in
                                             DispatchQueue.main.async {
-                                                print("header \(section.index) disappear")
+                                                animationModel.setOffset(for: section.index, value: value)
+                                            }
+                                        })
+                                        .onDisappear {
+                                            DispatchQueue.main.async {
                                                 animationModel.setOffset(for: section.index, value: nil)
                                             }
-
-//                                            animationModel.visibleSections[section.index] = false
-//                                            animationModel.offsets[section.index] = nil
-
+//                                            if section.index == 11 {
+//                                                lastHeaderBottom = nil
+//                                            }
                                         }
+//                                        .modifier(
+//                                            SizeModifier { rect in
+//                                                if section.index == 11 {
+//                                                    lastHeaderBottom = rect.maxY
+//                                                    print("lastHeaderBottom: \(lastHeaderBottom)")
+//                                                }
+//                                            }
+//                                        )
                                     }
+//                                    ,
+//                                    footer: {
+//                                        Rectangle()
+//                                            .fill(Color.red)
+//                                            .frame(height: 10)
+////                                            .modifier(
+////                                                SizeModifier { rect in
+////                                                    if section.index == 11 {
+////                                                        lastFooterTop = rect.minY
+////                                                        print("lastFooterTop: \(lastFooterTop)")
+////                                                    }
+////                                                }
+////                                            )
+////                                            .onDisappear {
+////                                                if section.index == 11 {
+////                                                    lastFooterTop = nil
+////                                                }
+////                                            }
+//                                    }
                                 )
                                 .id(section.id)
-
-
-                                //                                    .overlay(
-                                //
-                                //                                    )
-
-
-                                //                                    ZStack {
-                                //                                        VStack(spacing: 0) {
-                                //                                            sectionHeader(
-                                //                                                day: section.position.day,
-                                //                                                week: section.position.week
-                                //                                            )
-                                //                                            .listRowInsets(EdgeInsets())
-                                //                                            .listRowSeparator(.hidden)
-                                //                                            //                                        .background(Color.red)
-                                //                                            .id(section.id)
-                                //
-                                //                                            ForEachStore(
-                                //                                                self.store.scope(
-                                //                                                    state: \.sections[section.index].lessonCells,
-                                //                                                    action: GroupLessons.Action.lessonCells(id:action:)
-                                //                                                ),
-                                //                                                content: {
-                                //                                                    LessonCellView(store: $0)
-                                //                                                    //                                                    .id($0.id)
-                                //                                                        .listRowInsets(EdgeInsets())
-                                //                                                        .listRowSeparator(.hidden)
-                                //                                                    //                                                .overlay(Color.blue)
-                                //
-                                //                                                }
-                                //                                            )
-                                //                                        }
-                                //
-                                //                                        GeometryReader { proxy in
-                                //                                            Color.red.opacity(0.2)
-                                //                                                .onChange(of: proxy.frame(in: .global).minY) { value in
-                                //                                                    print("\(section.index) \(value)")
-                                //                                                    animationModel.setOffset(for: section.index, value: value)
-                                //                                                }
-                                //                                        }
-                                //                                        .onDisappear {
-                                //                                            print("Overlay Disappear \(section.index)")
-                                //                                        }
-                                //                                    }
-
-
-
-                                //                                    .onPreferenceChange(OffsetPreferenceKey.self) { value in
-                                ////                                        print("Set value \(value) for index \(section.index)")
-                                //                                        if visibleSections[section.index] {
-                                //                                            offsets[section.index] = value
-                                //                                        } else {
-                                //                                            print("Updating dismissed values for section \(section.index)")
-                                //                                            offsets[section.index] = nil
-                                //                                        }
-                                //                                    }
-
-
                                 .listRowInsets(EdgeInsets())
-                                //                                    .modifier(OffsetModifier { value in
-                                //                                        animationModel.setOffset(for: section.index, value: value)
-                                ////                                        DispatchQueue.main.async {
-                                ////                                            if visibleSections[section.index] {
-                                ////                                                offsets[section.index] = value
-                                ////                                            } else {
-                                ////                                                print("Updating dismissed values for section \(section.index)")
-                                ////                                                offsets[section.index] = nil
-                                ////                                            }
-                                ////                                        }
-                                //                                    })
                             }
 
                             // TODO: Handle if in last section.count != 0
+
                             Rectangle()
                                 .fill(Color.screenBackground)
-                                .frame(minHeight: geometryProxy.frame(in: .local).height - 44)
+                                .frame(
+                                    minHeight: max(0, geometryProxy.frame(in: .local).height - 44 - lastSection.reduce(0.0, +))
+                                )
                         }
-
                     }
-                    .coordinateSpace(name: "SCROLL")
                     .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
                     .onChange(of: selectedWeek) { changeSelectedWeek($0, proxy: proxy) }
+                    .overlay(
+                        VStack {
+                            Text("\(lastSection.reduce(0.0, +))")
+//                            Text("\(lastFooterTop ?? -999)")
+//                            Text("\(spacerSize(tableHeight: geometryProxy.frame(in: .local).height))")
+                        }
+                    )
                 }
                 .listStyle(.grouped)
                 .background(Color.screenBackground)
+
             }
+        }
+    }
+
+    func spacerSize(tableHeight: CGFloat) -> CGFloat {
+        if let lastHeaderBottom = lastHeaderBottom, let lastFooterTop = lastFooterTop {
+            let diff = lastHeaderBottom - lastFooterTop
+            if diff <= 0 {
+                return tableHeight - 44 - diff
+            } else {
+                return 0
+            }
+        } else {
+            return 0
+        }
+    }
+
+    func lastSectionOffsetModifiers(index: Int, height: CGFloat) {
+        if lastSection[safe: index] == nil {
+            lastSection.append(height)
+        } else {
+            lastSection[index] = height
         }
     }
 
@@ -459,31 +343,11 @@ struct GroupLessonsView: View {
         .frame(height: 44)
     }
 
-//    func calculateTopIndex(offsets: [CGFloat?]) -> Int {
-//        let target: CGFloat = 169.0
-//
-//        if offsets.compactMap({ $0 }).count <= 1, let index = offsets.firstIndex(where: { $0 != nil }) {
-//            return index
-//
-//        } else if let firstIndex = offsets.firstIndex(where: { $0 ?? 0 > target + 1 }) {
-//            let result = max(firstIndex - 1, 0)
-//            return result
-//
-//        } else if let lastIndex = offsets.lastIndex(where: { $0 ?? CGFloat.infinity < target - 1 }) {
-//            let result = min(lastIndex + 1, GroupLessons.State.Section.Position.count - 1)
-//            return result
-//
-//        } else {
-//            let result = offsets.count - 1
-//            return result
-//        }
-//    }
-
 }
 
 struct HeaderTest: View {
 
-    @ObservedObject var animation: GroupLessonsView.AnimationViewModel
+    @ObservedObject var animation: AnimationViewModel
     let groupName: String
     @Binding var selectedWeek: Lesson.Week?
     @Binding var selectedDay: Lesson.Day?
@@ -506,10 +370,7 @@ struct HeaderTest: View {
                 selectedDay: $selectedDay,
                 displayedDay: $displayedDay
             )
-
         }
-
-
 //        .safeAreaInset(edge: .top, content: {
 //            Rectangle().fill(.red)
 //        })

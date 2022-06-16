@@ -18,7 +18,7 @@ struct OffsetModifier: ViewModifier {
             .overlay(
                 ZStack {
                     GeometryReader { proxy in
-                        Color.clear.opacity(0.2).preference(
+                        Color.clear.preference(
                             key: OffsetPreferenceKey.self,
                             value: proxy.frame(in: .global).minY
                         )
@@ -39,11 +39,52 @@ struct OffsetModifier: ViewModifier {
 
 }
 
+struct SizeModifier: ViewModifier {
+
+    //    @State var offset: CGFloat = .zero
+
+    @State var value: CGRect = .zero
+    var onChange: (CGRect) -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                ZStack {
+                    GeometryReader { proxy in
+                        Color.clear.preference(
+                            key: SizePreferenceKey.self,
+                            value: proxy.frame(in: .local)
+                        )
+                    }
+                }
+            )
+            .onPreferenceChange(SizePreferenceKey.self) { value in
+                onChange(value)
+                self.value = value
+            }
+            .overlay(
+                Color.red.opacity(0.2)
+                    .overlay(Text("\(value.height)"))
+            )
+    }
+
+}
+
+
 struct OffsetPreferenceKey: PreferenceKey {
 
     static var defaultValue: CGFloat = .zero
 
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = nextValue()
+    }
+}
+
+struct SizePreferenceKey: PreferenceKey {
+
+    static var defaultValue: CGRect = .zero
+
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
         value = nextValue()
     }
 }
