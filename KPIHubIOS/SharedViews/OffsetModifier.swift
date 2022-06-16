@@ -39,9 +39,7 @@ struct OffsetModifier: ViewModifier {
 
 }
 
-struct SizeModifier: ViewModifier {
-
-    //    @State var offset: CGFloat = .zero
+struct RectModifier: ViewModifier {
 
     @State var value: CGRect = .zero
     var onChange: (CGRect) -> Void
@@ -52,20 +50,16 @@ struct SizeModifier: ViewModifier {
                 ZStack {
                     GeometryReader { proxy in
                         Color.clear.preference(
-                            key: SizePreferenceKey.self,
+                            key: RectPreferenceKey.self,
                             value: proxy.frame(in: .local)
                         )
                     }
                 }
             )
-            .onPreferenceChange(SizePreferenceKey.self) { value in
+            .onPreferenceChange(RectPreferenceKey.self) { value in
                 onChange(value)
                 self.value = value
             }
-            .overlay(
-                Color.red.opacity(0.2)
-                    .overlay(Text("\(value.height)"))
-            )
     }
 
 }
@@ -80,7 +74,7 @@ struct OffsetPreferenceKey: PreferenceKey {
     }
 }
 
-struct SizePreferenceKey: PreferenceKey {
+struct RectPreferenceKey: PreferenceKey {
 
     static var defaultValue: CGRect = .zero
 
