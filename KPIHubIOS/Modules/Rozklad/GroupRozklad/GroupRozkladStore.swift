@@ -89,25 +89,27 @@ struct GroupRozklad {
     // MARK: - Reducer
 
     static let coreReducer = Reducer<State, Action, Environment> { state, action, environment in
+
+        enum SubscriberCancelId { }
         switch action {
         case .onAppear:
-            // TODO: Change 
-            if let lessons = environment.userDefaultsClient.get(for: .lessons) {
-                state.lessons = IdentifiedArray(uniqueElements: lessons)
-                state.sections = [State.Section](lessons: state.lessons)
-            }
-            if let group = environment.userDefaultsClient.get(for: .group) {
-                state.groupName = group.name
-            }
-            return Effect.run { subscriber in
-                environment.rozkladClient.lessons.subject
-                    .receive(on: DispatchQueue.main)
-                    .sink { lessons in
-                        subscriber.send(.updateLessons(lessons))
-                    }
-            }
+            state.groupName = environment.userDefaultsClient.get(for: .group)?.name ?? "-"
+            return Effect.concatenate(
+                Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
+                Effect.run { subscriber in
+                    environment.rozkladClient.lessons.subject
+                        .dropFirst()
+                        .receive(on: DispatchQueue.main)
+                        .sink { lessons in
+                            print("subscriberEvent")
+                            subscriber.send(.updateLessons(lessons))
+                        }
+                }
+                .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+            )
 
         case let .updateLessons(lessons):
+            print("Updating lessons: \(lessons.count)")
             state.lessons = lessons
             state.sections = [State.Section](lessons: state.lessons)
             return .none

@@ -52,6 +52,7 @@ struct LessonDetails {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
+        enum SubscriberCancelId { }
         switch action {
         case .onAppear:
             let lessonId = state.lesson.id
@@ -63,6 +64,7 @@ struct LessonDetails {
                         subscriber.send(.updateLesson(lesson))
                     }
             }
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case let .updateLesson(lesson):
             state.lesson = lesson

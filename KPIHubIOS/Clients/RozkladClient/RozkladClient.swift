@@ -72,14 +72,14 @@ final class RozkladClient {
 
         lazy var subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never> = {
             if let lessons = userDefaultsClient.get(for: .lessons) {
-                return .init(IdentifiedArray(uniqueElements: lessons))
+                return .init(lessons)
             } else {
                 return .init([])
             }
         }()
 
         func set(lessons: [Lesson], commitChanges: Bool) {
-            userDefaultsClient.set(lessons, for: .lessons)
+            userDefaultsClient.set(IdentifiedArray(uniqueElements: lessons), for: .lessons)
             if commitChanges {
                 commit()
             }
@@ -88,7 +88,7 @@ final class RozkladClient {
         func modify(with lesson: Lesson, commitChanges: Bool) {
             var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
             lessons[id: lesson.id] = lesson
-            userDefaultsClient.set(lessons.elements, for: .lessons)
+            userDefaultsClient.set(lessons, for: .lessons)
             if commitChanges {
                 commit()
             }
@@ -96,7 +96,7 @@ final class RozkladClient {
 
         func commit() {
             if let lessons = userDefaultsClient.get(for: .lessons) {
-                subject.send(IdentifiedArray(uniqueElements: lessons))
+                subject.send(lessons)
             } else {
                 subject.send([])
             }

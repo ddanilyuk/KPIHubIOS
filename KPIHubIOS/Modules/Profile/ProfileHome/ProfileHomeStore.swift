@@ -51,6 +51,7 @@ struct ProfileHome {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
+        enum SubscriberCancelId { }
         switch action {
         case .onAppear:
             return .merge(
@@ -69,6 +70,7 @@ struct ProfileHome {
                         }
                 }
             )
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case let .setRozkladState(rozkladState):
             state.rozkladState = rozkladState

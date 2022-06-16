@@ -180,5 +180,3 @@ struct GroupRozkladView: View {
     }
 
 }
-
-
