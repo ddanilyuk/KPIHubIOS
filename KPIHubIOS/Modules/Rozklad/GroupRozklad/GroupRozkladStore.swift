@@ -18,6 +18,21 @@ struct GroupRozklad {
         var groupName: String = ""
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
+        var lessonCells: IdentifiedArrayOf<LessonCell.State> {
+            get {
+                sections
+                    .map { $0.lessonCells }
+                    .reduce([], {
+                        var partialResult = $0
+                        partialResult.append(contentsOf: $1.elements)
+                        return partialResult
+                    })
+            }
+            set {
+                lessons = IdentifiedArrayOf(uniqueElements: newValue.map { $0.lesson })
+                sections = [State.Section](lessons: lessons)
+            }
+        }
 
         struct Section: Equatable, Identifiable {
 
@@ -131,17 +146,12 @@ struct GroupRozklad {
     }
 
     static let reducer = Reducer<State, Action, Environment>.combine(
-        Reducer<State, Action, Environment>.combine(
-            (0..<State.Section.Position.count).map({ index in
-                // TODO: Fix warning with calling every reducer on lesson cells
-                return LessonCell.reducer
-                    .forEach(
-                        state: \State.sections[index].lessonCells,
-                        action: /Action.lessonCells,
-                        environment: { _ in LessonCell.Environment() }
-                    )
-            })
-        ),
+        LessonCell.reducer
+            .forEach(
+                state: \State.lessonCells,
+                action: /Action.lessonCells,
+                environment: { _ in LessonCell.Environment() }
+            ),
         coreReducer
     )
 
