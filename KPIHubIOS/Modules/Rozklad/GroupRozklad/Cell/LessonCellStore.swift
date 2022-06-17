@@ -14,6 +14,7 @@ struct LessonCell {
 
     struct State: Equatable, Identifiable, Hashable {
         let lesson: Lesson
+        var mode: Mode = .default
 
         enum Mode: Equatable {
             case current(CGFloat)
@@ -45,14 +46,14 @@ struct LessonCell {
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    static let reducer = Reducer<State, Action, Environment> { state, action, _ in
         enum SubscriberCancelId {}
         switch action {
         case .onTap:
             return .none
 
         case .onAppear:
-            return Effect.fireAndSubscribe(<#T##currentValueSubject: CurrentValueSubject<_, Never>##CurrentValueSubject<_, Never>#>, transform: <#T##(_) -> T#>)
+//            return Effect.fireAndSubscribe(<#T##currentValueSubject: CurrentValueSubject<_, Never>##CurrentValueSubject<_, Never>#>, transform: <#T##(_) -> T#>)
             return Effect.concatenate(
                 Effect(value: .updateDate(Date())),
 
@@ -77,7 +78,24 @@ struct LessonCell {
             let minute = components.minute ?? 0
             var minutesFromStart = hour * 60 + minute
             print(minutesFromStart)
-//            let lessonMinutesFromStart
+
+            let lessonMinutesFromStart = state.lesson.position.minutesFromDayStart
+            if minutesFromStart < lessonMinutesFromStart {
+                state.mode = .default
+                return .none
+            }
+            // 08:30 = 510
+            // 10:05 = 605
+
+            // 09:00 = 540
+//             10:25 =
+
+            // 540 - 510 > 0
+//            let diff = minutesFromStart - lessonMinutesFromStart
+//            if diff < Lesson.Position.lessonDuration {
+//                state.mode = .current(CGFloat(diff) / CGFloat(Lesson.Position.lessonDuration))
+//            }
+//            if Lesson.Position.lessonDuration +  <
 
             return .none
         }
@@ -86,15 +104,15 @@ struct LessonCell {
 }
 
 import Combine
-
-extension Effect {
-
-    static func fireAndSubscribe<T>(
-        _ currentValueSubject: CurrentValueSubject<Output, Never>,
-        transform: @escaping (Output) -> T
-    ) -> Effect<T, Never> {
-//        let trans = transform(out)
-//        Effect(value: l)
-//        Effect(value: .)
-    }
-}
+//
+//extension Effect {
+//
+//    static func fireAndSubscribe<T>(
+//        _ currentValueSubject: CurrentValueSubject<Output, Never>,
+//        transform: @escaping (Output) -> T
+//    ) -> Effect<T, Never> {
+////        let trans = transform(out)
+////        Effect(value: l)
+////        Effect(value: .)
+//    }
+//}

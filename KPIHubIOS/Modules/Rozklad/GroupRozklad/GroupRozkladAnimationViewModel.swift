@@ -20,6 +20,7 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
 
     @Published var position = GroupRozklad.State.Section.Position(week: .first, day: .monday)
     var lastShownElement: LastShownElement?
+    var targetSize: CGFloat = 0
 
     // MARK: - Private properties
 
@@ -32,6 +33,12 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
         repeating: nil,
         count: GroupRozklad.State.Section.Position.count
     )
+
+    init() {
+//        super.init()
+
+        print("INIT")
+    }
 
     // MARK: - Public methods
 
@@ -81,7 +88,8 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
     }
 
     private func calculateIndex() -> Int {
-        let target: CGFloat = 169.0 + 1
+        let target: CGFloat = targetSize + 1
+//        print(target)
         let offsets = offsets
         let numberOfElements = offsets.compactMap { $0 }.count
 

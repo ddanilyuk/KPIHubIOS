@@ -84,6 +84,13 @@ struct GroupRozklad {
             self.lessons = []
             self.sections = [Section](lessons: [])
         }
+
+        init(groupName: String) {
+            self.groupName = groupName
+            self.lessons = IdentifiedArrayOf(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
+            self.sections = [Section](lessons: self.lessons)
+
+        }
     }
 
     // MARK: - Action
@@ -92,7 +99,10 @@ struct GroupRozklad {
         case onAppear
         case updateLessons(IdentifiedArrayOf<Lesson>)
         case updateDate(Date)
-        case scrollToNeeded
+
+        case resetScrollTo
+        case todaySelected
+
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
         case routeAction(RouteAction)
 
@@ -116,7 +126,7 @@ struct GroupRozklad {
         enum SubscriberCancelId { }
         switch action {
         case .onAppear:
-            state.groupName = environment.userDefaultsClient.get(for: .group)?.name ?? "-"
+            state.groupName = environment.userDefaultsClient.get(for: .group)?.name ?? "ІВ-82"
 //            if !state.alreadyAppeared {
 //                state.scrollTo = State.Section.id(week: .first, day: .init(rawValue: state.currentDay) ?? .monday)
 //                //                state.alreadyAppeared = true
@@ -149,19 +159,24 @@ struct GroupRozklad {
             print("Updating lessons: \(lessons.count)")
             state.lessons = lessons
             state.sections = [State.Section](lessons: state.lessons)
-
-            return Effect(value: .scrollToNeeded)
-                .delay(for: 0.2, scheduler: DispatchQueue.main)
-                .eraseToEffect()
-
-        case .scrollToNeeded:
-            if !state.alreadyAppeared {
-                state.scrollTo = State.Section.id(
-                    week: .init(rawValue: state.currentWeek) ?? .first,
-                    day: .init(rawValue: state.currentDay) ?? .monday
-                )
+            if state.alreadyAppeared {
+                return .none
+            } else {
                 state.alreadyAppeared = true
+                return Effect(value: .todaySelected)
+                    .delay(for: 0.2, scheduler: DispatchQueue.main)
+                    .eraseToEffect()
             }
+
+        case .todaySelected:
+            state.scrollTo = State.Section.id(
+                week: .init(rawValue: state.currentWeek) ?? .first,
+                day: .init(rawValue: state.currentDay) ?? .monday
+            )
+            return .none
+
+        case .resetScrollTo:
+            state.scrollTo = nil
             return .none
 
         case let .updateDate(date):
@@ -174,7 +189,7 @@ struct GroupRozklad {
 //            let week2 = components.yearForWeekOfYear ?? 0
 
             var minutesFromStart = hour * 60 + minute
-            print(minutesFromStart)
+//            print(minutesFromStart)
 
             var day = components.weekday! - 1
             if day == 0 {
