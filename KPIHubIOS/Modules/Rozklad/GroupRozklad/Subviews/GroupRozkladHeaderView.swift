@@ -18,8 +18,8 @@ struct GroupRozkladHeaderView: View {
     @Binding var displayedWeek: Lesson.Week
     @Binding var displayedDay: Lesson.Day
 
-    var currentWeek: Int
-    var currentDay: Int
+    var currentWeek: Lesson.Week
+    var currentDay: Lesson.Day?
 
     @Environment(\.safeAreaInsets) var safeAreaInsets
 

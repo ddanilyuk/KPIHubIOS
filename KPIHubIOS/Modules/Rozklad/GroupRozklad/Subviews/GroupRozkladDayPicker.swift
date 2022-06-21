@@ -11,7 +11,7 @@ struct GroupRozkladDayPicker: View {
 
     @Binding var selectedDay: Lesson.Day?
     @Binding var displayedDay: Lesson.Day
-    var currentDay: Int
+    var currentDay: Lesson.Day?
 
     var body: some View {
         HStack {
@@ -21,7 +21,7 @@ struct GroupRozkladDayPicker: View {
                     label: {
                         Text("\(element.shortDescription)")
                             .font(.system(.body).bold())
-                            .if(currentDay == element.rawValue) { view in
+                            .if(currentDay == element) { view in
                                 ZStack(alignment: .topTrailing) {
                                     Circle()
                                         .fill(Color.orange)

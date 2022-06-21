@@ -11,7 +11,7 @@ struct GroupRozkladWeekPicker: View {
 
     @Binding var selectedWeek: Lesson.Week?
     @Binding var displayedWeek: Lesson.Week
-    var currentWeek: Int
+    var currentWeek: Lesson.Week
 
     var body: some View {
         HStack {
@@ -21,7 +21,7 @@ struct GroupRozkladWeekPicker: View {
                     label: {
                         Text("\(element.description)")
                             .font(.system(.body).bold())
-                            .if(currentWeek == element.rawValue) { view in
+                            .if(currentWeek == element) { view in
                                 ZStack(alignment: .topTrailing) {
                                     Circle()
                                         .fill(Color.orange)

@@ -64,7 +64,8 @@ extension Rozklad.ScreenProvider {
                     GroupRozklad.Environment(
                         apiClient: $0.apiClient,
                         userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
+                        rozkladClient: $0.rozkladClient,
+                        currentDateClient: $0.currentDateClient
                     )
                 }
             ),

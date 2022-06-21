@@ -36,7 +36,7 @@ struct LessonDetailsView: View {
                     )
 
                     TypeSection(
-                        type: "Практика"
+                        type: viewStore.lesson.type
                     )
 
                     LocationsSection(

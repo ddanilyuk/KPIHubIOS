@@ -20,6 +20,17 @@ struct LessonCell {
             case current(CGFloat)
             case next
             case `default`
+
+            var percent: CGFloat {
+                switch self {
+                case let .current(value):
+                    return value
+                case .default:
+                    return 0
+                case .next:
+                    return 0
+                }
+            }
         }
 
         func hash(into hasher: inout Hasher) {
@@ -53,7 +64,6 @@ struct LessonCell {
             return .none
 
         case .onAppear:
-//            return Effect.fireAndSubscribe(<#T##currentValueSubject: CurrentValueSubject<_, Never>##CurrentValueSubject<_, Never>#>, transform: <#T##(_) -> T#>)
             return Effect.concatenate(
                 Effect(value: .updateDate(Date())),
 

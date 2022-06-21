@@ -84,7 +84,7 @@ struct GroupRozkladView: View {
                                 .frame(
                                     height: max(
                                         0,
-                                        geometryProxy.frame(in: .local).height - 44 - lastSection.reduce(0.0, +)
+                                        geometryProxy.frame(in: .local).height - headerHeight - 44 - lastSection.reduce(0.0, +)
                                     )
                                 )
                         }
@@ -95,21 +95,27 @@ struct GroupRozkladView: View {
                             .frame(height: headerHeight)
                     }
                     .overlay(alignment: .topTrailing) {
-                        Text("Сьогодні")
+                        Text(viewStore.state.currentLessonId != nil ? "Зараз" : "Далі")
                             .font(.system(.callout).bold())
+                            .frame(minWidth: 60)
                             .padding(.vertical, 4)
                             .padding(.horizontal, 8)
                             .foregroundColor(.white)
                             .background(
-                                RoundedRectangle(cornerRadius: 4)
-                                    .fill(Color.orange)
-                                    .shadow(color: .orange.opacity(0.2), radius: 4, x: 0, y: 0)
+                                RoundedRectangle(cornerRadius: 8)
+                                    .fill(viewStore.state.currentLessonId != nil ? Color.orange : Color.blue)
+                                    .shadow(
+                                        color: (viewStore.state.currentLessonId != nil ? Color.orange : Color.blue).opacity(0.2),
+                                        radius: 4,
+                                        x: 0,
+                                        y: 0
+                                    )
                             )
                             .onTapGesture {
                                 viewStore.send(.todaySelected)
                             }
                             .offset(x: 0, y: headerHeight)
-                            .padding(.top, 8)
+                            .padding(.top, 16)
                             .padding(.horizontal, 16)
                     }
                     .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
@@ -131,6 +137,7 @@ struct GroupRozkladView: View {
     }
 
     func sectionView(for section: GroupRozklad.State.Section) -> some View {
+//        ViewStore(store.scope(state: \.))
         Section(
             content: {
                 ForEachStore(
@@ -173,34 +180,27 @@ struct GroupRozkladView: View {
                     DispatchQueue.main.async {
                         animationModel.setOffset(for: section.index, value: value)
                         if section.index == 0 {
-//                            firstSectionOffset = value
-                            // 170 true
-//                            print(value)
 
                             let minimumOpacityOffset = headerHeight
                             let maximumOpacityOffset = headerHeight - 20
 
-                            print("\n\n value \(value) \n min \(minimumOpacityOffset) \n max \(maximumOpacityOffset)")
+//                            print("\n\n value \(value) \n min \(minimumOpacityOffset) \n max \(maximumOpacityOffset)")
 
                             switch value {
                             case (minimumOpacityOffset...):
-                                print("1")
+//                                print("1")
                                 headerBackgroundOpacity = 0
 
                             case (maximumOpacityOffset..<minimumOpacityOffset):
-                                print("2")
+//                                print("2")
                                 headerBackgroundOpacity = 1 - ((value - maximumOpacityOffset) / (20))
 
                             default:
-                                print("3")
+//                                print("3")
                                 headerBackgroundOpacity = 1
                             }
 
-                            print("headerBackgroundOpacity \(headerBackgroundOpacity)")
-
-//                            let target = headerHeight - 1
-//                            showHeaderBackground = target > value
-//                            print("First section: \(value) \(test)")
+//                            print("headerBackgroundOpacity \(headerBackgroundOpacity)")
                         }
                     }
                 })
@@ -278,7 +278,8 @@ struct GroupRozkladView_Previews: PreviewProvider {
                     environment: GroupRozklad.Environment(
                         apiClient: .failing,
                         userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live())
+                        rozkladClient: .live(userDefaultsClient: .live()),
+                        currentDateClient: .live(rozkladClient: .live(userDefaultsClient: .live()))
                     )
                 )
             )

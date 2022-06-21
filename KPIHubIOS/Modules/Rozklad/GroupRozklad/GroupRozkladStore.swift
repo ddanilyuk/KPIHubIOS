@@ -17,13 +17,17 @@ struct GroupRozklad {
 
     struct State: Equatable {
 
-        var currentDay: Int = 1
-        var currentWeek: Int = 1
+        var currentDay: Lesson.Day?
+        var currentWeek: Lesson.Week = .first
+        var currentLessonId: CurrentLesson?
+        var nextLessonId: Lesson.ID?
+
         var groupName: String = ""
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
         var alreadyAppeared: Bool = false
-        var scrollTo: String?
+        var scrollTo: Lesson.ID?
+
         var lessonCells: IdentifiedArrayOf<LessonCell.State> {
             get {
                 sections
@@ -89,7 +93,6 @@ struct GroupRozklad {
             self.groupName = groupName
             self.lessons = IdentifiedArrayOf(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
             self.sections = [Section](lessons: self.lessons)
-
         }
     }
 
@@ -98,7 +101,8 @@ struct GroupRozklad {
     enum Action: Equatable {
         case onAppear
         case updateLessons(IdentifiedArrayOf<Lesson>)
-        case updateDate(Date)
+
+        case updateCurrentDate
 
         case resetScrollTo
         case todaySelected
@@ -114,9 +118,11 @@ struct GroupRozklad {
     // MARK: - Environment
 
     struct Environment {
+
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer
@@ -132,7 +138,7 @@ struct GroupRozklad {
 //                //                state.alreadyAppeared = true
 //            }
             return Effect.concatenate(
-                Effect(value: .updateDate(Date())),
+                Effect(value: .updateCurrentDate),
                 Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
                 Effect.run { subscriber in
                     environment.rozkladClient.lessons.subject
@@ -145,20 +151,37 @@ struct GroupRozklad {
                 }
                 .cancellable(id: SubscriberCancelId.self, cancelInFlight: true),
                 Effect.run { subscriber in
-                    Timer.publish(every: 1, on: .main, in: .default)
-                        .autoconnect()
+                    environment.currentDateClient.updated
+                        .dropFirst()
                         .receive(on: DispatchQueue.main)
-                        .sink { date in
-                            subscriber.send(.updateDate(date))
+                        .sink { _ in
+                            subscriber.send(.updateCurrentDate)
                         }
                 }
-                .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+                    .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+
             )
+
+        case .updateCurrentDate:
+            state.currentDay = environment.currentDateClient.currentDay.value
+            state.currentWeek = environment.currentDateClient.currentWeek.value
+            state.currentLessonId = environment.currentDateClient.currentLessonId.value
+            state.nextLessonId = environment.currentDateClient.nextLessonId.value
+            state.sections = [State.Section](
+                lessons: state.lessons,
+                currentLesson: state.currentLessonId,
+                nextLesson: state.nextLessonId
+            )
+            return .none
 
         case let .updateLessons(lessons):
             print("Updating lessons: \(lessons.count)")
             state.lessons = lessons
-            state.sections = [State.Section](lessons: state.lessons)
+            state.sections = [State.Section](
+                lessons: state.lessons,
+                currentLesson: state.currentLessonId,
+                nextLesson: state.nextLessonId
+            )
             if state.alreadyAppeared {
                 return .none
             } else {
@@ -169,37 +192,12 @@ struct GroupRozklad {
             }
 
         case .todaySelected:
-            state.scrollTo = State.Section.id(
-                week: .init(rawValue: state.currentWeek) ?? .first,
-                day: .init(rawValue: state.currentDay) ?? .monday
-            )
+            let scrollTo = state.currentLessonId?.lessonId ?? state.nextLessonId
+            state.scrollTo = scrollTo
             return .none
 
         case .resetScrollTo:
             state.scrollTo = nil
-            return .none
-
-        case let .updateDate(date):
-            let calendar = Calendar(identifier: .gregorian)
-            let components = calendar.dateComponents([.hour, .minute, .weekOfYear, .weekday], from: Date())
-            let some = components.weekday
-            let hour = components.hour ?? 0
-            let minute = components.minute ?? 0
-            var weekOfYear = components.weekOfYear ?? 0
-//            let week2 = components.yearForWeekOfYear ?? 0
-
-            var minutesFromStart = hour * 60 + minute
-//            print(minutesFromStart)
-
-            var day = components.weekday! - 1
-            if day == 0 {
-                day = 7
-            }
-            state.currentDay = day
-            if toggleWeek {
-                weekOfYear += 1
-            }
-            state.currentWeek = weekOfYear % 2 + 1
             return .none
 
         case let .lessonCells(id, .onTap):
@@ -267,7 +265,11 @@ extension Array where Element == GroupRozklad.State.Section {
         return result
     }
 
-    init(lessons: IdentifiedArrayOf<Lesson>) {
+    init(
+        lessons: IdentifiedArrayOf<Lesson>,
+        currentLesson: CurrentLesson? = nil,
+        nextLesson: Lesson.ID? = nil
+    ) {
         let emptyScheduleDays = Array.combine(Lesson.Week.allCases, Lesson.Day.allCases)
             .map {
                 GroupRozklad.State.Section(
@@ -276,12 +278,22 @@ extension Array where Element == GroupRozklad.State.Section {
                 )
             }
         self = lessons.reduce(into: emptyScheduleDays) { partialResult, lesson in
+            var mode: LessonCell.State.Mode = .default
+            if lesson.id == currentLesson?.lessonId {
+                mode = .current(currentLesson?.percent ?? 0)
+            } else if lesson.id == nextLesson {
+                mode = .next
+            }
+            let lessonState = LessonCell.State(
+                lesson: lesson,
+                mode: mode
+            )
             partialResult[
                 ScheduleDay.index(
                     week: lesson.week,
                     day: lesson.day
                 )
-            ].lessonCells.append(LessonCell.State(lesson: lesson))
+            ].lessonCells.append(lessonState)
         }
     }
 

@@ -39,6 +39,7 @@ struct Rozklad {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer

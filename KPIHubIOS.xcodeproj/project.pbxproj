@@ -88,6 +88,8 @@
 		5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7B0BE3285B717800F8FB4C /* GroupRozkladHeaderView.swift */; };
 		5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C5903285B6D5A00900A90 /* View+If.swift */; };
 		5F7C5906285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C5905285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift */; };
+		5F856A3E286471AE00AB63AC /* Shape+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A3D286471AE00AB63AC /* Shape+Ext.swift */; };
+		5F856A412864727000AB63AC /* CurrentDateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A402864727000AB63AC /* CurrentDateClient.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -213,6 +215,8 @@
 		5F7B0BE3285B717800F8FB4C /* GroupRozkladHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladHeaderView.swift; sourceTree = "<group>"; };
 		5F7C5903285B6D5A00900A90 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		5F7C5905285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladAnimationViewModel.swift; sourceTree = "<group>"; };
+		5F856A3D286471AE00AB63AC /* Shape+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shape+Ext.swift"; sourceTree = "<group>"; };
+		5F856A402864727000AB63AC /* CurrentDateClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateClient.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -315,6 +319,7 @@
 				5F69BBDC284CBF7900FED83D /* TCARouter+EmptyScreen.swift */,
 				5FA2AC03284E30B50041FE74 /* Color+Extension.swift */,
 				5F7C5903285B6D5A00900A90 /* View+If.swift */,
+				5F856A3D286471AE00AB63AC /* Shape+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -504,6 +509,7 @@
 				5F28FB8E2858D64100579A75 /* Keychain */,
 				5FDFBE28284D4894007E9F3A /* RozkladClient */,
 				5FDFBE25284D46EC007E9F3A /* CampusClient */,
+				5F856A3F2864725500AB63AC /* CurrentDateClient */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -636,6 +642,14 @@
 				5F5F46332847FFAC00202DA5 /* LargeTagView.swift */,
 			);
 			path = Tags;
+			sourceTree = "<group>";
+		};
+		5F856A3F2864725500AB63AC /* CurrentDateClient */ = {
+			isa = PBXGroup;
+			children = (
+				5F856A402864727000AB63AC /* CurrentDateClient.swift */,
+			);
+			path = CurrentDateClient;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -1037,6 +1051,7 @@
 				5F5F46462849007100202DA5 /* GroupRozkladTitleView.swift in Sources */,
 				5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */,
 				5F137EF428440A1100514263 /* CampusStore.swift in Sources */,
+				5F856A3E286471AE00AB63AC /* Shape+Ext.swift in Sources */,
 				5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */,
 				5F137EDB2843A85600514263 /* AllGroupsResponse.swift in Sources */,
 				5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */,
@@ -1107,6 +1122,7 @@
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
+				5F856A412864727000AB63AC /* CurrentDateClient.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 				5FDFBE35284D5232007E9F3A /* StudySheetItem.swift in Sources */,
 			);
