@@ -9,20 +9,16 @@ import SwiftUI
 
 struct RozkladSectionView: View {
 
+    let lessonsUpdatedDate: Date?
     let rozkladState: RozkladClient.StateModule.State
+    let onUpdateRozklad: () -> Void
     let onChangeGroup: () -> Void
     let onSelectGroup: () -> Void
 
     var body: some View {
-
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
-
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Розклад")
-                    .font(.system(.body).bold())
-
+        ProfileSection(
+            title: "Розклад",
+            content: {
                 switch rozkladState {
                 case let .selected(group):
                     selectedView(with: group)
@@ -30,8 +26,7 @@ struct RozkladSectionView: View {
                     notSelectedView
                 }
             }
-            .padding()
-        }
+        )
     }
 
     func selectedView(with group: GroupResponse) -> some View {
@@ -40,9 +35,31 @@ struct RozkladSectionView: View {
             ProfileHomeViewCell(
                 title: "Обрана группа:",
                 value: .text(group.name),
-                imageName: "person.2",
-                backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                image: {
+                    Image(systemName: "person.2")
+                        .foregroundColor(Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255))
+                },
+                backgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+            )
+
+            ProfileHomeViewCell(
+                title: "Останнє оновлення:",
+                value: .date(lessonsUpdatedDate),
+                image: {
+                    Image(systemName: "clock")
+                        .foregroundColor(.indigo.lighter(by: 0.9))
+                },
+                backgroundColor: .indigo,
+                rightView: {
+                    Button(
+                        action: { onUpdateRozklad() },
+                        label: {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .foregroundColor(.red)
+                                .font(.headline.bold())
+                        }
+                    )
+                }
             )
 
             Divider()
@@ -78,4 +95,36 @@ struct RozkladSectionView: View {
         }
     }
 
+}
+
+extension Color {
+    public func lighter(by amount: CGFloat = 0.2) -> Self { Self(UIColor(self).lighter(by: amount)) }
+    public func darker(by amount: CGFloat = 0.2) -> Self { Self(UIColor(self).darker(by: amount)) }
+}
+
+extension UIColor {
+    func mix(with color: UIColor, amount: CGFloat) -> Self {
+        var red1: CGFloat = 0
+        var green1: CGFloat = 0
+        var blue1: CGFloat = 0
+        var alpha1: CGFloat = 0
+
+        var red2: CGFloat = 0
+        var green2: CGFloat = 0
+        var blue2: CGFloat = 0
+        var alpha2: CGFloat = 0
+
+        getRed(&red1, green: &green1, blue: &blue1, alpha: &alpha1)
+        color.getRed(&red2, green: &green2, blue: &blue2, alpha: &alpha2)
+
+        return Self(
+            red: red1 * CGFloat(1.0 - amount) + red2 * amount,
+            green: green1 * CGFloat(1.0 - amount) + green2 * amount,
+            blue: blue1 * CGFloat(1.0 - amount) + blue2 * amount,
+            alpha: alpha1
+        )
+    }
+
+    func lighter(by amount: CGFloat = 0.2) -> Self { mix(with: .white, amount: amount) }
+    func darker(by amount: CGFloat = 0.2) -> Self { mix(with: .black, amount: amount) }
 }

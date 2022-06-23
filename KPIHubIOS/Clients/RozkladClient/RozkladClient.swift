@@ -78,8 +78,17 @@ final class RozkladClient {
             }
         }()
 
+        lazy var uploadedAt: CurrentValueSubject<Date?, Never> = {
+            if let uploadedAt = userDefaultsClient.get(for: .lessonsUpdatedAt) {
+                return .init(uploadedAt)
+            } else {
+                return .init(nil)
+            }
+        }()
+
         func set(lessons: [Lesson], commitChanges: Bool) {
             userDefaultsClient.set(IdentifiedArray(uniqueElements: lessons), for: .lessons)
+            userDefaultsClient.set(Date(), for: .lessonsUpdatedAt)
             if commitChanges {
                 commit()
             }

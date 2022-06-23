@@ -16,9 +16,10 @@ struct ProfileHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(spacing: 32) {
-
                     RozkladSectionView(
+                        lessonsUpdatedDate: viewStore.updatedDate,
                         rozkladState: viewStore.rozkladState,
+                        onUpdateRozklad: { viewStore.send(.updateRozklad) },
                         onChangeGroup: { viewStore.send(.changeGroup) },
                         onSelectGroup: { viewStore.send(.selectGroup) }
                     )
@@ -28,6 +29,10 @@ struct ProfileHomeView: View {
                         onLogoutCampus: { viewStore.send(.campusLogout) },
                         onLoginCampus: { viewStore.send(.campusLogin) }
                     )
+
+                    OtherSectionView(
+                        forDevelopers: { viewStore.send(.routeAction(.forDevelopers)) }
+                    )
                 }
                 .padding(16)
             }
@@ -36,6 +41,7 @@ struct ProfileHomeView: View {
                 viewStore.send(.onAppear)
             }
             .background(Color.screenBackground)
+            .loadable(viewStore.binding(\.$isLoading))
         }
     }
 
@@ -54,6 +60,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                     ),
                     reducer: ProfileHome.reducer,
                     environment: ProfileHome.Environment(
+                        apiClient: .failing,
                         userDefaultsClient: .live(),
                         rozkladClient: .live(userDefaultsClient: .live()),
                         campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())

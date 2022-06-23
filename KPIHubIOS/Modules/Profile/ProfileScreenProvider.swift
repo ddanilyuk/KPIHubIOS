@@ -22,12 +22,14 @@ extension Profile.ScreenProvider {
         static var module: Any.Type = Profile.self
 
         case profileHome(ProfileHome.State)
+        case forDevelopers(ForDevelopers.State)
     }
 
     // MARK: - Action handling
 
     enum Action: Equatable {
         case profileHome(ProfileHome.Action)
+        case forDevelopers(ForDevelopers.Action)
     }
 
     // MARK: - Reducer handling
@@ -39,10 +41,19 @@ extension Profile.ScreenProvider {
                 action: /Action.profileHome,
                 environment: {
                     ProfileHome.Environment(
+                        apiClient: $0.apiClient,
                         userDefaultsClient: $0.userDefaultsClient,
                         rozkladClient: $0.rozkladClient,
                         campusClient: $0.campusClient
                     )
+                }
+            ),
+        ForDevelopers.reducer
+            .pullback(
+                state: /State.forDevelopers,
+                action: /Action.forDevelopers,
+                environment: { _ in
+                    ForDevelopers.Environment()
                 }
             )
     )
