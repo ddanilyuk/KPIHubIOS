@@ -75,9 +75,10 @@ struct CurrentDateClient {
                 case currentDay:
                     switch lesson.position {
                     case let position where position.range.contains(currentTimeFromDayStart):
-                        let percent = CGFloat(currentTimeFromDayStart - position.minutesFromDayStart) / CGFloat(Lesson.Position.lessonDuration)
+                        let difference = CGFloat(currentTimeFromDayStart - position.minutesFromDayStart)
+                        let percent = difference / CGFloat(Lesson.Position.lessonDuration)
                         return (
-                            current: .init(lessonId: lesson.id, percent: percent),
+                            current: CurrentLesson(lessonId: lesson.id, percent: percent),
                             next: lessons[safe: lessons.index(id: lesson.id)! + 1] ?? lessons[0]
                         )
 
