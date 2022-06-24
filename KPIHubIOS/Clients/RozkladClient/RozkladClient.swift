@@ -127,6 +127,12 @@ final class RozkladClient {
         RozkladClient(userDefaultsClient: userDefaultsClient)
     }
 
+    static func mock(
+        userDefaultsClient: UserDefaultsClient = .mock()
+    ) -> RozkladClient {
+        RozkladClient(userDefaultsClient: userDefaultsClient)
+    }
+
     private init(userDefaultsClient: UserDefaultsClient) {
         self.state = StateModule(userDefaultsClient: userDefaultsClient)
         self.lessons = LessonsModule(userDefaultsClient: userDefaultsClient)

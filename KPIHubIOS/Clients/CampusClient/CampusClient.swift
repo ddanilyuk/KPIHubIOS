@@ -162,6 +162,18 @@ final class CampusClient {
         )
     }
 
+    static func mock(
+        apiClient: APIClient = .failing,
+        userDefaultsClient: UserDefaultsClient = .mock(),
+        keychainClient: KeychainClient = .mock()
+    ) -> CampusClient {
+        CampusClient(
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient,
+            keychainClient: keychainClient
+        )
+    }
+
     private init(
         apiClient: APIClient,
         userDefaultsClient: UserDefaultsClient,

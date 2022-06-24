@@ -277,9 +277,9 @@ struct GroupRozkladView_Previews: PreviewProvider {
                     reducer: GroupRozklad.reducer,
                     environment: GroupRozklad.Environment(
                         apiClient: .failing,
-                        userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live()),
-                        currentDateClient: .live(rozkladClient: .live(userDefaultsClient: .live()))
+                        userDefaultsClient: .mock(),
+                        rozkladClient: .mock(),
+                        currentDateClient: .mock()
                     )
                 )
             )

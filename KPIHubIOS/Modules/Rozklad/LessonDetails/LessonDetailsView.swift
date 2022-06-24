@@ -101,9 +101,9 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     ),
                     reducer: LessonDetails.reducer,
                     environment: LessonDetails.Environment(
-                        userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live()),
-                        currentDateClient: .live(rozkladClient: .live(userDefaultsClient: .live()))
+                        userDefaultsClient: .mock(),
+                        rozkladClient: .mock(),
+                        currentDateClient: .mock()
                     )
                 )
             )

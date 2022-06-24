@@ -29,10 +29,6 @@ protocol UserDefaultsClientable {
         for defaultKey: UserDefaultKey<T>
     ) -> T?
 
-    func get<T: Codable>(
-        for defaultKey: UserDefaultKey<T?>
-    ) -> T?
-
     func get(
         for defaultKey: UserDefaultKey<Bool>
     ) -> Bool
@@ -40,20 +36,29 @@ protocol UserDefaultsClientable {
     // MARK: - Remove
 
     func remove<T: Codable>(for key: UserDefaultKey<T>)
+
+    static func live() -> Self
+    static func mock() -> Self
 }
 
 
 final class UserDefaultsClient: UserDefaultsClientable {
 
     static func live() -> UserDefaultsClient {
-        return UserDefaultsClient()
+        return UserDefaultsClient(UserDefaults.standard)
+    }
+
+    static func mock() -> UserDefaultsClient {
+        return UserDefaultsClient(UserDefaults(suiteName: "mock")!)
     }
     
-    private init() { }
+    private init(_ defaults: UserDefaults) {
+        self.defaults = defaults
+    }
 
     // MARK: - Properties
 
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
 
     // MARK: - Set
 
@@ -82,12 +87,6 @@ final class UserDefaultsClient: UserDefaultsClientable {
 
     func get<T: Codable>(
         for defaultKey: UserDefaultKey<T>
-    ) -> T? {
-        return get(for: defaultKey.key)
-    }
-
-    func get<T: Codable>(
-        for defaultKey: UserDefaultKey<T?>
     ) -> T? {
         return get(for: defaultKey.key)
     }

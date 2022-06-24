@@ -183,4 +183,21 @@ struct CurrentDateClient {
             updatedSubject: updatedSubject
         )
     }
+
+    static func mock() -> CurrentDateClient {
+
+        let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(.monday)
+        let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
+        let currentLessonIdSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
+        let nextLessonIdSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
+        let updatedSubject = CurrentValueSubject<Void, Never>(())
+
+        return .init(
+            currentLessonId: currentLessonIdSubject,
+            nextLessonId: nextLessonIdSubject,
+            currentDay: currentDaySubject,
+            currentWeek: currentWeekSubject,
+            updatedSubject: updatedSubject
+        )
+    }
 }
