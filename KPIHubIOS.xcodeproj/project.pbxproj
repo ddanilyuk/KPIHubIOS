@@ -74,6 +74,7 @@
 		5F671255286611FC00A57E10 /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F671254286611FC00A57E10 /* BadgeView.swift */; };
 		5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712562866129900A57E10 /* LinearGradientAnimatableView.swift */; };
 		5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712582866130900A57E10 /* BorderGradientBackgroundView.swift */; };
+		5F67125B2866144000A57E10 /* LessonMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67125A2866144000A57E10 /* LessonMode.swift */; };
 		5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */; };
 		5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */; };
 		5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */; };
@@ -209,6 +210,7 @@
 		5F671254286611FC00A57E10 /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
 		5F6712562866129900A57E10 /* LinearGradientAnimatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientAnimatableView.swift; sourceTree = "<group>"; };
 		5F6712582866130900A57E10 /* BorderGradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderGradientBackgroundView.swift; sourceTree = "<group>"; };
+		5F67125A2866144000A57E10 /* LessonMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonMode.swift; sourceTree = "<group>"; };
 		5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginStore.swift; sourceTree = "<group>"; };
 		5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginView.swift; sourceTree = "<group>"; };
 		5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButtonStyle.swift; sourceTree = "<group>"; };
@@ -548,6 +550,7 @@
 			children = (
 				5F5F463E284814EA00202DA5 /* Response */,
 				5F5F463C284814E800202DA5 /* Lesson.swift */,
+				5F67125A2866144000A57E10 /* LessonMode.swift */,
 			);
 			path = Lessons;
 			sourceTree = "<group>";
@@ -1144,6 +1147,7 @@
 				5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */,
 				5F69BBE4284CC12800FED83D /* CampusHomeView.swift in Sources */,
 				5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */,
+				5F67125B2866144000A57E10 /* LessonMode.swift in Sources */,
 				5F79DEB6284EB8BD0040C14A /* CampusSectionView.swift in Sources */,
 				5F69BBDD284CBF7A00FED83D /* TCARouter+EmptyScreen.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
