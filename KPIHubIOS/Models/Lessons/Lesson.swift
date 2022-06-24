@@ -112,6 +112,37 @@ extension Lesson {
             }
         }
 
+        static var lessonDuration: Int = 95
+
+        var minutesFromDayStart: Int {
+            func calculate(hour: Int, minute: Int) -> Int {
+                return hour * 60 + minute
+            }
+            switch self {
+            case .first:
+                return calculate(hour: 8, minute: 30)
+            case .second:
+                return calculate(hour: 10, minute: 25)
+            case .third:
+                return calculate(hour: 12, minute: 20)
+            case .fourth:
+                return calculate(hour: 14, minute: 15)
+            case .fifth:
+                return calculate(hour: 16, minute: 10)
+            case .sixth:
+                return calculate(hour: 18, minute: 05)
+
+            }
+        }
+
+        var minutesFromDayStartEnd: Int {
+            return minutesFromDayStart + Position.lessonDuration
+        }
+
+        var range: Range<Int> {
+            return minutesFromDayStart..<minutesFromDayStart + Position.lessonDuration
+        }
+
         init(lessonResponsePosition: LessonResponse.Position) {
             self = .init(rawValue: lessonResponsePosition.rawValue) ?? .first
         }
@@ -123,7 +154,11 @@ extension Lesson {
 
 extension Lesson {
 
-    enum Day: Int, Codable, CaseIterable, Equatable {
+    enum Day: Int, Codable, CaseIterable, Equatable, Comparable {
+        static func < (lhs: Lesson.Day, rhs: Lesson.Day) -> Bool {
+            return lhs.rawValue < rhs.rawValue
+        }
+
         case monday = 1
         case tuesday
         case wednesday
@@ -184,6 +219,15 @@ extension Lesson {
             self = .init(rawValue: lessonResponseWeek.rawValue) ?? .first
         }
 
+        func toggled() -> Week {
+            switch self {
+            case .first:
+                return .second
+            case .second:
+                return .first
+            }
+        }
+
         var description: String {
             switch self {
             case .first:
@@ -217,4 +261,26 @@ extension Lesson: Identifiable {
         return lessonResponse.id
     }
     
+}
+
+
+extension Lesson {
+
+    var type: String {
+        let location = locations?.first ?? ""
+        switch location.lowercased() {
+        case let string where string.contains("лек"):
+            return "Лекція"
+
+        case let string where string.contains("прак"):
+            return "Практика"
+
+        case let string where string.contains("лаб"):
+            return "Лабораторна"
+
+        default:
+            return "Невідомо"
+        }
+    }
+
 }

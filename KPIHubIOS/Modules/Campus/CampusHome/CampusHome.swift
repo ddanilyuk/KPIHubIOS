@@ -54,14 +54,17 @@ struct CampusHome {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
+        enum SubscriberCancelId { }
         switch action {
         case .onAppear:
             return Effect.run { subscriber in
                 environment.campusClient.studySheet.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { state in
                         subscriber.send(.setStudySheetState(state))
                     }
             }
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .refresh:
             switch state.studySheetState {

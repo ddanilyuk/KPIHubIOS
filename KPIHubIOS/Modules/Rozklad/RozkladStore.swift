@@ -26,7 +26,7 @@ struct Rozklad {
     enum Action: Equatable, IdentifiedRouterAction {
 
         case onSetup
-        case setGroupLessons
+        case setGroupRozklad
         case setGroupPicker
 
         case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
@@ -39,29 +39,33 @@ struct Rozklad {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
+        enum SubscriberCancelId { }
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
                 environment.rozkladClient.state.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { state in
                         switch state {
                         case .selected:
-                            subscriber.send(.setGroupLessons)
+                            subscriber.send(.setGroupRozklad)
                         case .notSelected:
                             subscriber.send(.setGroupPicker)
                         }
                     }
             }
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
-        case .setGroupLessons:
+        case .setGroupRozklad:
             state.routes = [
                 .root(
-                    .groupLessons(GroupLessons.State()),
+                    .groupRozklad(GroupRozklad.State()),
                     embedInNavigationView: true
                 )
             ]
@@ -76,7 +80,7 @@ struct Rozklad {
             ]
             return .none
 
-        case let .routeAction(_, .groupLessons(.routeAction(.openDetails(lesson)))):
+        case let .routeAction(_, .groupRozklad(.routeAction(.openDetails(lesson)))):
             let lessonDetailsState = LessonDetails.State(
                 lesson: lesson
             )

@@ -22,9 +22,9 @@ struct RozkladFlowCoordinatorView: View {
                     then: EmptyScreenView.init
                 )
                 CaseLet(
-                    state: /Rozklad.ScreenProvider.State.groupLessons,
-                    action: Rozklad.ScreenProvider.Action.groupLessons,
-                    then: GroupLessonsView.init
+                    state: /Rozklad.ScreenProvider.State.groupRozklad,
+                    action: Rozklad.ScreenProvider.Action.groupRozklad,
+                    then: GroupRozkladView.init
                 )
                 CaseLet(
                     state: /Rozklad.ScreenProvider.State.lessonDetails,

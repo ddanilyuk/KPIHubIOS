@@ -50,27 +50,30 @@ struct App {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
-
         let campusClient: CampusClient
-
+        let currentDateClient: CurrentDateClient
 
         static var live: Self {
             let apiClient: APIClient = .live(
-//                router: rootRouter.baseURL("http://127.0.0.1:8080")
-                router: rootRouter.baseURL("http://kpihub.xyz")
+                router: rootRouter.baseURL("http://192.168.31.30:8080")
+//                router: rootRouter.baseURL("http://kpihub.xyz")
             )
             let userDefaultsClient: UserDefaultsClient = .live()
+            let keychainClient: KeychainClientable = KeychainClient.live()
             let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
             let campusClient: CampusClient = .live(
                 apiClient: apiClient,
-                userDefaultsClient: userDefaultsClient
+                userDefaultsClient: userDefaultsClient,
+                keychainClient: keychainClient
             )
+            let currentDateClient: CurrentDateClient = .live(rozkladClient: rozkladClient)
 
             return Self(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
                 rozkladClient: rozkladClient,
-                campusClient: campusClient
+                campusClient: campusClient,
+                currentDateClient: currentDateClient
             )
         }
     }
@@ -127,7 +130,7 @@ struct App {
             ),
         reducerCore
     )
-    .debug()
+//    .debug()
 
 }
 
@@ -153,7 +156,8 @@ extension App.Environment {
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
             rozkladClient: rozkladClient,
-            campusClient: campusClient
+            campusClient: campusClient,
+            currentDateClient: currentDateClient
         )
     }
 

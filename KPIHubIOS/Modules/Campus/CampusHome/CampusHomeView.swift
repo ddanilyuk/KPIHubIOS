@@ -105,7 +105,7 @@ struct CampusHomeView_Previews: PreviewProvider {
                     environment: CampusHome.Environment(
                         apiClient: .failing,
                         userDefaultsClient: .live(),
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live())
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
                     )
                 )
             )

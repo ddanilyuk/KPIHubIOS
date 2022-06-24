@@ -1,5 +1,5 @@
 //
-//  GroupLessonsWeekPicker.swift
+//  GroupRozkladWeekPicker.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 02.06.2022.
@@ -7,10 +7,11 @@
 
 import SwiftUI
 
-struct GroupLessonsWeekPicker: View {
+struct GroupRozkladWeekPicker: View {
 
     @Binding var selectedWeek: Lesson.Week?
     @Binding var displayedWeek: Lesson.Week
+    var currentWeek: Lesson.Week
 
     var body: some View {
         HStack {
@@ -20,6 +21,16 @@ struct GroupLessonsWeekPicker: View {
                     label: {
                         Text("\(element.description)")
                             .font(.system(.body).bold())
+                            .if(currentWeek == element) { view in
+                                ZStack(alignment: .topTrailing) {
+                                    Circle()
+                                        .fill(Color.orange)
+                                        .frame(width: 8, height: 8)
+                                        .offset(x: 10)
+
+                                    view
+                                }
+                            }
                     }
                 )
                 .frame(minWidth: 0, maxWidth: .infinity)

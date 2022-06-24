@@ -52,6 +52,7 @@ struct Main {
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer
@@ -116,7 +117,8 @@ extension Main.Environment {
         Rozklad.Environment(
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
-            rozkladClient: rozkladClient
+            rozkladClient: rozkladClient,
+            currentDateClient: currentDateClient
         )
     }
 

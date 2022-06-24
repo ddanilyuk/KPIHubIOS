@@ -8,6 +8,7 @@
 import Combine
 import Routes
 import ComposableArchitecture
+import KeychainAccess
 
 final class CampusClient {
 
@@ -21,6 +22,7 @@ final class CampusClient {
         }
 
         private let userDefaultsClient: UserDefaultsClient
+        private let keychainClient: KeychainClientable
 
         lazy var subject: CurrentValueSubject<State, Never> = {
             if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
@@ -30,8 +32,12 @@ final class CampusClient {
             }
         }()
 
-        init(userDefaultsClient: UserDefaultsClient) {
+        init(
+            userDefaultsClient: UserDefaultsClient,
+            keychainClient: KeychainClientable
+        ) {
             self.userDefaultsClient = userDefaultsClient
+            self.keychainClient = keychainClient
         }
 
         func login(
@@ -40,7 +46,8 @@ final class CampusClient {
             commitChanges: Bool
         ) {
             userDefaultsClient.set(userInfo, for: .campusUserInfo)
-            userDefaultsClient.set(credentials, for: .campusCredentials)
+            keychainClient.set(credentials.username, for: .campusUsername)
+            keychainClient.set(credentials.password, for: .campusPassword)
             if commitChanges {
                 commit()
             }
@@ -48,7 +55,8 @@ final class CampusClient {
 
         func logOut(commitChanges: Bool) {
             userDefaultsClient.remove(for: .campusUserInfo)
-            userDefaultsClient.remove(for: .campusCredentials)
+            try? keychainClient.remove(for: .campusUsername)
+            try? keychainClient.remove(for: .campusPassword)
             if commitChanges {
                 commit()
             }
@@ -76,27 +84,33 @@ final class CampusClient {
         }
 
         private let userDefaultsClient: UserDefaultsClient
+        private let keychainClient: KeychainClientable
         private let apiClient: APIClient
         private var studySheetCancellable: Cancellable?
 
         var subject: CurrentValueSubject<State, Never> = .init(.notLoading)
 
         init(
+            apiClient: APIClient,
             userDefaultsClient: UserDefaultsClient,
-            apiClient: APIClient
+            keychainClient: KeychainClientable
         ) {
-            self.userDefaultsClient = userDefaultsClient
             self.apiClient = apiClient
+            self.userDefaultsClient = userDefaultsClient
+            self.keychainClient = keychainClient
         }
 
         func load() {
-            guard let credentials = userDefaultsClient.get(for: .campusCredentials) else {
+            guard
+                let username = keychainClient.get(key: .campusUsername),
+                let password = keychainClient.get(key: .campusPassword)
+            else {
                 subject.send(.notLoading)
                 return
             }
             let campusLoginQuery = CampusLoginQuery(
-                username: credentials.username,
-                password: credentials.password
+                username: username,
+                password: password
             )
             let task: Effect<[StudySheetItem], Error> = Effect.task { [weak self] in
                 guard let self = self else {
@@ -138,17 +152,30 @@ final class CampusClient {
 
     static func live(
         apiClient: APIClient,
-        userDefaultsClient: UserDefaultsClient
+        userDefaultsClient: UserDefaultsClient,
+        keychainClient: KeychainClientable
     ) -> CampusClient {
         CampusClient(
             apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient
+            userDefaultsClient: userDefaultsClient,
+            keychainClient: keychainClient
         )
     }
 
-    private init(apiClient: APIClient, userDefaultsClient: UserDefaultsClient) {
-        self.state = StateModule(userDefaultsClient: userDefaultsClient)
-        self.studySheet = StudySheetModule(userDefaultsClient: userDefaultsClient, apiClient: apiClient)
+    private init(
+        apiClient: APIClient,
+        userDefaultsClient: UserDefaultsClient,
+        keychainClient: KeychainClientable
+    ) {
+        self.state = StateModule(
+            userDefaultsClient: userDefaultsClient,
+            keychainClient: keychainClient
+        )
+        self.studySheet = StudySheetModule(
+            apiClient: apiClient,
+            userDefaultsClient: userDefaultsClient,
+            keychainClient: keychainClient
+        )
     }
 
 }

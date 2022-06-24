@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IdentifiedCollections
 
 protocol UserDefaultsClientable {
 
@@ -143,12 +144,8 @@ extension UserDefaultKey {
         "group"
     }
 
-    static var lessons: UserDefaultKey<[Lesson]> {
+    static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> {
         "lessons"
-    }
-
-    static var campusCredentials: UserDefaultKey<CampusCredentials> {
-        "campusCredentials"
     }
 
     static var campusUserInfo: UserDefaultKey<CampusUserInfo> {

@@ -52,16 +52,19 @@ struct LessonDetails {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
+        enum SubscriberCancelId { }
         switch action {
         case .onAppear:
             let lessonId = state.lesson.id
             return Effect.run { subscriber in
                 environment.rozkladClient.lessons.subject
+                    .receive(on: DispatchQueue.main)
                     .compactMap { $0[id: lessonId] }
                     .sink { lesson in
                         subscriber.send(.updateLesson(lesson))
                     }
             }
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case let .updateLesson(lesson):
             state.lesson = lesson

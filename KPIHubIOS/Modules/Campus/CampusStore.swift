@@ -45,10 +45,12 @@ struct Campus {
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
+        enum SubscriberCancelId { }
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
                 environment.campusClient.state.subject
+                    .receive(on: DispatchQueue.main)
                     .sink { state in
                         switch state {
                         case .loggedOut:
@@ -58,6 +60,7 @@ struct Campus {
                         }
                     }
             }
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .setCampusLogin:
             state.routes = [
