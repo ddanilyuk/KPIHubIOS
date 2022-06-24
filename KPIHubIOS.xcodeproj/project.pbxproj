@@ -301,6 +301,7 @@
 				5F137EEC284409CC00514263 /* Rozklad */,
 				5F137EED284409D200514263 /* Campus */,
 				5F137EEE284409DD00514263 /* Profile */,
+				5F67124A2865C12D00A57E10 /* SharedViews */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -454,7 +455,6 @@
 				5F137EF728440A1E00514263 /* ProfileStore.swift */,
 				5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */,
 				5F137EF928440A2400514263 /* ProfileFlowCoordinatorView.swift */,
-				5F67124A2865C12D00A57E10 /* SharedViews */,
 				5F667D01284E4D43006D3AB7 /* ProfileHome */,
 				5F67124528650EE800A57E10 /* ForDevelopers */,
 			);
@@ -569,19 +569,19 @@
 			children = (
 				5F667D02284E4D55006D3AB7 /* ProfileHomeStore.swift */,
 				5F667D04284E4D5C006D3AB7 /* ProfileHomeView.swift */,
-				5F667D08284E5BE0006D3AB7 /* Subviews */,
+				5F667D08284E5BE0006D3AB7 /* Sections */,
 			);
 			path = ProfileHome;
 			sourceTree = "<group>";
 		};
-		5F667D08284E5BE0006D3AB7 /* Subviews */ = {
+		5F667D08284E5BE0006D3AB7 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
 				5F79DEB3284EB8A40040C14A /* RozkladSectionView.swift */,
 				5F79DEB5284EB8BD0040C14A /* CampusSectionView.swift */,
 				5F6712432865055800A57E10 /* OtherSectionView.swift */,
 			);
-			path = Subviews;
+			path = Sections;
 			sourceTree = "<group>";
 		};
 		5F67124528650EE800A57E10 /* ForDevelopers */ = {
