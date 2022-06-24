@@ -8,30 +8,31 @@
 import ComposableArchitecture
 import CoreGraphics
 
+enum LessonMode: Equatable {
+    case current(CGFloat)
+    case next
+    case `default`
+
+    var percent: CGFloat {
+        switch self {
+        case let .current(value):
+            return value
+        case .default:
+            return 0
+        case .next:
+            return 0
+        }
+    }
+}
+
+
 struct LessonCell {
 
     // MARK: - State
 
     struct State: Equatable, Identifiable, Hashable {
         let lesson: Lesson
-        var mode: Mode = .default
-
-        enum Mode: Equatable {
-            case current(CGFloat)
-            case next
-            case `default`
-
-            var percent: CGFloat {
-                switch self {
-                case let .current(value):
-                    return value
-                case .default:
-                    return 0
-                case .next:
-                    return 0
-                }
-            }
-        }
+        var mode: LessonMode = .default
 
         func hash(into hasher: inout Hasher) {
             hasher.combine(id)
@@ -48,7 +49,6 @@ struct LessonCell {
         case onTap
         case onAppear
         case onDisappear
-        case updateDate(Date)
     }
 
     // MARK: - Environment
@@ -64,65 +64,12 @@ struct LessonCell {
             return .none
 
         case .onAppear:
-            return Effect.concatenate(
-                Effect(value: .updateDate(Date())),
-
-                Effect.run { subscriber in
-                    Timer.publish(every: 1, on: .main, in: .default)
-                        .autoconnect()
-                        .receive(on: DispatchQueue.main)
-                        .sink { date in
-                            subscriber.send(.updateDate(date))
-                        }
-                }
-                    .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
-            )
+            return .none
 
         case .onDisappear:
             return .cancel(id: SubscriberCancelId.self)
 
-        case let .updateDate(date):
-            let calendar = Calendar(identifier: .gregorian)
-            let components = calendar.dateComponents([.hour, .minute], from: date)
-            let hour = components.hour ?? 0
-            let minute = components.minute ?? 0
-            var minutesFromStart = hour * 60 + minute
-            print(minutesFromStart)
-
-            let lessonMinutesFromStart = state.lesson.position.minutesFromDayStart
-            if minutesFromStart < lessonMinutesFromStart {
-                state.mode = .default
-                return .none
-            }
-            // 08:30 = 510
-            // 10:05 = 605
-
-            // 09:00 = 540
-//             10:25 =
-
-            // 540 - 510 > 0
-//            let diff = minutesFromStart - lessonMinutesFromStart
-//            if diff < Lesson.Position.lessonDuration {
-//                state.mode = .current(CGFloat(diff) / CGFloat(Lesson.Position.lessonDuration))
-//            }
-//            if Lesson.Position.lessonDuration +  <
-
-            return .none
         }
     }
 
 }
-
-import Combine
-//
-//extension Effect {
-//
-//    static func fireAndSubscribe<T>(
-//        _ currentValueSubject: CurrentValueSubject<Output, Never>,
-//        transform: @escaping (Output) -> T
-//    ) -> Effect<T, Never> {
-////        let trans = transform(out)
-////        Effect(value: l)
-////        Effect(value: .)
-//    }
-//}

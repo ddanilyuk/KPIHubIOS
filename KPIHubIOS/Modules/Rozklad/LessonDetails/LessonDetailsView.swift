@@ -26,7 +26,8 @@ struct LessonDetailsView: View {
                     DateAndTime(
                         lessonPositionDescription: viewStore.lesson.position.description,
                         lessonWeek: viewStore.lesson.week,
-                        lessonDay: viewStore.lesson.day
+                        lessonDay: viewStore.lesson.day,
+                        mode: viewStore.mode
                     )
 
                     TeacherSection(
@@ -102,7 +103,8 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     reducer: LessonDetails.reducer,
                     environment: LessonDetails.Environment(
                         userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live())
+                        rozkladClient: .live(userDefaultsClient: .live()),
+                        currentDateClient: .live(rozkladClient: .live(userDefaultsClient: .live()))
                     )
                 )
             )

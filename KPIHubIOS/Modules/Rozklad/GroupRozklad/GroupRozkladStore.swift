@@ -118,7 +118,6 @@ struct GroupRozklad {
     // MARK: - Environment
 
     struct Environment {
-
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
@@ -278,7 +277,7 @@ extension Array where Element == GroupRozklad.State.Section {
                 )
             }
         self = lessons.reduce(into: emptyScheduleDays) { partialResult, lesson in
-            var mode: LessonCell.State.Mode = .default
+            var mode: LessonMode = .default
             if lesson.id == currentLesson?.lessonId {
                 mode = .current(currentLesson?.percent ?? 0)
             } else if lesson.id == nextLesson {

@@ -25,6 +25,7 @@ struct TeacherSection: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.white)
+                        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
 
                     VStack(spacing: 16) {
                         ForEach(teachers, id: \.self) { teacher in

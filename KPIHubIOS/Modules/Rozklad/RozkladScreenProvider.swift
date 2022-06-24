@@ -76,7 +76,8 @@ extension Rozklad.ScreenProvider {
                 environment: {
                     LessonDetails.Environment(
                         userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
+                        rozkladClient: $0.rozkladClient,
+                        currentDateClient: $0.currentDateClient
                     )
                 }
             ),

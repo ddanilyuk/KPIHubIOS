@@ -123,8 +123,6 @@ private struct CurrentLessonBackgroundView: View {
 
     @State var gradientAngle: Double = 0
 
-//    let so = LinearGradient(
-
     var body: some View {
         RoundedRectangle(cornerRadius: 8)
             .fill(
@@ -154,12 +152,16 @@ struct GradientAnimationView: View {
     @State private var isAnimating = false
     @State private var progress: CGFloat = 0
 
-    let startGradient = Gradient(colors: [.purple, .yellow]) // Very popular these days
-    let endGradient = Gradient(colors: [.blue, .purple]) // Very popular these days
+    let startGradient = Gradient(colors: [.purple, .yellow])
+    let endGradient = Gradient(colors: [.blue, .purple])
 
     var body: some View {
         RoundedRectangle(cornerRadius: 2)
-            .animatableGradient(fromGradient: startGradient, toGradient: endGradient, progress: progress)
+            .animatableGradient(
+                fromGradient: startGradient,
+                toGradient: endGradient,
+                progress: progress
+            )
             .cornerRadius(2)
             .onAppear {
                 withAnimation(.linear(duration: 1.0).repeatForever(autoreverses: true)) {
@@ -195,7 +197,11 @@ struct AnimatableGradientModifier: AnimatableModifier {
             gradientColors.append(colorMixer(fromColor: fromColor, toColor: toColor, progress: progress))
         }
 
-        return LinearGradient(gradient: Gradient(colors: gradientColors), startPoint: .topLeading, endPoint: .bottomTrailing)
+        return LinearGradient(
+            gradient: Gradient(colors: gradientColors),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 
     func colorMixer(fromColor: UIColor, toColor: UIColor, progress: CGFloat) -> Color {
@@ -224,7 +230,7 @@ extension View {
 
 private struct BadgeView: View {
 
-    let mode: LessonCell.State.Mode
+    let mode: LessonMode
 
     var body: some View {
         HStack(spacing: 4) {
@@ -243,7 +249,7 @@ private struct BadgeView: View {
         )
     }
 
-    func badgeBackgroundColor(for mode: LessonCell.State.Mode) -> Color {
+    func badgeBackgroundColor(for mode: LessonMode) -> Color {
         switch mode {
         case .current:
             return Color.orange
@@ -256,7 +262,7 @@ private struct BadgeView: View {
         }
     }
 
-    func badgeText(for mode: LessonCell.State.Mode) -> String {
+    func badgeText(for mode: LessonMode) -> String {
         switch mode {
         case .current:
             return "Зараз"
@@ -273,7 +279,7 @@ private struct BadgeView: View {
 
 // MARK: - shadowColor
 
-extension LessonCell.State.Mode {
+private extension LessonMode {
     var shadowColor: Color {
         switch self {
         case .current:

@@ -19,6 +19,7 @@ struct LocationsSection: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.white)
+                    .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
 
                 VStack(spacing: 0) {
                     ForEach(locations, id: \.self) { location in

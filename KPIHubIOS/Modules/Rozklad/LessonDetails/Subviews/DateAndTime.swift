@@ -19,6 +19,9 @@ struct DateAndTime: View {
     let lessonPositionDescription: Lesson.Position.Description
     let lessonWeek: Lesson.Week
     let lessonDay: Lesson.Day
+    let mode: LessonMode
+
+    @State var width: CGFloat = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -30,6 +33,7 @@ struct DateAndTime: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.white)
+                    .shadow(color: mode.shadowColor, radius: 8, x: 0, y: 4)
 
                 VStack(spacing: 16) {
 
@@ -38,7 +42,7 @@ struct DateAndTime: View {
                             .fill(Color.orange.opacity(0.2))
                             .frame(height: Constants.lineHeight)
 
-                        HStack(spacing: 16) {
+                        HStack(spacing: width * 5 / CGFloat(Lesson.Position.lessonDuration)) {
                             VStack(spacing: 5) {
                                 HStack(alignment: .bottom) {
                                     Text("\(lessonPositionDescription.firstPartStart)")
@@ -50,7 +54,7 @@ struct DateAndTime: View {
                                 .frame(height: 12)
 
                                 RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                                    .fill(Color.orange)
+                                    .fill(mode.percent == 0 ? Color.orange : Color.orange.opacity(0.4))
                                     .frame(height: Constants.lineHeight)
 
                                 Spacer(minLength: 12)
@@ -60,7 +64,7 @@ struct DateAndTime: View {
                                 Spacer(minLength: 12)
 
                                 RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                                    .fill(Color.orange)
+                                    .fill(mode.percent == 0 ? Color.orange : Color.orange.opacity(0.4))
                                     .frame(height: Constants.lineHeight)
 
                                 HStack(alignment: .top) {
@@ -73,8 +77,27 @@ struct DateAndTime: View {
                                 .frame(height: 12)
                             }
                         }
-                    }
 
+                        switch mode {
+                        case let .current(percent):
+                            HStack {
+                                GradientAnimationView()
+                                    .cornerRadius(3)
+                                    .frame(width: width * percent, height: 6)
+
+                                Spacer()
+                            }
+
+
+                        default:
+                            EmptyView()
+                        }
+                    }
+                    .modifier(RectModifier { rect in
+                        print(rect.width)
+                        width = rect.width
+                        print(width)
+                    })
                     HStack {
                         Text("\(lessonDay.fullDescription)")
 
@@ -89,4 +112,19 @@ struct DateAndTime: View {
         }
     }
 
+}
+
+private extension LessonMode {
+    var shadowColor: Color {
+        switch self {
+        case .current:
+            return Color.orange.opacity(0.3)
+
+        case .next:
+            return Color.blue.opacity(0.2)
+
+        case .default:
+            return Color.black.opacity(0.05)
+        }
+    }
 }

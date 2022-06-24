@@ -15,6 +15,11 @@ struct LessonDetails {
 
         var lesson: Lesson
 
+        var currentLessonId: CurrentLesson?
+        var nextLessonId: Lesson.ID?
+
+        var mode: LessonMode = .default
+
         @BindableState var isEditing: Bool = false
 
         init(lesson: Lesson) {
@@ -28,6 +33,7 @@ struct LessonDetails {
 
         case onAppear
 
+        case updateCurrentDate
         case updateLesson(Lesson)
 
         case editNames
@@ -47,6 +53,7 @@ struct LessonDetails {
     struct Environment {
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer
@@ -56,15 +63,40 @@ struct LessonDetails {
         switch action {
         case .onAppear:
             let lessonId = state.lesson.id
-            return Effect.run { subscriber in
-                environment.rozkladClient.lessons.subject
-                    .receive(on: DispatchQueue.main)
-                    .compactMap { $0[id: lessonId] }
-                    .sink { lesson in
-                        subscriber.send(.updateLesson(lesson))
-                    }
-            }
+            return Effect.concatenate(
+                Effect(value: .updateCurrentDate),
+                Effect.run { subscriber in
+                    environment.rozkladClient.lessons.subject
+                        .receive(on: DispatchQueue.main)
+                        .compactMap { $0[id: lessonId] }
+                        .sink { lesson in
+                            subscriber.send(.updateLesson(lesson))
+                        }
+                },
+                Effect.run { subscriber in
+                    environment.currentDateClient.updated
+                        .dropFirst()
+                        .receive(on: DispatchQueue.main)
+                        .sink { _ in
+                            subscriber.send(.updateCurrentDate)
+                        }
+                }
+            )
             .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+
+        case .updateCurrentDate:
+            let lessonId = state.lesson.id
+            let currentLesson = environment.currentDateClient.currentLessonId.value
+            let nextLessonId = environment.currentDateClient.nextLessonId.value
+
+            if let currentLesson = currentLesson, lessonId == currentLesson.lessonId {
+                state.mode = .current(currentLesson.percent)
+            } else if lessonId == nextLessonId {
+                state.mode = .current(0.5)
+            } else {
+                state.mode = .default
+            }
+            return .none
 
         case let .updateLesson(lesson):
             state.lesson = lesson
