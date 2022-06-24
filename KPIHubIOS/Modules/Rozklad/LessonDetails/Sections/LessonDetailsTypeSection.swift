@@ -24,6 +24,7 @@ struct LessonDetailsTypeSection: View {
                     )
                     Spacer()
                 }
+                .padding(16)
             }
         )
     }

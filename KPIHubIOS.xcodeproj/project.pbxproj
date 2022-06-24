@@ -71,6 +71,9 @@
 		5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */; };
 		5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124D2865CA1600A57E10 /* View+Preview.swift */; };
 		5F6712512865FB8600A57E10 /* LessonDetailsSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712502865FB8600A57E10 /* LessonDetailsSectionView.swift */; };
+		5F671255286611FC00A57E10 /* BadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F671254286611FC00A57E10 /* BadgeView.swift */; };
+		5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712562866129900A57E10 /* LinearGradientAnimatableView.swift */; };
+		5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712582866130900A57E10 /* BorderGradientBackgroundView.swift */; };
 		5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */; };
 		5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */; };
 		5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */; };
@@ -203,6 +206,9 @@
 		5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionView.swift; sourceTree = "<group>"; };
 		5F67124D2865CA1600A57E10 /* View+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Preview.swift"; sourceTree = "<group>"; };
 		5F6712502865FB8600A57E10 /* LessonDetailsSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsSectionView.swift; sourceTree = "<group>"; };
+		5F671254286611FC00A57E10 /* BadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeView.swift; sourceTree = "<group>"; };
+		5F6712562866129900A57E10 /* LinearGradientAnimatableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearGradientAnimatableView.swift; sourceTree = "<group>"; };
+		5F6712582866130900A57E10 /* BorderGradientBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderGradientBackgroundView.swift; sourceTree = "<group>"; };
 		5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginStore.swift; sourceTree = "<group>"; };
 		5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginView.swift; sourceTree = "<group>"; };
 		5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButtonStyle.swift; sourceTree = "<group>"; };
@@ -344,6 +350,8 @@
 				5F5F46422848EDF600202DA5 /* OffsetModifier.swift */,
 				5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */,
 				5FA2AC01284E30950041FE74 /* PullToRefresh.swift */,
+				5F6712562866129900A57E10 /* LinearGradientAnimatableView.swift */,
+				5F6712582866130900A57E10 /* BorderGradientBackgroundView.swift */,
 			);
 			path = SharedViews;
 			sourceTree = "<group>";
@@ -432,6 +440,7 @@
 				5F137F0028440E5900514263 /* LessonDetails */,
 				5F97F119284D5A3E00DB0576 /* EditLessonNames */,
 				5F97F11F284E1EEA00DB0576 /* EditLessonTeachers */,
+				5F671253286611EA00A57E10 /* SharedViews */,
 			);
 			path = Rozklad;
 			sourceTree = "<group>";
@@ -608,6 +617,14 @@
 				5F6712502865FB8600A57E10 /* LessonDetailsSectionView.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		5F671253286611EA00A57E10 /* SharedViews */ = {
+			isa = PBXGroup;
+			children = (
+				5F671254286611FC00A57E10 /* BadgeView.swift */,
+			);
+			path = SharedViews;
 			sourceTree = "<group>";
 		};
 		5F69BBD2284AAC3300FED83D /* CampusLogin */ = {
@@ -1104,7 +1121,9 @@
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
 				5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */,
+				5F671255286611FC00A57E10 /* BadgeView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
+				5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
 				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
@@ -1118,6 +1137,7 @@
 				5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */,
 				5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */,
 				5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */,
+				5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */,
 				5F137EDD2843A87700514263 /* RozkladGroup.swift in Sources */,
 				5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,

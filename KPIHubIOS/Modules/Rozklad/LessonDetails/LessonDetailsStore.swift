@@ -88,7 +88,7 @@ struct LessonDetails {
             if let currentLesson = currentLesson, lessonId == currentLesson.lessonId {
                 state.mode = .current(currentLesson.percent)
             } else if lessonId == nextLessonId {
-                state.mode = .current(0.5)
+                state.mode = .next
             } else {
                 state.mode = .default
             }

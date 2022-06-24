@@ -30,7 +30,6 @@ struct LessonDetailsSectionView<Content: View>: View {
                         .shadow(color: shadowColor, radius: shadowRadius, x: 0, y: shadowRadius / 2)
 
                     content
-                        .padding(16)
                 }
             }
         }

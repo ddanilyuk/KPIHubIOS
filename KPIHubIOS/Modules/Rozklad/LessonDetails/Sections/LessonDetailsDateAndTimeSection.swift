@@ -56,13 +56,17 @@ struct LessonDetailsDateAndTimeSection: View {
                     }
                     .font(.system(.subheadline).weight(.regular))
                 }
+                .padding(16)
+                .overlay(alignment: .topTrailing) {
+                    BadgeView(mode: mode)
+                }
             }
         )
     }
 
     var backgroundLine: some View {
         RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-            .fill(Color.orange.opacity(0.2))
+            .fill(mode.backgroundLineColor)
             .frame(height: Constants.lineHeight)
     }
 
@@ -78,7 +82,7 @@ struct LessonDetailsDateAndTimeSection: View {
             .frame(height: 12)
 
             RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                .fill(mode.percent == 0 ? Color.orange : Color.orange.opacity(0.4))
+                .fill(mode.partColor)
                 .frame(height: Constants.lineHeight)
 
             Spacer(minLength: 12)
@@ -90,7 +94,7 @@ struct LessonDetailsDateAndTimeSection: View {
             Spacer(minLength: 12)
 
             RoundedRectangle(cornerRadius: Constants.lineCornerRadius)
-                .fill(mode.percent == 0 ? Color.orange : Color.orange.opacity(0.4))
+                .fill(mode.partColor)
                 .frame(height: Constants.lineHeight)
 
             HStack(alignment: .top) {
@@ -104,14 +108,14 @@ struct LessonDetailsDateAndTimeSection: View {
         }
     }
 
-    @ViewBuilder
-    var progressBar: some View {
+    @ViewBuilder var progressBar: some View {
+        let hightFactor = 1.5
         switch mode {
         case let .current(percent):
             HStack {
-                GradientAnimationView()
-                    .cornerRadius(3)
-                    .frame(width: width * percent, height: 6)
+                LinearGradientAnimatableView()
+                    .cornerRadius(Constants.lineCornerRadius * hightFactor)
+                    .frame(width: width * percent, height: Constants.lineHeight * hightFactor)
 
                 Spacer()
             }
@@ -123,17 +127,47 @@ struct LessonDetailsDateAndTimeSection: View {
 
 }
 
+// MARK: - LessonMode + Colors
+
 private extension LessonMode {
+
     var shadowColor: Color {
         switch self {
         case .current:
-            return Color.orange.opacity(0.3)
+            return .orange.opacity(0.3)
 
         case .next:
-            return Color.blue.opacity(0.2)
+            return .blue.opacity(0.2)
 
         case .default:
-            return Color.black.opacity(0.05)
+            return .black.opacity(0.05)
         }
     }
+
+    var backgroundLineColor: Color {
+        switch self {
+        case .current:
+            return .orange.opacity(0.2)
+
+        case .next:
+            return .blue.opacity(0.2)
+
+        case .default:
+            return .orange.opacity(0.2)
+        }
+    }
+
+    var partColor: Color {
+        switch self {
+        case .current:
+            return .orange.opacity(0.4)
+
+        case .next:
+            return .blue
+
+        case .default:
+            return .orange
+        }
+    }
+
 }

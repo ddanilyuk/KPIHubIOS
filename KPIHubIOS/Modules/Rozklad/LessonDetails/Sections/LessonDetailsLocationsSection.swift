@@ -38,6 +38,7 @@ struct LessonDetailsLocationsSection: View {
                 }
             }
         }
+        .padding(16)
     }
 
 }
