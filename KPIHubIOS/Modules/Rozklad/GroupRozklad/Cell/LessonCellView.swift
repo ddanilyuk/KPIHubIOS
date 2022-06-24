@@ -292,7 +292,7 @@ extension LessonCell.State.Mode {
 
 struct LessonCellView_Previews: PreviewProvider {
     static var previews: some View {
-        SwiftUI.Group {
+        Group {
             LessonCellView(
                 store: Store(
                     initialState: LessonCell.State(
@@ -303,9 +303,7 @@ struct LessonCellView_Previews: PreviewProvider {
                     environment: LessonCell.Environment()
                 )
             )
-            .previewLayout(.sizeThatFits)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(width: 375)
+            .smallPreview
 
             LessonCellView(
                 store: Store(
@@ -317,9 +315,7 @@ struct LessonCellView_Previews: PreviewProvider {
                     environment: LessonCell.Environment()
                 )
             )
-            .previewLayout(.sizeThatFits)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(width: 375)
+            .smallPreview
 
             LessonCellView(
                 store: Store(
@@ -331,9 +327,7 @@ struct LessonCellView_Previews: PreviewProvider {
                     environment: LessonCell.Environment()
                 )
             )
-            .previewLayout(.sizeThatFits)
-            .fixedSize(horizontal: false, vertical: true)
-            .frame(width: 375)
+            .smallPreview
         }
     }
 }

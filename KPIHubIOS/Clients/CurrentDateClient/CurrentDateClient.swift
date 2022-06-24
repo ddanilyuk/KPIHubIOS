@@ -115,33 +115,43 @@ struct CurrentDateClient {
         let (dayNumber, weekNumber) = currentDayWeek(from: Date())
         let currentDay = Lesson.Day(rawValue: dayNumber)
         let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first
-        let (currentLesson, nextLesson) = currentAndNextLesson(
-            lessons: rozkladClient.lessons.subject.value,
-            currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
-            currentWeek: currentWeek,
-            currentDay: currentDay
-        )
-
         let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(currentDay)
         let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(currentWeek)
-        let currentLessonIdSubject = CurrentValueSubject<CurrentLesson?, Never>(currentLesson)
-        let nextLessonIdSubject = CurrentValueSubject<Lesson.ID?, Never>(nextLesson.id)
-        let updatedSubject = CurrentValueSubject<Void, Never>(())
 
-        func updateSubjects(with date: Date) {
-            let (dayNumber, weekNumber) = currentDayWeek(from: date)
-            let currentDay = Lesson.Day(rawValue: dayNumber)
-            let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first
+        let currentLessonIdSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
+        let nextLessonIdSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
+
+        if !rozkladClient.lessons.subject.value.isEmpty {
             let (currentLesson, nextLesson) = currentAndNextLesson(
                 lessons: rozkladClient.lessons.subject.value,
                 currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
                 currentWeek: currentWeek,
                 currentDay: currentDay
             )
-            currentDaySubject.value = currentDay
-            currentWeekSubject.value = currentWeek
             currentLessonIdSubject.value = currentLesson
             nextLessonIdSubject.value = nextLesson.id
+        }
+
+        let updatedSubject = CurrentValueSubject<Void, Never>(())
+
+        func updateSubjects(with date: Date) {
+            let (dayNumber, weekNumber) = currentDayWeek(from: date)
+            let currentDay = Lesson.Day(rawValue: dayNumber)
+            let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first
+            currentDaySubject.value = currentDay
+            currentWeekSubject.value = currentWeek
+
+            if !rozkladClient.lessons.subject.value.isEmpty {
+                let (currentLesson, nextLesson) = currentAndNextLesson(
+                    lessons: rozkladClient.lessons.subject.value,
+                    currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
+                    currentWeek: currentWeek,
+                    currentDay: currentDay
+                )
+                currentLessonIdSubject.value = currentLesson
+                nextLessonIdSubject.value = nextLesson.id
+            }
+
             updatedSubject.send()
         }
 

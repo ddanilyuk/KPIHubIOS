@@ -15,9 +15,7 @@ struct ForDevelopers {
 
     // MARK: - Action
 
-    enum Action: Equatable {
-        case start
-    }
+    enum Action: Equatable { }
 
     // MARK: - Environment
 
@@ -26,10 +24,7 @@ struct ForDevelopers {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        switch action {
-        case .start:
-            return .none
-        }
+        return .none
     }
 
 }
