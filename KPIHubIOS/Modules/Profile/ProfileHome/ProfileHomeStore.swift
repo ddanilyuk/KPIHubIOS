@@ -16,7 +16,9 @@ struct ProfileHome {
         var updatedDate: Date?
         var rozkladState: RozkladClient.StateModule.State = .notSelected
         var campusState: CampusClient.StateModule.State = .loggedOut
-//        var
+
+        var confirmationDialog: ConfirmationDialogState<Action>?
+        var alert: AlertState<Action>?
         @BindableState var isLoading: Bool = false
     }
 
@@ -29,15 +31,20 @@ struct ProfileHome {
         case setRozkladState(RozkladClient.StateModule.State)
         case setCampusState(CampusClient.StateModule.State)
 
+        case updateRozkladButtonTapped
         case updateRozklad
         case lessonsResult(Result<[Lesson], NSError>)
 
+        case changeGroupButtonTapped
         case changeGroup
         case selectGroup
 
+        case campusLogoutButtonTapped
         case campusLogout
         case campusLogin
 
+        case cancelTapped
+        case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
@@ -100,6 +107,18 @@ struct ProfileHome {
             state.campusState = campusState
             return .none
 
+        case .updateRozkladButtonTapped:
+            state.confirmationDialog = ConfirmationDialogState(
+                title: TextState("Ви впевнені?"),
+                titleVisibility: .visible,
+                message: TextState("Оновлення розкладу видалить всі редагування!"),
+                buttons: [
+                    .destructive(TextState("Оновити розклад"), action: .send(.updateRozklad)),
+                    .cancel(TextState("Назад"))
+                ]
+            )
+            return .none
+
         case .updateRozklad:
             switch state.rozkladState {
             case let .selected(group):
@@ -128,6 +147,23 @@ struct ProfileHome {
 
         case let .lessonsResult(.failure(error)):
             state.isLoading = false
+            state.alert = AlertState(
+                title: TextState("Error"),
+                message: TextState("\(error.localizedDescription)"),
+                dismissButton: .default(TextState("Ok"))
+            )
+            return .none
+
+        case .changeGroupButtonTapped:
+            state.confirmationDialog = ConfirmationDialogState(
+                title: TextState("Ви впевнені?"),
+                titleVisibility: .visible,
+                message: TextState("Зміна групи видалить всі редагування!"),
+                buttons: [
+                    .destructive(TextState("Змінити"), action: .send(.changeGroup)),
+                    .cancel(TextState("Назад"))
+                ]
+            )
             return .none
 
         case .changeGroup:
@@ -137,6 +173,17 @@ struct ProfileHome {
         case .selectGroup:
             return Effect(value: .routeAction(.rozklad))
 
+        case .campusLogoutButtonTapped:
+            state.confirmationDialog = ConfirmationDialogState(
+                title: TextState("Ви впевнені?"),
+                titleVisibility: .visible,
+                buttons: [
+                    .destructive(TextState("Вийти"), action: .send(.campusLogout)),
+                    .cancel(TextState("Назад"))
+                ]
+            )
+            return .none
+
         case .campusLogout:
             environment.campusClient.state.logOut(commitChanges: true)
             environment.campusClient.studySheet.removeLoaded()
@@ -144,6 +191,14 @@ struct ProfileHome {
 
         case .campusLogin:
             return Effect(value: .routeAction(.campus))
+
+        case .cancelTapped:
+            state.confirmationDialog = nil
+            return .none
+
+        case .dismissAlert:
+            state.alert = nil
+            return .none
 
         case .binding:
             return .none

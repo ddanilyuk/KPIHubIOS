@@ -19,14 +19,14 @@ struct ProfileHomeView: View {
                     RozkladSectionView(
                         lessonsUpdatedDate: viewStore.updatedDate,
                         rozkladState: viewStore.rozkladState,
-                        onUpdateRozklad: { viewStore.send(.updateRozklad) },
-                        onChangeGroup: { viewStore.send(.changeGroup) },
+                        onUpdateRozklad: { viewStore.send(.updateRozkladButtonTapped) },
+                        onChangeGroup: { viewStore.send(.changeGroupButtonTapped) },
                         onSelectGroup: { viewStore.send(.selectGroup) }
                     )
 
                     CampusSectionView(
                         campusState: viewStore.campusState,
-                        onLogoutCampus: { viewStore.send(.campusLogout) },
+                        onLogoutCampus: { viewStore.send(.campusLogoutButtonTapped) },
                         onLoginCampus: { viewStore.send(.campusLogin) }
                     )
 
@@ -42,6 +42,14 @@ struct ProfileHomeView: View {
             }
             .background(Color.screenBackground)
             .loadable(viewStore.binding(\.$isLoading))
+            .alert(
+                self.store.scope(state: \.alert),
+                dismiss: .dismissAlert
+            )
+            .confirmationDialog(
+                self.store.scope(state: \.confirmationDialog),
+                dismiss: .cancelTapped
+            )
         }
     }
 
