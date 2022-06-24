@@ -109,6 +109,12 @@ final class RozkladClient {
             } else {
                 subject.send([])
             }
+
+            if let lessonsUpdatedAt = userDefaultsClient.get(for: .lessonsUpdatedAt) {
+                uploadedAt.send(lessonsUpdatedAt)
+            } else {
+                uploadedAt.send(nil)
+            }
         }
 
     }
