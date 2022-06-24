@@ -131,7 +131,7 @@ struct GroupRozklad {
         enum SubscriberCancelId { }
         switch action {
         case .onAppear:
-            state.groupName = environment.userDefaultsClient.get(for: .group)?.name ?? "ІВ-82"
+            state.groupName = environment.userDefaultsClient.get(key: GroupResponseKey.self)?.name ?? "ІВ-82"
 //            if !state.alreadyAppeared {
 //                state.scrollTo = State.Section.id(week: .first, day: .init(rawValue: state.currentDay) ?? .monday)
 //                //                state.alreadyAppeared = true

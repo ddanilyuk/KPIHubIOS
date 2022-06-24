@@ -67,13 +67,13 @@ struct Login {
             environment.campusClient.studySheet.load()
             environment.rozkladClient.state.commit()
             environment.rozkladClient.lessons.commit()
-            environment.userDefaultsClient.set(true, for: .onboardingPassed)
+            environment.userDefaultsClient.set(true, key: OnboardingPassedKey.self)
             return Effect(value: .delegate(.done))
 
         case .routeAction(_, .groupPicker(.routeAction(.done))):
             environment.rozkladClient.state.commit()
             environment.rozkladClient.lessons.commit()
-            environment.userDefaultsClient.set(true, for: .onboardingPassed)
+            environment.userDefaultsClient.set(true, key: OnboardingPassedKey.self)
             return Effect(value: .delegate(.done))
 
         case .routeAction:

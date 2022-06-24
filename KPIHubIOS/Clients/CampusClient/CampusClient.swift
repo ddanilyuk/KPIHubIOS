@@ -25,7 +25,7 @@ final class CampusClient {
         private let keychainClient: KeychainClientable
 
         lazy var subject: CurrentValueSubject<State, Never> = {
-            if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+            if let campusUserInfo = userDefaultsClient.get(key: CampusUserInfoKey.self) {
                 return .init(.loggedIn(campusUserInfo))
             } else {
                 return .init(.loggedOut)
@@ -45,7 +45,7 @@ final class CampusClient {
             userInfo: CampusUserInfo,
             commitChanges: Bool
         ) {
-            userDefaultsClient.set(userInfo, for: .campusUserInfo)
+            userDefaultsClient.set(userInfo, key: CampusUserInfoKey.self)
             keychainClient.set(credentials.username, for: .campusUsername)
             keychainClient.set(credentials.password, for: .campusPassword)
             if commitChanges {
@@ -54,7 +54,7 @@ final class CampusClient {
         }
 
         func logOut(commitChanges: Bool) {
-            userDefaultsClient.remove(for: .campusUserInfo)
+            userDefaultsClient.remove(for: CampusUserInfoKey.self)
             try? keychainClient.remove(for: .campusUsername)
             try? keychainClient.remove(for: .campusPassword)
             if commitChanges {
@@ -63,7 +63,7 @@ final class CampusClient {
         }
 
         func commit() {
-            if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+            if let campusUserInfo = userDefaultsClient.get(key: CampusUserInfoKey.self) {
                 subject.send(.loggedIn(campusUserInfo))
             } else {
                 subject.send(.loggedOut)

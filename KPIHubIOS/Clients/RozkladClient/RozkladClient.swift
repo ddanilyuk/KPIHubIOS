@@ -27,7 +27,7 @@ final class RozkladClient {
         }
 
         lazy var subject: CurrentValueSubject<State, Never> = {
-            if let group = userDefaultsClient.get(for: .group) {
+            if let group = userDefaultsClient.get(key: GroupResponseKey.self) {
                 return .init(.selected(group))
             } else {
                 return .init(.notSelected)
@@ -35,21 +35,21 @@ final class RozkladClient {
         }()
 
         func select(group: GroupResponse, commitChanges: Bool) {
-            userDefaultsClient.set(group, for: .group)
+            userDefaultsClient.set(group, key: GroupResponseKey.self)
             if commitChanges {
                 commit()
             }
         }
 
         func deselect(commitChanges: Bool) {
-            userDefaultsClient.remove(for: .group)
+            userDefaultsClient.remove(for: GroupResponseKey.self)
             if commitChanges {
                 commit()
             }
         }
 
         func commit() {
-            if let group = userDefaultsClient.get(for: .group) {
+            if let group = userDefaultsClient.get(key: GroupResponseKey.self) {
                 subject.send(.selected(group))
             } else {
                 subject.send(.notSelected)
@@ -71,7 +71,7 @@ final class RozkladClient {
         }
 
         lazy var subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never> = {
-            if let lessons = userDefaultsClient.get(for: .lessons) {
+            if let lessons = userDefaultsClient.get(key: LessonsKey.self) {
                 return .init(lessons)
             } else {
                 return .init([])
@@ -79,7 +79,7 @@ final class RozkladClient {
         }()
 
         lazy var uploadedAt: CurrentValueSubject<Date?, Never> = {
-            if let uploadedAt = userDefaultsClient.get(for: .lessonsUpdatedAt) {
+            if let uploadedAt = userDefaultsClient.get(key: LessonsUpdatedDateKey.self) {
                 return .init(uploadedAt)
             } else {
                 return .init(nil)
@@ -87,30 +87,30 @@ final class RozkladClient {
         }()
 
         func set(lessons: [Lesson], commitChanges: Bool) {
-            userDefaultsClient.set(IdentifiedArray(uniqueElements: lessons), for: .lessons)
-            userDefaultsClient.set(Date(), for: .lessonsUpdatedAt)
+            userDefaultsClient.set(IdentifiedArray(uniqueElements: lessons), key: LessonsKey.self)
+            userDefaultsClient.set(Date(), key: LessonsUpdatedDateKey.self)
             if commitChanges {
                 commit()
             }
         }
 
         func modify(with lesson: Lesson, commitChanges: Bool) {
-            var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
+            var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(key: LessonsKey.self) ?? [])
             lessons[id: lesson.id] = lesson
-            userDefaultsClient.set(lessons, for: .lessons)
+            userDefaultsClient.set(lessons, key: LessonsKey.self)
             if commitChanges {
                 commit()
             }
         }
 
         func commit() {
-            if let lessons = userDefaultsClient.get(for: .lessons) {
+            if let lessons = userDefaultsClient.get(key: LessonsKey.self) {
                 subject.send(lessons)
             } else {
                 subject.send([])
             }
 
-            if let lessonsUpdatedAt = userDefaultsClient.get(for: .lessonsUpdatedAt) {
+            if let lessonsUpdatedAt = userDefaultsClient.get(key: LessonsUpdatedDateKey.self) {
                 uploadedAt.send(lessonsUpdatedAt)
             } else {
                 uploadedAt.send(nil)

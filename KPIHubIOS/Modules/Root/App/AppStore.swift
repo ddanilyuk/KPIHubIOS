@@ -83,7 +83,12 @@ struct App {
     static var reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .appDelegate(.didFinishLaunching):
-            if environment.userDefaultsClient.get(for: .onboardingPassed) {
+
+            environment.userDefaultsClient.set(false, key: OnboardingPassedKey.self)
+            environment.userDefaultsClient.set("123", key: StorageKey.group)
+            environment.userDefaultsClient.set(123, keyTest: .test)
+
+            if environment.userDefaultsClient.get(key: OnboardingPassedKey.self) {
                 state.set(.main)
             } else {
                 state.set(.login)
