@@ -27,7 +27,7 @@ final class RozkladClient {
         }
 
         lazy var subject: CurrentValueSubject<State, Never> = {
-            if let group = userDefaultsClient.get(for: .group) {
+            if let group = userDefaultsClient.get(for: .groupResponse) {
                 return .init(.selected(group))
             } else {
                 return .init(.notSelected)
@@ -35,21 +35,21 @@ final class RozkladClient {
         }()
 
         func select(group: GroupResponse, commitChanges: Bool) {
-            userDefaultsClient.set(group, for: .group)
+            userDefaultsClient.set(group, for: .groupResponse)
             if commitChanges {
                 commit()
             }
         }
 
         func deselect(commitChanges: Bool) {
-            userDefaultsClient.remove(for: .group)
+            userDefaultsClient.remove(for: .groupResponse)
             if commitChanges {
                 commit()
             }
         }
 
         func commit() {
-            if let group = userDefaultsClient.get(for: .group) {
+            if let group = userDefaultsClient.get(for: .groupResponse) {
                 subject.send(.selected(group))
             } else {
                 subject.send(.notSelected)

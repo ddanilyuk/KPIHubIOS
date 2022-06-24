@@ -121,44 +121,26 @@ final class UserDefaultsClient: UserDefaultsClientable {
 
 }
 
-// MARK: - UserDefaultKey
-
 struct UserDefaultKey<T: Codable> {
-
-    var key: String
+    var customKey: String?
 }
 
-// MARK: - UserDefaultKey + ExpressibleByStringLiteral
-
-extension UserDefaultKey: ExpressibleByStringLiteral {
-
-    init(stringLiteral value: String) {
-        self.key = value
+extension UserDefaultKey {
+    var key: String {
+        customKey ?? String(describing: self)
     }
-    
 }
 
 extension UserDefaultKey {
 
-    static var group: UserDefaultKey<GroupResponse> {
-        "group"
-    }
+    static var groupResponse: UserDefaultKey<GroupResponse> { .init() }
 
-    static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> {
-        "lessons"
-    }
+    static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> { .init() }
 
-    static var lessonsUpdatedAt: UserDefaultKey<Date> {
-        "lessonsUpdatedAt"
-    }
+    static var lessonsUpdatedAt: UserDefaultKey<Date> { .init() }
 
+    static var campusUserInfo: UserDefaultKey<CampusUserInfo> { .init() }
 
-    static var campusUserInfo: UserDefaultKey<CampusUserInfo> {
-        "campusUserInfo"
-    }
-
-    static var onboardingPassed: UserDefaultKey<Bool> {
-        "onboardingPassed"
-    }
+    static var onboardingPassed: UserDefaultKey<Bool> { .init() }
 
 }
