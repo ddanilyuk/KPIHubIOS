@@ -1,5 +1,5 @@
 //
-//  TypeSection.swift
+//  LessonDetailsTypeSection.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 06.06.2022.
@@ -7,20 +7,14 @@
 
 import SwiftUI
 
-struct TypeSection: View {
+struct LessonDetailsTypeSection: View {
 
     var type: String
 
     var body: some View {
-
-        VStack(alignment: .leading, spacing: 0) {
-            SectionHeader(title: "Тип")
-
-            ZStack {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-
+        LessonDetailsSectionView(
+            title: "Тип",
+            content: {
                 HStack {
                     LargeTagView(
                         icon: Image(systemName: "graduationcap"),
@@ -30,9 +24,8 @@ struct TypeSection: View {
                     )
                     Spacer()
                 }
-                .padding(16)
             }
-        }
+        )
     }
 
 }

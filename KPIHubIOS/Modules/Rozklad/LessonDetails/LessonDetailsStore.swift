@@ -14,10 +14,6 @@ struct LessonDetails {
     struct State: Equatable {
 
         var lesson: Lesson
-
-        var currentLessonId: CurrentLesson?
-        var nextLessonId: Lesson.ID?
-
         var mode: LessonMode = .default
 
         @BindableState var isEditing: Bool = false

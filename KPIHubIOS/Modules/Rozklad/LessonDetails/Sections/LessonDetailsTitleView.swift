@@ -1,5 +1,5 @@
 //
-//  TitleView.swift
+//  LessonDetailsTitleView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 06.06.2022.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TitleView: View {
+struct LessonDetailsTitleView: View {
 
     var title: String
     var isEditing: Bool
