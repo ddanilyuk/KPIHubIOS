@@ -25,12 +25,12 @@ struct ForDevelopersView: View {
                         Text("Якщо є будь-які питанням, напиши мені.")
                     }
 
-                    ProfileSection(
+                    ProfileSectionView(
                         title: "Github",
                         content: {
                             VStack(alignment: .leading, spacing: 20) {
 
-                                ProfileHomeViewCell(
+                                ProfileCellView(
                                     title: "Додаток:",
                                     value: .link(
                                         name: "KPIHubIOS",
@@ -40,10 +40,10 @@ struct ForDevelopersView: View {
                                         Image("github")
                                             .resizable()
                                     },
-                                    backgroundColor: .white
+                                    imageBackgroundColor: .white
                                 )
 
-                                ProfileHomeViewCell(
+                                ProfileCellView(
                                     title: "Сервер:",
                                     value: .link(
                                         name: "KPIHubServer",
@@ -53,19 +53,19 @@ struct ForDevelopersView: View {
                                         Image("github")
                                             .resizable()
                                     },
-                                    backgroundColor: .white
+                                    imageBackgroundColor: .white
                                 )
 
                             }
                         }
                     )
 
-                    ProfileSection(
+                    ProfileSectionView(
                         title: "Контакти",
                         content: {
                             VStack(alignment: .leading, spacing: 20) {
 
-                                ProfileHomeViewCell(
+                                ProfileCellView(
                                     title: "Telegram:",
                                     value: .link(
                                         name: "@ddanilyuk",
@@ -75,10 +75,10 @@ struct ForDevelopersView: View {
                                         Image("telegram")
                                             .resizable()
                                     },
-                                    backgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                                    imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
                                 )
 
-                                ProfileHomeViewCell(
+                                ProfileCellView(
                                     title: "Email:",
                                     value: .link(
                                         name: "danis.danilyuk@gmail.com",
@@ -88,7 +88,7 @@ struct ForDevelopersView: View {
                                         Image(systemName: "mail")
                                             .foregroundColor(.green.lighter(by: 0.9))
                                     },
-                                    backgroundColor: .green
+                                    imageBackgroundColor: .green
                                 )
 
                             }

@@ -1,5 +1,5 @@
 //
-//  ProfileHomeCellView.swift
+//  ProfileCellView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 06.06.2022.
@@ -7,70 +7,7 @@
 
 import SwiftUI
 
-struct ProfileSection<Content: View>: View {
-
-    let title: String
-    let content: Content
-
-    init(
-        title: String,
-        @ViewBuilder content: () -> Content
-    ) {
-        self.title = title
-        self.content = content()
-    }
-
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
-
-            VStack(alignment: .leading, spacing: 20) {
-                Text(title)
-                    .font(.system(.body).bold())
-
-                content
-            }
-            .padding()
-        }
-    }
-}
-
-struct ProfileHomeViewCell<ImageContent, ButtonContent>: View where ButtonContent: View, ImageContent: View {
-
-    let title: String
-    let value: Value
-    let imageName: ImageContent
-    let backgroundColor: Color
-
-    var rightView: ButtonContent?
-
-    init(
-        title: String,
-        value: ProfileHomeViewCell<ImageContent, ButtonContent>.Value,
-        @ViewBuilder image: () -> ImageContent,
-        backgroundColor: Color,
-        @ViewBuilder rightView: () -> ButtonContent
-    ) {
-        self.title = title
-        self.value = value
-        self.imageName = image()
-        self.backgroundColor = backgroundColor
-        self.rightView = rightView()
-    }
-
-    init(
-        title: String,
-        value: ProfileHomeViewCell<ImageContent, ButtonContent>.Value,
-        @ViewBuilder image: () -> ImageContent,
-        backgroundColor: Color
-    ) where ButtonContent == EmptyView {
-        self.title = title
-        self.value = value
-        self.imageName = image()
-        self.backgroundColor = backgroundColor
-    }
+struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
 
     enum Value {
         case text(String)
@@ -78,13 +15,46 @@ struct ProfileHomeViewCell<ImageContent, ButtonContent>: View where ButtonConten
         case link(name: String, url: URL)
     }
 
+    let title: String
+    let value: Value
+    let imageView: ImageContent
+    let imageBackgroundColor: Color
+
+    var rightView: ButtonContent?
+
+    init(
+        title: String,
+        value: ProfileCellView<ImageContent, ButtonContent>.Value,
+        @ViewBuilder image: () -> ImageContent,
+        imageBackgroundColor: Color,
+        @ViewBuilder rightView: () -> ButtonContent
+    ) {
+        self.title = title
+        self.value = value
+        self.imageView = image()
+        self.imageBackgroundColor = imageBackgroundColor
+        self.rightView = rightView()
+    }
+
+    init(
+        title: String,
+        value: ProfileCellView<ImageContent, ButtonContent>.Value,
+        @ViewBuilder image: () -> ImageContent,
+        imageBackgroundColor: Color
+    ) where ButtonContent == EmptyView {
+        self.title = title
+        self.value = value
+        self.imageView = image()
+        self.imageBackgroundColor = imageBackgroundColor
+    }
+
     var body: some View {
         HStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(backgroundColor)
+                    .fill(imageBackgroundColor)
 
-                imageName
+                imageView
                     .font(.system(.body))
             }
             .frame(width: 35, height: 35)

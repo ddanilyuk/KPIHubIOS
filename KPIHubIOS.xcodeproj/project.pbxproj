@@ -65,10 +65,11 @@
 		5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D02284E4D55006D3AB7 /* ProfileHomeStore.swift */; };
 		5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D04284E4D5C006D3AB7 /* ProfileHomeView.swift */; };
 		5F667D07284E5566006D3AB7 /* ProfileScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */; };
-		5F667D0A284E5BF1006D3AB7 /* ProfileHomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */; };
+		5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D09284E5BF1006D3AB7 /* ProfileCellView.swift */; };
 		5F6712442865055800A57E10 /* OtherSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712432865055800A57E10 /* OtherSectionView.swift */; };
 		5F67124728650EF900A57E10 /* ForDevelopers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124628650EF900A57E10 /* ForDevelopers.swift */; };
 		5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124828650F0200A57E10 /* ForDevelopersView.swift */; };
+		5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */; };
 		5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */; };
 		5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */; };
 		5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */; };
@@ -195,10 +196,11 @@
 		5F667D02284E4D55006D3AB7 /* ProfileHomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHomeStore.swift; sourceTree = "<group>"; };
 		5F667D04284E4D5C006D3AB7 /* ProfileHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHomeView.swift; sourceTree = "<group>"; };
 		5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenProvider.swift; sourceTree = "<group>"; };
-		5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHomeCellView.swift; sourceTree = "<group>"; };
+		5F667D09284E5BF1006D3AB7 /* ProfileCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellView.swift; sourceTree = "<group>"; };
 		5F6712432865055800A57E10 /* OtherSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSectionView.swift; sourceTree = "<group>"; };
 		5F67124628650EF900A57E10 /* ForDevelopers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopers.swift; sourceTree = "<group>"; };
 		5F67124828650F0200A57E10 /* ForDevelopersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersView.swift; sourceTree = "<group>"; };
+		5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionView.swift; sourceTree = "<group>"; };
 		5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginStore.swift; sourceTree = "<group>"; };
 		5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginView.swift; sourceTree = "<group>"; };
 		5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButtonStyle.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				5F137EF728440A1E00514263 /* ProfileStore.swift */,
 				5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */,
 				5F137EF928440A2400514263 /* ProfileFlowCoordinatorView.swift */,
+				5F67124A2865C12D00A57E10 /* SharedViews */,
 				5F667D01284E4D43006D3AB7 /* ProfileHome */,
 				5F67124528650EE800A57E10 /* ForDevelopers */,
 			);
@@ -571,7 +574,6 @@
 		5F667D08284E5BE0006D3AB7 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */,
 				5F79DEB3284EB8A40040C14A /* RozkladSectionView.swift */,
 				5F79DEB5284EB8BD0040C14A /* CampusSectionView.swift */,
 				5F6712432865055800A57E10 /* OtherSectionView.swift */,
@@ -586,6 +588,15 @@
 				5F67124828650F0200A57E10 /* ForDevelopersView.swift */,
 			);
 			path = ForDevelopers;
+			sourceTree = "<group>";
+		};
+		5F67124A2865C12D00A57E10 /* SharedViews */ = {
+			isa = PBXGroup;
+			children = (
+				5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */,
+				5F667D09284E5BF1006D3AB7 /* ProfileCellView.swift */,
+			);
+			path = SharedViews;
 			sourceTree = "<group>";
 		};
 		5F69BBD2284AAC3300FED83D /* CampusLogin */ = {
@@ -1087,6 +1098,7 @@
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
 				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
 				5F137EC22843A35D00514263 /* AppStore.swift in Sources */,
+				5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */,
 				5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */,
 				5F97F118284D552900DB0576 /* DateAndTime.swift in Sources */,
 				5F5F4631284625BB00202DA5 /* Schedule.swift in Sources */,
@@ -1120,7 +1132,7 @@
 				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
 				5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */,
 				5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */,
-				5F667D0A284E5BF1006D3AB7 /* ProfileHomeCellView.swift in Sources */,
+				5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */,
 				5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,

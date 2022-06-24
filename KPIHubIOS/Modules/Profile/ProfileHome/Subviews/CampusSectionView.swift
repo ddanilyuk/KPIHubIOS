@@ -14,7 +14,7 @@ struct CampusSectionView: View {
     let onLoginCampus: () -> Void
 
     var body: some View {
-        ProfileSection(
+        ProfileSectionView(
             title: "Кампус",
             content: {
                 switch campusState {
@@ -30,24 +30,24 @@ struct CampusSectionView: View {
     func loggedInView(with campusUserInfo: CampusUserInfo) -> some View {
         VStack(alignment: .leading, spacing: 20) {
 
-            ProfileHomeViewCell(
+            ProfileCellView(
                 title: "Ім'я:",
                 value: .text(campusUserInfo.fullName),
                 image: {
                     Image(systemName: "person")
                         .foregroundColor(Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255))
                 },
-                backgroundColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                imageBackgroundColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
             )
 
-            ProfileHomeViewCell(
+            ProfileCellView(
                 title: "Кафедра:",
                 value: .text(campusUserInfo.subdivision.first?.name ?? "-"),
                 image: {
                     Image(systemName: "graduationcap")
                         .foregroundColor(Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255))
                 },
-                backgroundColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                imageBackgroundColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
             )
 
             Divider()

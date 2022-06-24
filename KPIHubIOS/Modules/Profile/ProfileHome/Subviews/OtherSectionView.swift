@@ -12,17 +12,17 @@ struct OtherSectionView: View {
     let forDevelopers: () -> Void
 
     var body: some View {
-        ProfileSection(
+        ProfileSectionView(
             title: "Інше",
             content: {
-                ProfileHomeViewCell(
+                ProfileCellView(
                     title: "",
                     value: .text("Для розробників"),
                     image: {
                         Image(systemName: "terminal")
                             .foregroundColor(.red.lighter(by: 0.9))
                     },
-                    backgroundColor: .red
+                    imageBackgroundColor: .red
                 )
                 .onTapGesture {
                     forDevelopers()

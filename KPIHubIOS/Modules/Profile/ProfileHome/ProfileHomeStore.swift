@@ -43,7 +43,7 @@ struct ProfileHome {
         case campusLogout
         case campusLogin
 
-        case cancelTapped
+        case dismissConfirmationDialog
         case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
@@ -192,7 +192,7 @@ struct ProfileHome {
         case .campusLogin:
             return Effect(value: .routeAction(.campus))
 
-        case .cancelTapped:
+        case .dismissConfirmationDialog:
             state.confirmationDialog = nil
             return .none
 

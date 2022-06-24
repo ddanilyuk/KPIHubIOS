@@ -16,13 +16,10 @@ struct ProfileHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(spacing: 32) {
-                    RozkladSectionView(
-                        lessonsUpdatedDate: viewStore.updatedDate,
-                        rozkladState: viewStore.rozkladState,
-                        onUpdateRozklad: { viewStore.send(.updateRozkladButtonTapped) },
-                        onChangeGroup: { viewStore.send(.changeGroupButtonTapped) },
-                        onSelectGroup: { viewStore.send(.selectGroup) }
-                    )
+                    RozkladSectionView(store: store.scope(
+                        state: RozkladSectionView.ViewState.init(profileHomeState:),
+                        action: ProfileHome.Action.init(rozkladSection:)
+                    ))
 
                     CampusSectionView(
                         campusState: viewStore.campusState,
@@ -48,7 +45,7 @@ struct ProfileHomeView: View {
             )
             .confirmationDialog(
                 self.store.scope(state: \.confirmationDialog),
-                dismiss: .cancelTapped
+                dismiss: .dismissConfirmationDialog
             )
         }
     }
