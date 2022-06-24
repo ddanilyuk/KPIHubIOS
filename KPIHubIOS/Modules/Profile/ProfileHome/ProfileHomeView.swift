@@ -16,17 +16,25 @@ struct ProfileHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(spacing: 32) {
-
                     RozkladSectionView(
-                        rozkladState: viewStore.rozkladState,
-                        onChangeGroup: { viewStore.send(.changeGroup) },
-                        onSelectGroup: { viewStore.send(.selectGroup) }
+                        store: store.scope(
+                            state: RozkladSectionView.ViewState.init(profileHomeState:),
+                            action: ProfileHome.Action.init(rozkladSection:)
+                        )
                     )
 
                     CampusSectionView(
-                        campusState: viewStore.campusState,
-                        onLogoutCampus: { viewStore.send(.campusLogout) },
-                        onLoginCampus: { viewStore.send(.campusLogin) }
+                        store: store.scope(
+                            state: CampusSectionView.ViewState.init(profileHomeState:),
+                            action: ProfileHome.Action.init(campusSection:)
+                        )
+                    )
+
+                    OtherSectionView(
+                        store: store.scope(
+                            state: { _ in OtherSectionView.ViewState() },
+                            action: ProfileHome.Action.init(otherSection:)
+                        )
                     )
                 }
                 .padding(16)
@@ -36,6 +44,15 @@ struct ProfileHomeView: View {
                 viewStore.send(.onAppear)
             }
             .background(Color.screenBackground)
+            .loadable(viewStore.binding(\.$isLoading))
+            .alert(
+                self.store.scope(state: \.alert),
+                dismiss: .dismissAlert
+            )
+            .confirmationDialog(
+                self.store.scope(state: \.confirmationDialog),
+                dismiss: .dismissConfirmationDialog
+            )
         }
     }
 
@@ -45,21 +62,42 @@ struct ProfileHomeView: View {
 
 struct ProfileHomeView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            ProfileHomeView(
-                store: Store(
-                    initialState: ProfileHome.State(
-                        rozkladState: .notSelected,
-                        campusState: .loggedOut
-                    ),
-                    reducer: ProfileHome.reducer,
-                    environment: ProfileHome.Environment(
-                        userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live()),
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
+        Group {
+            NavigationView {
+                ProfileHomeView(
+                    store: Store(
+                        initialState: ProfileHome.State(
+                            rozkladState: .notSelected,
+                            campusState: .loggedOut
+                        ),
+                        reducer: ProfileHome.reducer,
+                        environment: ProfileHome.Environment(
+                            apiClient: .failing,
+                            userDefaultsClient: .live(),
+                            rozkladClient: .live(userDefaultsClient: .live()),
+                            campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
+                        )
                     )
                 )
-            )
+            }
+
+            NavigationView {
+                ProfileHomeView(
+                    store: Store(
+                        initialState: ProfileHome.State(
+                            rozkladState: .selected(GroupResponse(id: UUID(), name: "ІВ-82")),
+                            campusState: .loggedIn(CampusUserInfo.mock)
+                        ),
+                        reducer: ProfileHome.reducer,
+                        environment: ProfileHome.Environment(
+                            apiClient: .failing,
+                            userDefaultsClient: .live(),
+                            rozkladClient: .live(userDefaultsClient: .live()),
+                            campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
+                        )
+                    )
+                )
+            }
         }
     }
 }

@@ -133,6 +133,7 @@ extension Main.Environment {
 
     var profile: Profile.Environment {
         Profile.Environment(
+            apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
             rozkladClient: rozkladClient,
             campusClient: campusClient

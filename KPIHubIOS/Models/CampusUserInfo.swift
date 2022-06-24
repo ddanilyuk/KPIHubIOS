@@ -43,3 +43,32 @@ struct CampusUserInfo: Codable, Equatable {
     let credo: String
 
 }
+
+extension CampusUserInfo {
+
+    static var mock = CampusUserInfo(
+        modules: [],
+        position: [],
+        subdivision: [
+            CampusUserInfo.InfoItem(
+                id: 1,
+                name: "ФІОТ"
+            )
+        ],
+        studyGroup: CampusUserInfo.InfoItem(
+            id: 1,
+            name: "ІВ-82"
+        ),
+        sid: "",
+        email: "",
+        scientificInterest: "",
+        username: "dda77177",
+        tgAuthLinked: false,
+        profiles: [],
+        id: 1,
+        userIdentifier: "",
+        fullName: "Данилюк Денис Андрійович",
+        photo: "",
+        credo: ""
+    )
+}

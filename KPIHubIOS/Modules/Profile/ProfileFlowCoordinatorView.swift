@@ -21,6 +21,11 @@ struct ProfileFlowCoordinatorView: View {
                     action: Profile.ScreenProvider.Action.profileHome,
                     then: ProfileHomeView.init
                 )
+                CaseLet(
+                    state: /Profile.ScreenProvider.State.forDevelopers,
+                    action: Profile.ScreenProvider.Action.forDevelopers,
+                    then: ForDevelopersView.init
+                )
             }
         }
     }

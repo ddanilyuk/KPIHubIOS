@@ -39,6 +39,7 @@ struct Profile {
     // MARK: - Environment
 
     struct Environment {
+        let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClient
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
@@ -46,13 +47,18 @@ struct Profile {
 
     // MARK: - Reducer
 
-    static let reducerCore = Reducer<State, Action, Environment> { _, action, _ in
+    static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .routeAction(_, .profileHome(.routeAction(.rozklad))):
             return Effect(value: .delegate(.selectRozkladTab))
 
         case .routeAction(_, .profileHome(.routeAction(.campus))):
             return Effect(value: .delegate(.selectCampusTab))
+
+        case .routeAction(_, .profileHome(.routeAction(.forDevelopers))):
+            let forDevelopersState = ForDevelopers.State()
+            state.routes.push(.forDevelopers(forDevelopersState))
+            return .none
 
         case .routeAction:
             return .none

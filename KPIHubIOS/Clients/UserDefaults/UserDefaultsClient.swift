@@ -148,6 +148,11 @@ extension UserDefaultKey {
         "lessons"
     }
 
+    static var lessonsUpdatedAt: UserDefaultKey<Date> {
+        "lessonsUpdatedAt"
+    }
+
+
     static var campusUserInfo: UserDefaultKey<CampusUserInfo> {
         "campusUserInfo"
     }

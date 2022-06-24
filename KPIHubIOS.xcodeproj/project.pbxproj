@@ -65,7 +65,12 @@
 		5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D02284E4D55006D3AB7 /* ProfileHomeStore.swift */; };
 		5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D04284E4D5C006D3AB7 /* ProfileHomeView.swift */; };
 		5F667D07284E5566006D3AB7 /* ProfileScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */; };
-		5F667D0A284E5BF1006D3AB7 /* ProfileHomeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */; };
+		5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F667D09284E5BF1006D3AB7 /* ProfileCellView.swift */; };
+		5F6712442865055800A57E10 /* OtherSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6712432865055800A57E10 /* OtherSectionView.swift */; };
+		5F67124728650EF900A57E10 /* ForDevelopers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124628650EF900A57E10 /* ForDevelopers.swift */; };
+		5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124828650F0200A57E10 /* ForDevelopersView.swift */; };
+		5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */; };
+		5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F67124D2865CA1600A57E10 /* View+Preview.swift */; };
 		5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */; };
 		5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */; };
 		5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */; };
@@ -192,7 +197,12 @@
 		5F667D02284E4D55006D3AB7 /* ProfileHomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHomeStore.swift; sourceTree = "<group>"; };
 		5F667D04284E4D5C006D3AB7 /* ProfileHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHomeView.swift; sourceTree = "<group>"; };
 		5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreenProvider.swift; sourceTree = "<group>"; };
-		5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHomeCellView.swift; sourceTree = "<group>"; };
+		5F667D09284E5BF1006D3AB7 /* ProfileCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCellView.swift; sourceTree = "<group>"; };
+		5F6712432865055800A57E10 /* OtherSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherSectionView.swift; sourceTree = "<group>"; };
+		5F67124628650EF900A57E10 /* ForDevelopers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopers.swift; sourceTree = "<group>"; };
+		5F67124828650F0200A57E10 /* ForDevelopersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersView.swift; sourceTree = "<group>"; };
+		5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionView.swift; sourceTree = "<group>"; };
+		5F67124D2865CA1600A57E10 /* View+Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Preview.swift"; sourceTree = "<group>"; };
 		5F69BBD3284AAC4400FED83D /* CampusLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginStore.swift; sourceTree = "<group>"; };
 		5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginView.swift; sourceTree = "<group>"; };
 		5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButtonStyle.swift; sourceTree = "<group>"; };
@@ -291,6 +301,7 @@
 				5F137EEC284409CC00514263 /* Rozklad */,
 				5F137EED284409D200514263 /* Campus */,
 				5F137EEE284409DD00514263 /* Profile */,
+				5F67124A2865C12D00A57E10 /* SharedViews */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -320,6 +331,7 @@
 				5FA2AC03284E30B50041FE74 /* Color+Extension.swift */,
 				5F7C5903285B6D5A00900A90 /* View+If.swift */,
 				5F856A3D286471AE00AB63AC /* Shape+Ext.swift */,
+				5F67124D2865CA1600A57E10 /* View+Preview.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -444,6 +456,7 @@
 				5F667D06284E5566006D3AB7 /* ProfileScreenProvider.swift */,
 				5F137EF928440A2400514263 /* ProfileFlowCoordinatorView.swift */,
 				5F667D01284E4D43006D3AB7 /* ProfileHome */,
+				5F67124528650EE800A57E10 /* ForDevelopers */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -556,19 +569,37 @@
 			children = (
 				5F667D02284E4D55006D3AB7 /* ProfileHomeStore.swift */,
 				5F667D04284E4D5C006D3AB7 /* ProfileHomeView.swift */,
-				5F667D08284E5BE0006D3AB7 /* Subviews */,
+				5F667D08284E5BE0006D3AB7 /* Sections */,
 			);
 			path = ProfileHome;
 			sourceTree = "<group>";
 		};
-		5F667D08284E5BE0006D3AB7 /* Subviews */ = {
+		5F667D08284E5BE0006D3AB7 /* Sections */ = {
 			isa = PBXGroup;
 			children = (
-				5F667D09284E5BF1006D3AB7 /* ProfileHomeCellView.swift */,
 				5F79DEB3284EB8A40040C14A /* RozkladSectionView.swift */,
 				5F79DEB5284EB8BD0040C14A /* CampusSectionView.swift */,
+				5F6712432865055800A57E10 /* OtherSectionView.swift */,
 			);
-			path = Subviews;
+			path = Sections;
+			sourceTree = "<group>";
+		};
+		5F67124528650EE800A57E10 /* ForDevelopers */ = {
+			isa = PBXGroup;
+			children = (
+				5F67124628650EF900A57E10 /* ForDevelopers.swift */,
+				5F67124828650F0200A57E10 /* ForDevelopersView.swift */,
+			);
+			path = ForDevelopers;
+			sourceTree = "<group>";
+		};
+		5F67124A2865C12D00A57E10 /* SharedViews */ = {
+			isa = PBXGroup;
+			children = (
+				5F67124B2865C13A00A57E10 /* ProfileSectionView.swift */,
+				5F667D09284E5BF1006D3AB7 /* ProfileCellView.swift */,
+			);
+			path = SharedViews;
 			sourceTree = "<group>";
 		};
 		5F69BBD2284AAC3300FED83D /* CampusLogin */ = {
@@ -894,7 +925,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				uk,
 			);
 			mainGroup = 5F97B3B2283677C200350368;
 			packageReferences = (
@@ -1045,6 +1076,7 @@
 				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
 				5F667CFC284E3ED0006D3AB7 /* TitleView.swift in Sources */,
 				5F667D00284E3EFB006D3AB7 /* SectionHeader.swift in Sources */,
+				5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */,
 				5F5F4648284900A000202DA5 /* GroupRozkladWeekPicker.swift in Sources */,
 				5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */,
 				5F69BBDB284ACC4100FED83D /* APIClient.swift in Sources */,
@@ -1070,6 +1102,7 @@
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
 				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
 				5F137EC22843A35D00514263 /* AppStore.swift in Sources */,
+				5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */,
 				5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */,
 				5F97F118284D552900DB0576 /* DateAndTime.swift in Sources */,
 				5F5F4631284625BB00202DA5 /* Schedule.swift in Sources */,
@@ -1077,6 +1110,7 @@
 				5F667CF8284E3E6B006D3AB7 /* TeacherSection.swift in Sources */,
 				5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */,
 				5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */,
+				5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */,
 				5F137EDD2843A87700514263 /* RozkladGroup.swift in Sources */,
 				5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
@@ -1094,6 +1128,7 @@
 				5F69BBE7284CCA6E00FED83D /* StudySheet.swift in Sources */,
 				5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */,
 				5F667D07284E5566006D3AB7 /* ProfileScreenProvider.swift in Sources */,
+				5F67124728650EF900A57E10 /* ForDevelopers.swift in Sources */,
 				5F69BBF9284D164600FED83D /* StudySheetActivityCellView.swift in Sources */,
 				5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
@@ -1101,7 +1136,7 @@
 				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
 				5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */,
 				5F69BBD4284AAC4500FED83D /* CampusLoginStore.swift in Sources */,
-				5F667D0A284E5BF1006D3AB7 /* ProfileHomeCellView.swift in Sources */,
+				5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */,
 				5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */,
 				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,
@@ -1116,6 +1151,7 @@
 				5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */,
 				5F667CF6284E3E62006D3AB7 /* TypeSection.swift in Sources */,
 				5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */,
+				5F6712442865055800A57E10 /* OtherSectionView.swift in Sources */,
 				5F97F11D284D5A6200DB0576 /* EditLessonNamesView.swift in Sources */,
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */,
@@ -1293,6 +1329,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1324,6 +1361,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
