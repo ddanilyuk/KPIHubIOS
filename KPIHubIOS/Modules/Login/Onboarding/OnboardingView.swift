@@ -80,8 +80,8 @@ struct OnboardingView_Previews: PreviewProvider {
             OnboardingView(
                 store: Store(
                     initialState: Onboarding.State(),
-                    reducer: Onboarding.reducer,
-                    environment: Onboarding.Environment()
+                    reducer: .empty,
+                    environment: ()
                 )
             )
         }

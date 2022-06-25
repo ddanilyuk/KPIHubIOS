@@ -48,7 +48,7 @@ struct App {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
@@ -58,7 +58,7 @@ struct App {
                 router: rootRouter.baseURL("http://192.168.31.30:8080")
 //                router: rootRouter.baseURL("http://kpihub.xyz")
             )
-            let userDefaultsClient: UserDefaultsClient = .live()
+            let userDefaultsClient: UserDefaultsClientable = liveDependencies.userDefaults
             let keychainClient: KeychainClientable = KeychainClient.live()
             let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
             let campusClient: CampusClient = .live(

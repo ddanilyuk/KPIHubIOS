@@ -15,9 +15,9 @@ final class RozkladClient {
 
     final class StateModule {
 
-        private let userDefaultsClient: UserDefaultsClient
+        private let userDefaultsClient: UserDefaultsClientable
         
-        init(userDefaultsClient: UserDefaultsClient) {
+        init(userDefaultsClient: UserDefaultsClientable) {
             self.userDefaultsClient = userDefaultsClient
         }
 
@@ -64,9 +64,9 @@ final class RozkladClient {
 
     final class LessonsModule {
 
-        private let userDefaultsClient: UserDefaultsClient
+        private let userDefaultsClient: UserDefaultsClientable
 
-        init(userDefaultsClient: UserDefaultsClient) {
+        init(userDefaultsClient: UserDefaultsClientable) {
             self.userDefaultsClient = userDefaultsClient
         }
 
@@ -123,17 +123,17 @@ final class RozkladClient {
 
     // MARK: - Lifecycle
 
-    static func live(userDefaultsClient: UserDefaultsClient) -> RozkladClient {
+    static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClient {
         RozkladClient(userDefaultsClient: userDefaultsClient)
     }
 
     static func mock(
-        userDefaultsClient: UserDefaultsClient = .mock()
+        userDefaultsClient: UserDefaultsClientable = mockDependencies.userDefaults
     ) -> RozkladClient {
         RozkladClient(userDefaultsClient: userDefaultsClient)
     }
 
-    private init(userDefaultsClient: UserDefaultsClient) {
+    private init(userDefaultsClient: UserDefaultsClientable) {
         self.state = StateModule(userDefaultsClient: userDefaultsClient)
         self.lessons = LessonsModule(userDefaultsClient: userDefaultsClient)
     }

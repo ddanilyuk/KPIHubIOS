@@ -47,7 +47,7 @@ struct CampusHome {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let campusClient: CampusClient
     }
 

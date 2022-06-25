@@ -92,8 +92,8 @@ struct EditLessonTeachersView_Previews: PreviewProvider {
                     ),
                     reducer: EditLessonTeachers.reducer,
                     environment: EditLessonTeachers.Environment(
-                        userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live())
+                        userDefaultsClient: mockDependencies.userDefaults,
+                        rozkladClient: .live(userDefaultsClient: mockDependencies.userDefaults)
                     )
                 )
             )

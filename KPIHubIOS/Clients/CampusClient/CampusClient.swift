@@ -21,7 +21,7 @@ final class CampusClient {
             case loggedOut
         }
 
-        private let userDefaultsClient: UserDefaultsClient
+        private let userDefaultsClient: UserDefaultsClientable
         private let keychainClient: KeychainClientable
 
         lazy var subject: CurrentValueSubject<State, Never> = {
@@ -33,7 +33,7 @@ final class CampusClient {
         }()
 
         init(
-            userDefaultsClient: UserDefaultsClient,
+            userDefaultsClient: UserDefaultsClientable,
             keychainClient: KeychainClientable
         ) {
             self.userDefaultsClient = userDefaultsClient
@@ -83,7 +83,7 @@ final class CampusClient {
             case loaded([StudySheetItem])
         }
 
-        private let userDefaultsClient: UserDefaultsClient
+        private let userDefaultsClient: UserDefaultsClientable
         private let keychainClient: KeychainClientable
         private let apiClient: APIClient
         private var studySheetCancellable: Cancellable?
@@ -92,7 +92,7 @@ final class CampusClient {
 
         init(
             apiClient: APIClient,
-            userDefaultsClient: UserDefaultsClient,
+            userDefaultsClient: UserDefaultsClientable,
             keychainClient: KeychainClientable
         ) {
             self.apiClient = apiClient
@@ -152,7 +152,7 @@ final class CampusClient {
 
     static func live(
         apiClient: APIClient,
-        userDefaultsClient: UserDefaultsClient,
+        userDefaultsClient: UserDefaultsClientable,
         keychainClient: KeychainClientable
     ) -> CampusClient {
         CampusClient(
@@ -164,7 +164,7 @@ final class CampusClient {
 
     static func mock(
         apiClient: APIClient = .failing,
-        userDefaultsClient: UserDefaultsClient = .mock(),
+        userDefaultsClient: UserDefaultsClientable = mockDependencies.userDefaults,
         keychainClient: KeychainClient = .mock()
     ) -> CampusClient {
         CampusClient(
@@ -176,7 +176,7 @@ final class CampusClient {
 
     private init(
         apiClient: APIClient,
-        userDefaultsClient: UserDefaultsClient,
+        userDefaultsClient: UserDefaultsClientable,
         keychainClient: KeychainClientable
     ) {
         self.state = StateModule(

@@ -81,13 +81,8 @@ struct CampusLoginView_Previews: PreviewProvider {
             CampusLoginView(
                 store: Store(
                     initialState: CampusLogin.State(mode: .onlyCampus),
-                    reducer: CampusLogin.reducer,
-                    environment: CampusLogin.Environment(
-                        apiClient: .failing,
-                        userDefaultsClient: .mock(),
-                        campusClient: .mock(),
-                        rozkladClient: .mock()
-                    )
+                    reducer: .empty,
+                    environment: ()
                 )
             )
         }

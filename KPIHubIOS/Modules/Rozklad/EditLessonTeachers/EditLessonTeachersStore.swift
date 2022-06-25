@@ -40,7 +40,7 @@ struct EditLessonTeachers {
     // MARK: - Environment
 
     struct Environment {
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
     }
 

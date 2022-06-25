@@ -104,8 +104,8 @@ struct CampusHomeView_Previews: PreviewProvider {
                     reducer: CampusHome.reducer,
                     environment: CampusHome.Environment(
                         apiClient: .failing,
-                        userDefaultsClient: .live(),
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
+                        userDefaultsClient: mockDependencies.userDefaults,
+                        campusClient: .live(apiClient: .failing, userDefaultsClient: mockDependencies.userDefaults, keychainClient: KeychainClient.live())
                     )
                 )
             )
