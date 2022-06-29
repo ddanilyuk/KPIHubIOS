@@ -135,6 +135,7 @@ struct CurrentDateClient {
         let updatedSubject = CurrentValueSubject<Void, Never>(())
 
         func updateSubjects(with date: Date) {
+            print("Updating date subjects")
             let (dayNumber, weekNumber) = currentDayWeek(from: date)
             let currentDay = Lesson.Day(rawValue: dayNumber)
             let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first
@@ -167,6 +168,12 @@ struct CurrentDateClient {
         }
         RunLoop.main.add(timer, forMode: .default)
 
+        rozkladClient.lessons.subject.eraseToAnyPublisher()
+            .sink { _ in
+                updateSubjects(with: Date())
+            }
+            .store(in: &liveCancellables)
+        
         // Setup notification on change clock
         NotificationCenter.default
             .publisher(for: NSNotification.Name.NSSystemClockDidChange)

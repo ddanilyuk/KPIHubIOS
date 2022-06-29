@@ -22,7 +22,7 @@ struct GroupPicker {
             groups = []
             searchedGroups = []
             searchedText = ""
-            isLoading = true
+            isLoading = false
         }
     }
 
@@ -30,6 +30,7 @@ struct GroupPicker {
 
     enum Action: Equatable, BindableAction {
         case onAppear
+        case refresh
         case groupSelected(GroupResponse)
 
         case allGroupsResult(Result<[GroupResponse], NSError>)
@@ -56,6 +57,15 @@ struct GroupPicker {
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
+            return Effect(value: .refresh)
+
+        case let .allGroupsResult(.success(groups)):
+            state.isLoading = false
+            state.groups = groups
+            state.searchedGroups = groups
+            return .none
+
+        case .refresh:
             let task: Effect<[GroupResponse], Error> = Effect.task {
                 let result = try await environment.apiClient.decodedResponse(
                     for: .api(.groups(.all)),
@@ -67,12 +77,6 @@ struct GroupPicker {
                 .mapError { $0 as NSError }
                 .receive(on: DispatchQueue.main)
                 .catchToEffect(Action.allGroupsResult)
-
-        case let .allGroupsResult(.success(groups)):
-            state.isLoading = false
-            state.groups = groups
-            state.searchedGroups = groups
-            return .none
 
         case let .groupSelected(group):
             state.isLoading = true

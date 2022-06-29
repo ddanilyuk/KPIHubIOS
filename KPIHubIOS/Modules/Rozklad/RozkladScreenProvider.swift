@@ -44,18 +44,6 @@ extension Rozklad.ScreenProvider {
     // MARK: - Reducer handling
 
     static let reducer = Reducer<State, Action, Rozklad.Environment>.combine(
-        GroupPicker.reducer
-            .pullback(
-                state: /State.groupPicker,
-                action: /Action.groupPicker,
-                environment: {
-                    GroupPicker.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            ),
         GroupRozklad.reducer
             .pullback(
                 state: /State.groupRozklad,
@@ -66,6 +54,18 @@ extension Rozklad.ScreenProvider {
                         userDefaultsClient: $0.userDefaultsClient,
                         rozkladClient: $0.rozkladClient,
                         currentDateClient: $0.currentDateClient
+                    )
+                }
+            ),
+        GroupPicker.reducer
+            .pullback(
+                state: /State.groupPicker,
+                action: /Action.groupPicker,
+                environment: {
+                    GroupPicker.Environment(
+                        apiClient: $0.apiClient,
+                        userDefaultsClient: $0.userDefaultsClient,
+                        rozkladClient: $0.rozkladClient
                     )
                 }
             ),

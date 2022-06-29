@@ -9,6 +9,84 @@ import Combine
 import IdentifiedCollections
 import Foundation
 
+
+protocol RozkladClientable {
+
+    var state: RozkladClientableStateModule { get set }
+
+}
+
+struct RozkladClientableStateModule {
+
+    enum State: Equatable {
+        case selected(GroupResponse)
+        case notSelected
+    }
+
+//    private let userDefaultsClient: UserDefaultsClientable
+
+    var subject: CurrentValueSubject<State, Never>
+
+    var select: (_ group: GroupResponse, _ commitChanges: Bool) -> Void
+    var deselect: (_ commitChanges: Bool) -> Void
+    var commit: () -> Void
+
+    static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientableStateModule {
+
+        let subject = CurrentValueSubject<State, Never>(.notSelected)
+        let commit: () -> Void = {
+            if let group = userDefaultsClient.get(for: .groupResponse) {
+                subject.send(.selected(group))
+            } else {
+                subject.send(.notSelected)
+            }
+        }
+        commit()
+
+        return RozkladClientableStateModule(
+//            userDefaultsClient: userDefaultsClient,
+            subject: subject,
+            select: { group, commitChanges in
+                userDefaultsClient.set(group, for: .groupResponse)
+                if commitChanges {
+                    commit()
+                }
+            },
+            deselect: { commitChanges in
+                userDefaultsClient.remove(for: .groupResponse)
+                if commitChanges {
+                    commit()
+                }
+            },
+            commit: commit
+        )
+    }
+
+    static func mock(
+//        userDefaultsClient: UserDefaultsClientable = mockDependencies.userDefaults
+    ) -> RozkladClientableStateModule {
+
+        let subject = CurrentValueSubject<State, Never>(.notSelected)
+        let commit: () -> Void = {
+            subject.send(.selected(GroupResponse(id: UUID(), name: "ІВ-82")))
+        }
+        commit()
+
+        return RozkladClientableStateModule(
+//            userDefaultsClient: userDefaultsClient,
+            subject: subject,
+            select: { _, _ in },
+            deselect: { _ in },
+            commit: commit
+        )
+    }
+
+}
+
+
+
+
+
 final class RozkladClient {
 
     // MARK: - State
@@ -43,6 +121,8 @@ final class RozkladClient {
 
         func deselect(commitChanges: Bool) {
             userDefaultsClient.remove(for: .groupResponse)
+            userDefaultsClient.remove(for: .lessons)
+            userDefaultsClient.remove(for: .lessonsUpdatedAt)
             if commitChanges {
                 commit()
             }
@@ -137,4 +217,5 @@ final class RozkladClient {
         self.state = StateModule(userDefaultsClient: userDefaultsClient)
         self.lessons = LessonsModule(userDefaultsClient: userDefaultsClient)
     }
+
 }

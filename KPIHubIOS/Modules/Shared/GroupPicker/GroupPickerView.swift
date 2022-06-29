@@ -32,7 +32,12 @@ struct GroupPickerView: View {
                 placement: .navigationBarDrawer(displayMode: .always),
                 prompt: Text("Пошук")
             )
-            .onAppear { viewStore.send(.onAppear) }
+            .refreshable {
+                viewStore.send(.refresh)
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
             .navigationTitle("Оберіть групу")
             .loadable(viewStore.binding(\.$isLoading))
         }

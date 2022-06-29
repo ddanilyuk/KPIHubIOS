@@ -184,7 +184,8 @@ extension UserDefaultsClientable {
 
 let user: UserDefaultsClientable = Test.live()
 
-
+// This code is prepared for migrating to new composable-architecture
+// design using @Dependency(\.keyPath)
 struct Dependencies {
 
     var mode: Mode

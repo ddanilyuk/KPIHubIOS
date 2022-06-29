@@ -11,7 +11,6 @@
 		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
 		5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* LessonResponse.swift */; };
 		5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EAD28439EA100514263 /* ComposableArchitecture */; };
-		5F137EB128439EC800514263 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB028439EC800514263 /* TCACoordinators */; };
 		5F137EB428439F2400514263 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB328439F2400514263 /* Introspect */; };
 		5F137EC22843A35D00514263 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppStore.swift */; };
 		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
@@ -112,6 +111,7 @@
 		5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */; };
 		5FA2AC02284E30950041FE74 /* PullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC01284E30950041FE74 /* PullToRefresh.swift */; };
 		5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC03284E30B50041FE74 /* Color+Extension.swift */; };
+		5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5FA65DDB286A4C370048182C /* TCACoordinators */; };
 		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
 		5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClient.swift */; };
 		5FDFBE2A284D48A2007E9F3A /* RozkladClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */; };
@@ -273,8 +273,8 @@
 				5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */,
 				5F137EB428439F2400514263 /* Introspect in Frameworks */,
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
-				5F137EB128439EC800514263 /* TCACoordinators in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
+				5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -878,9 +878,9 @@
 			packageProductDependencies = (
 				5FD570B4283680DA00D8E869 /* Routes */,
 				5F137EAD28439EA100514263 /* ComposableArchitecture */,
-				5F137EB028439EC800514263 /* TCACoordinators */,
 				5F137EB328439F2400514263 /* Introspect */,
 				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
+				5FA65DDB286A4C370048182C /* TCACoordinators */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -958,9 +958,9 @@
 			mainGroup = 5F97B3B2283677C200350368;
 			packageReferences = (
 				5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -1537,14 +1537,6 @@
 				minimumVersion = 0.35.0;
 			};
 		};
-		5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.2;
-			};
-		};
 		5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
@@ -1561,6 +1553,14 @@
 				minimumVersion = 4.2.0;
 			};
 		};
+		5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1568,11 +1568,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		5F137EB028439EC800514263 /* TCACoordinators */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5F137EAF28439EC800514263 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
-			productName = TCACoordinators;
 		};
 		5F137EB328439F2400514263 /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1583,6 +1578,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
+		};
+		5FA65DDB286A4C370048182C /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
 		};
 		5FD570B4283680DA00D8E869 /* Routes */ = {
 			isa = XCSwiftPackageProductDependency;

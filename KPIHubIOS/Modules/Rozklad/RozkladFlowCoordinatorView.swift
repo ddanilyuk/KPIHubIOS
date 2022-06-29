@@ -17,6 +17,11 @@ struct RozkladFlowCoordinatorView: View {
         TCARouter(store) { screen in
             SwitchStore(screen) {
                 CaseLet(
+                    state: /Rozklad.ScreenProvider.State.groupPicker,
+                    action: Rozklad.ScreenProvider.Action.groupPicker,
+                    then: GroupPickerView.init
+                )
+                CaseLet(
                     state: /Rozklad.ScreenProvider.State.empty,
                     action: Rozklad.ScreenProvider.Action.empty,
                     then: EmptyScreenView.init
@@ -30,11 +35,6 @@ struct RozkladFlowCoordinatorView: View {
                     state: /Rozklad.ScreenProvider.State.lessonDetails,
                     action: Rozklad.ScreenProvider.Action.lessonDetails,
                     then: LessonDetailsView.init
-                )
-                CaseLet(
-                    state: /Rozklad.ScreenProvider.State.groupPicker,
-                    action: Rozklad.ScreenProvider.Action.groupPicker,
-                    then: GroupPickerView.init
                 )
                 CaseLet(
                     state: /Rozklad.ScreenProvider.State.editLessonNames,
