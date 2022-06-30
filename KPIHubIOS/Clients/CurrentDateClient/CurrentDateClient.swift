@@ -34,7 +34,7 @@ struct CurrentDateClient {
     static var liveCancellables: Set<AnyCancellable> = []
 
     // swiftlint:disable function_body_length
-    static func live(rozkladClient: RozkladClient) -> CurrentDateClient {
+    static func live(rozkladClient: RozkladClientable) -> CurrentDateClient {
 
         func currentDayWeek(from date: Date) -> (dayNumber: Int, weekNumber: Int) {
             let components = calendar.dateComponents(

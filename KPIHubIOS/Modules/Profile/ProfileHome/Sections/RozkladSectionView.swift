@@ -12,7 +12,7 @@ struct RozkladSectionView: View {
 
     struct ViewState: Equatable {
         let updatedAt: Date?
-        let rozkladState: RozkladClient.StateModule.State
+        let rozkladState: RozkladClientableStateModule.State
     }
 
     enum ViewAction {

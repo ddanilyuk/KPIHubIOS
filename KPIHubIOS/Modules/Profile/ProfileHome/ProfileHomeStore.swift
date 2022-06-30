@@ -14,7 +14,7 @@ struct ProfileHome {
     struct State: Equatable {
 
         var updatedDate: Date?
-        var rozkladState: RozkladClient.StateModule.State = .notSelected
+        var rozkladState: RozkladClientableStateModule.State = .notSelected
         var campusState: CampusClient.StateModule.State = .loggedOut
 
         var confirmationDialog: ConfirmationDialogState<Action>?
@@ -28,7 +28,7 @@ struct ProfileHome {
         case onAppear
 
         case setUpdatedDate(Date?)
-        case setRozkladState(RozkladClient.StateModule.State)
+        case setRozkladState(RozkladClientableStateModule.State)
         case setCampusState(CampusClient.StateModule.State)
 
         case updateRozkladButtonTapped
@@ -60,7 +60,7 @@ struct ProfileHome {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
         let campusClient: CampusClient
     }
 
@@ -72,7 +72,7 @@ struct ProfileHome {
         case .onAppear:
             return .merge(
                 Effect.run { subscriber in
-                    environment.rozkladClient.lessons.uploadedAt
+                    environment.rozkladClient.lessons.updatedAtSubject
                         .receive(on: DispatchQueue.main)
                         .sink { date in
                             subscriber.send(.setUpdatedDate(date))
@@ -128,7 +128,7 @@ struct ProfileHome {
                         for: .api(.group(group.id, .lessons)),
                         as: LessonsResponse.self
                     )
-                    environment.rozkladClient.state.select(group: group, commitChanges: false)
+                    environment.rozkladClient.state.setState(.selected(group), false)
                     return result.value.lessons.map { Lesson(lessonResponse: $0) }
                 }
                 return task
@@ -142,7 +142,7 @@ struct ProfileHome {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: true)
+            environment.rozkladClient.lessons.set(lessons, true)
             return .none
 
         case let .lessonsResult(.failure(error)):
@@ -167,7 +167,7 @@ struct ProfileHome {
             return .none
 
         case .changeGroup:
-            environment.rozkladClient.state.deselect(commitChanges: true)
+            environment.rozkladClient.state.setState(.notSelected, true)
             return Effect(value: .routeAction(.rozklad))
 
         case .selectGroup:

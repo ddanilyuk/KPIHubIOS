@@ -10,10 +10,24 @@ import IdentifiedCollections
 import Foundation
 
 
-protocol RozkladClientable {
+struct RozkladClientable {
 
-    var state: RozkladClientableStateModule { get set }
+    let state: RozkladClientableStateModule
+    let lessons: RozkladClientableLessonsModule
 
+    static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientable {
+        RozkladClientable(
+            state: .live(userDefaultsClient: userDefaultsClient),
+            lessons: .live(userDefaultsClient: userDefaultsClient)
+        )
+    }
+
+    static func mock() -> RozkladClientable {
+        RozkladClientable(
+            state: .mock(),
+            lessons: .mock()
+        )
+    }
 }
 
 struct RozkladClientableStateModule {
@@ -23,13 +37,9 @@ struct RozkladClientableStateModule {
         case notSelected
     }
 
-//    private let userDefaultsClient: UserDefaultsClientable
-
-    var subject: CurrentValueSubject<State, Never>
-
-    var select: (_ group: GroupResponse, _ commitChanges: Bool) -> Void
-    var deselect: (_ commitChanges: Bool) -> Void
-    var commit: () -> Void
+    let subject: CurrentValueSubject<State, Never>
+    let setState: (State, _ commitChanges: Bool) -> Void
+    let commit: () -> Void
 
     static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientableStateModule {
 
@@ -44,16 +54,14 @@ struct RozkladClientableStateModule {
         commit()
 
         return RozkladClientableStateModule(
-//            userDefaultsClient: userDefaultsClient,
             subject: subject,
-            select: { group, commitChanges in
-                userDefaultsClient.set(group, for: .groupResponse)
-                if commitChanges {
-                    commit()
+            setState: { state, commitChanges in
+                switch state {
+                case let .selected(group):
+                    userDefaultsClient.set(group, for: .groupResponse)
+                case .notSelected:
+                    userDefaultsClient.remove(for: .groupResponse)
                 }
-            },
-            deselect: { commitChanges in
-                userDefaultsClient.remove(for: .groupResponse)
                 if commitChanges {
                     commit()
                 }
@@ -62,22 +70,73 @@ struct RozkladClientableStateModule {
         )
     }
 
-    static func mock(
-//        userDefaultsClient: UserDefaultsClientable = mockDependencies.userDefaults
-    ) -> RozkladClientableStateModule {
+    static func mock() -> RozkladClientableStateModule {
+        RozkladClientableStateModule(
+            subject: CurrentValueSubject<State, Never>(
+                .selected(GroupResponse(id: UUID(), name: "ІВ-82"))
+            ),
+            setState: { _, _ in },
+            commit: { }
+        )
+    }
 
-        let subject = CurrentValueSubject<State, Never>(.notSelected)
+}
+
+struct RozkladClientableLessonsModule {
+
+    let subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>
+    let updatedAtSubject: CurrentValueSubject<Date?, Never>
+
+    // TODO: SetRequest
+    
+    let set: ([Lesson], _ commitChanges: Bool) -> Void
+    let modify: (Lesson, _ commitChanges: Bool) -> Void
+    let commit: () -> Void
+
+    static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientableLessonsModule {
+
+        let subject = CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>([])
+        let updatedAtSubject = CurrentValueSubject<Date?, Never>(nil)
+
         let commit: () -> Void = {
-            subject.send(.selected(GroupResponse(id: UUID(), name: "ІВ-82")))
+            subject.value = userDefaultsClient.get(for: .lessons) ?? []
+            updatedAtSubject.value = userDefaultsClient.get(for: .lessonsUpdatedAt)
         }
         commit()
 
-        return RozkladClientableStateModule(
-//            userDefaultsClient: userDefaultsClient,
+        return RozkladClientableLessonsModule(
             subject: subject,
-            select: { _, _ in },
-            deselect: { _ in },
+            updatedAtSubject: updatedAtSubject,
+            set: { lessons, commitChanges in
+                userDefaultsClient.set(IdentifiedArray(uniqueElements: lessons), for: .lessons)
+                userDefaultsClient.set(Date(), for: .lessonsUpdatedAt)
+                if commitChanges {
+                    commit()
+                }
+            },
+            modify: { lesson, commitChanges in
+                var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
+                lessons[id: lesson.id] = lesson
+                userDefaultsClient.set(lessons, for: .lessons)
+                if commitChanges {
+                    commit()
+                }
+            },
             commit: commit
+        )
+    }
+
+    static func mock() -> RozkladClientableLessonsModule {
+        RozkladClientableLessonsModule(
+            subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>(
+                .init(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
+            ),
+            updatedAtSubject: CurrentValueSubject<Date?, Never>(
+                Date()
+            ),
+            set: { _, _ in },
+            modify: { _, _ in },
+            commit: { }
         )
     }
 
@@ -85,8 +144,7 @@ struct RozkladClientableStateModule {
 
 
 
-
-
+/*
 final class RozkladClient {
 
     // MARK: - State
@@ -219,3 +277,4 @@ final class RozkladClient {
     }
 
 }
+*/

@@ -41,7 +41,7 @@ struct EditLessonNames {
 
     struct Environment {
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
     }
 
     // MARK: - Reducer
@@ -51,7 +51,7 @@ struct EditLessonNames {
         case .save:
             var newLesson = state.lesson
             newLesson.names = state.selected
-            environment.rozkladClient.lessons.modify(with: newLesson, commitChanges: true)
+            environment.rozkladClient.lessons.modify(newLesson, true)
             return Effect(value: .routeAction(.dismiss))
 
         case .cancel:

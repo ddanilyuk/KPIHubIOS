@@ -55,7 +55,7 @@ struct CampusLogin {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let campusClient: CampusClient
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
     }
 
     // MARK: - Reducer
@@ -128,7 +128,7 @@ struct CampusLogin {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.state.select(group: group, commitChanges: false)
+                environment.rozkladClient.state.setState(.selected(group), false)
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -137,7 +137,7 @@ struct CampusLogin {
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):
-            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
+            environment.rozkladClient.lessons.set(lessons, false)
             return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):

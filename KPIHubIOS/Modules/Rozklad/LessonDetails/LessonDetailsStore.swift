@@ -48,7 +48,7 @@ struct LessonDetails {
 
     struct Environment {
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
         let currentDateClient: CurrentDateClient
     }
 

@@ -49,7 +49,7 @@ struct GroupPicker {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
     }
 
     // MARK: - Reducer
@@ -85,7 +85,7 @@ struct GroupPicker {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.state.select(group: group, commitChanges: false)
+                environment.rozkladClient.state.setState(.selected(group), false)
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -95,7 +95,7 @@ struct GroupPicker {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
+            environment.rozkladClient.lessons.set(lessons, false)
             return Effect(value: .routeAction(.done))
 
         case let .allGroupsResult(.failure(error)),

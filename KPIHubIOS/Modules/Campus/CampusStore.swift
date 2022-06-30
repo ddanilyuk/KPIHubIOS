@@ -39,7 +39,7 @@ struct Campus {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let campusClient: CampusClient
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
     }
 
     // MARK: - Reducer

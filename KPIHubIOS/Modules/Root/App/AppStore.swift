@@ -49,7 +49,7 @@ struct App {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
+        let rozkladClient: RozkladClientable
         let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
 
@@ -60,7 +60,7 @@ struct App {
             )
             let userDefaultsClient: UserDefaultsClientable = liveDependencies.userDefaults
             let keychainClient: KeychainClientable = KeychainClient.live()
-            let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
+            let rozkladClient: RozkladClientable = .live(userDefaultsClient: userDefaultsClient)
             let campusClient: CampusClient = .live(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
