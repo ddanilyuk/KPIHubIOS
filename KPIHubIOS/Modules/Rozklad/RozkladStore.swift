@@ -152,6 +152,5 @@ struct Rozklad {
             .forEachIdentifiedRoute(environment: { $0 })
             .withRouteReducer(reducerCore)
     )
-//        .debug()
 
 }

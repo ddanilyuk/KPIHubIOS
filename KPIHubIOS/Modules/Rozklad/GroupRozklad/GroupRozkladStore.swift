@@ -132,10 +132,6 @@ struct GroupRozklad {
         switch action {
         case .onAppear:
             state.groupName = environment.userDefaultsClient.get(for: .groupResponse)?.name ?? "ІВ-82"
-//            if !state.alreadyAppeared {
-//                state.scrollTo = State.Section.id(week: .first, day: .init(rawValue: state.currentDay) ?? .monday)
-//                //                state.alreadyAppeared = true
-//            }
             return Effect.merge(
                 Effect(value: .updateCurrentDate),
                 Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
@@ -157,15 +153,12 @@ struct GroupRozklad {
                             subscriber.send(.updateCurrentDate)
                         }
                 }
-//                .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
             )
             .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .updateCurrentDate:
             let currentLessonId = state.currentLessonId
             let nextLessonId = state.nextLessonId
-
-//            print("currentLessonId \(environment.currentDateClient.currentLessonId.value)")
             state.currentDay = environment.currentDateClient.currentDay.value
             state.currentWeek = environment.currentDateClient.currentWeek.value
             state.currentLessonId = environment.currentDateClient.currentLessonId.value

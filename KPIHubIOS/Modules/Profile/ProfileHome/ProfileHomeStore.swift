@@ -167,7 +167,7 @@ struct ProfileHome {
             return .none
 
         case .changeGroup:
-            environment.rozkladClient.state.setState(ClientValue(.notSelected, commitChanges: false))
+            environment.rozkladClient.state.setState(ClientValue(.notSelected, commitChanges: true))
             return Effect(value: .routeAction(.rozklad))
 
         case .selectGroup:

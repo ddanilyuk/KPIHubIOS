@@ -22,7 +22,7 @@ struct GroupPicker {
             groups = []
             searchedGroups = []
             searchedText = ""
-            isLoading = false
+            isLoading = true
         }
     }
 

@@ -22,11 +22,10 @@ struct GroupRozkladView: View {
 
     @State var lastSection: [CGFloat] = []
 
-    let store: Store<GroupRozklad.State, GroupRozklad.Action>
-
     @State var headerHeight: CGFloat = 0
-//    @State var firstSectionOffset: CGFloat = 0
     @State var headerBackgroundOpacity: CGFloat = 0
+
+    let store: Store<GroupRozklad.State, GroupRozklad.Action>
 
     init(store: Store<GroupRozklad.State, GroupRozklad.Action>) {
         self.store = store
@@ -50,7 +49,6 @@ struct GroupRozkladView: View {
                 )
                 .modifier(RectModifier { rect in
                     headerHeight = rect.height - 4
-                    print(headerHeight)
                     animationModel.targetSize = headerHeight
                 })
                 .zIndex(1)
@@ -95,28 +93,15 @@ struct GroupRozkladView: View {
                             .frame(height: headerHeight)
                     }
                     .overlay(alignment: .topTrailing) {
-                        Text(viewStore.state.currentLessonId != nil ? "Зараз" : "Далі")
-                            .font(.system(.callout).bold())
-                            .frame(minWidth: 60)
-                            .padding(.vertical, 4)
-                            .padding(.horizontal, 8)
-                            .foregroundColor(.white)
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(viewStore.state.currentLessonId != nil ? Color.orange : Color.blue)
-                                    .shadow(
-                                        color: (viewStore.state.currentLessonId != nil ? Color.orange : Color.blue).opacity(0.2),
-                                        radius: 4,
-                                        x: 0,
-                                        y: 0
-                                    )
-                            )
-                            .onTapGesture {
-                                viewStore.send(.todaySelected)
-                            }
-                            .offset(x: 0, y: headerHeight)
-                            .padding(.top, 8)
-                            .padding(.horizontal, 16)
+                        GroupRozkladScrollToView(
+                            mode: GroupRozkladScrollToView.Mode(currentLesson: viewStore.state.currentLessonId)
+                        )
+                        .onTapGesture {
+                            viewStore.send(.todaySelected)
+                        }
+                        .offset(x: 0, y: headerHeight)
+                        .padding(.top, 8)
+                        .padding(.horizontal, 16)
                     }
                     .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
                     .onChange(of: selectedWeek) { changeSelectedWeek($0, proxy: proxy) }
@@ -137,7 +122,6 @@ struct GroupRozkladView: View {
     }
 
     func sectionView(for section: GroupRozklad.State.Section) -> some View {
-//        ViewStore(store.scope(state: \.))
         Section(
             content: {
                 ForEachStore(
@@ -160,62 +144,60 @@ struct GroupRozkladView: View {
                     }
                 )
             },
-            header: {
-                HStack {
-                    let day = section.position.day.fullDescription
-                    let week = section.position.week.description
-                    Text("\(day). \(week)")
-                        .font(.system(.headline))
-                        .foregroundColor(.black)
-                        .padding(.horizontal)
-                        .padding(.top)
-                        .textCase(nil)
-                        .listRowInsets(EdgeInsets())
-                        .listRowSeparator(.hidden)
-
-                    Spacer()
-                }
-                .frame(height: 44)
-                .modifier(OffsetModifier { value in
-                    DispatchQueue.main.async {
-                        animationModel.setOffset(for: section.index, value: value)
-                        if section.index == 0 {
-
-                            let minimumOpacityOffset = headerHeight
-                            let maximumOpacityOffset = headerHeight - 20
-
-//                            print("\n\n value \(value) \n min \(minimumOpacityOffset) \n max \(maximumOpacityOffset)")
-
-                            switch value {
-                            case (minimumOpacityOffset...):
-//                                print("1")
-                                headerBackgroundOpacity = 0
-
-                            case (maximumOpacityOffset..<minimumOpacityOffset):
-//                                print("2")
-                                headerBackgroundOpacity = 1 - ((value - maximumOpacityOffset) / (20))
-
-                            default:
-//                                print("3")
-                                headerBackgroundOpacity = 1
-                            }
-
-//                            print("headerBackgroundOpacity \(headerBackgroundOpacity)")
-                        }
-                    }
-                })
-                .onDisappear {
-                    DispatchQueue.main.async {
-                        animationModel.setOffset(for: section.index, value: nil)
-                        if section.index == 0 {
-                            headerBackgroundOpacity = 1
-                        }
-                    }
-                }
-            }
+            header: { sectionHeaderView(for: section) }
         )
         .id(section.id)
         .listRowInsets(EdgeInsets())
+    }
+
+    func sectionHeaderView(for section: GroupRozklad.State.Section) -> some View {
+        HStack {
+            let day = section.position.day.fullDescription
+            let week = section.position.week.description
+            Text("\(day). \(week)")
+                .font(.system(.headline))
+                .foregroundColor(.black)
+                .padding(.horizontal)
+                .padding(.top)
+                .textCase(nil)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+
+            Spacer()
+        }
+        .frame(height: 44)
+        .modifier(OffsetModifier { value in
+            DispatchQueue.main.async {
+                animationModel.setOffset(for: section.index, value: value)
+                if section.index == 0 {
+                    updateHeaderBackgroundOpacity(offset: value)
+                }
+            }
+        })
+        .onDisappear {
+            DispatchQueue.main.async {
+                animationModel.setOffset(for: section.index, value: nil)
+                if section.index == 0 {
+                    headerBackgroundOpacity = 1
+                }
+            }
+        }
+    }
+
+    func updateHeaderBackgroundOpacity(offset: CGFloat) {
+        let minimumOpacityOffset = headerHeight
+        let maximumOpacityOffset = headerHeight - 20
+
+        switch offset {
+        case (minimumOpacityOffset...):
+            headerBackgroundOpacity = 0
+
+        case (maximumOpacityOffset..<minimumOpacityOffset):
+            headerBackgroundOpacity = 1 - ((offset - maximumOpacityOffset) / (20))
+
+        default:
+            headerBackgroundOpacity = 1
+        }
     }
 
     func lastSectionOffsetModifiers(index: Int, height: CGFloat) {
@@ -264,8 +246,6 @@ struct GroupRozkladView: View {
 // MARK: - Preview
 
 struct GroupRozkladView_Previews: PreviewProvider {
-
-//    let some = GroupRozklad.State
 
     static var previews: some View {
         NavigationView {
