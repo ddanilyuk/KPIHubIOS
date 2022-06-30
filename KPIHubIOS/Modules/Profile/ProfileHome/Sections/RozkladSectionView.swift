@@ -13,7 +13,7 @@ struct RozkladSectionView: View {
     struct ViewState: Equatable {
         let updatedAt: Date?
         let rozkladState: RozkladClientState.State
-        @BindableState var week: Bool
+        @BindableState var toggleWeek: Bool
     }
 
     enum ViewAction: BindableAction {
@@ -23,13 +23,7 @@ struct RozkladSectionView: View {
         case binding(BindingAction<ViewState>)
     }
 
-//    let store: Store<ViewState, ViewAction>
     @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
-
-//    init(store: Store<ViewState, ViewAction>) {
-//        self.store = store
-//        self.viewStore = ViewStore(store)
-//    }
 
     var body: some View {
         ProfileSectionView(
@@ -48,64 +42,11 @@ struct RozkladSectionView: View {
     func selectedView(with group: GroupResponse) -> some View {
         VStack(alignment: .leading, spacing: 16) {
 
-            ProfileCellView(
-                title: "Обрана группа:",
-                value: .text(group.name),
-                image: {
-                    Image(systemName: "person.2")
-                        .foregroundColor(Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255))
-                },
-                imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
-            )
+            groupView(name: group.name)
 
-            ProfileCellView(
-                title: "Останнє оновлення:",
-                value: .date(viewStore.updatedAt),
-                image: {
-                    Image(systemName: "clock")
-                        .foregroundColor(.indigo.lighter(by: 0.9))
-                },
-                imageBackgroundColor: .indigo,
-                rightView: {
-                    Button(
-                        action: { viewStore.send(.updateRozklad) },
-                        label: {
-                            Image(systemName: "arrow.triangle.2.circlepath")
-                                .foregroundColor(.red)
-                                .font(.headline.bold())
-                        }
-                    )
-                }
-            )
+            lastUpdatedAtView
 
-            HStack(spacing: 16) {
-                ZStack {
-                    Circle()
-                        .fill(Color.teal)
-
-                    Image(systemName: "calendar")
-                        .foregroundColor(Color.teal.lighter(by: 0.9))
-                        .font(.system(.body))
-                }
-                .frame(width: 35, height: 35)
-
-                VStack(alignment: .leading, spacing: 6) {
-
-                    Text("Зміна тижня:")
-                        .font(.system(.body))
-
-                    Text("Іноді начання починається не з першого тижня. Ця змінна допоможе це виправити.")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(.system(.caption))
-                        .foregroundColor(Color.secondary)
-                }
-
-                Toggle(
-                    isOn: viewStore.binding(\.$week),
-                    label: { Text("") }
-                )
-                .labelsHidden()
-            }
+            toggleWeekView
 
             Divider()
 
@@ -122,8 +63,73 @@ struct RozkladSectionView: View {
         }
     }
 
+    func groupView(name: String) -> some View {
+        ProfileCellView(
+            title: "Обрана группа:",
+            value: .text(name),
+            image: {
+                Image(systemName: "person.2")
+                    .foregroundColor(Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255))
+            },
+            imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+        )
+    }
+
+    var lastUpdatedAtView: some View {
+        ProfileCellView(
+            title: "Останнє оновлення:",
+            value: .date(viewStore.updatedAt),
+            image: {
+                Image(systemName: "clock")
+                    .foregroundColor(.indigo.lighter(by: 0.9))
+            },
+            imageBackgroundColor: .indigo,
+            rightView: {
+                Button(
+                    action: { viewStore.send(.updateRozklad) },
+                    label: {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .foregroundColor(.red)
+                            .font(.headline.bold())
+                    }
+                )
+            }
+        )
+    }
+
+    var toggleWeekView: some View {
+        HStack(spacing: 16) {
+            ZStack {
+                Circle()
+                    .fill(Color.teal)
+
+                Image(systemName: "calendar")
+                    .foregroundColor(Color.teal.lighter(by: 0.9))
+                    .font(.system(.body))
+            }
+            .frame(width: 35, height: 35)
+
+            VStack(alignment: .leading, spacing: 6) {
+
+                Text("Зміна тижня:")
+                    .font(.system(.body))
+
+                Text("Іноді начання починається не з першого тижня. Ця змінна допоможе це виправити.")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.system(.caption))
+                    .foregroundColor(Color.secondary)
+            }
+
+            Toggle(
+                isOn: viewStore.binding(\.$toggleWeek),
+                label: { Text("") }
+            )
+            .labelsHidden()
+        }
+    }
+
     var notSelectedView: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 16) {
 
             Divider()
 
@@ -151,11 +157,11 @@ extension ProfileHome.State {
             RozkladSectionView.ViewState(
                 updatedAt: self.updatedDate,
                 rozkladState: self.rozkladState,
-                week: self.toggleWeek
+                toggleWeek: self.toggleWeek
             )
         }
         set {
-            toggleWeek = newValue.week
+            toggleWeek = newValue.toggleWeek
         }
     }
 
@@ -194,7 +200,7 @@ struct RozkladSectionView_Previews: PreviewProvider {
                     initialState: RozkladSectionView.ViewState(
                         updatedAt: Date(),
                         rozkladState: .notSelected,
-                        week: true
+                        toggleWeek: true
                     ),
                     reducer: Reducer.empty,
                     environment: Void()
@@ -214,7 +220,7 @@ struct RozkladSectionView_Previews: PreviewProvider {
                                 name: "ІВ-82"
                             )
                         ),
-                        week: false
+                        toggleWeek: false
                     ),
                     reducer: Reducer.empty,
                     environment: Void()

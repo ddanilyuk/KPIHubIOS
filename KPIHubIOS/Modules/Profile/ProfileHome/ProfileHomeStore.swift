@@ -13,9 +13,9 @@ struct ProfileHome {
 
     struct State: Equatable {
 
-        var updatedDate: Date?
         var rozkladState: RozkladClientState.State = .notSelected
         var campusState: CampusClientableState.State = .loggedOut
+        var lessonsUpdatedAtDate: Date?
         @BindableState var toggleWeek: Bool = false
 
         var confirmationDialog: ConfirmationDialogState<Action>?
@@ -28,9 +28,9 @@ struct ProfileHome {
     enum Action: Equatable, BindableAction {
         case onAppear
 
-        case setUpdatedDate(Date?)
         case setRozkladState(RozkladClientState.State)
         case setCampusState(CampusClientableState.State)
+        case setLessonsUpdatedAtDate(Date?)
 
         case updateRozkladButtonTapped
         case updateRozklad
@@ -40,10 +40,9 @@ struct ProfileHome {
         case changeGroup
         case selectGroup
 
-        // TODO: Rename loginCampus
-        case campusLogoutButtonTapped
-        case campusLogout
-        case campusLogin
+        case logoutCampusButtonTapped
+        case logoutCampus
+        case loginCampus
 
         case dismissConfirmationDialog
         case dismissAlert
@@ -74,40 +73,10 @@ struct ProfileHome {
         switch action {
         case .onAppear:
             state.toggleWeek = environment.userDefaultsClient.get(for: .toggleWeek)
-            return .merge(
-                Effect(value: .setRozkladState(environment.rozkladClient.state.subject.value)),
-                Effect(value: .setCampusState(environment.campusClient.state.subject.value)),
-                Effect(value: .setUpdatedDate(environment.rozkladClient.lessons.updatedAtSubject.value)),
-                Effect.run { subscriber in
-                    environment.rozkladClient.state.subject
-                        .dropFirst()
-                        .receive(on: DispatchQueue.main)
-                        .sink { rozkladState in
-                            subscriber.send(.setRozkladState(rozkladState))
-                        }
-                },
-                Effect.run { subscriber in
-                    environment.campusClient.state.subject
-                        .dropFirst()
-                        .receive(on: DispatchQueue.main)
-                        .sink { campusState in
-                            subscriber.send(.setCampusState(campusState))
-                        }
-                },
-                Effect.run { subscriber in
-                    environment.rozkladClient.lessons.updatedAtSubject
-                        .dropFirst()
-                        .receive(on: DispatchQueue.main)
-                        .sink { date in
-                            subscriber.send(.setUpdatedDate(date))
-                        }
-                }
+            return Effect.setAndSubscribeOnAppear(
+                environment: environment,
+                cancellable: SubscriberCancelId.self
             )
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
-
-        case let .setUpdatedDate(date):
-            state.updatedDate = date
-            return .none
 
         case let .setRozkladState(rozkladState):
             state.rozkladState = rozkladState
@@ -115,6 +84,10 @@ struct ProfileHome {
 
         case let .setCampusState(campusState):
             state.campusState = campusState
+            return .none
+            
+        case let .setLessonsUpdatedAtDate(date):
+            state.lessonsUpdatedAtDate = date
             return .none
 
         case .updateRozkladButtonTapped:
@@ -183,32 +156,27 @@ struct ProfileHome {
         case .selectGroup:
             return Effect(value: .routeAction(.rozklad))
 
-        case .campusLogoutButtonTapped:
+        case .logoutCampusButtonTapped:
             state.confirmationDialog = ConfirmationDialogState(
                 title: TextState("Ви впевнені?"),
                 titleVisibility: .visible,
                 buttons: [
-                    .destructive(TextState("Вийти"), action: .send(.campusLogout)),
+                    .destructive(TextState("Вийти"), action: .send(.logoutCampus)),
                     .cancel(TextState("Назад"))
                 ]
             )
             return .none
 
-        case .campusLogout:
+        case .logoutCampus:
             environment.campusClient.state.logout(ClientValue(commitChanges: true))
             environment.campusClient.studySheet.clean()
             return Effect(value: .routeAction(.campus))
 
-        case .campusLogin:
+        case .loginCampus:
             return Effect(value: .routeAction(.campus))
-//
-//        case .binding(\.toggleWeek):
-//            print("HERE \(state.toggleWeek)")
-//            return .none
 
-        case .binding(\.rozkladSectionView.$week):
+        case .binding(\.rozkladSectionView.$toggleWeek):
             environment.userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
-            print("!!! \(state.toggleWeek)")
             environment.currentDateClient.forceUpdate()
             return .none
 
@@ -221,7 +189,6 @@ struct ProfileHome {
             return .none
 
         case let .binding(action):
-            print(action)
             return .none
 
         case .routeAction:
@@ -229,6 +196,41 @@ struct ProfileHome {
         }
     }
     .binding()
-//    .debug()
 
+}
+
+extension Effect where Output == ProfileHome.Action, Failure == Never {
+
+    static func setAndSubscribeOnAppear(environment: ProfileHome.Environment, cancellable: Any.Type) -> Self {
+        return .merge(
+            Effect(value: .setRozkladState(environment.rozkladClient.state.subject.value)),
+            Effect(value: .setCampusState(environment.campusClient.state.subject.value)),
+            Effect(value: .setLessonsUpdatedAtDate(environment.rozkladClient.lessons.updatedAtSubject.value)),
+            Effect.run { subscriber in
+                environment.rozkladClient.state.subject
+                    .dropFirst()
+                    .receive(on: DispatchQueue.main)
+                    .sink { rozkladState in
+                        subscriber.send(.setRozkladState(rozkladState))
+                    }
+            },
+            Effect.run { subscriber in
+                environment.campusClient.state.subject
+                    .dropFirst()
+                    .receive(on: DispatchQueue.main)
+                    .sink { campusState in
+                        subscriber.send(.setCampusState(campusState))
+                    }
+            },
+            Effect.run { subscriber in
+                environment.rozkladClient.lessons.updatedAtSubject
+                    .dropFirst()
+                    .receive(on: DispatchQueue.main)
+                    .sink { date in
+                        subscriber.send(.setLessonsUpdatedAtDate(date))
+                    }
+            }
+        )
+        .cancellable(id: cancellable, cancelInFlight: true)
+    }
 }

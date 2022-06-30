@@ -10,12 +10,9 @@ import ComposableArchitecture
 
 struct OtherSectionView: View {
 
-    struct ViewState: Equatable {
-//        @BindableState var week: Bool
-    }
+    struct ViewState: Equatable { }
 
     enum ViewAction {
-//        case binding(BindingAction<ViewState>)
         case forDevelopers
     }
 
@@ -26,7 +23,6 @@ struct OtherSectionView: View {
             title: "Інше",
             content: {
                 VStack(alignment: .leading, spacing: 16) {
-
                     ProfileCellView(
                         title: "",
                         value: .text("Для розробників"),

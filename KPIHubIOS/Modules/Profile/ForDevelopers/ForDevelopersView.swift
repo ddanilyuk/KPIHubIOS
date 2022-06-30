@@ -25,75 +25,9 @@ struct ForDevelopersView: View {
                         Text("Якщо є будь-які питанням, напиши мені.")
                     }
 
-                    ProfileSectionView(
-                        title: "Github",
-                        content: {
-                            VStack(alignment: .leading, spacing: 20) {
+                    gitHubSection
 
-                                ProfileCellView(
-                                    title: "Додаток:",
-                                    value: .link(
-                                        name: "KPIHubIOS",
-                                        url: URL(string: "https://github.com/ddanilyuk/KPIHubIOS")!
-                                    ),
-                                    image: {
-                                        Image("github")
-                                            .resizable()
-                                    },
-                                    imageBackgroundColor: .white
-                                )
-
-                                ProfileCellView(
-                                    title: "Сервер:",
-                                    value: .link(
-                                        name: "KPIHubServer",
-                                        url: URL(string: "https://github.com/ddanilyuk/KPIHubServer")!
-                                    ),
-                                    image: {
-                                        Image("github")
-                                            .resizable()
-                                    },
-                                    imageBackgroundColor: .white
-                                )
-
-                            }
-                        }
-                    )
-
-                    ProfileSectionView(
-                        title: "Контакти",
-                        content: {
-                            VStack(alignment: .leading, spacing: 20) {
-
-                                ProfileCellView(
-                                    title: "Telegram:",
-                                    value: .link(
-                                        name: "@ddanilyuk",
-                                        url: URL(string: "https://t.me/ddanilyuk")!
-                                    ),
-                                    image: {
-                                        Image("telegram")
-                                            .resizable()
-                                    },
-                                    imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
-                                )
-
-                                ProfileCellView(
-                                    title: "Email:",
-                                    value: .link(
-                                        name: "danis.danilyuk@gmail.com",
-                                        url: URL(string: "mailto:danis.danilyuk@gmail.com")!
-                                    ),
-                                    image: {
-                                        Image(systemName: "mail")
-                                            .foregroundColor(.green.lighter(by: 0.9))
-                                    },
-                                    imageBackgroundColor: .green
-                                )
-
-                            }
-                        }
-                    )
+                    contactsSection
                 }
                 .padding(16)
             }
@@ -101,6 +35,80 @@ struct ForDevelopersView: View {
         .background(Color.screenBackground)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Для розробників")
+    }
+
+    var gitHubSection: some View {
+        ProfileSectionView(
+            title: "Github",
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+
+                    ProfileCellView(
+                        title: "Додаток:",
+                        value: .link(
+                            name: "KPIHubIOS",
+                            url: URL(string: "https://github.com/ddanilyuk/KPIHubIOS")!
+                        ),
+                        image: {
+                            Image("github")
+                                .resizable()
+                        },
+                        imageBackgroundColor: .white
+                    )
+
+                    ProfileCellView(
+                        title: "Сервер:",
+                        value: .link(
+                            name: "KPIHubServer",
+                            url: URL(string: "https://github.com/ddanilyuk/KPIHubServer")!
+                        ),
+                        image: {
+                            Image("github")
+                                .resizable()
+                        },
+                        imageBackgroundColor: .white
+                    )
+
+                }
+            }
+        )
+    }
+
+    var contactsSection: some View {
+        ProfileSectionView(
+            title: "Контакти",
+            content: {
+                VStack(alignment: .leading, spacing: 20) {
+
+                    ProfileCellView(
+                        title: "Telegram:",
+                        value: .link(
+                            name: "@ddanilyuk",
+                            url: URL(string: "https://t.me/ddanilyuk")!
+                        ),
+                        image: {
+                            Image("telegram")
+                                .resizable()
+                        },
+                        imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                    )
+
+                    ProfileCellView(
+                        title: "Email:",
+                        value: .link(
+                            name: "danis.danilyuk@gmail.com",
+                            url: URL(string: "mailto:danis.danilyuk@gmail.com")!
+                        ),
+                        image: {
+                            Image(systemName: "mail")
+                                .foregroundColor(.green.lighter(by: 0.9))
+                        },
+                        imageBackgroundColor: .green
+                    )
+
+                }
+            }
+        )
     }
 
 }

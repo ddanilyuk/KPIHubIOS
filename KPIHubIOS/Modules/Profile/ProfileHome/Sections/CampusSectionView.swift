@@ -77,7 +77,7 @@ struct CampusSectionView: View {
     }
 
     var loggedOutView: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 16) {
             Divider()
 
             Button(
@@ -118,10 +118,10 @@ extension ProfileHome.Action {
     static func campusSectionView(_ viewAction: CampusSectionView.ViewAction) -> Self {
         switch viewAction {
         case .logoutCampus:
-            return .campusLogoutButtonTapped
+            return .logoutCampusButtonTapped
 
         case .loginCampus:
-            return .campusLogin
+            return .loginCampus
         }
     }
 
