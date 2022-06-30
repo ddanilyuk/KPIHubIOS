@@ -115,7 +115,7 @@ struct GroupRozkladView: View {
                                 viewStore.send(.todaySelected)
                             }
                             .offset(x: 0, y: headerHeight)
-                            .padding(.top, 16)
+                            .padding(.top, 8)
                             .padding(.horizontal, 16)
                     }
                     .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }

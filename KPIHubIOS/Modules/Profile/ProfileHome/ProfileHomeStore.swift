@@ -15,7 +15,7 @@ struct ProfileHome {
 
         var updatedDate: Date?
         var rozkladState: RozkladClientState.State = .notSelected
-        var campusState: CampusClient.StateModule.State = .loggedOut
+        var campusState: CampusClientableState.State = .loggedOut
 
         var confirmationDialog: ConfirmationDialogState<Action>?
         var alert: AlertState<Action>?
@@ -29,7 +29,7 @@ struct ProfileHome {
 
         case setUpdatedDate(Date?)
         case setRozkladState(RozkladClientState.State)
-        case setCampusState(CampusClient.StateModule.State)
+        case setCampusState(CampusClientableState.State)
 
         case updateRozkladButtonTapped
         case updateRozklad
@@ -61,7 +61,7 @@ struct ProfileHome {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
-        let campusClient: CampusClient
+        let campusClient: CampusClientable
     }
 
     // MARK: - Reducer
@@ -185,8 +185,8 @@ struct ProfileHome {
             return .none
 
         case .campusLogout:
-            environment.campusClient.state.logOut(commitChanges: true)
-            environment.campusClient.studySheet.removeLoaded()
+            environment.campusClient.state.logout(ClientValue(commitChanges: true))
+            environment.campusClient.studySheet.clean()
             return Effect(value: .routeAction(.campus))
 
         case .campusLogin:

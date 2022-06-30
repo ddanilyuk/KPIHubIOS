@@ -54,7 +54,7 @@ struct CampusLogin {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let campusClient: CampusClient
+        let campusClient: CampusClientable
         let rozkladClient: RozkladClient
     }
 
@@ -99,9 +99,13 @@ struct CampusLogin {
                 password: state.password
             )
             environment.campusClient.state.login(
-                credentials: campusCredentials,
-                userInfo: campusUserInfo,
-                commitChanges: false
+                ClientValue(
+                    CampusClientableState.LoginRequest(
+                        credentials: campusCredentials,
+                        userInfo: campusUserInfo
+                    ),
+                    commitChanges: false
+                )
             )
 
             switch state.mode {

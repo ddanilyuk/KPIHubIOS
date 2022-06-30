@@ -154,6 +154,7 @@ struct GroupRozklad {
                         .dropFirst()
                         .receive(on: DispatchQueue.main)
                         .sink { _ in
+                            print("!!!!!!!!! updateCurrentDate")
                             subscriber.send(.updateCurrentDate)
                         }
                 }

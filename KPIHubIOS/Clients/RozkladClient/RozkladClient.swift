@@ -56,14 +56,14 @@ struct RozkladClientState {
 
         return RozkladClientState(
             subject: subject,
-            setState: { request in
-                switch request.value {
+            setState: { clientValue in
+                switch clientValue.value {
                 case let .selected(group):
                     userDefaultsClient.set(group, for: .groupResponse)
                 case .notSelected:
                     userDefaultsClient.remove(for: .groupResponse)
                 }
-                if request.commitChanges {
+                if clientValue.commitChanges {
                     commit()
                 }
             },
@@ -108,19 +108,19 @@ struct RozkladClientLessons {
         return RozkladClientLessons(
             subject: subject,
             updatedAtSubject: updatedAtSubject,
-            set: { request in
-                userDefaultsClient.set(IdentifiedArray(uniqueElements: request.value), for: .lessons)
+            set: { clientValue in
+                userDefaultsClient.set(IdentifiedArray(uniqueElements: clientValue.value), for: .lessons)
                 userDefaultsClient.set(Date(), for: .lessonsUpdatedAt)
-                if request.commitChanges {
+                if clientValue.commitChanges {
                     commit()
                 }
             },
-            modify: { request in
+            modify: { clientValue in
                 var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
-                let modifiedLesson = request.value
+                let modifiedLesson = clientValue.value
                 lessons[id: modifiedLesson.id] = modifiedLesson
                 userDefaultsClient.set(lessons, for: .lessons)
-                if request.commitChanges {
+                if clientValue.commitChanges {
                     commit()
                 }
             },

@@ -17,55 +17,55 @@ struct CampusHomeView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            ScrollView {
-                VStack {
-                    PullToRefresh(coordinateSpaceName: "pullToRefresh") {
-                        // do your stuff when pulled
-                        viewStore.send(.refresh)
-                    }
+            List {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(backgroundColor)
+                        .shadow(color: Color(red: 237 / 255, green: 107 / 255, blue: 7 / 255).opacity(0.15), radius: 12, x: 0, y: 6)
 
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(backgroundColor)
-                            .shadow(color: Color(red: 237 / 255, green: 107 / 255, blue: 7 / 255).opacity(0.15), radius: 12, x: 0, y: 6)
+                    VStack {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Circle()
+                                    .fill(accentColor)
 
-                        VStack {
-                            HStack(spacing: 16) {
-                                ZStack {
-                                    Circle()
-                                        .fill(accentColor)
-
-                                    Image(systemName: "graduationcap")
-                                        .font(.system(.body).bold())
-                                        .foregroundColor(.white)
-                                }
-                                .frame(width: 40, height: 40)
-
-                                Text("Поточний контроль")
+                                Image(systemName: "graduationcap")
                                     .font(.system(.body).bold())
-
-                                Spacer()
+                                    .foregroundColor(.white)
                             }
+                            .frame(width: 40, height: 40)
 
-                            studySheetDescription(for: viewStore.state.studySheetState)
-                                .font(.system(.callout))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .frame(height: 25)
-                                .padding(.leading, 40 + 16)
+                            Text("Поточний контроль")
+                                .font(.system(.body).bold())
+
+                            Spacer()
                         }
-                        .padding(16)
+
+                        studySheetDescription(for: viewStore.state.studySheetState)
+                            .font(.system(.callout))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(height: 25)
+                            .padding(.leading, 40 + 16)
                     }
-                    .onTapGesture {
-                        viewStore.send(.studySheetTap)
-                    }
+                    .padding(16)
+                }
+                .onTapGesture {
+                    viewStore.send(.studySheetTap)
                 }
                 .padding(24)
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .background(Color.screenBackground)
+                .listRowSeparator(.hidden, edges: .all)
             }
-            .coordinateSpace(name: "pullToRefresh")
+            .listStyle(.plain)
+            .background(Color.screenBackground)
+            .listRowSeparator(.hidden, edges: .all)
+            .refreshable {
+                viewStore.send(.refresh)
+            }
             .onAppear {
                 viewStore.send(.onAppear)
             }
-            .background(Color.screenBackground)
             .navigationTitle("Кампус")
             .loadable(viewStore.binding(\.$isLoading))
         }
@@ -73,7 +73,7 @@ struct CampusHomeView: View {
     }
 
     @ViewBuilder
-    func studySheetDescription(for state: CampusClient.StudySheetModule.State) -> some View {
+    func studySheetDescription(for state: CampusClientableStudySheet.State) -> some View {
         switch state {
         case .loading:
             HStack(spacing: 10) {

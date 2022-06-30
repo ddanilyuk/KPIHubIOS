@@ -38,7 +38,7 @@ struct Campus {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let campusClient: CampusClient
+        let campusClient: CampusClientable
         let rozkladClient: RozkladClient
     }
 
@@ -48,18 +48,22 @@ struct Campus {
         enum SubscriberCancelId { }
         switch action {
         case .onSetup:
-            return Effect.run { subscriber in
-                environment.campusClient.state.subject
-                    .receive(on: DispatchQueue.main)
-                    .sink { state in
-                        switch state {
-                        case .loggedOut:
-                            subscriber.send(.setCampusLogin)
-                        case .loggedIn:
-                            subscriber.send(.setCampusHome)
+            return .merge(
+                Effect.run { subscriber in
+                    environment.campusClient.state.subject
+                        .receive(on: DispatchQueue.main)
+                        .sink { state in
+                            switch state {
+                            case .loggedOut:
+                                subscriber.send(.setCampusLogin)
+                            case .loggedIn:
+                                subscriber.send(.setCampusHome)
+                            }
                         }
-                    }
-            }
+                },
+                environment.campusClient.studySheet.load()
+                    .fireAndForget()
+            )
             .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .setCampusLogin:
@@ -82,8 +86,8 @@ struct Campus {
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
             environment.campusClient.state.commit()
-            environment.campusClient.studySheet.load()
-            return .none
+            return environment.campusClient.studySheet.load()
+                .fireAndForget()
 
         case let .routeAction(_, action: .campusHome(.routeAction(.studySheet(items)))):
             let studySheetState = StudySheet.State(items: items)

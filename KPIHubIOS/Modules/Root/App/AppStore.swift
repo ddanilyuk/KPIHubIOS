@@ -50,7 +50,7 @@ struct App {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
-        let campusClient: CampusClient
+        let campusClient: CampusClientable
         let currentDateClient: CurrentDateClient
 
         static var live: Self {
@@ -61,7 +61,7 @@ struct App {
             let userDefaultsClient: UserDefaultsClientable = liveDependencies.userDefaults
             let keychainClient: KeychainClientable = KeychainClient.live()
             let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
-            let campusClient: CampusClient = .live(
+            let campusClient: CampusClientable = .live(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
                 keychainClient: keychainClient
@@ -88,11 +88,9 @@ struct App {
             } else {
                 state.set(.login)
             }
-            environment.campusClient.studySheet.load()
             return .none
 
         case .login(.delegate(.done)):
-            environment.campusClient.studySheet.load()
             state.set(.main)
             return .none
 

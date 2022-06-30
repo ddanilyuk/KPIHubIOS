@@ -17,4 +17,9 @@ struct ClientValue<T> {
         self.value = value
         self.commitChanges = commitChanges
     }
+
+    init(commitChanges: Bool) where T == Void {
+        self.value = ()
+        self.commitChanges = commitChanges
+    }
 }

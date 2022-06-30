@@ -51,7 +51,7 @@ struct Main {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
-        let campusClient: CampusClient
+        let campusClient: CampusClientable
         let currentDateClient: CurrentDateClient
     }
 
