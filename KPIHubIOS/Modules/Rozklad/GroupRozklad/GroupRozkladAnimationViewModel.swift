@@ -44,11 +44,13 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
 
     func save() {
         savedOffsets = offsets
+        print("Saved:", savedOffsets)
     }
 
     func restore() {
         offsets = savedOffsets
         render()
+        print("Restored", offsets)
     }
 
     func setOffset(for index: Int, value: CGFloat?) {
@@ -66,6 +68,7 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
             let newPosition = GroupRozklad.State.Section.Position(
                 index: min(max(0, calculateIndex()), 11)
             )
+            debug()
             if newPosition != renderedPosition {
                 DispatchQueue.main.async { [self] in
                     position = newPosition

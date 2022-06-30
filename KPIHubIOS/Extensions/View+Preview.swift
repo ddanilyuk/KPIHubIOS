@@ -13,6 +13,6 @@ extension View {
         self
             .previewLayout(.sizeThatFits)
             .fixedSize(horizontal: false, vertical: true)
-            .frame(width: 375)
+            .frame(width: 385)
     }
 }

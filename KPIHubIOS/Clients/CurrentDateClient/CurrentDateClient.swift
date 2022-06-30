@@ -17,6 +17,7 @@ struct CurrentDateClient {
     let currentDay: CurrentValueSubject<Lesson.Day?, Never>
     let currentWeek: CurrentValueSubject<Lesson.Week, Never>
 
+    let forceUpdate: () -> Void
     var updated: AnyPublisher<Date, Never> { updatedSubject.eraseToAnyPublisher() }
     private let updatedSubject: CurrentValueSubject<Date, Never>
 
@@ -27,7 +28,10 @@ struct CurrentDateClient {
 extension CurrentDateClient {
 
     // swiftlint:disable function_body_length
-    static func live(rozkladClient: RozkladClient) -> Self {
+    static func live(
+        userDefaultsClient: UserDefaultsClientable,
+        rozkladClient: RozkladClient
+    ) -> Self {
 
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: "Europe/Kiev")!
@@ -64,7 +68,11 @@ extension CurrentDateClient {
             .store(in: &liveCancellables)
 
         func updateSubjects(with date: Date) {
-            let (dayNumber, weekNumber) = currentDayWeek(calendar: calendar, from: date)
+            let (dayNumber, weekNumber) = currentDayWeek(
+                calendar: calendar,
+                from: date,
+                toggleWeek: userDefaultsClient.get(for: .toggleWeek)
+            )
             let currentDay = Lesson.Day(rawValue: dayNumber)
             let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first
             currentDaySubject.value = currentDay
@@ -107,13 +115,18 @@ extension CurrentDateClient {
             nextLessonId: nextLessonIdSubject,
             currentDay: currentDaySubject,
             currentWeek: currentWeekSubject,
+            forceUpdate: { updateSubjects(with: Date()) },
             updatedSubject: updatedSubject
         )
     }
 
     private static var liveCancellables: Set<AnyCancellable> = []
 
-    private static func currentDayWeek(calendar: Calendar, from date: Date) -> (dayNumber: Int, weekNumber: Int) {
+    private static func currentDayWeek(
+        calendar: Calendar,
+        from date: Date,
+        toggleWeek: Bool
+    ) -> (dayNumber: Int, weekNumber: Int) {
         let components = calendar.dateComponents(
             [.weekOfYear, .weekday],
             from: date
@@ -204,6 +217,7 @@ extension CurrentDateClient {
             nextLessonId: nextLessonIdSubject,
             currentDay: currentDaySubject,
             currentWeek: currentWeekSubject,
+            forceUpdate: { },
             updatedSubject: updatedSubject
         )
     }

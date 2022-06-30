@@ -44,7 +44,8 @@ extension Profile.ScreenProvider {
                         apiClient: $0.apiClient,
                         userDefaultsClient: $0.userDefaultsClient,
                         rozkladClient: $0.rozkladClient,
-                        campusClient: $0.campusClient
+                        campusClient: $0.campusClient,
+                        currentDateClient: $0.currentDateClient
                     )
                 }
             ),

@@ -136,7 +136,8 @@ extension Main.Environment {
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
             rozkladClient: rozkladClient,
-            campusClient: campusClient
+            campusClient: campusClient,
+            currentDateClient: currentDateClient
         )
     }
 

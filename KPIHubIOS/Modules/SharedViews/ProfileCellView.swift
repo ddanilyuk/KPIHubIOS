@@ -88,6 +88,8 @@ struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
 
             rightView
         }
+
+        .frame(minHeight: 44)
     }
 
 }

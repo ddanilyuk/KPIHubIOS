@@ -9,8 +9,6 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
-var toggleWeek: Bool = true
-
 struct GroupRozklad {
 
     // MARK: - State
@@ -26,7 +24,10 @@ struct GroupRozklad {
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
 
+        var isShown: Bool = false
+
         @BindableState var isAlreadyAppeared: Bool = false
+        var scrollOnAppear: Bool = false
         var scrollTo: Lesson.ID?
 
         var lessonCells: IdentifiedArrayOf<LessonCell.State> {
@@ -96,6 +97,7 @@ struct GroupRozklad {
 
     enum Action: Equatable, BindableAction {
         case onAppear
+        case onDisappear
 
         case updateLessons(IdentifiedArrayOf<Lesson>)
         case updateCurrentDate
@@ -127,6 +129,7 @@ struct GroupRozklad {
         enum SubscriberCancelId { }
         switch action {
         case .onAppear:
+            state.isShown = true
             return Effect.merge(
                 Effect(value: .updateCurrentDate),
                 Effect.concatenate(
@@ -153,6 +156,10 @@ struct GroupRozklad {
             )
             .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
+        case .onDisappear:
+            state.isShown = false
+            return .none
+
         case .updateCurrentDate:
             let oldCurrentLessonId = state.currentLessonId
             let oldNextLessonId = state.nextLessonId
@@ -166,9 +173,15 @@ struct GroupRozklad {
                 nextLesson: state.nextLessonId
             )
             if oldCurrentLessonId != state.currentLessonId || oldNextLessonId != state.nextLessonId {
-                return Effect(value: .scrollToNearest())
-                    .delay(for: 0.2, scheduler: DispatchQueue.main)
-                    .eraseToEffect()
+                if state.isShown {
+                    return Effect(value: .scrollToNearest())
+                        .delay(for: 0.2, scheduler: DispatchQueue.main)
+                        .eraseToEffect()
+                } else {
+                    state.isAlreadyAppeared = false
+                    return .none
+                }
+
             } else {
                 return .none
             }

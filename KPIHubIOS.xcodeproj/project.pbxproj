@@ -1557,8 +1557,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.35.0;
+				kind = exactVersion;
+				version = 0.37.0;
 			};
 		};
 		5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {

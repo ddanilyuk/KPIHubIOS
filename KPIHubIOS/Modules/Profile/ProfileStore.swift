@@ -43,6 +43,7 @@ struct Profile {
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
         let campusClient: CampusClientable
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer

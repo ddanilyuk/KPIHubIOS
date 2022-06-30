@@ -57,7 +57,7 @@ protocol UserDefaultsClientable {
 
 
 
-private struct UserDefaultsClientImplementation: UserDefaultsClientable {
+struct UserDefaultsClientImplementation: UserDefaultsClientable {
 
 //    static func live() -> UserDefaultsClient {
 //        return UserDefaultsClient(UserDefaults.standard)
@@ -84,6 +84,7 @@ private struct UserDefaultsClientImplementation: UserDefaultsClientable {
         guard let encoded = try? JSONEncoder().encode(value) else {
             return
         }
+        print("defaultKey.key set \(defaultKey.key)")
         defaults.set(encoded, forKey: defaultKey.key)
     }
 
@@ -95,6 +96,7 @@ private struct UserDefaultsClientImplementation: UserDefaultsClientable {
         guard let encoded = try? encoder.encode(value) else {
             return
         }
+        print("defaultKey.key set \(defaultKey.key)")
         defaults.set(encoded, forKey: defaultKey.key)
     }
 
@@ -103,6 +105,7 @@ private struct UserDefaultsClientImplementation: UserDefaultsClientable {
     func get<T: Codable>(
         for defaultKey: UserDefaultKey<T>
     ) -> T? {
+
         return get(for: defaultKey.key)
     }
 
@@ -115,6 +118,7 @@ private struct UserDefaultsClientImplementation: UserDefaultsClientable {
     private func get<T: Codable>(
         for key: String
     ) -> T? {
+        print("defaultKey.key get \(key)")
         guard
             let data = defaults.object(forKey: key) as? Data,
             let value = try? JSONDecoder().decode(T.self, from: data)
@@ -136,12 +140,10 @@ private struct UserDefaultsClientImplementation: UserDefaultsClientable {
 }
 
 struct UserDefaultKey<T: Codable> {
-    var customKey: String?
-}
+    var key: String
 
-extension UserDefaultKey {
-    var key: String {
-        customKey ?? String(describing: self)
+    init(key: String = #function) {
+        self.key = key
     }
 }
 
@@ -156,6 +158,8 @@ extension UserDefaultKey {
     static var campusUserInfo: UserDefaultKey<CampusUserInfo> { .init() }
 
     static var onboardingPassed: UserDefaultKey<Bool> { .init() }
+
+    static var toggleWeek: UserDefaultKey<Bool> { .init() }
 
 }
 

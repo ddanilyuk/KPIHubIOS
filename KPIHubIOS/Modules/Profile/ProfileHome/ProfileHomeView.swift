@@ -16,12 +16,21 @@ struct ProfileHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(spacing: 32) {
-                    RozkladSectionView(
-                        store: store.scope(
-                            state: RozkladSectionView.ViewState.init(profileHomeState:),
-                            action: ProfileHome.Action.init(rozkladSection:)
+//                    RozkladSectionView(
+//                        store: store.scope(
+//                            state: RozkladSectionView.ViewState.init(profileHomeState:),
+//                            action: ProfileHome.Action.init(rozkladSection:)
+//                        )
+//                    )
+                    WithViewStore(
+                        self.store.scope(
+                            state: \.rozkladSectionView,
+                            action: ProfileHome.Action.rozkladSectionView
                         )
-                    )
+                    ) { viewStore in
+                        RozkladSectionView(viewStore: viewStore)
+                    }
+
 
                     CampusSectionView(
                         store: store.scope(
@@ -30,12 +39,20 @@ struct ProfileHomeView: View {
                         )
                     )
 
-                    OtherSectionView(
-                        store: store.scope(
-                            state: { _ in OtherSectionView.ViewState() },
-                            action: ProfileHome.Action.init(otherSection:)
+                    WithViewStore(
+                        self.store.scope(
+                            state: \.otherSectionView,
+                            action: ProfileHome.Action.otherSectionView
                         )
-                    )
+                    ) { viewStore in
+                        OtherSectionView(viewStore: viewStore)
+                    }
+//                    OtherSectionView(
+//                        store: store.scope(
+//                            state: { _ in OtherSectionView.ViewState() },
+//                            action: ProfileHome.Action.init(otherSection:)
+//                        )
+//                    )
                 }
                 .padding(16)
             }
@@ -75,7 +92,8 @@ struct ProfileHomeView_Previews: PreviewProvider {
                             apiClient: .failing,
                             userDefaultsClient: mockDependencies.userDefaults,
                             rozkladClient: .mock(),
-                            campusClient: .live(apiClient: .failing, userDefaultsClient: mockDependencies.userDefaults, keychainClient: KeychainClient.live())
+                            campusClient: .mock(),
+                            currentDateClient: .mock()
                         )
                     )
                 )
@@ -93,7 +111,8 @@ struct ProfileHomeView_Previews: PreviewProvider {
                             apiClient: .failing,
                             userDefaultsClient: mockDependencies.userDefaults,
                             rozkladClient: .mock(),
-                            campusClient: .live(apiClient: .failing, userDefaultsClient: mockDependencies.userDefaults, keychainClient: KeychainClient.live())
+                            campusClient: .mock(),
+                            currentDateClient: .mock()
                         )
                     )
                 )

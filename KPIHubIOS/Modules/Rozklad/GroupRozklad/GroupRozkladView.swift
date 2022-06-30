@@ -65,6 +65,7 @@ struct GroupRozkladView: View {
                 animationModel.restore()
             }
             .onDisappear {
+                viewStore.send(.onDisappear)
                 animationModel.save()
             }
         }

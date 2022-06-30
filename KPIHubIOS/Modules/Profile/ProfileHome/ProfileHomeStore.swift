@@ -16,6 +16,7 @@ struct ProfileHome {
         var updatedDate: Date?
         var rozkladState: RozkladClientState.State = .notSelected
         var campusState: CampusClientableState.State = .loggedOut
+        @BindableState var toggleWeek: Bool = false
 
         var confirmationDialog: ConfirmationDialogState<Action>?
         var alert: AlertState<Action>?
@@ -62,6 +63,7 @@ struct ProfileHome {
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
         let campusClient: CampusClientable
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer
@@ -70,16 +72,14 @@ struct ProfileHome {
         enum SubscriberCancelId { }
         switch action {
         case .onAppear:
+            state.toggleWeek = environment.userDefaultsClient.get(for: .toggleWeek)
             return .merge(
-                Effect.run { subscriber in
-                    environment.rozkladClient.lessons.updatedAtSubject
-                        .receive(on: DispatchQueue.main)
-                        .sink { date in
-                            subscriber.send(.setUpdatedDate(date))
-                        }
-                },
+                Effect(value: .setRozkladState(environment.rozkladClient.state.subject.value)),
+                Effect(value: .setCampusState(environment.campusClient.state.subject.value)),
+                Effect(value: .setUpdatedDate(environment.rozkladClient.lessons.updatedAtSubject.value)),
                 Effect.run { subscriber in
                     environment.rozkladClient.state.subject
+                        .dropFirst()
                         .receive(on: DispatchQueue.main)
                         .sink { rozkladState in
                             subscriber.send(.setRozkladState(rozkladState))
@@ -87,9 +87,18 @@ struct ProfileHome {
                 },
                 Effect.run { subscriber in
                     environment.campusClient.state.subject
+                        .dropFirst()
                         .receive(on: DispatchQueue.main)
                         .sink { campusState in
                             subscriber.send(.setCampusState(campusState))
+                        }
+                },
+                Effect.run { subscriber in
+                    environment.rozkladClient.lessons.updatedAtSubject
+                        .dropFirst()
+                        .receive(on: DispatchQueue.main)
+                        .sink { date in
+                            subscriber.send(.setUpdatedDate(date))
                         }
                 }
             )
@@ -191,6 +200,16 @@ struct ProfileHome {
 
         case .campusLogin:
             return Effect(value: .routeAction(.campus))
+//
+//        case .binding(\.toggleWeek):
+//            print("HERE \(state.toggleWeek)")
+//            return .none
+
+        case .binding(\.rozkladSectionView.$week):
+            environment.userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
+            print("!!! \(state.toggleWeek)")
+            environment.currentDateClient.forceUpdate()
+            return .none
 
         case .dismissConfirmationDialog:
             state.confirmationDialog = nil
@@ -200,7 +219,8 @@ struct ProfileHome {
             state.alert = nil
             return .none
 
-        case .binding:
+        case let .binding(action):
+            print(action)
             return .none
 
         case .routeAction:
@@ -208,5 +228,6 @@ struct ProfileHome {
         }
     }
     .binding()
+//    .debug()
 
 }

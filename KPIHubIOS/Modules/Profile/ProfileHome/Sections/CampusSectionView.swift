@@ -44,7 +44,7 @@ struct CampusSectionView: View {
     }
 
     var loggedInView: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 16) {
 
             ProfileCellView(
                 title: "Ім'я:",
