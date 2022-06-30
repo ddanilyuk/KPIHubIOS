@@ -8,6 +8,7 @@
 import Combine
 import IdentifiedCollections
 import Foundation
+import CasePaths
 
 struct RozkladClient {
 
@@ -39,6 +40,7 @@ struct RozkladClientState {
     }
 
     let subject: CurrentValueSubject<State, Never>
+    let group: () -> GroupResponse?
     let setState: (ClientValue<State>) -> Void
     let commit: () -> Void
 
@@ -56,6 +58,10 @@ struct RozkladClientState {
 
         return RozkladClientState(
             subject: subject,
+            group: {
+                let groupResponsePath = /RozkladClientState.State.selected
+                return groupResponsePath.extract(from: subject.value)
+            },
             setState: { clientValue in
                 switch clientValue.value {
                 case let .selected(group):
@@ -72,10 +78,12 @@ struct RozkladClientState {
     }
 
     static func mock() -> RozkladClientState {
-        RozkladClientState(
+        let group = GroupResponse(id: UUID(), name: "ІВ-82")
+        return RozkladClientState(
             subject: CurrentValueSubject<State, Never>(
-                .selected(GroupResponse(id: UUID(), name: "ІВ-82"))
+                .selected(group)
             ),
+            group: { group },
             setState: { _ in },
             commit: { }
         )

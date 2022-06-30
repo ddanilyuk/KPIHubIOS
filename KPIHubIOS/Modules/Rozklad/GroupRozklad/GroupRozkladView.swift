@@ -20,7 +20,8 @@ struct GroupRozkladView: View {
     @State var displayedWeek: Lesson.Week = .first
     @State var displayedDay: Lesson.Day = .monday
 
-    @State var lastSection: [CGFloat] = []
+    /// Used for computing space after last section (for displaying week/day in right way )
+    @State var lastSectionCellHeights: [CGFloat] = []
 
     @State var headerHeight: CGFloat = 0
     @State var headerBackgroundOpacity: CGFloat = 0
@@ -32,6 +33,8 @@ struct GroupRozkladView: View {
 
         UITableView.appearance().sectionHeaderTopPadding = 0
     }
+
+    // MARK: - Views
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -82,7 +85,7 @@ struct GroupRozkladView: View {
                                 .frame(
                                     height: max(
                                         0,
-                                        geometryProxy.frame(in: .local).height - headerHeight - 44 - lastSection.reduce(0.0, +)
+                                        geometryProxy.frame(in: .local).height - headerHeight - 44 - lastSectionCellHeights.reduce(0.0, +)
                                     )
                                 )
                         }
@@ -94,10 +97,10 @@ struct GroupRozkladView: View {
                     }
                     .overlay(alignment: .topTrailing) {
                         GroupRozkladScrollToView(
-                            mode: GroupRozkladScrollToView.Mode(currentLesson: viewStore.state.currentLessonId)
+                            mode: .init(currentLesson: viewStore.state.currentLessonId)
                         )
                         .onTapGesture {
-                            viewStore.send(.todaySelected)
+                            viewStore.send(.scrollToNearest())
                         }
                         .offset(x: 0, y: headerHeight)
                         .padding(.top, 8)
@@ -184,6 +187,8 @@ struct GroupRozkladView: View {
         }
     }
 
+    // MARK: - Helpers
+
     func updateHeaderBackgroundOpacity(offset: CGFloat) {
         let minimumOpacityOffset = headerHeight
         let maximumOpacityOffset = headerHeight - 20
@@ -201,10 +206,10 @@ struct GroupRozkladView: View {
     }
 
     func lastSectionOffsetModifiers(index: Int, height: CGFloat) {
-        if lastSection[safe: index] == nil {
-            lastSection.append(height)
+        if lastSectionCellHeights[safe: index] == nil {
+            lastSectionCellHeights.append(height)
         } else {
-            lastSection[index] = height
+            lastSectionCellHeights[index] = height
         }
     }
 
@@ -251,9 +256,7 @@ struct GroupRozkladView_Previews: PreviewProvider {
         NavigationView {
             GroupRozkladView(
                 store: Store(
-                    initialState: GroupRozklad.State(
-                        groupName: "ІВ-82"
-                    ),
+                    initialState: GroupRozklad.State(),
                     reducer: GroupRozklad.reducer,
                     environment: GroupRozklad.Environment(
                         apiClient: .failing,

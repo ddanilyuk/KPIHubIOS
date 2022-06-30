@@ -198,6 +198,7 @@ struct Dependencies {
 
 public protocol MockDependencyKey {
     associatedtype Value
+    
     static var mock: Value { get }
 }
 

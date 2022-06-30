@@ -25,7 +25,8 @@ struct GroupRozklad {
         var groupName: String = ""
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
-        var alreadyAppeared: Bool = false
+
+        @BindableState var isAlreadyAppeared: Bool = false
         var scrollTo: Lesson.ID?
 
         var lessonCells: IdentifiedArrayOf<LessonCell.State> {
@@ -89,26 +90,22 @@ struct GroupRozklad {
             self.sections = [Section](lessons: [])
         }
 
-        init(groupName: String) {
-            self.groupName = groupName
-            self.lessons = IdentifiedArrayOf(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
-            self.sections = [Section](lessons: self.lessons)
-        }
     }
 
     // MARK: - Action
 
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
         case onAppear
-        case updateLessons(IdentifiedArrayOf<Lesson>)
 
+        case updateLessons(IdentifiedArrayOf<Lesson>)
         case updateCurrentDate
 
+        case scrollToNearest(_ condition: Bool = true)
         case resetScrollTo
-        case todaySelected
 
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
         case routeAction(RouteAction)
+        case binding(BindingAction<State>)
 
         enum RouteAction: Equatable {
             case openDetails(Lesson)
@@ -127,20 +124,21 @@ struct GroupRozklad {
     // MARK: - Reducer
 
     static let coreReducer = Reducer<State, Action, Environment> { state, action, environment in
-
         enum SubscriberCancelId { }
         switch action {
         case .onAppear:
-            state.groupName = environment.userDefaultsClient.get(for: .groupResponse)?.name ?? "ІВ-82"
             return Effect.merge(
                 Effect(value: .updateCurrentDate),
-                Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
+                Effect.concatenate(
+                    Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
+                    Effect(value: .scrollToNearest(!state.isAlreadyAppeared)),
+                    Effect(value: .binding(.set(\.$isAlreadyAppeared, true)))
+                ),
                 Effect.run { subscriber in
                     environment.rozkladClient.lessons.subject
                         .dropFirst()
                         .receive(on: DispatchQueue.main)
                         .sink { lessons in
-                            print("subscriberEvent")
                             subscriber.send(.updateLessons(lessons))
                         }
                 },
@@ -149,7 +147,6 @@ struct GroupRozklad {
                         .dropFirst()
                         .receive(on: DispatchQueue.main)
                         .sink { _ in
-                            print("!!!!!!!!! updateCurrentDate")
                             subscriber.send(.updateCurrentDate)
                         }
                 }
@@ -157,8 +154,8 @@ struct GroupRozklad {
             .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .updateCurrentDate:
-            let currentLessonId = state.currentLessonId
-            let nextLessonId = state.nextLessonId
+            let oldCurrentLessonId = state.currentLessonId
+            let oldNextLessonId = state.nextLessonId
             state.currentDay = environment.currentDateClient.currentDay.value
             state.currentWeek = environment.currentDateClient.currentWeek.value
             state.currentLessonId = environment.currentDateClient.currentLessonId.value
@@ -168,8 +165,8 @@ struct GroupRozklad {
                 currentLesson: state.currentLessonId,
                 nextLesson: state.nextLessonId
             )
-            if currentLessonId != state.currentLessonId || nextLessonId != state.nextLessonId {
-                return Effect(value: .todaySelected)
+            if oldCurrentLessonId != state.currentLessonId || oldNextLessonId != state.nextLessonId {
+                return Effect(value: .scrollToNearest())
                     .delay(for: 0.2, scheduler: DispatchQueue.main)
                     .eraseToEffect()
             } else {
@@ -177,25 +174,20 @@ struct GroupRozklad {
             }
 
         case let .updateLessons(lessons):
-            print("Updating lessons: \(lessons.count)")
+            state.groupName = environment.rozkladClient.state.group()?.name ?? "-"
             state.lessons = lessons
             state.sections = [State.Section](
                 lessons: state.lessons,
                 currentLesson: state.currentLessonId,
                 nextLesson: state.nextLessonId
             )
-            if state.alreadyAppeared {
-                return .none
-            } else {
-                state.alreadyAppeared = true
-                return Effect(value: .todaySelected)
-                    .delay(for: 0.2, scheduler: DispatchQueue.main)
-                    .eraseToEffect()
-            }
+            return .none
 
-        case .todaySelected:
-            let scrollTo = state.currentLessonId?.lessonId ?? state.nextLessonId
-            state.scrollTo = scrollTo
+        case let .scrollToNearest(condition):
+            if condition {
+                let scrollTo = state.currentLessonId?.lessonId ?? state.nextLessonId
+                state.scrollTo = scrollTo
+            }
             return .none
 
         case .resetScrollTo:
@@ -215,8 +207,12 @@ struct GroupRozklad {
 
         case .lessonCells:
             return .none
+
+        case .binding:
+            return .none
         }
     }
+    .binding()
 
     static let reducer = Reducer<State, Action, Environment>.combine(
         LessonCell.reducer
