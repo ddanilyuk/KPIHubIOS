@@ -136,7 +136,7 @@ struct GroupRozklad {
 //                state.scrollTo = State.Section.id(week: .first, day: .init(rawValue: state.currentDay) ?? .monday)
 //                //                state.alreadyAppeared = true
 //            }
-            return Effect.concatenate(
+            return Effect.merge(
                 Effect(value: .updateCurrentDate),
                 Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
                 Effect.run { subscriber in
@@ -147,8 +147,7 @@ struct GroupRozklad {
                             print("subscriberEvent")
                             subscriber.send(.updateLessons(lessons))
                         }
-                }
-                .cancellable(id: SubscriberCancelId.self, cancelInFlight: true),
+                },
                 Effect.run { subscriber in
                     environment.currentDateClient.updated
                         .dropFirst()
@@ -158,11 +157,15 @@ struct GroupRozklad {
                             subscriber.send(.updateCurrentDate)
                         }
                 }
-                    .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
-
+//                .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
             )
+            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .updateCurrentDate:
+            let currentLessonId = state.currentLessonId
+            let nextLessonId = state.nextLessonId
+
+//            print("currentLessonId \(environment.currentDateClient.currentLessonId.value)")
             state.currentDay = environment.currentDateClient.currentDay.value
             state.currentWeek = environment.currentDateClient.currentWeek.value
             state.currentLessonId = environment.currentDateClient.currentLessonId.value
@@ -172,7 +175,13 @@ struct GroupRozklad {
                 currentLesson: state.currentLessonId,
                 nextLesson: state.nextLessonId
             )
-            return .none
+            if currentLessonId != state.currentLessonId || nextLessonId != state.nextLessonId {
+                return Effect(value: .todaySelected)
+                    .delay(for: 0.2, scheduler: DispatchQueue.main)
+                    .eraseToEffect()
+            } else {
+                return .none
+            }
 
         case let .updateLessons(lessons):
             print("Updating lessons: \(lessons.count)")

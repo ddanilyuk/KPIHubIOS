@@ -140,7 +140,6 @@ struct Rozklad {
             return .none
 
         case .routeAction:
-            print("ACTION!!!!")
             return .none
 
         case .updateRoutes:
@@ -153,6 +152,6 @@ struct Rozklad {
             .forEachIdentifiedRoute(environment: { $0 })
             .withRouteReducer(reducerCore)
     )
-        .debug()
+//        .debug()
 
 }
