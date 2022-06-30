@@ -16,43 +16,29 @@ struct ProfileHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(spacing: 32) {
-//                    RozkladSectionView(
-//                        store: store.scope(
-//                            state: RozkladSectionView.ViewState.init(profileHomeState:),
-//                            action: ProfileHome.Action.init(rozkladSection:)
-//                        )
-//                    )
                     WithViewStore(
                         self.store.scope(
-                            state: \.rozkladSectionView,
+                            state: \ProfileHome.State.rozkladSectionView,
                             action: ProfileHome.Action.rozkladSectionView
-                        )
-                    ) { viewStore in
-                        RozkladSectionView(viewStore: viewStore)
-                    }
-
-
-                    CampusSectionView(
-                        store: store.scope(
-                            state: CampusSectionView.ViewState.init(profileHomeState:),
-                            action: ProfileHome.Action.init(campusSection:)
-                        )
+                        ),
+                        content: RozkladSectionView.init(viewStore:)
                     )
 
                     WithViewStore(
                         self.store.scope(
-                            state: \.otherSectionView,
+                            state: \ProfileHome.State.campusSectionView,
+                            action: ProfileHome.Action.campusSectionView
+                        ),
+                        content: CampusSectionView.init(viewStore:)
+                    )
+
+                    WithViewStore(
+                        self.store.scope(
+                            state: \ProfileHome.State.otherSectionView,
                             action: ProfileHome.Action.otherSectionView
-                        )
-                    ) { viewStore in
-                        OtherSectionView(viewStore: viewStore)
-                    }
-//                    OtherSectionView(
-//                        store: store.scope(
-//                            state: { _ in OtherSectionView.ViewState() },
-//                            action: ProfileHome.Action.init(otherSection:)
-//                        )
-//                    )
+                        ),
+                        content: OtherSectionView.init(viewStore:)
+                    )
                 }
                 .padding(16)
             }

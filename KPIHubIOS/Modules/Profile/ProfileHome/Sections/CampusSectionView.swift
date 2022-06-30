@@ -21,13 +21,7 @@ struct CampusSectionView: View {
         case logoutCampus
     }
 
-    let store: Store<ViewState, ViewAction>
     @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
-
-    init(store: Store<ViewState, ViewAction>) {
-        self.store = store
-        self.viewStore = ViewStore(store)
-    }
 
     var body: some View {
         ProfileSectionView(
@@ -103,14 +97,16 @@ struct CampusSectionView: View {
 
 // MARK: - ViewState
 
-extension CampusSectionView.ViewState {
+extension ProfileHome.State {
 
-    init(profileHomeState: ProfileHome.State) {
-        self.campusState = profileHomeState.campusState
+    var campusSectionView: CampusSectionView.ViewState {
         let campusUserInfoPath = /CampusClientableState.State.loggedIn
-        let campusUserInfo = campusUserInfoPath.extract(from: campusState)
-        self.fullName = campusUserInfo?.fullName ?? "-"
-        self.cathedra = campusUserInfo?.subdivision.first?.name ?? "-"
+        let campusUserInfo = campusUserInfoPath.extract(from: self.campusState)
+        return CampusSectionView.ViewState(
+            campusState: self.campusState,
+            fullName: campusUserInfo?.fullName ?? "-",
+            cathedra: campusUserInfo?.subdivision.first?.name ?? "-"
+        )
     }
 
 }
@@ -119,13 +115,13 @@ extension CampusSectionView.ViewState {
 
 extension ProfileHome.Action {
 
-    init(campusSection: CampusSectionView.ViewAction) {
-        switch campusSection {
+    static func campusSectionView(_ viewAction: CampusSectionView.ViewAction) -> Self {
+        switch viewAction {
         case .logoutCampus:
-            self = .campusLogoutButtonTapped
+            return .campusLogoutButtonTapped
 
         case .loginCampus:
-            self = .campusLogin
+            return .campusLogin
         }
     }
 
@@ -138,7 +134,7 @@ struct CampusSectionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CampusSectionView(
-                store: Store(
+                viewStore: ViewStore(Store(
                     initialState: CampusSectionView.ViewState(
                         campusState: .loggedOut,
                         fullName: "",
@@ -146,14 +142,14 @@ struct CampusSectionView_Previews: PreviewProvider {
                     ),
                     reducer: Reducer.empty,
                     environment: Void()
-                )
+                ))
             )
             .smallPreview
             .padding(16)
             .background(Color.screenBackground)
 
             CampusSectionView(
-                store: Store(
+                viewStore: ViewStore(Store(
                     initialState: CampusSectionView.ViewState(
                         campusState: .loggedIn(
                             CampusUserInfo.mock
@@ -163,7 +159,7 @@ struct CampusSectionView_Previews: PreviewProvider {
                     ),
                     reducer: Reducer.empty,
                     environment: Void()
-                )
+                ))
             )
             .smallPreview
             .padding(16)

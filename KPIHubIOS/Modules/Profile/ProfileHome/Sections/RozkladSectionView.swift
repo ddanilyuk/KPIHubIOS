@@ -78,8 +78,6 @@ struct RozkladSectionView: View {
                 }
             )
 
-//            Divider( )
-
             HStack(spacing: 16) {
                 ZStack {
                     Circle()
@@ -101,8 +99,6 @@ struct RozkladSectionView: View {
                         .font(.system(.caption))
                         .foregroundColor(Color.secondary)
                 }
-
-//                Spacer(minLength: 0)
 
                 Toggle(
                     isOn: viewStore.binding(\.$week),
@@ -148,33 +144,8 @@ struct RozkladSectionView: View {
 
 // MARK: - ViewState
 
-//extension RozkladSectionView.ViewState {
-//    init(profileHomeState: ProfileHome.State) {
-//        updatedAt = profileHomeState.updatedDate
-//        rozkladState = profileHomeState.rozkladState
-//    }
-//}
-//
-//// MARK: - ViewAction
-//
-//extension ProfileHome.Action {
-//    init(rozkladSection: RozkladSectionView.ViewAction) {
-//        switch rozkladSection {
-//        case .changeGroup:
-//            self = .changeGroupButtonTapped
-//
-//        case .updateRozklad:
-//            self = .updateRozkladButtonTapped
-//
-//        case .selectGroup:
-//            self = .selectGroup
-//        }
-//    }
-//}
-
-
-
 extension ProfileHome.State {
+
     var rozkladSectionView: RozkladSectionView.ViewState {
         get {
             RozkladSectionView.ViewState(
@@ -187,9 +158,13 @@ extension ProfileHome.State {
             toggleWeek = newValue.week
         }
     }
+
 }
 
+// MARK: - ViewAction
+
 extension ProfileHome.Action {
+
     static func rozkladSectionView(_ viewAction: RozkladSectionView.ViewAction) -> Self {
         switch viewAction {
         case .changeGroup:
@@ -205,6 +180,7 @@ extension ProfileHome.Action {
             return .binding(action.pullback(\.rozkladSectionView))
         }
     }
+    
 }
 
 // MARK: - Preview

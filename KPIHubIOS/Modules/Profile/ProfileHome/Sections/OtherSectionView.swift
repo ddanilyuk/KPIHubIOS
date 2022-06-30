@@ -47,58 +47,25 @@ struct OtherSectionView: View {
 
 // MARK: - ViewState
 
-//extension OtherSectionView.ViewState {
-//
-//    init(profileHomeState: ProfileHome.State) {
-//        self._toggleWeek = profileHomeState.$toggleWeek
-//    }
-//}
+extension ProfileHome.State {
+
+    var otherSectionView: OtherSectionView.ViewState {
+        OtherSectionView.ViewState()
+    }
+
+}
 
 // MARK: - ViewAction
 
-//extension ProfileHome.Action {
-//
-//    init(otherSection: OtherSectionView.ViewAction) {
-//        switch otherSection {
-//        case .forDevelopers:
-//            self = .routeAction(.forDevelopers)
-//
-//        case let .binding(action):
-//
-//            self = .binding(action.pullback(\.view))
-//        }
-//    }
-//
-//}
-
-extension ProfileHome.State {
-    var otherSectionView: OtherSectionView.ViewState {
-        get {
-            OtherSectionView.ViewState()
-        }
-        set {
-//            let some = $toggleWeek
-//            self.isLoading = newValue.week
-//            toggleWeek = newValue.week
-//            toggleWeek = newValue.toggleWeek
-        }
-    }
-}
-
 extension ProfileHome.Action {
+
     static func otherSectionView(_ viewAction: OtherSectionView.ViewAction) -> Self {
         switch viewAction {
-//        case let .binding(action):
-//            action.keyPath
-//            switch action {
-//            case .
-//            }
-//            return .binding(action.pullback(\.otherSectionView))
-
         case .forDevelopers:
             return .routeAction(.forDevelopers)
         }
     }
+    
 }
 
 // MARK: - Preview

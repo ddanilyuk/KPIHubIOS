@@ -40,6 +40,7 @@ struct ProfileHome {
         case changeGroup
         case selectGroup
 
+        // TODO: Rename loginCampus
         case campusLogoutButtonTapped
         case campusLogout
         case campusLogin
