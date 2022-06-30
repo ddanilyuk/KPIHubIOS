@@ -45,7 +45,6 @@ struct Rozklad {
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
-//        enum SubscriberCancelId { }
         switch action {
         case .onSetup:
             return Effect.run { subscriber in
@@ -60,34 +59,17 @@ struct Rozklad {
                         }
                     }
             }
-//            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .setGroupRozklad:
-//            state.routes.popToRoot()
-////            state.routes [
-//            state.routes = [
-//                .root(
-//                    .groupRozklad(GroupRozklad.State()),
-//                    embedInNavigationView: true
-//                )
-//            ]
-//            state.routes.push(<#T##screen: ScreenProvider.State##ScreenProvider.State#>)
-            return .routeWithDelaysIfUnsupported(state.routes) { routes in
-                routes = [
-                    .root(
-                        .groupRozklad(GroupRozklad.State()),
-                        embedInNavigationView: true
-                    )
-                ]
-            }
+            state.routes = [
+                .root(
+                    .groupRozklad(GroupRozklad.State()),
+                    embedInNavigationView: true
+                )
+            ]
+            return .none
 
         case .setGroupPicker:
-//            state.routes = [
-//                .root(
-//                    .groupPicker(GroupPicker.State()),
-//                    embedInNavigationView: true
-//                )
-//            ]
             state.routes = [
                 .root(
                     .groupPicker(GroupPicker.State()),
@@ -95,14 +77,7 @@ struct Rozklad {
                 )
             ]
             return .none
-            return .routeWithDelaysIfUnsupported(state.routes) { routes in
-                routes = [
-                    .root(
-                        .groupPicker(GroupPicker.State()),
-                        embedInNavigationView: true
-                    )
-                ]
-            }
+
         case let .routeAction(_, .groupRozklad(.routeAction(.openDetails(lesson)))):
             let lessonDetailsState = LessonDetails.State(
                 lesson: lesson

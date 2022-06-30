@@ -48,7 +48,7 @@ struct LessonCellView: View {
                         }
                     }
             }
-            .frame(width: viewStore.mode.isCurrent ? 4 :2 , alignment: .center)
+            .frame(width: viewStore.mode.isCurrent ? 4 : 2 , alignment: .center)
             .frame(minHeight: 20)
         }
     }
