@@ -155,7 +155,7 @@ extension ProfileHome.State {
     var rozkladSectionView: RozkladSectionView.ViewState {
         get {
             RozkladSectionView.ViewState(
-                updatedAt: self.updatedDate,
+                updatedAt: self.lessonsUpdatedAtDate,
                 rozkladState: self.rozkladState,
                 toggleWeek: self.toggleWeek
             )
