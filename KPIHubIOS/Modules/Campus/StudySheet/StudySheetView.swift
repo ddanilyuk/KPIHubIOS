@@ -90,10 +90,13 @@ struct StudySheetView: View {
                 }
                 .animation(Animation.default, value: viewStore.cells)
             }
+            .navigationBarTitle("Поточний контроль")
+            .navigationBarTitleDisplayMode(.inline)
+            .background(Color.screenBackground)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
-        .navigationBarTitle("Поточний контроль")
-        .navigationBarTitleDisplayMode(.inline)
-        .background(Color.screenBackground)
     }
 
 }

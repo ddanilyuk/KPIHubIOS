@@ -83,7 +83,7 @@ struct CampusHomeView: View {
             }
 
         case .notLoading:
-            Text("Помилка")
+            Text("-")
 
         case .loaded:
             Text("Завантажено")

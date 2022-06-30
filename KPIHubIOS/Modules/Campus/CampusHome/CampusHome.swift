@@ -16,15 +16,8 @@ struct CampusHome {
 
         @BindableState var isLoading: Bool = false
 
-        var openSheet: Bool = false
+        var openStudySheetOnLoad: Bool = false
         var studySheetState: CampusClientableStudySheet.State = .notLoading
-
-        enum LoadingState<T: Equatable>: Equatable {
-            case notLoading
-            case loading
-            case loaded
-            case openAfterLoading
-        }
     }
 
     // MARK: - Action
@@ -90,7 +83,7 @@ struct CampusHome {
 
             case let .loaded(items):
                 state.isLoading = false
-                if state.openSheet {
+                if state.openStudySheetOnLoad {
                     return Effect(value: .routeAction(
                         .studySheet(items)
                     ))
@@ -106,7 +99,7 @@ struct CampusHome {
 
             case .loading:
                 state.isLoading = true
-                state.openSheet = true
+                state.openStudySheetOnLoad = true
                 return .none
 
             case let .loaded(items):
