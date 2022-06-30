@@ -30,6 +30,16 @@ struct RozkladClientable {
     }
 }
 
+struct ClientValue<T> {
+    let value: T
+    let commitChanges: Bool
+
+    init(_ value: T, commitChanges: Bool) {
+        self.value = value
+        self.commitChanges = commitChanges
+    }
+}
+
 struct RozkladClientableStateModule {
 
     enum State: Equatable {
@@ -38,7 +48,7 @@ struct RozkladClientableStateModule {
     }
 
     let subject: CurrentValueSubject<State, Never>
-    let setState: (State, _ commitChanges: Bool) -> Void
+    let setState: (ClientValue<State>) -> Void
     let commit: () -> Void
 
     static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientableStateModule {
@@ -55,14 +65,14 @@ struct RozkladClientableStateModule {
 
         return RozkladClientableStateModule(
             subject: subject,
-            setState: { state, commitChanges in
-                switch state {
+            setState: { request in
+                switch request.value {
                 case let .selected(group):
                     userDefaultsClient.set(group, for: .groupResponse)
                 case .notSelected:
                     userDefaultsClient.remove(for: .groupResponse)
                 }
-                if commitChanges {
+                if request.commitChanges {
                     commit()
                 }
             },
@@ -75,7 +85,7 @@ struct RozkladClientableStateModule {
             subject: CurrentValueSubject<State, Never>(
                 .selected(GroupResponse(id: UUID(), name: "ІВ-82"))
             ),
-            setState: { _, _ in },
+            setState: { _ in },
             commit: { }
         )
     }
@@ -87,10 +97,8 @@ struct RozkladClientableLessonsModule {
     let subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>
     let updatedAtSubject: CurrentValueSubject<Date?, Never>
 
-    // TODO: SetRequest
-    
-    let set: ([Lesson], _ commitChanges: Bool) -> Void
-    let modify: (Lesson, _ commitChanges: Bool) -> Void
+    let set: (ClientValue<[Lesson]>) -> Void
+    let modify: (ClientValue<Lesson>) -> Void
     let commit: () -> Void
 
     static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientableLessonsModule {
@@ -107,18 +115,19 @@ struct RozkladClientableLessonsModule {
         return RozkladClientableLessonsModule(
             subject: subject,
             updatedAtSubject: updatedAtSubject,
-            set: { lessons, commitChanges in
-                userDefaultsClient.set(IdentifiedArray(uniqueElements: lessons), for: .lessons)
+            set: { request in
+                userDefaultsClient.set(IdentifiedArray(uniqueElements: request.value), for: .lessons)
                 userDefaultsClient.set(Date(), for: .lessonsUpdatedAt)
-                if commitChanges {
+                if request.commitChanges {
                     commit()
                 }
             },
-            modify: { lesson, commitChanges in
+            modify: { request in
                 var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
-                lessons[id: lesson.id] = lesson
+                let modifiedLesson = request.value
+                lessons[id: modifiedLesson.id] = modifiedLesson
                 userDefaultsClient.set(lessons, for: .lessons)
-                if commitChanges {
+                if request.commitChanges {
                     commit()
                 }
             },
@@ -134,8 +143,8 @@ struct RozkladClientableLessonsModule {
             updatedAtSubject: CurrentValueSubject<Date?, Never>(
                 Date()
             ),
-            set: { _, _ in },
-            modify: { _, _ in },
+            set: { _ in },
+            modify: { _ in },
             commit: { }
         )
     }

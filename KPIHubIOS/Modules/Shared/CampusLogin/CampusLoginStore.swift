@@ -128,7 +128,7 @@ struct CampusLogin {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.state.setState(.selected(group), false)
+                environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -137,7 +137,7 @@ struct CampusLogin {
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):
-            environment.rozkladClient.lessons.set(lessons, false)
+            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: true))
             return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):

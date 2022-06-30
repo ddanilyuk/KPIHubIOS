@@ -85,7 +85,7 @@ struct GroupPicker {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.state.setState(.selected(group), false)
+                environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -95,7 +95,7 @@ struct GroupPicker {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.lessons.set(lessons, false)
+            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: false))
             return Effect(value: .routeAction(.done))
 
         case let .allGroupsResult(.failure(error)),

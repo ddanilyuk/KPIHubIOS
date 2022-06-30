@@ -128,7 +128,7 @@ struct ProfileHome {
                         for: .api(.group(group.id, .lessons)),
                         as: LessonsResponse.self
                     )
-                    environment.rozkladClient.state.setState(.selected(group), false)
+                    environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
                     return result.value.lessons.map { Lesson(lessonResponse: $0) }
                 }
                 return task
@@ -142,7 +142,7 @@ struct ProfileHome {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.lessons.set(lessons, true)
+            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: true))
             return .none
 
         case let .lessonsResult(.failure(error)):
@@ -167,7 +167,7 @@ struct ProfileHome {
             return .none
 
         case .changeGroup:
-            environment.rozkladClient.state.setState(.notSelected, true)
+            environment.rozkladClient.state.setState(ClientValue(.notSelected, commitChanges: false))
             return Effect(value: .routeAction(.rozklad))
 
         case .selectGroup:
