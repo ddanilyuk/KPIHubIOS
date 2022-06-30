@@ -50,7 +50,7 @@ struct Main {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClientable
+        let rozkladClient: RozkladClient
         let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
     }

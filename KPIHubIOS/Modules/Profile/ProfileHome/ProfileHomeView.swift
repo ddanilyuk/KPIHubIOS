@@ -74,7 +74,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                         environment: ProfileHome.Environment(
                             apiClient: .failing,
                             userDefaultsClient: mockDependencies.userDefaults,
-                            rozkladClient: .live(userDefaultsClient: mockDependencies.userDefaults),
+                            rozkladClient: .mock(),
                             campusClient: .live(apiClient: .failing, userDefaultsClient: mockDependencies.userDefaults, keychainClient: KeychainClient.live())
                         )
                     )
@@ -92,7 +92,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                         environment: ProfileHome.Environment(
                             apiClient: .failing,
                             userDefaultsClient: mockDependencies.userDefaults,
-                            rozkladClient: .live(userDefaultsClient: mockDependencies.userDefaults),
+                            rozkladClient: .mock(),
                             campusClient: .live(apiClient: .failing, userDefaultsClient: mockDependencies.userDefaults, keychainClient: KeychainClient.live())
                         )
                     )

@@ -41,7 +41,7 @@ struct EditLessonTeachers {
 
     struct Environment {
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClientable
+        let rozkladClient: RozkladClient
     }
 
     // MARK: - Reducer

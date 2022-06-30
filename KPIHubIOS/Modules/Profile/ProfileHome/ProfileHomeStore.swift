@@ -14,7 +14,7 @@ struct ProfileHome {
     struct State: Equatable {
 
         var updatedDate: Date?
-        var rozkladState: RozkladClientableStateModule.State = .notSelected
+        var rozkladState: RozkladClientState.State = .notSelected
         var campusState: CampusClient.StateModule.State = .loggedOut
 
         var confirmationDialog: ConfirmationDialogState<Action>?
@@ -28,7 +28,7 @@ struct ProfileHome {
         case onAppear
 
         case setUpdatedDate(Date?)
-        case setRozkladState(RozkladClientableStateModule.State)
+        case setRozkladState(RozkladClientState.State)
         case setCampusState(CampusClient.StateModule.State)
 
         case updateRozkladButtonTapped
@@ -60,7 +60,7 @@ struct ProfileHome {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClientable
+        let rozkladClient: RozkladClient
         let campusClient: CampusClient
     }
 

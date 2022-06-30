@@ -120,7 +120,7 @@ struct GroupRozklad {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClientable
+        let rozkladClient: RozkladClient
         let currentDateClient: CurrentDateClient
     }
 

@@ -93,7 +93,7 @@ struct EditLessonTeachersView_Previews: PreviewProvider {
                     reducer: EditLessonTeachers.reducer,
                     environment: EditLessonTeachers.Environment(
                         userDefaultsClient: mockDependencies.userDefaults,
-                        rozkladClient: .live(userDefaultsClient: mockDependencies.userDefaults)
+                        rozkladClient: .mock()
                     )
                 )
             )
