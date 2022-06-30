@@ -40,6 +40,10 @@ struct GroupPickerView: View {
             }
             .navigationTitle("Оберіть групу")
             .loadable(viewStore.binding(\.$isLoading))
+            .alert(
+                self.store.scope(state: \.alert),
+                dismiss: .dismissAlert
+            )
         }
     }
 

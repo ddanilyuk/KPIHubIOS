@@ -69,6 +69,10 @@ struct CampusLoginView: View {
             }
             .background(Color.screenBackground)
             .loadable(viewStore.binding(\.$isLoading))
+            .alert(
+                self.store.scope(state: \.alert),
+                dismiss: .dismissAlert
+            )
         }
     }
 }

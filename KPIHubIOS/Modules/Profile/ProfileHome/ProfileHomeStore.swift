@@ -130,11 +130,7 @@ struct ProfileHome {
 
         case let .lessonsResult(.failure(error)):
             state.isLoading = false
-            state.alert = AlertState(
-                title: TextState("Error"),
-                message: TextState("\(error.localizedDescription)"),
-                dismissButton: .default(TextState("Ok"))
-            )
+            state.alert = AlertState.error(error)
             return .none
 
         case .changeGroupButtonTapped:

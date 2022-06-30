@@ -29,6 +29,7 @@ struct CampusLogin {
 
         var loginButtonEnabled: Bool = true
 
+        var alert: AlertState<Action>?
         let mode: Mode
     }
 
@@ -40,6 +41,7 @@ struct CampusLogin {
         case groupSearchResult(Result<GroupResponse, APIError>)
         case lessonsResult(Result<[Lesson], NSError>)
 
+        case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
@@ -158,6 +160,11 @@ struct CampusLogin {
         case let .campusUserInfoResult(.failure(error)),
              let .lessonsResult(.failure(error)):
             state.isLoading = false
+            state.alert = AlertState.error(error)
+            return .none
+
+        case .dismissAlert:
+            state.alert = nil
             return .none
 
         case .binding:

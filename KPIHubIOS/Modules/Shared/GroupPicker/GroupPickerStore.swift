@@ -13,17 +13,11 @@ struct GroupPicker {
     // MARK: - State
 
     struct State: Equatable {
-        var groups: [GroupResponse]
-        var searchedGroups: [GroupResponse]
-        @BindableState var searchedText: String
-        @BindableState var isLoading: Bool
-
-        init() {
-            groups = []
-            searchedGroups = []
-            searchedText = ""
-            isLoading = true
-        }
+        var groups: [GroupResponse] = []
+        var searchedGroups: [GroupResponse] = []
+        @BindableState var searchedText: String = ""
+        @BindableState var isLoading: Bool = true
+        var alert: AlertState<Action>?
     }
 
     // MARK: - Action
@@ -36,6 +30,7 @@ struct GroupPicker {
         case allGroupsResult(Result<[GroupResponse], NSError>)
         case lessonsResult(Result<[Lesson], NSError>)
 
+        case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
@@ -101,6 +96,7 @@ struct GroupPicker {
         case let .allGroupsResult(.failure(error)),
              let .lessonsResult(.failure(error)):
             state.isLoading = false
+            state.alert = AlertState.error(error)
             return .none
 
         case .binding(\.$searchedText):
@@ -114,6 +110,10 @@ struct GroupPicker {
                 }
                 state.searchedGroups = filtered
             }
+            return .none
+
+        case .dismissAlert:
+            state.alert = nil
             return .none
 
         case .binding:
