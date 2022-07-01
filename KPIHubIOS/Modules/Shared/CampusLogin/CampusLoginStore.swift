@@ -21,13 +21,21 @@ struct CampusLogin {
             case campusAndGroup
         }
 
+        // MARK: - Field
+
+        enum Field: Int, CaseIterable {
+            case username
+            case password
+        }
+
         // MARK: - Properties
 
+        @BindableState var focusedField: Field?
         @BindableState var username: String = ""
         @BindableState var password: String = ""
         @BindableState var isLoading: Bool = false
 
-        var loginButtonEnabled: Bool = true
+        var loginButtonEnabled: Bool = false
 
         var alert: AlertState<Action>?
         let mode: Mode

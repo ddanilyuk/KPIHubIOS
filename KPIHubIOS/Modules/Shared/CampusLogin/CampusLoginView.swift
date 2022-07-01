@@ -10,13 +10,8 @@ import ComposableArchitecture
 
 struct CampusLoginView: View {
 
-    private enum Field: Int, CaseIterable {
-        case username
-        case password
-    }
-
     let store: Store<CampusLogin.State, CampusLogin.Action>
-    @FocusState private var focusedField: Field?
+    @FocusState private var focusedField: CampusLogin.State.Field?
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -73,6 +68,7 @@ struct CampusLoginView: View {
                 self.store.scope(state: \.alert),
                 dismiss: .dismissAlert
             )
+            .synchronize(viewStore.binding(\.$focusedField), self.$focusedField)
         }
     }
 }

@@ -41,6 +41,7 @@
 		5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137F0128440E6D00514263 /* LessonDetailsStore.swift */; };
 		5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137F0328440E7400514263 /* LessonDetailsView.swift */; };
 		5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F58286E44AA00D13782 /* AlertState+Error.swift */; };
+		5F198F5B286F83AA00D13782 /* View+sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F5A286F83AA00D13782 /* View+sync.swift */; };
 		5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5F28FB8C2858D55B00579A75 /* KeychainAccess */; };
 		5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28FB8F2858D65500579A75 /* KeychainClient.swift */; };
 		5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4629284569DD00202DA5 /* LessonCellStore.swift */; };
@@ -184,6 +185,7 @@
 		5F137F0128440E6D00514263 /* LessonDetailsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsStore.swift; sourceTree = "<group>"; };
 		5F137F0328440E7400514263 /* LessonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsView.swift; sourceTree = "<group>"; };
 		5F198F58286E44AA00D13782 /* AlertState+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertState+Error.swift"; sourceTree = "<group>"; };
+		5F198F5A286F83AA00D13782 /* View+sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+sync.swift"; sourceTree = "<group>"; };
 		5F28FB8F2858D65500579A75 /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		5F5F4629284569DD00202DA5 /* LessonCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellStore.swift; sourceTree = "<group>"; };
 		5F5F462B284569E700202DA5 /* LessonCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellView.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				5F856A3D286471AE00AB63AC /* Shape+Ext.swift */,
 				5F67124D2865CA1600A57E10 /* View+Preview.swift */,
 				5FEE632D286DA06A002F7E9D /* Publisher+Ext.swift */,
+				5F198F5A286F83AA00D13782 /* View+sync.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1127,6 +1130,7 @@
 				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
 				5F667CFC284E3ED0006D3AB7 /* LessonDetailsTitleView.swift in Sources */,
 				5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */,
+				5F198F5B286F83AA00D13782 /* View+sync.swift in Sources */,
 				5F5F4648284900A000202DA5 /* GroupRozkladWeekPicker.swift in Sources */,
 				5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */,
 				5F69BBDB284ACC4100FED83D /* APIClient.swift in Sources */,
