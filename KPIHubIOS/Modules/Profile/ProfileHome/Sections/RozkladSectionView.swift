@@ -69,9 +69,9 @@ struct RozkladSectionView: View {
             value: .text(name),
             image: {
                 Image(systemName: "person.2")
-                    .foregroundColor(Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255))
+                    .foregroundColor(Color.indigo.lighter(by: 0.9))
             },
-            imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+            imageBackgroundColor: Color.indigo
         )
     }
 
@@ -81,9 +81,9 @@ struct RozkladSectionView: View {
             value: .date(viewStore.updatedAt),
             image: {
                 Image(systemName: "clock")
-                    .foregroundColor(.indigo.lighter(by: 0.9))
+                    .foregroundColor(.yellow.lighter(by: 0.9))
             },
-            imageBackgroundColor: .indigo,
+            imageBackgroundColor: .yellow,
             rightView: {
                 Button(
                     action: { viewStore.send(.updateRozklad) },
@@ -101,10 +101,10 @@ struct RozkladSectionView: View {
         HStack(spacing: 16) {
             ZStack {
                 Circle()
-                    .fill(Color.teal)
+                    .fill(Color.cyan)
 
                 Image(systemName: "calendar")
-                    .foregroundColor(Color.teal.lighter(by: 0.9))
+                    .foregroundColor(Color.cyan.lighter(by: 0.9))
                     .font(.system(.body))
             }
             .frame(width: 35, height: 35)

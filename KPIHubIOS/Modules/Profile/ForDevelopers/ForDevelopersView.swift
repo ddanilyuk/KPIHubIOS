@@ -90,7 +90,7 @@ struct ForDevelopersView: View {
                             Image("telegram")
                                 .resizable()
                         },
-                        imageBackgroundColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                        imageBackgroundColor: Color.yellow
                     )
 
                     ProfileCellView(

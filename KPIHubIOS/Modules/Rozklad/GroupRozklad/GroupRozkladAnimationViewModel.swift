@@ -68,7 +68,6 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
             let newPosition = GroupRozklad.State.Section.Position(
                 index: min(max(0, calculateIndex()), 11)
             )
-            debug()
             if newPosition != renderedPosition {
                 DispatchQueue.main.async { [self] in
                     position = newPosition

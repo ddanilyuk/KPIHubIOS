@@ -19,8 +19,8 @@ struct LessonDetailsTypeSection: View {
                     LargeTagView(
                         icon: Image(systemName: "graduationcap"),
                         text: type,
-                        backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                        accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                        backgroundColor: Color.cyan.lighter(by: 0.9),
+                        accentColor: Color.cyan
                     )
                     Spacer()
                 }

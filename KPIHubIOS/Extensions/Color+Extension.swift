@@ -8,17 +8,22 @@
 import SwiftUI
 
 extension Color {
+
     static var screenBackground: Color {
         return Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)
     }
+
 }
 
 extension Color {
-    public func lighter(by amount: CGFloat = 0.2) -> Self { Self(UIColor(self).lighter(by: amount)) }
-    public func darker(by amount: CGFloat = 0.2) -> Self { Self(UIColor(self).darker(by: amount)) }
+
+    func lighter(by amount: CGFloat = 0.2) -> Self { Self(UIColor(self).lighter(by: amount)) }
+    func darker(by amount: CGFloat = 0.2) -> Self { Self(UIColor(self).darker(by: amount)) }
+
 }
 
 extension UIColor {
+
     func mix(with color: UIColor, amount: CGFloat) -> Self {
         var red1: CGFloat = 0
         var green1: CGFloat = 0
@@ -43,4 +48,5 @@ extension UIColor {
 
     func lighter(by amount: CGFloat = 0.2) -> Self { mix(with: .white, amount: amount) }
     func darker(by amount: CGFloat = 0.2) -> Self { mix(with: .black, amount: amount) }
+    
 }

@@ -86,12 +86,13 @@ struct LessonCellView: View {
                     .font(.system(.callout).bold())
                     .lineLimit(2)
 
+
                 ForEach(viewStore.lesson.teachers ?? [], id: \.self) { teacher in
                     SmallTagView(
                         icon: Image(systemName: "person"),
                         text: teacher.shortName,
-                        backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                        accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                        backgroundColor: Color.indigo.lighter(by: 0.9),
+                        accentColor: Color.indigo
                     )
                 }
 
@@ -99,15 +100,15 @@ struct LessonCellView: View {
                     SmallTagView(
                         icon: Image(systemName: "location"),
                         text: viewStore.lesson.locations?.first ?? "-",
-                        backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                        accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                        backgroundColor: Color.yellow.lighter(by: 0.9),
+                        accentColor: Color.yellow
                     )
 
                     SmallTagView(
                         icon: Image(systemName: "graduationcap"),
                         text: viewStore.lesson.type,
-                        backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-                        accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                        backgroundColor: Color.cyan.lighter(by: 0.9),
+                        accentColor: Color.cyan
                     )
                 }
             }

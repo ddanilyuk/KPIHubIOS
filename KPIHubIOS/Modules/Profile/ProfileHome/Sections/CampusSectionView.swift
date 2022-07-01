@@ -45,9 +45,9 @@ struct CampusSectionView: View {
                 value: .text(viewStore.fullName),
                 image: {
                     Image(systemName: "person")
-                        .foregroundColor(Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255))
+                        .foregroundColor(Color.mint.lighter(by: 0.9))
                 },
-                imageBackgroundColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                imageBackgroundColor: Color.mint
             )
 
             ProfileCellView(
@@ -55,9 +55,9 @@ struct CampusSectionView: View {
                 value: .text(viewStore.cathedra),
                 image: {
                     Image(systemName: "graduationcap")
-                        .foregroundColor(Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255))
+                        .foregroundColor(Color.cyan.lighter(by: 0.9))
                 },
-                imageBackgroundColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                imageBackgroundColor: Color.cyan
             )
 
             Divider()

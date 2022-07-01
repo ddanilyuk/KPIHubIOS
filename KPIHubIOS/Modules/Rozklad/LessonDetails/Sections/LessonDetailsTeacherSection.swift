@@ -30,8 +30,8 @@ struct LessonDetailsTeacherSection: View {
                         LargeTagView(
                             icon: Image(systemName: "person"),
                             text: teacher.shortName,
-                            backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                            accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                            backgroundColor: Color.indigo.lighter(by: 0.9),
+                            accentColor: Color.indigo
                         )
                         Spacer()
                     }

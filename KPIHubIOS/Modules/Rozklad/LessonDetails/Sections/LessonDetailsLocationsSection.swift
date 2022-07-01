@@ -26,8 +26,8 @@ struct LessonDetailsLocationsSection: View {
                         LargeTagView(
                             icon: Image(systemName: "location"),
                             text: location,
-                            backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                            accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                            backgroundColor: Color.yellow.lighter(by: 0.9),
+                            accentColor: Color.yellow
                         )
 
                         Spacer()

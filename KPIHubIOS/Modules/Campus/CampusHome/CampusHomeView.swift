@@ -12,26 +12,23 @@ struct CampusHomeView: View {
 
     let store: Store<CampusHome.State, CampusHome.Action>
 
-    let accentColor = Color(red: 250 / 255, green: 160 / 255, blue: 90 / 255)
-    let backgroundColor = Color(red: 254 / 255, green: 244 / 255, blue: 235 / 255)
-
     var body: some View {
         WithViewStore(store) { viewStore in
             List {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(backgroundColor)
-                        .shadow(color: Color(red: 237 / 255, green: 107 / 255, blue: 7 / 255).opacity(0.15), radius: 12, x: 0, y: 6)
+                        .fill(.orange.lighter(by: 0.85))
+                        .shadow(color: .orange.opacity(0.15), radius: 12, x: 0, y: 6)
 
                     VStack {
                         HStack(spacing: 16) {
                             ZStack {
                                 Circle()
-                                    .fill(accentColor)
+                                    .fill(.orange)
 
                                 Image(systemName: "graduationcap")
                                     .font(.system(.body).bold())
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.orange.lighter(by: 0.9))
                             }
                             .frame(width: 40, height: 40)
 
@@ -69,7 +66,6 @@ struct CampusHomeView: View {
             .navigationTitle("Кампус")
             .loadable(viewStore.binding(\.$isLoading))
         }
-
     }
 
     @ViewBuilder

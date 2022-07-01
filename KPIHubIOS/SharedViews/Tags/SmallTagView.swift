@@ -48,8 +48,8 @@ struct SmallTagView_Previews: PreviewProvider {
         SmallTagView(
             icon: Image(systemName: "graduationcap"),
             text: "Практика",
-            backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-            accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+            backgroundColor: Color.cyan.lighter(by: 0.9),
+            accentColor: Color.cyan
         )
         .previewLayout(.fixed(width: 200, height: 100))
     }
