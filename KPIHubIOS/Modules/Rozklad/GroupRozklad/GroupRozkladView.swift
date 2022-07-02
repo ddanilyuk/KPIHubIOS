@@ -46,9 +46,9 @@ struct GroupRozkladView: View {
                     selectedDay: $selectedDay,
                     displayedWeek: $displayedWeek,
                     displayedDay: $displayedDay,
+                    headerBackgroundOpacity: $headerBackgroundOpacity,
                     currentWeek: viewStore.currentWeek,
-                    currentDay: viewStore.currentDay,
-                    headerBackgroundOpacity: $headerBackgroundOpacity
+                    currentDay: viewStore.currentDay
                 )
                 .modifier(RectModifier { rect in
                     headerHeight = rect.height - 4
@@ -98,7 +98,7 @@ struct GroupRozkladView: View {
                     }
                     .overlay(alignment: .topTrailing) {
                         GroupRozkladScrollToView(
-                            mode: .init(currentLesson: viewStore.state.currentLessonId)
+                            mode: .init(currentLesson: viewStore.state.currentLesson)
                         )
                         .onTapGesture {
                             viewStore.send(.scrollToNearest())

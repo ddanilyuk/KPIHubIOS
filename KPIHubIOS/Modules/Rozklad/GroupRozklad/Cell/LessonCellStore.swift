@@ -12,13 +12,9 @@ struct LessonCell {
 
     // MARK: - State
 
-    struct State: Equatable, Identifiable, Hashable {
+    struct State: Equatable, Identifiable {
         let lesson: Lesson
         var mode: LessonMode = .default
-
-        func hash(into hasher: inout Hasher) {
-            hasher.combine(id)
-        }
 
         var id: Lesson.ID {
             return lesson.id
@@ -40,7 +36,6 @@ struct LessonCell {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        enum SubscriberCancelId {}
         switch action {
         case .onTap:
             return .none
@@ -49,8 +44,7 @@ struct LessonCell {
             return .none
 
         case .onDisappear:
-            return .cancel(id: SubscriberCancelId.self)
-
+            return .none
         }
     }
 

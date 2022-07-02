@@ -12,7 +12,7 @@ import UIKit
 
 struct CurrentDateClient {
 
-    let currentLessonId: CurrentValueSubject<CurrentLesson?, Never>
+    let currentLesson: CurrentValueSubject<CurrentLesson?, Never>
     let nextLessonId: CurrentValueSubject<Lesson.ID?, Never>
     let currentDay: CurrentValueSubject<Lesson.Day?, Never>
     let currentWeek: CurrentValueSubject<Lesson.Week, Never>
@@ -38,7 +38,7 @@ extension CurrentDateClient {
 
         let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(nil)
         let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
-        let currentLessonIdSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
+        let currentLessonSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
         let nextLessonIdSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
         let updatedSubject = CurrentValueSubject<Date, Never>(Date())
 
@@ -85,7 +85,7 @@ extension CurrentDateClient {
                     currentWeek: currentWeek,
                     currentDay: currentDay
                 )
-                currentLessonIdSubject.value = currentLesson
+                currentLessonSubject.value = currentLesson
                 nextLessonIdSubject.value = nextLesson.id
             }
 
@@ -111,7 +111,7 @@ extension CurrentDateClient {
         }
 
         return .init(
-            currentLessonId: currentLessonIdSubject,
+            currentLesson: currentLessonSubject,
             nextLessonId: nextLessonIdSubject,
             currentDay: currentDaySubject,
             currentWeek: currentWeekSubject,
@@ -213,7 +213,7 @@ extension CurrentDateClient {
         let updatedSubject = CurrentValueSubject<Date, Never>(Date())
 
         return .init(
-            currentLessonId: currentLessonIdSubject,
+            currentLesson: currentLessonIdSubject,
             nextLessonId: nextLessonIdSubject,
             currentDay: currentDaySubject,
             currentWeek: currentWeekSubject,

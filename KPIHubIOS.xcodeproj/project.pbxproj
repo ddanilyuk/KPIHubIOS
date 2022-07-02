@@ -42,6 +42,9 @@
 		5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137F0328440E7400514263 /* LessonDetailsView.swift */; };
 		5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F58286E44AA00D13782 /* AlertState+Error.swift */; };
 		5F198F5B286F83AA00D13782 /* View+sync.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F5A286F83AA00D13782 /* View+sync.swift */; };
+		5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F5C28704DE300D13782 /* GroupRozkladSection.swift */; };
+		5F198F5F2870511200D13782 /* SafeAreaInsetsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F5E2870511200D13782 /* SafeAreaInsetsKey.swift */; };
+		5F198F612870513300D13782 /* View+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F198F602870513300D13782 /* View+cornerRadius.swift */; };
 		5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5F28FB8C2858D55B00579A75 /* KeychainAccess */; };
 		5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F28FB8F2858D65500579A75 /* KeychainClient.swift */; };
 		5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F5F4629284569DD00202DA5 /* LessonCellStore.swift */; };
@@ -186,6 +189,9 @@
 		5F137F0328440E7400514263 /* LessonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsView.swift; sourceTree = "<group>"; };
 		5F198F58286E44AA00D13782 /* AlertState+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertState+Error.swift"; sourceTree = "<group>"; };
 		5F198F5A286F83AA00D13782 /* View+sync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+sync.swift"; sourceTree = "<group>"; };
+		5F198F5C28704DE300D13782 /* GroupRozkladSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladSection.swift; sourceTree = "<group>"; };
+		5F198F5E2870511200D13782 /* SafeAreaInsetsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInsetsKey.swift; sourceTree = "<group>"; };
+		5F198F602870513300D13782 /* View+cornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+cornerRadius.swift"; sourceTree = "<group>"; };
 		5F28FB8F2858D65500579A75 /* KeychainClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainClient.swift; sourceTree = "<group>"; };
 		5F5F4629284569DD00202DA5 /* LessonCellStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellStore.swift; sourceTree = "<group>"; };
 		5F5F462B284569E700202DA5 /* LessonCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCellView.swift; sourceTree = "<group>"; };
@@ -354,6 +360,8 @@
 				5F67124D2865CA1600A57E10 /* View+Preview.swift */,
 				5FEE632D286DA06A002F7E9D /* Publisher+Ext.swift */,
 				5F198F5A286F83AA00D13782 /* View+sync.swift */,
+				5F198F5E2870511200D13782 /* SafeAreaInsetsKey.swift */,
+				5F198F602870513300D13782 /* View+cornerRadius.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -490,6 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137EFC28440DF500514263 /* GroupRozkladStore.swift */,
+				5F198F5C28704DE300D13782 /* GroupRozkladSection.swift */,
 				5F137EFE28440DFD00514263 /* GroupRozkladView.swift */,
 				5F7C5905285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift */,
 				5F5F46442849005300202DA5 /* Subviews */,
@@ -1124,6 +1133,7 @@
 				5F97F11B284D5A5800DB0576 /* EditLessonNamesStore.swift in Sources */,
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
+				5F198F612870513300D13782 /* View+cornerRadius.swift in Sources */,
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
 				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
@@ -1180,6 +1190,7 @@
 				5F69BBDD284CBF7A00FED83D /* TCARouter+EmptyScreen.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */,
+				5F198F5F2870511200D13782 /* SafeAreaInsetsKey.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */,
@@ -1217,6 +1228,7 @@
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */,
 				5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */,
+				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,

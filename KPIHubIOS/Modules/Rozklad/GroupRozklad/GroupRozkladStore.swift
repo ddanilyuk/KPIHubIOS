@@ -17,72 +17,27 @@ struct GroupRozklad {
 
         var currentDay: Lesson.Day?
         var currentWeek: Lesson.Week = .first
-        var currentLessonId: CurrentLesson?
+        var currentLesson: CurrentLesson?
         var nextLessonId: Lesson.ID?
 
         var groupName: String = ""
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
 
-        var isShown: Bool = false
+        var isAppeared: Bool = false
 
-        @BindableState var isAlreadyAppeared: Bool = false
-        var scrollOnAppear: Bool = false
+        @BindableState var needToScrollOnAppear: Bool = false
         var scrollTo: Lesson.ID?
 
         var lessonCells: IdentifiedArrayOf<LessonCell.State> {
             get {
                 sections
                     .map { $0.lessonCells }
-                    .reduce([], {
-                        var partialResult = $0
-                        partialResult.append(contentsOf: $1.elements)
-                        return partialResult
-                    })
+                    .reduce(into: [], { $0.append(contentsOf: $1.elements) })
             }
             set {
                 lessons = IdentifiedArrayOf(uniqueElements: newValue.map { $0.lesson })
                 sections = [State.Section](lessons: lessons)
-            }
-        }
-
-        struct Section: Equatable, Identifiable {
-
-            static func id(week: Lesson.Week, day: Lesson.Day) -> String {
-                "\(Section.self)\(week.rawValue)\(day.rawValue)"
-            }
-
-            let position: Position
-            var lessonCells: IdentifiedArrayOf<LessonCell.State>
-
-            var id: String {
-                Section.id(week: position.week, day: position.day)
-            }
-
-            var index: Int {
-                position.index
-            }
-
-            struct Position: Equatable, Identifiable {
-
-                static var count: Int {
-                    Lesson.Week.allCases.count * Lesson.Day.allCases.count
-                }
-
-                static func index(week: Lesson.Week, day: Lesson.Day) -> Int {
-                    (week.rawValue - 1) * 6 + (day.rawValue - 1)
-                }
-
-                let week: Lesson.Week
-                let day: Lesson.Day
-
-                var id: Int {
-                    index
-                }
-
-                var index: Int {
-                    Position.index(week: week, day: day)
-                }
             }
         }
 
@@ -129,13 +84,13 @@ struct GroupRozklad {
         enum SubscriberCancelId { }
         switch action {
         case .onAppear:
-            state.isShown = true
+            state.isAppeared = true
             return Effect.merge(
                 Effect(value: .updateCurrentDate),
                 Effect.concatenate(
                     Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
-                    Effect(value: .scrollToNearest(!state.isAlreadyAppeared)),
-                    Effect(value: .binding(.set(\.$isAlreadyAppeared, true)))
+                    Effect(value: .scrollToNearest(state.needToScrollOnAppear)),
+                    Effect(value: .binding(.set(\.$needToScrollOnAppear, false)))
                 ),
                 Effect.run { subscriber in
                     environment.rozkladClient.lessons.subject
@@ -157,28 +112,28 @@ struct GroupRozklad {
             .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .onDisappear:
-            state.isShown = false
+            state.isAppeared = false
             return .none
 
         case .updateCurrentDate:
-            let oldCurrentLessonId = state.currentLessonId
+            let oldCurrentLesson = state.currentLesson
             let oldNextLessonId = state.nextLessonId
             state.currentDay = environment.currentDateClient.currentDay.value
             state.currentWeek = environment.currentDateClient.currentWeek.value
-            state.currentLessonId = environment.currentDateClient.currentLessonId.value
+            state.currentLesson = environment.currentDateClient.currentLesson.value
             state.nextLessonId = environment.currentDateClient.nextLessonId.value
             state.sections = [State.Section](
                 lessons: state.lessons,
-                currentLesson: state.currentLessonId,
+                currentLesson: state.currentLesson,
                 nextLesson: state.nextLessonId
             )
-            if oldCurrentLessonId?.lessonId != state.currentLessonId?.lessonId || oldNextLessonId != state.nextLessonId {
-                if state.isShown {
+            if oldCurrentLesson?.lessonId != state.currentLesson?.lessonId || oldNextLessonId != state.nextLessonId {
+                if state.isAppeared {
                     return Effect(value: .scrollToNearest())
                         .delay(for: 0.2, scheduler: DispatchQueue.main)
                         .eraseToEffect()
                 } else {
-                    state.isAlreadyAppeared = false
+                    state.needToScrollOnAppear = true
                     return .none
                 }
 
@@ -191,14 +146,14 @@ struct GroupRozklad {
             state.lessons = lessons
             state.sections = [State.Section](
                 lessons: state.lessons,
-                currentLesson: state.currentLessonId,
+                currentLesson: state.currentLesson,
                 nextLesson: state.nextLessonId
             )
             return .none
 
-        case let .scrollToNearest(condition):
-            if condition {
-                let scrollTo = state.currentLessonId?.lessonId ?? state.nextLessonId
+        case let .scrollToNearest(needToScroll):
+            if needToScroll {
+                let scrollTo = state.currentLesson?.lessonId ?? state.nextLessonId
                 state.scrollTo = scrollTo
             }
             return .none
@@ -236,76 +191,5 @@ struct GroupRozklad {
             ),
         coreReducer
     )
-
-}
-
-// MARK: - GroupRozklad.State.Section.Position
-
-extension GroupRozklad.State.Section.Position {
-
-    init(index: Int) {
-        switch index {
-        case (0..<6):
-            week = .first
-            day = Lesson.Day(rawValue: index + 1) ?? .monday
-
-        case (6..<12):
-            week = .second
-            day = Lesson.Day(rawValue: index - 5) ?? .monday
-
-        default:
-            assertionFailure("Invalid index")
-            week = .first
-            day = .monday
-        }
-    }
-
-}
-
-// MARK: - Array + GroupRozklad.State.Section
-
-extension Array where Element == GroupRozklad.State.Section {
-
-    static func combine<T, V>(_ firsts: [T], _ seconds: [V]) -> [(T, V)] {
-        var result: [(T, V)] = []
-        for first in firsts {
-            for second in seconds {
-                result.append((first, second))
-            }
-        }
-        return result
-    }
-
-    init(
-        lessons: IdentifiedArrayOf<Lesson>,
-        currentLesson: CurrentLesson? = nil,
-        nextLesson: Lesson.ID? = nil
-    ) {
-        let emptyScheduleDays = Array.combine(Lesson.Week.allCases, Lesson.Day.allCases)
-            .map {
-                GroupRozklad.State.Section(
-                    position: .init(week: $0, day: $1),
-                    lessonCells: []
-                )
-            }
-        self = lessons.reduce(into: emptyScheduleDays) { partialResult, lesson in
-            var mode: LessonMode = .default
-            if lesson.id == currentLesson?.lessonId {
-                mode = .current(currentLesson?.percent ?? 0)
-            } else if lesson.id == nextLesson {
-                mode = .next
-            }
-            let lessonState = LessonCell.State(
-                lesson: lesson,
-                mode: mode
-            )
-            partialResult[
-                ScheduleDay.index(
-                    week: lesson.week,
-                    day: lesson.day
-                )
-            ].lessonCells.append(lessonState)
-        }
-    }
 
 }

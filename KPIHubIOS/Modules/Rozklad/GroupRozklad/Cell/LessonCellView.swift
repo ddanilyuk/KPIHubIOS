@@ -115,6 +115,7 @@ struct LessonCellView: View {
             .padding(16)
         }
     }
+    
 }
 
 // MARK: - Preview

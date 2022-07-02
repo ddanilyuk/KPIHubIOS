@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Change actions
 struct GroupRozkladWeekPicker: View {
 
     @Binding var selectedWeek: Lesson.Week?

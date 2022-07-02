@@ -17,16 +17,11 @@ struct LessonDetails {
         var mode: LessonMode = .default
 
         @BindableState var isEditing: Bool = false
-
-        init(lesson: Lesson) {
-            self.lesson = lesson
-        }
     }
 
     // MARK: - Action
 
     enum Action: Equatable, BindableAction {
-
         case onAppear
 
         case updateCurrentDate
@@ -59,12 +54,12 @@ struct LessonDetails {
         switch action {
         case .onAppear:
             let lessonId = state.lesson.id
-            return Effect.concatenate(
+            return Effect.merge(
                 Effect(value: .updateCurrentDate),
                 Effect.run { subscriber in
                     environment.rozkladClient.lessons.subject
-                        .receive(on: DispatchQueue.main)
                         .compactMap { $0[id: lessonId] }
+                        .receive(on: DispatchQueue.main)
                         .sink { lesson in
                             subscriber.send(.updateLesson(lesson))
                         }
@@ -82,7 +77,7 @@ struct LessonDetails {
 
         case .updateCurrentDate:
             let lessonId = state.lesson.id
-            let currentLesson = environment.currentDateClient.currentLessonId.value
+            let currentLesson = environment.currentDateClient.currentLesson.value
             let nextLessonId = environment.currentDateClient.nextLessonId.value
 
             if let currentLesson = currentLesson, lessonId == currentLesson.lessonId {
