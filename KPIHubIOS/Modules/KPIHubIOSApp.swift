@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Routes
 import ComposableArchitecture
 
 @main
