@@ -55,9 +55,9 @@ struct App {
         let currentDateClient: CurrentDateClient
 
         static var live: Self {
+            let appConfiguration: AppConfiguration = .live(bundle: Bundle.main)
             let apiClient: APIClient = .live(
-//                router: rootRouter.baseURL("http://192.168.31.89:8080")
-                router: rootRouter.baseURL("http://kpihub.xyz")
+                router: rootRouter.baseURL(appConfiguration.apiURL)
             )
             let userDefaultsClient: UserDefaultsClientable = .live()
             let keychainClient: KeychainClientable = .live()

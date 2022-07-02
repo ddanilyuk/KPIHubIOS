@@ -6,6 +6,10 @@
 	<array>
 		<string>uk</string>
 	</array>
+	<key>KPIHubIOS_APP_NAME</key>
+	<string>$(KPIHubIOS_APP_NAME)</string>
+	<key>KPIHubIOS_ENVIRONMENT</key>
+	<string>$(KPIHubIOS_ENVIRONMENT)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
