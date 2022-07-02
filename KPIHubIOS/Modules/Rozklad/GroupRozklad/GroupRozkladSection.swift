@@ -121,7 +121,7 @@ extension Array where Element == GroupRozklad.State.Section {
                 mode: mode
             )
             partialResult[
-                ScheduleDay.index(
+                GroupRozklad.State.Section.Position.index(
                     week: lesson.week,
                     day: lesson.day
                 )

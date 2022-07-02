@@ -64,7 +64,7 @@ struct GroupPicker {
             let task: Effect<[GroupResponse], Error> = Effect.task {
                 let result = try await environment.apiClient.decodedResponse(
                     for: .api(.groups(.all)),
-                    as: AllGroupsResponse.self
+                    as: GroupsResponse.self
                 )
                 return result.value.groups
             }
