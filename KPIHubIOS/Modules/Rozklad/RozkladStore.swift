@@ -24,8 +24,9 @@ struct Rozklad {
     // MARK: - Action
 
     enum Action: Equatable, IdentifiedRouterAction {
-
         case onSetup
+
+        case updateRozkladState(RozkladClientState.State)
         case setGroupRozklad
         case setGroupPicker
 
@@ -47,17 +48,30 @@ struct Rozklad {
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onSetup:
-            return Effect.run { subscriber in
-                environment.rozkladClient.state.subject
-                    .receive(on: DispatchQueue.main)
-                    .sink { state in
-                        switch state {
-                        case .selected:
-                            subscriber.send(.setGroupRozklad)
-                        case .notSelected:
-                            subscriber.send(.setGroupPicker)
+            return Effect.merge(
+                Effect(value: .updateRozkladState(environment.rozkladClient.state.subject.value)),
+                Effect.run { subscriber in
+                    environment.rozkladClient.state.subject
+                        .dropFirst()
+                        .removeDuplicates()
+                        .receive(on: DispatchQueue.main)
+                        .sink { state in
+                            switch state {
+                            case .selected:
+                                subscriber.send(.setGroupRozklad)
+                            case .notSelected:
+                                subscriber.send(.setGroupPicker)
+                            }
                         }
-                    }
+                }
+            )
+
+        case let .updateRozkladState(state):
+            switch state {
+            case .selected:
+                return Effect(value: .setGroupRozklad)
+            case .notSelected:
+                return Effect(value: .setGroupPicker)
             }
 
         case .setGroupRozklad:
