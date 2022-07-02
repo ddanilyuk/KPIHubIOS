@@ -45,7 +45,7 @@ struct Campus {
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelID { }
         switch action {
         case .onSetup:
             return .merge(
@@ -64,7 +64,7 @@ struct Campus {
                 environment.campusClient.studySheet.load()
                     .fireAndForget()
             )
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+            .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
 
         case .setCampusLogin:
             state.routes = [

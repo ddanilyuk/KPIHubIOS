@@ -111,7 +111,7 @@ extension Array where Element == GroupRozklad.State.Section {
             }
         self = lessons.reduce(into: emptySections) { partialResult, lesson in
             var mode: LessonMode = .default
-            if lesson.id == currentLesson?.lessonId {
+            if lesson.id == currentLesson?.lessonID {
                 mode = .current(currentLesson?.percent ?? 0)
             } else if lesson.id == nextLesson {
                 mode = .next

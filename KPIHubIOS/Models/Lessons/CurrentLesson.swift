@@ -9,6 +9,6 @@ import Foundation
 import CoreGraphics
 
 struct CurrentLesson: Equatable {
-    var lessonId: Lesson.ID
+    var lessonID: Lesson.ID
     var percent: CGFloat
 }

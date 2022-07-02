@@ -18,7 +18,7 @@ struct GroupRozklad {
         var currentDay: Lesson.Day?
         var currentWeek: Lesson.Week = .first
         var currentLesson: CurrentLesson?
-        var nextLessonId: Lesson.ID?
+        var nextLessonID: Lesson.ID?
 
         var groupName: String = ""
         var lessons: IdentifiedArrayOf<Lesson> = []
@@ -81,7 +81,7 @@ struct GroupRozklad {
     // MARK: - Reducer
 
     static let coreReducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelID { }
         switch action {
         case .onAppear:
             state.isAppeared = true
@@ -109,7 +109,7 @@ struct GroupRozklad {
                         }
                 }
             )
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+            .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
 
         case .onDisappear:
             state.isAppeared = false
@@ -117,17 +117,17 @@ struct GroupRozklad {
 
         case .updateCurrentDate:
             let oldCurrentLesson = state.currentLesson
-            let oldNextLessonId = state.nextLessonId
+            let oldNextLessonID = state.nextLessonID
             state.currentDay = environment.currentDateClient.currentDay.value
             state.currentWeek = environment.currentDateClient.currentWeek.value
             state.currentLesson = environment.currentDateClient.currentLesson.value
-            state.nextLessonId = environment.currentDateClient.nextLessonId.value
+            state.nextLessonID = environment.currentDateClient.nextLessonID.value
             state.sections = [State.Section](
                 lessons: state.lessons,
                 currentLesson: state.currentLesson,
-                nextLesson: state.nextLessonId
+                nextLesson: state.nextLessonID
             )
-            if oldCurrentLesson?.lessonId != state.currentLesson?.lessonId || oldNextLessonId != state.nextLessonId {
+            if oldCurrentLesson?.lessonID != state.currentLesson?.lessonID || oldNextLessonID != state.nextLessonID {
                 if state.isAppeared {
                     return Effect(value: .scrollToNearest())
                         .delay(for: 0.2, scheduler: DispatchQueue.main)
@@ -147,13 +147,13 @@ struct GroupRozklad {
             state.sections = [State.Section](
                 lessons: state.lessons,
                 currentLesson: state.currentLesson,
-                nextLesson: state.nextLessonId
+                nextLesson: state.nextLessonID
             )
             return .none
 
         case let .scrollToNearest(needToScroll):
             if needToScroll {
-                let scrollTo = state.currentLesson?.lessonId ?? state.nextLessonId
+                let scrollTo = state.currentLesson?.lessonID ?? state.nextLessonID
                 state.scrollTo = scrollTo
             }
             return .none

@@ -13,7 +13,7 @@ import UIKit
 struct CurrentDateClient {
 
     let currentLesson: CurrentValueSubject<CurrentLesson?, Never>
-    let nextLessonId: CurrentValueSubject<Lesson.ID?, Never>
+    let nextLessonID: CurrentValueSubject<Lesson.ID?, Never>
     let currentDay: CurrentValueSubject<Lesson.Day?, Never>
     let currentWeek: CurrentValueSubject<Lesson.Week, Never>
 
@@ -39,7 +39,7 @@ extension CurrentDateClient {
         let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(nil)
         let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
         let currentLessonSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
-        let nextLessonIdSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
+        let nextLessonIDSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
         let updatedSubject = CurrentValueSubject<Date, Never>(Date())
 
         var timer: Timer?
@@ -86,7 +86,7 @@ extension CurrentDateClient {
                     currentDay: currentDay
                 )
                 currentLessonSubject.value = currentLesson
-                nextLessonIdSubject.value = nextLesson.id
+                nextLessonIDSubject.value = nextLesson.id
             }
 
             updatedSubject.send(Date())
@@ -112,7 +112,7 @@ extension CurrentDateClient {
 
         return .init(
             currentLesson: currentLessonSubject,
-            nextLessonId: nextLessonIdSubject,
+            nextLessonID: nextLessonIDSubject,
             currentDay: currentDaySubject,
             currentWeek: currentWeekSubject,
             forceUpdate: { updateSubjects(with: Date()) },
@@ -168,7 +168,7 @@ extension CurrentDateClient {
                     let difference = CGFloat(currentTimeFromDayStart - position.minutesFromDayStart)
                     let percent = difference / CGFloat(Lesson.Position.lessonDuration)
                     return (
-                        current: CurrentLesson(lessonId: lesson.id, percent: percent),
+                        current: CurrentLesson(lessonID: lesson.id, percent: percent),
                         next: lessons[safe: lessons.index(id: lesson.id)! + 1] ?? lessons[0]
                     )
 
@@ -208,13 +208,13 @@ extension CurrentDateClient {
     static func mock() -> CurrentDateClient {
         let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(.monday)
         let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
-        let currentLessonIdSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
-        let nextLessonIdSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
+        let currentLessonIDSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
+        let nextLessonIDSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
         let updatedSubject = CurrentValueSubject<Date, Never>(Date())
 
         return .init(
-            currentLesson: currentLessonIdSubject,
-            nextLessonId: nextLessonIdSubject,
+            currentLesson: currentLessonIDSubject,
+            nextLessonID: nextLessonIDSubject,
             currentDay: currentDaySubject,
             currentWeek: currentWeekSubject,
             forceUpdate: { },

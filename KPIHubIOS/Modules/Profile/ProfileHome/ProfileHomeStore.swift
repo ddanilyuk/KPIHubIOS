@@ -70,13 +70,13 @@ struct ProfileHome {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelID { }
         switch action {
         case .onAppear:
             state.toggleWeek = environment.userDefaultsClient.get(for: .toggleWeek)
             return Effect.setAndSubscribeOnAppear(
                 environment: environment,
-                cancellable: SubscriberCancelId.self
+                cancellable: SubscriberCancelID.self
             )
 
         case let .setRozkladState(rozkladState):

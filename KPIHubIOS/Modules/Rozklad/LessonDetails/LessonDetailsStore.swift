@@ -50,15 +50,15 @@ struct LessonDetails {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelID { }
         switch action {
         case .onAppear:
-            let lessonId = state.lesson.id
+            let lessonID = state.lesson.id
             return Effect.merge(
                 Effect(value: .updateCurrentDate),
                 Effect.run { subscriber in
                     environment.rozkladClient.lessons.subject
-                        .compactMap { $0[id: lessonId] }
+                        .compactMap { $0[id: lessonID] }
                         .receive(on: DispatchQueue.main)
                         .sink { lesson in
                             subscriber.send(.updateLesson(lesson))
@@ -73,16 +73,16 @@ struct LessonDetails {
                         }
                 }
             )
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+            .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
 
         case .updateCurrentDate:
-            let lessonId = state.lesson.id
+            let lessonID = state.lesson.id
             let currentLesson = environment.currentDateClient.currentLesson.value
-            let nextLessonId = environment.currentDateClient.nextLessonId.value
+            let nextLessonID = environment.currentDateClient.nextLessonID.value
 
-            if let currentLesson = currentLesson, lessonId == currentLesson.lessonId {
+            if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
                 state.mode = .current(currentLesson.percent)
-            } else if lessonId == nextLessonId {
+            } else if lessonID == nextLessonID {
                 state.mode = .next
             } else {
                 state.mode = .default
