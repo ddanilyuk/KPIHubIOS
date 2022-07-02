@@ -26,6 +26,7 @@ struct Campus {
     enum Action: Equatable, IdentifiedRouterAction {
         case onSetup
 
+        case updateCampusState(CampusClientState.State)
         case setCampusLogin
         case setCampusHome
 
@@ -38,7 +39,7 @@ struct Campus {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let campusClient: CampusClientable
+        let campusClient: CampusClient
         let rozkladClient: RozkladClient
     }
 
@@ -49,22 +50,28 @@ struct Campus {
         switch action {
         case .onSetup:
             return .merge(
+                Effect(value: .updateCampusState(environment.campusClient.state.subject.value)),
                 Effect.run { subscriber in
                     environment.campusClient.state.subject
+                        .dropFirst()
+                        .removeDuplicates()
                         .receive(on: DispatchQueue.main)
                         .sink { state in
-                            switch state {
-                            case .loggedOut:
-                                subscriber.send(.setCampusLogin)
-                            case .loggedIn:
-                                subscriber.send(.setCampusHome)
-                            }
+                            subscriber.send(.updateCampusState(state))
                         }
                 },
                 environment.campusClient.studySheet.load()
                     .fireAndForget()
             )
             .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+
+        case let .updateCampusState(state):
+            switch state {
+            case .loggedOut:
+                return Effect(value: .setCampusLogin)
+            case .loggedIn:
+                return Effect(value: .setCampusHome)
+            }
 
         case .setCampusLogin:
             state.routes = [

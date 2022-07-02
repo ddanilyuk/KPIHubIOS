@@ -17,7 +17,7 @@ struct CampusHome {
         @BindableState var isLoading: Bool = false
 
         var openStudySheetOnLoad: Bool = false
-        var studySheetState: CampusClientableStudySheet.State = .notLoading
+        var studySheetState: CampusClientStudySheet.State = .notLoading
     }
 
     // MARK: - Action
@@ -26,7 +26,7 @@ struct CampusHome {
         case onAppear
         case refresh
         case studySheetTap
-        case setStudySheetState(CampusClientableStudySheet.State)
+        case setStudySheetState(CampusClientStudySheet.State)
 
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
@@ -41,7 +41,7 @@ struct CampusHome {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let campusClient: CampusClientable
+        let campusClient: CampusClient
     }
 
     // MARK: - Reducer

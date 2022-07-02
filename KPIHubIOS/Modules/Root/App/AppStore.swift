@@ -51,7 +51,7 @@ struct App {
         let userDefaultsClient: UserDefaultsClientable
         let keychainClient: KeychainClientable
         let rozkladClient: RozkladClient
-        let campusClient: CampusClientable
+        let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
 
         static var live: Self {
@@ -64,7 +64,7 @@ struct App {
             let rozkladClient: RozkladClient = .live(
                 userDefaultsClient: userDefaultsClient
             )
-            let campusClient: CampusClientable = .live(
+            let campusClient: CampusClient = .live(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
                 keychainClient: keychainClient

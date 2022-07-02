@@ -56,12 +56,7 @@ struct Rozklad {
                         .removeDuplicates()
                         .receive(on: DispatchQueue.main)
                         .sink { state in
-                            switch state {
-                            case .selected:
-                                subscriber.send(.setGroupRozklad)
-                            case .notSelected:
-                                subscriber.send(.setGroupPicker)
-                            }
+                            subscriber.send(.updateRozkladState(state))
                         }
                 }
             )

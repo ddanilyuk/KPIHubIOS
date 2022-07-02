@@ -40,7 +40,7 @@ struct Login {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
-        let campusClient: CampusClientable
+        let campusClient: CampusClient
     }
 
     // MARK: - Reducer

@@ -10,17 +10,17 @@ import Routes
 import ComposableArchitecture
 import KeychainAccess
 
-struct CampusClientable {
+struct CampusClient {
 
-    let state: CampusClientableState
-    let studySheet: CampusClientableStudySheet
+    let state: CampusClientState
+    let studySheet: CampusClientStudySheet
 
     static func live(
         apiClient: APIClient,
         userDefaultsClient: UserDefaultsClientable,
         keychainClient: KeychainClientable
-    ) -> CampusClientable {
-        CampusClientable(
+    ) -> CampusClient {
+        CampusClient(
             state: .live(
                 userDefaultsClient: userDefaultsClient,
                 keychainClient: keychainClient
@@ -33,8 +33,8 @@ struct CampusClientable {
         )
     }
 
-    static func mock() -> CampusClientable {
-        CampusClientable(
+    static func mock() -> CampusClient {
+        CampusClient(
             state: .mock(),
             studySheet: .mock()
         )
@@ -42,9 +42,9 @@ struct CampusClientable {
 
 }
 
-// MARK: - CampusClientableState
+// MARK: - CampusClientState
 
-struct CampusClientableState {
+struct CampusClientState {
 
     enum State: Equatable {
         case loggedIn(CampusUserInfo)
@@ -65,7 +65,7 @@ struct CampusClientableState {
     static func live(
         userDefaultsClient: UserDefaultsClientable,
         keychainClient: KeychainClientable
-    ) -> CampusClientableState {
+    ) -> CampusClientState {
         let subject = CurrentValueSubject<State, Never>(.loggedOut)
         let commit: () -> Void = {
             if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
@@ -75,7 +75,7 @@ struct CampusClientableState {
             }
         }
         commit()
-        return CampusClientableState(
+        return CampusClientState(
             subject: subject,
             login: { clientValue in
                 let userInfo = clientValue.value.userInfo
@@ -99,8 +99,8 @@ struct CampusClientableState {
         )
     }
 
-    static func mock() -> CampusClientableState {
-        return CampusClientableState(
+    static func mock() -> CampusClientState {
+        return CampusClientState(
             subject: CurrentValueSubject<State, Never>(
                 .loggedIn(CampusUserInfo.mock)
             ),
@@ -112,9 +112,9 @@ struct CampusClientableState {
 
 }
 
-// MARK: - CampusClientableStudySheet
+// MARK: - CampusClientStudySheet
 
-struct CampusClientableStudySheet {
+struct CampusClientStudySheet {
 
     enum State: Equatable {
         case notLoading
@@ -131,11 +131,11 @@ struct CampusClientableStudySheet {
         apiClient: APIClient,
         userDefaultsClient: UserDefaultsClientable,
         keychainClient: KeychainClientable
-    ) -> CampusClientableStudySheet {
+    ) -> CampusClientStudySheet {
 
         let subject = CurrentValueSubject<State, Never>(.notLoading)
 
-        return CampusClientableStudySheet(
+        return CampusClientStudySheet(
             subject: subject,
             load: {
                 guard
@@ -172,8 +172,8 @@ struct CampusClientableStudySheet {
         )
     }
 
-    static func mock() -> CampusClientableStudySheet {
-        CampusClientableStudySheet(
+    static func mock() -> CampusClientStudySheet {
+        CampusClientStudySheet(
             subject: CurrentValueSubject<State, Never>(.notLoading),
             load: { .none },
             clean: { }

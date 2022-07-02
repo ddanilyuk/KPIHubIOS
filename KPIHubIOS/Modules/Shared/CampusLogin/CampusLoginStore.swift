@@ -64,7 +64,7 @@ struct CampusLogin {
     struct Environment {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
-        let campusClient: CampusClientable
+        let campusClient: CampusClient
         let rozkladClient: RozkladClient
     }
 
@@ -109,7 +109,7 @@ struct CampusLogin {
             )
             environment.campusClient.state.login(
                 ClientValue(
-                    CampusClientableState.LoginRequest(
+                    CampusClientState.LoginRequest(
                         credentials: campusCredentials,
                         userInfo: campusUserInfo
                     ),

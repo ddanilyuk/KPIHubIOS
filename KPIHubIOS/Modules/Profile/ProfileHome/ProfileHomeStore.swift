@@ -15,7 +15,7 @@ struct ProfileHome {
     struct State: Equatable {
 
         var rozkladState: RozkladClientState.State = .notSelected
-        var campusState: CampusClientableState.State = .loggedOut
+        var campusState: CampusClientState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
         @BindableState var toggleWeek: Bool = false
 
@@ -30,7 +30,7 @@ struct ProfileHome {
         case onAppear
 
         case setRozkladState(RozkladClientState.State)
-        case setCampusState(CampusClientableState.State)
+        case setCampusState(CampusClientState.State)
         case setLessonsUpdatedAtDate(Date?)
 
         case updateRozkladButtonTapped
@@ -63,7 +63,7 @@ struct ProfileHome {
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
-        let campusClient: CampusClientable
+        let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
     }
 

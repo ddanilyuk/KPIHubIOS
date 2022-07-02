@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct CampusSectionView: View {
 
     struct ViewState: Equatable {
-        let campusState: CampusClientableState.State
+        let campusState: CampusClientState.State
         let fullName: String
         let cathedra: String
     }
@@ -100,7 +100,7 @@ struct CampusSectionView: View {
 extension ProfileHome.State {
 
     var campusSectionView: CampusSectionView.ViewState {
-        let campusUserInfoPath = /CampusClientableState.State.loggedIn
+        let campusUserInfoPath = /CampusClientState.State.loggedIn
         let campusUserInfo = campusUserInfoPath.extract(from: self.campusState)
         return CampusSectionView.ViewState(
             campusState: self.campusState,
