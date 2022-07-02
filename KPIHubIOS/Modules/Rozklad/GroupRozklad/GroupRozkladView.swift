@@ -42,11 +42,11 @@ struct GroupRozkladView: View {
                 GroupRozkladHeaderView(
                     animation: animationModel,
                     groupName: viewStore.groupName,
-                    selectedWeek: $selectedWeek,
-                    selectedDay: $selectedDay,
                     displayedWeek: $displayedWeek,
                     displayedDay: $displayedDay,
                     headerBackgroundOpacity: $headerBackgroundOpacity,
+                    selectWeek: { selectedWeek = $0 },
+                    selectDay: { selectedDay = $0 },
                     currentWeek: viewStore.currentWeek,
                     currentDay: viewStore.currentDay
                 )
@@ -219,7 +219,6 @@ struct GroupRozkladView: View {
             return
         }
         withAnimation {
-            // If scrolling from bottom to top is lagging
             proxy.scrollTo(
                 GroupRozklad.State.Section.id(
                     week: displayedWeek,

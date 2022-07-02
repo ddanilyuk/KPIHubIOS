@@ -7,18 +7,17 @@
 
 import SwiftUI
 
-// TODO: Change actions
 struct GroupRozkladDayPicker: View {
 
-    @Binding var selectedDay: Lesson.Day?
-    @Binding var displayedDay: Lesson.Day
+    var displayedDay: Lesson.Day
     var currentDay: Lesson.Day?
+    var selectDay: (Lesson.Day?) -> Void
 
     var body: some View {
         HStack {
             ForEach(Lesson.Day.allCases, id: \.self) { element in
                 Button(
-                    action: { selectedDay = element },
+                    action: { selectDay(element) },
                     label: {
                         Text("\(element.shortDescription)")
                             .font(.system(.body).bold())

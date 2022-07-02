@@ -7,19 +7,18 @@
 
 import SwiftUI
 
-// TODO: Replace with actions
 struct GroupRozkladHeaderView: View {
 
     @ObservedObject var animation: GroupRozkladAnimationViewModel
     let groupName: String
 
-    @Binding var selectedWeek: Lesson.Week?
-    @Binding var selectedDay: Lesson.Day?
-
     @Binding var displayedWeek: Lesson.Week
     @Binding var displayedDay: Lesson.Day
 
     @Binding var headerBackgroundOpacity: CGFloat
+
+    var selectWeek: (Lesson.Week) -> Void
+    var selectDay: (Lesson.Day?) -> Void
 
     var currentWeek: Lesson.Week
     var currentDay: Lesson.Day?
@@ -34,16 +33,16 @@ struct GroupRozkladHeaderView: View {
                 )
 
                 GroupRozkladWeekPicker(
-                    selectedWeek: $selectedWeek,
-                    displayedWeek: $displayedWeek,
-                    currentWeek: currentWeek
+                    displayedWeek: displayedWeek,
+                    currentWeek: currentWeek,
+                    selectWeek: selectWeek
                 )
             }
 
             GroupRozkladDayPicker(
-                selectedDay: $selectedDay,
-                displayedDay: $displayedDay,
-                currentDay: currentDay
+                displayedDay: displayedDay,
+                currentDay: currentDay,
+                selectDay: selectDay
             )
             .padding(.bottom, 4)
         }

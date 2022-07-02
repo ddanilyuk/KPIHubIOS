@@ -19,10 +19,10 @@ struct LessonDetailsLocationsSection: View {
     }
 
     var content: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 16) {
             ForEach(locations, id: \.self) { location in
                 VStack(spacing: 16) {
-                    HStack {
+                    HStack(spacing: 0) {
                         LargeTagView(
                             icon: Image(systemName: "location"),
                             text: location,
@@ -32,9 +32,10 @@ struct LessonDetailsLocationsSection: View {
 
                         Spacer()
                     }
-                    if location != locations.last {
-                        Divider()
-                    }
+                    // If you add a separator, then text wrapping and layout will break
+                    // if teacher != teachers.last {
+                    //    Divider()
+                    // }
                 }
             }
         }
