@@ -11,4 +11,4 @@
 KPIHubIOS_APP_NAME = KPIHub Dev
 KPIHubIOS_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS.development
 KPIHubIOS_ENVIRONMENT = development
-KPIHubIOS_APP_ICON = AppIconDev
+KPIHubIOS_APP_ICON = AppIconDevelopment

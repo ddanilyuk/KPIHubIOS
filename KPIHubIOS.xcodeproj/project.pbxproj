@@ -1439,7 +1439,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0396781E7DF2BDBEE05FC394 /* Pods-KPIHubIOS.debug-production.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1570,7 +1570,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABE84473594E67C1BE4A5774 /* Pods-KPIHubIOS.release-development.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1761,7 +1761,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8519F4CB701CA3A6820AA6C8 /* Pods-KPIHubIOS.debug-development.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1794,7 +1794,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AC884E8709013BB4ECE15DB6 /* Pods-KPIHubIOS.release-production.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

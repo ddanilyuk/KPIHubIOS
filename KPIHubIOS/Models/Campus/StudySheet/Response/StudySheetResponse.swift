@@ -10,4 +10,3 @@ import Foundation
 struct StudySheetResponse: Codable, Equatable {
     let studySheet: [StudySheetItemResponse]
 }
-
