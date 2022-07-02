@@ -130,7 +130,7 @@ struct GroupRozklad {
             if oldCurrentLesson?.lessonID != state.currentLesson?.lessonID || oldNextLessonID != state.nextLessonID {
                 if state.isAppeared {
                     return Effect(value: .scrollToNearest())
-                        .delay(for: 0.2, scheduler: DispatchQueue.main)
+                        .delay(for: 0.3, scheduler: DispatchQueue.main)
                         .eraseToEffect()
                 } else {
                     state.needToScrollOnAppear = true
