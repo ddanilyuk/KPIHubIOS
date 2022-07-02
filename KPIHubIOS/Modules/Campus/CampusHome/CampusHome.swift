@@ -13,11 +13,10 @@ struct CampusHome {
     // MARK: - State
 
     struct State: Equatable {
-
-        @BindableState var isLoading: Bool = false
-
         var openStudySheetOnLoad: Bool = false
         var studySheetState: CampusClientStudySheet.State = .notLoading
+
+        @BindableState var isLoading: Bool = false
     }
 
     // MARK: - Action
@@ -103,7 +102,6 @@ struct CampusHome {
                 return .none
 
             case let .loaded(items):
-                state.isLoading = false
                 return Effect(value: .routeAction(
                     .studySheet(items)
                 ))

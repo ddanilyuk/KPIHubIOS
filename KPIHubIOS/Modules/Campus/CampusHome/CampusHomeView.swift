@@ -101,7 +101,7 @@ struct CampusHomeView_Previews: PreviewProvider {
                     environment: CampusHome.Environment(
                         apiClient: .failing,
                         userDefaultsClient: mockDependencies.userDefaults,
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: mockDependencies.userDefaults, keychainClient: KeychainClient.live())
+                        campusClient: .mock()
                     )
                 )
             )
