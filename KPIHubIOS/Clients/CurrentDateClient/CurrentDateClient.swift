@@ -49,8 +49,8 @@ extension CurrentDateClient {
 
         // Setup lesson changes update
         rozkladClient.lessons.subject.eraseToAnyPublisher()
-            .ignoreOutput(setOutputType: Void.self)
-            .sink {
+            .dropFirst()
+            .sink { _ in
                 updateSubjects(with: Date())
             }
             .store(in: &liveCancellables)

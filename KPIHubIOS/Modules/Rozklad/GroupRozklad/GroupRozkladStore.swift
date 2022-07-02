@@ -172,7 +172,7 @@ struct GroupRozklad {
                 currentLesson: state.currentLessonId,
                 nextLesson: state.nextLessonId
             )
-            if oldCurrentLessonId != state.currentLessonId || oldNextLessonId != state.nextLessonId {
+            if oldCurrentLessonId?.lessonId != state.currentLessonId?.lessonId || oldNextLessonId != state.nextLessonId {
                 if state.isShown {
                     return Effect(value: .scrollToNearest())
                         .delay(for: 0.2, scheduler: DispatchQueue.main)

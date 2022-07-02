@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Routes
 
 struct ProfileHome {
 
@@ -107,12 +108,18 @@ struct ProfileHome {
             case let .selected(group):
                 state.isLoading = true
                 let task: Effect<[Lesson], Error> = Effect.task {
-                    let result = try await environment.apiClient.decodedResponse(
-                        for: .api(.group(group.id, .lessons)),
+                    // Update group id using name
+                    let newGroup = try await environment.apiClient.decodedResponse(
+                        for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
+                        as: GroupResponse.self
+                    )
+                    // Update lessons
+                    let lessons = try await environment.apiClient.decodedResponse(
+                        for: .api(.group(newGroup.value.id, .lessons)),
                         as: LessonsResponse.self
                     )
-                    environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
-                    return result.value.lessons.map { Lesson(lessonResponse: $0) }
+                    environment.rozkladClient.state.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
+                    return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
                 }
                 return task
                     .mapError { $0 as NSError }

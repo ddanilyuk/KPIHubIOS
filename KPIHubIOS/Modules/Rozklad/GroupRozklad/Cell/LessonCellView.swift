@@ -61,7 +61,6 @@ struct LessonCellView: View {
                     .overlay(alignment: .topTrailing) {
                         BadgeView(mode: viewStore.mode)
                     }
-                    .shadow(color: Color.orange.opacity(0.3), radius: 8, x: 0, y: 4)
 
             case .next:
                 RoundedRectangle(cornerRadius: 8)

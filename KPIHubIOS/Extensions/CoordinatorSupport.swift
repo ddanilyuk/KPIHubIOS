@@ -19,7 +19,6 @@ extension CoordinatorStateIdentifiable {
     var id: String {
         let mirror = Mirror(reflecting: self)
         if let name = mirror.children.first?.label {
-//            print("ID screen \(Self.module).\(name)")
             return "\(Self.module).\(name)"
         } else {
             assertionFailure("Invalid name")
