@@ -264,25 +264,3 @@ extension Lesson: Identifiable {
     }
     
 }
-
-
-//extension Lesson {
-//
-//    var type: String {
-//        let location = locations?.first ?? ""
-//        switch location.lowercased() {
-//        case let string where string.contains("лек"):
-//            return "Лекція"
-//
-//        case let string where string.contains("прак"):
-//            return "Практика"
-//
-//        case let string where string.contains("лаб"):
-//            return "Лабораторна"
-//
-//        default:
-//            return "Невідомо"
-//        }
-//    }
-//
-//}
