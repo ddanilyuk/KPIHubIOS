@@ -230,7 +230,6 @@ struct RozkladSectionView_Previews: PreviewProvider {
             .smallPreview
             .padding(16)
             .background(Color.screenBackground)
-
         }
     }
 }
