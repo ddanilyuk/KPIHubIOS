@@ -19,14 +19,6 @@ protocol KeychainClientable {
 
 final class KeychainClient: KeychainClientable {
 
-    static func live() -> KeychainClient {
-        KeychainClient()
-    }
-
-    static func mock() -> KeychainClient {
-        KeychainClient(keychain: Keychain(service: "mock"))
-    }
-
     let keychain: Keychain
 
     init(keychain: Keychain = Keychain()) {
@@ -50,4 +42,15 @@ final class KeychainClient: KeychainClientable {
 enum KeychainKey: String {
     case campusUsername
     case campusPassword
+}
+
+extension KeychainClientable where Self == KeychainClient {
+
+    static func live() -> KeychainClient {
+        KeychainClient()
+    }
+
+    static func mock() -> KeychainClient {
+        KeychainClient(keychain: Keychain(service: "mock"))
+    }
 }

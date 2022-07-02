@@ -59,8 +59,8 @@ struct App {
 //                router: rootRouter.baseURL("http://192.168.31.89:8080")
                 router: rootRouter.baseURL("http://kpihub.xyz")
             )
-            let userDefaultsClient: UserDefaultsClientable = UserDefaultsClientImplementation(UserDefaults.standard)
-            let keychainClient: KeychainClientable = KeychainClient.live()
+            let userDefaultsClient: UserDefaultsClientable = .live()
+            let keychainClient: KeychainClientable = .live()
             let rozkladClient: RozkladClient = .live(
                 userDefaultsClient: userDefaultsClient
             )

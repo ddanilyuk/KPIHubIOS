@@ -74,10 +74,8 @@ struct StudySheetCellView_Previews: PreviewProvider {
                 environment: StudySheetCell.Environment()
             )
         )
-        .previewLayout(.sizeThatFits)
-        .fixedSize(horizontal: false, vertical: true)
+        .smallPreview
         .padding(16)
-        .frame(width: 375)
         .background(Color.screenBackground)
     }
 }

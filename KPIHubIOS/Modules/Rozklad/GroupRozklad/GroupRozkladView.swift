@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 // We need to set in root of the file because we don't need to recreate it with GroupRozkladView
-// and we don't need to body in GroupRozkladView when GroupRozkladAnimationViewModel changes.
+// and we don't need to redraw body in GroupRozkladView when GroupRozkladAnimationViewModel changes.
 private var animationModel: GroupRozkladAnimationViewModel = .init()
 
 struct GroupRozkladView: View {
@@ -261,7 +261,7 @@ struct GroupRozkladView_Previews: PreviewProvider {
                     reducer: GroupRozklad.reducer,
                     environment: GroupRozklad.Environment(
                         apiClient: .failing,
-                        userDefaultsClient: mockDependencies.userDefaults,
+                        userDefaultsClient: .mock(),
                         rozkladClient: .mock(),
                         currentDateClient: .mock()
                     )

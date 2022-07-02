@@ -100,7 +100,7 @@ struct CampusHomeView_Previews: PreviewProvider {
                     reducer: CampusHome.reducer,
                     environment: CampusHome.Environment(
                         apiClient: .failing,
-                        userDefaultsClient: mockDependencies.userDefaults,
+                        userDefaultsClient: .mock(),
                         campusClient: .mock()
                     )
                 )

@@ -27,13 +27,12 @@ struct LargeTagView: View {
             .frame(width: 30, height: 30)
 
             Text("\(text)")
-                .font(.system(.body))
                 .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
                 .padding(.vertical, 4)
                 .padding(.horizontal, 8)
         }
         .background(backgroundColor)
-        .cornerRadius(14)
+        .cornerRadius(15)
         .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
     }
 

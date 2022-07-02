@@ -74,8 +74,8 @@ struct OtherSectionView_Previews: PreviewProvider {
                 viewStore: ViewStore(
                     Store(
                         initialState: OtherSectionView.ViewState(),
-                        reducer: Reducer.empty,
-                        environment: Void()
+                        reducer: .empty,
+                        environment: ()
                     )
                 )
             )

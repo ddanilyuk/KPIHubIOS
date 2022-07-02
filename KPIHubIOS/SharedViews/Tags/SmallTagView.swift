@@ -27,6 +27,7 @@ struct SmallTagView: View {
             .frame(width: 24, height: 24)
 
             Text("\(text)")
+                .lineLimit(1)
                 .font(.system(.footnote))
                 .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
                 .padding(.vertical, 3)
@@ -34,8 +35,6 @@ struct SmallTagView: View {
         }
         .background(backgroundColor)
         .cornerRadius(12)
-//        .shadow(radius: 4)
-//        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
     }
 
 }

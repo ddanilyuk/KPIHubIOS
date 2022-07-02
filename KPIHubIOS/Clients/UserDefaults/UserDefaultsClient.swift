@@ -8,19 +8,6 @@
 import Foundation
 import IdentifiedCollections
 
-
-struct TestDefaults {
-
-    struct Request<T: Codable> {
-        var value: T
-        var key: UserDefaultKey<T>
-    }
-
-//    func set(_ request: any Request) -> Void {
-//
-//    }
-}
-
 protocol UserDefaultsClientable {
 
     // MARK: - Set
@@ -50,23 +37,11 @@ protocol UserDefaultsClientable {
 
     func remove<T: Codable>(for key: UserDefaultKey<T>)
 
-//    static func mock() -> Self
 }
 
 
+struct UserDefaultsClient: UserDefaultsClientable {
 
-
-
-struct UserDefaultsClientImplementation: UserDefaultsClientable {
-
-//    static func live() -> UserDefaultsClient {
-//        return UserDefaultsClient(UserDefaults.standard)
-//    }
-//
-//    static func mock() -> UserDefaultsClient {
-//        return UserDefaultsClient(UserDefaults(suiteName: "mock")!)
-//    }
-    
     init(_ defaults: UserDefaults) {
         self.defaults = defaults
     }
@@ -160,73 +135,16 @@ extension UserDefaultKey {
 
 }
 
-enum Test {
-//    typealias TestType = UserDefaultsClientable
+// MARK: - UserDefaultsClient
+
+extension UserDefaultsClientable where Self == UserDefaultsClient {
 
     static func live() -> UserDefaultsClientable {
-        return UserDefaultsClientImplementation(UserDefaults.standard)
+        return UserDefaultsClient(UserDefaults.standard)
     }
 
     static func mock() -> UserDefaultsClientable {
-        return UserDefaultsClientImplementation(UserDefaults(suiteName: "mock")!)
-    }
-}
-
-extension UserDefaultsClientable {
-    static func live() -> UserDefaultsClientable {
-        return UserDefaultsClientImplementation(UserDefaults.standard)
-    }
-
-    static func mock() -> UserDefaultsClientable {
-        return UserDefaultsClientImplementation(UserDefaults(suiteName: "mock")!)
-    }
-
-}
-
-let user: UserDefaultsClientable = Test.live()
-
-// This code is prepared for migrating to new composable-architecture
-// design using @Dependency(\.keyPath)
-struct Dependencies {
-
-    var mode: Mode
-
-    enum Mode {
-        case mock
-        case live
-    }
-}
-
-public protocol MockDependencyKey {
-    associatedtype Value
-    
-    static var mock: Value { get }
-}
-
-
-public protocol DependencyKey: MockDependencyKey {
-    static var live: Value { get }
-}
-
-let liveDependencies = Dependencies(mode: .live)
-let mockDependencies = Dependencies(mode: .mock)
-
-extension Dependencies {
-
-    public var userDefaults: UserDefaultsClientable {
-        get {
-            switch self.mode {
-            case .live:
-                return UserDefaultsKey.live
-            case .mock:
-                return UserDefaultsKey.mock
-            }
-        }
-    }
-
-    private enum UserDefaultsKey: DependencyKey {
-        static let live: any UserDefaultsClientable = UserDefaultsClientImplementation(UserDefaults.standard)
-        static let mock: any UserDefaultsClientable = UserDefaultsClientImplementation(UserDefaults(suiteName: "mock")!)
+        return UserDefaultsClient(UserDefaults(suiteName: "mock")!)
     }
 
 }

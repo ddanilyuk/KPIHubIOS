@@ -76,7 +76,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                         reducer: ProfileHome.reducer,
                         environment: ProfileHome.Environment(
                             apiClient: .failing,
-                            userDefaultsClient: mockDependencies.userDefaults,
+                            userDefaultsClient: .mock(),
                             rozkladClient: .mock(),
                             campusClient: .mock(),
                             currentDateClient: .mock()
@@ -95,7 +95,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                         reducer: ProfileHome.reducer,
                         environment: ProfileHome.Environment(
                             apiClient: .failing,
-                            userDefaultsClient: mockDependencies.userDefaults,
+                            userDefaultsClient: .mock(),
                             rozkladClient: .mock(),
                             campusClient: .mock(),
                             currentDateClient: .mock()

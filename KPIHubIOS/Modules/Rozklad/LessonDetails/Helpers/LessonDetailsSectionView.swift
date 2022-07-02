@@ -23,7 +23,7 @@ struct LessonDetailsSectionView<Content: View>: View {
             VStack(alignment: .leading, spacing: 4) {
                 SectionHeader(title: title)
 
-                ZStack {
+                ZStack(alignment: .topLeading) {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.white)
                         .shadow(color: shadowColor, radius: shadowRadius, x: 0, y: shadowRadius / 2)
