@@ -10,6 +10,7 @@ import Foundation
 struct GroupResponse {
     let id: UUID
     let name: String
+    let faculty: String?
 }
 
 extension GroupResponse: Codable {

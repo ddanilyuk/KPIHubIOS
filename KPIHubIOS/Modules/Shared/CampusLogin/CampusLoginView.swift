@@ -16,8 +16,15 @@ struct CampusLoginView: View {
     var body: some View {
         WithViewStore(store) { viewStore in
             GeometryReader { proxy in
-                ScrollView {
+                ScrollView(.vertical, showsIndicators: false) {
                     VStack {
+
+                        Text("Після входу буде відображатися поточний контроль")
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(.callout)
+                            .padding()
+
                         Spacer()
                         VStack(spacing: 24) {
                             TextField("Логін", text: viewStore.binding(\.$username))
@@ -62,6 +69,7 @@ struct CampusLoginView: View {
 
                 }
             }
+            .navigationBarTitle("Кампус")
             .background(Color.screenBackground)
             .loadable(viewStore.binding(\.$isLoading))
             .alert(

@@ -78,7 +78,7 @@ struct RozkladClientState {
     }
 
     static func mock() -> RozkladClientState {
-        let group = GroupResponse(id: UUID(), name: "ІВ-82")
+        let group = GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")
         return RozkladClientState(
             subject: CurrentValueSubject<State, Never>(
                 .selected(group)

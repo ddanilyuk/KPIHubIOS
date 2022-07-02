@@ -34,23 +34,15 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
         count: GroupRozklad.State.Section.Position.count
     )
 
-    init() {
-//        super.init()
-
-        print("INIT")
-    }
-
     // MARK: - Public methods
 
     func save() {
         savedOffsets = offsets
-        print("Saved:", savedOffsets)
     }
 
     func restore() {
         offsets = savedOffsets
         render()
-        print("Restored", offsets)
     }
 
     func setOffset(for index: Int, value: CGFloat?) {

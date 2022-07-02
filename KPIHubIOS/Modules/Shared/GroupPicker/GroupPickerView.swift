@@ -17,9 +17,13 @@ struct GroupPickerView: View {
             List {
                 ForEach(viewStore.searchedGroups, id: \.id) { group in
                     ZStack {
-                        HStack {
+                        VStack {
                             Text(group.name)
-                            Spacer()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Text(group.faculty ?? "-")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                     .frame(height: 44)

@@ -13,8 +13,8 @@ struct EditLessonTeachers {
 
     struct State: Equatable {
         let lesson: Lesson
-        let teachers: [Teacher]
-        var selected: [Teacher]
+        let teachers: [String]
+        var selected: [String]
 
         init(lesson: Lesson) {
             self.lesson = lesson
@@ -29,7 +29,7 @@ struct EditLessonTeachers {
         case save
         case cancel
 
-        case toggle(Teacher)
+        case toggle(String)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {

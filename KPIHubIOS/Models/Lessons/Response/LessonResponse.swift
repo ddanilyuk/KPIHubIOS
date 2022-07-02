@@ -39,8 +39,9 @@ struct LessonResponse: Equatable {
     }
 
     let names: [String]
-    let teachers: [Teacher]?
+    let teachers: [String]?
     let locations: [String]?
+    let type: String
 
     let week: Week
     let day: Day
@@ -77,16 +78,11 @@ extension LessonResponse {
         LessonResponse(
             names: ["First Monday very long", "First 2213 very long", "First aallala very long"],
             teachers: [
-                Teacher(
-                    fullName: "асистент Каплунов Артем Володимирович",
-                    shortName: "ас. Каплунов А. В."
-                ),
-                Teacher(
-                    fullName: "доцент Долголенко Олександр Миколайович",
-                    shortName: "доц. Долголенко О. М."
-                )
+                "асистент Каплунов Артем Володимирович",
+                "доцент Долголенко Олександр Миколайович"
             ],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .monday,
             position: .first
@@ -95,6 +91,7 @@ extension LessonResponse {
             names: ["Second Monday"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .monday,
             position: .second
@@ -103,6 +100,7 @@ extension LessonResponse {
             names: ["Third Monday"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .monday,
             position: .third
@@ -111,6 +109,7 @@ extension LessonResponse {
             names: ["Fourth Monday"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .monday,
             position: .fourth
@@ -120,6 +119,7 @@ extension LessonResponse {
             names: ["First Tue"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .tuesday,
             position: .first
@@ -128,6 +128,7 @@ extension LessonResponse {
             names: ["Third Tue"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .tuesday,
             position: .third
@@ -136,6 +137,7 @@ extension LessonResponse {
             names: ["Fourth Tue"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .tuesday,
             position: .fourth
@@ -145,6 +147,7 @@ extension LessonResponse {
             names: ["Second Wed"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .wednesday,
             position: .second
@@ -153,6 +156,7 @@ extension LessonResponse {
             names: ["Third Wed"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .wednesday,
             position: .third
@@ -161,6 +165,7 @@ extension LessonResponse {
             names: ["Fourth Wed"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .first,
             day: .wednesday,
             position: .fourth
@@ -169,6 +174,7 @@ extension LessonResponse {
             names: ["Ha ha"],
             teachers: [],
             locations: [],
+            type: "Лекція",
             week: .second,
             day: .tuesday,
             position: .second

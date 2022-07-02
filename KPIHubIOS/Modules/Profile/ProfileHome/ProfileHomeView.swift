@@ -89,7 +89,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                 ProfileHomeView(
                     store: Store(
                         initialState: ProfileHome.State(
-                            rozkladState: .selected(GroupResponse(id: UUID(), name: "ІВ-82")),
+                            rozkladState: .selected(GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")),
                             campusState: .loggedIn(CampusUserInfo.mock)
                         ),
                         reducer: ProfileHome.reducer,

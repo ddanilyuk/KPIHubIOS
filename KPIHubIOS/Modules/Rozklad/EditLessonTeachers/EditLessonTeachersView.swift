@@ -36,7 +36,7 @@ struct EditLessonTeachersView: View {
 
                                 LargeTagView(
                                     icon: Image(systemName: "person"),
-                                    text: teacher.fullName,
+                                    text: teacher,
                                     backgroundColor: Color.indigo.lighter(by: 0.9),
                                     accentColor: Color.indigo
                                 )

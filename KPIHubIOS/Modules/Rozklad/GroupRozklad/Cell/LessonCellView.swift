@@ -90,7 +90,7 @@ struct LessonCellView: View {
                 ForEach(viewStore.lesson.teachers ?? [], id: \.self) { teacher in
                     SmallTagView(
                         icon: Image(systemName: "person"),
-                        text: teacher.shortName,
+                        text: teacher,
                         backgroundColor: Color.indigo.lighter(by: 0.9),
                         accentColor: Color.indigo
                     )

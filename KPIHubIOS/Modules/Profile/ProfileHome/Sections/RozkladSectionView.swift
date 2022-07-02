@@ -217,7 +217,8 @@ struct RozkladSectionView_Previews: PreviewProvider {
                         rozkladState: .selected(
                             GroupResponse(
                                 id: UUID(),
-                                name: "ІВ-82"
+                                name: "ІВ-82",
+                                faculty: "ФІОТ"
                             )
                         ),
                         toggleWeek: false

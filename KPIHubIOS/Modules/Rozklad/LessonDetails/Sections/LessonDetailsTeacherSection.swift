@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LessonDetailsTeacherSection: View {
 
-    var teachers: [Teacher]
+    var teachers: [String]
     var isEditing: Bool
     var onTap: () -> Void
 
@@ -29,7 +29,7 @@ struct LessonDetailsTeacherSection: View {
                     HStack {
                         LargeTagView(
                             icon: Image(systemName: "person"),
-                            text: teacher.shortName,
+                            text: teacher,
                             backgroundColor: Color.indigo.lighter(by: 0.9),
                             accentColor: Color.indigo
                         )

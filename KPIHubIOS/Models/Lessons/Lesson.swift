@@ -10,8 +10,9 @@ import Foundation
 struct Lesson {
 
     var names: [String]
-    var teachers: [Teacher]?
+    var teachers: [String]?
     var locations: [String]?
+    var type: String
 
     var week: Week
     var day: Day
@@ -30,6 +31,7 @@ extension Lesson {
         self.names = lessonResponse.names
         self.teachers = lessonResponse.teachers
         self.locations = lessonResponse.locations
+        self.type = lessonResponse.type
         self.week = Week(lessonResponseWeek: lessonResponse.week)
         self.day = Day(lessonResponseDay: lessonResponse.day)
         self.position = Position(lessonResponsePosition: lessonResponse.position)
@@ -264,23 +266,23 @@ extension Lesson: Identifiable {
 }
 
 
-extension Lesson {
-
-    var type: String {
-        let location = locations?.first ?? ""
-        switch location.lowercased() {
-        case let string where string.contains("лек"):
-            return "Лекція"
-
-        case let string where string.contains("прак"):
-            return "Практика"
-
-        case let string where string.contains("лаб"):
-            return "Лабораторна"
-
-        default:
-            return "Невідомо"
-        }
-    }
-
-}
+//extension Lesson {
+//
+//    var type: String {
+//        let location = locations?.first ?? ""
+//        switch location.lowercased() {
+//        case let string where string.contains("лек"):
+//            return "Лекція"
+//
+//        case let string where string.contains("прак"):
+//            return "Практика"
+//
+//        case let string where string.contains("лаб"):
+//            return "Лабораторна"
+//
+//        default:
+//            return "Невідомо"
+//        }
+//    }
+//
+//}

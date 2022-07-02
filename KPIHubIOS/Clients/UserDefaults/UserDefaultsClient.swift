@@ -84,7 +84,6 @@ struct UserDefaultsClientImplementation: UserDefaultsClientable {
         guard let encoded = try? JSONEncoder().encode(value) else {
             return
         }
-        print("defaultKey.key set \(defaultKey.key)")
         defaults.set(encoded, forKey: defaultKey.key)
     }
 
@@ -96,7 +95,6 @@ struct UserDefaultsClientImplementation: UserDefaultsClientable {
         guard let encoded = try? encoder.encode(value) else {
             return
         }
-        print("defaultKey.key set \(defaultKey.key)")
         defaults.set(encoded, forKey: defaultKey.key)
     }
 
@@ -118,7 +116,6 @@ struct UserDefaultsClientImplementation: UserDefaultsClientable {
     private func get<T: Codable>(
         for key: String
     ) -> T? {
-        print("defaultKey.key get \(key)")
         guard
             let data = defaults.object(forKey: key) as? Data,
             let value = try? JSONDecoder().decode(T.self, from: data)

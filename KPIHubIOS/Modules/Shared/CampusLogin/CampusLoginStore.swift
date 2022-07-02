@@ -45,7 +45,7 @@ struct CampusLogin {
 
     enum Action: Equatable, BindableAction {
         case login
-        case campusUserInfoResult(Result<CampusUserInfo, NSError>)
+        case campusUserInfoResult(Result<CampusUserInfo, APIError>)
         case groupSearchResult(Result<GroupResponse, APIError>)
         case lessonsResult(Result<[Lesson], NSError>)
 
@@ -87,19 +87,18 @@ struct CampusLogin {
             )
             state.isLoading = true
             let task: Effect<CampusUserInfo, Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
+                let result = try await environment.apiClient.request(
                     for: .api(.campus(.userInfo(campusLoginQuery))),
                     as: CampusUserInfo.self
                 )
-                return result.value
+                return result
             }
             return task
-                .mapError { $0 as NSError }
+                .mapError(APIError.init(error:))
                 .receive(on: DispatchQueue.main)
                 .catchToEffect(Action.campusUserInfoResult)
 
         case let .campusUserInfoResult(.success(campusUserInfo)):
-
             let groupSearchQuery = GroupSearchQuery(
                 groupName: campusUserInfo.studyGroup.name
             )
@@ -165,8 +164,20 @@ struct CampusLogin {
                 return .none
             }
 
-        case let .campusUserInfoResult(.failure(error)),
-             let .lessonsResult(.failure(error)):
+        case let .campusUserInfoResult(.failure(error)):
+            state.isLoading = false
+            switch error {
+            case .serviceError(404, _):
+                state.alert = AlertState(title: TextState("Схоже, логін або пароль невірний."))
+                return .none
+
+            case .serviceError,
+                 .unknown:
+                state.alert = AlertState.error(error)
+                return .none
+            }
+
+        case let .lessonsResult(.failure(error)):
             state.isLoading = false
             state.alert = AlertState.error(error)
             return .none
