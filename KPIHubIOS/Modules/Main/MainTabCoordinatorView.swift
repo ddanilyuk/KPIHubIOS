@@ -57,7 +57,6 @@ struct MainTabCoordinatorView: View {
                 }
                 .tag(Main.State.Tab.profile)
             }
-            .accentColor(.orange)
             .onAppear {
                 viewStore.send(.rozklad(.onSetup))
                 viewStore.send(.campus(.onSetup))

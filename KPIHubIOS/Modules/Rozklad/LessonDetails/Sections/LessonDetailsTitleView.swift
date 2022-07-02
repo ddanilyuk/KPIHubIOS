@@ -11,7 +11,6 @@ struct LessonDetailsTitleView: View {
 
     var title: String
     var isEditing: Bool
-    var onTap: () -> Void
 
     var body: some View {
         HStack {
@@ -21,9 +20,6 @@ struct LessonDetailsTitleView: View {
             Text(title)
                 .font(.system(.title).bold())
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-        }
-        .onTapGesture {
-            onTap()
         }
     }
     

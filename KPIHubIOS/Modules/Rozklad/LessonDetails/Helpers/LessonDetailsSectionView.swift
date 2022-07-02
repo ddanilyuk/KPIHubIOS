@@ -13,7 +13,6 @@ struct LessonDetailsSectionView<Content: View>: View {
     var shadowColor: Color = Color.black.opacity(0.05)
     var shadowRadius: CGFloat = 4
     var isEditing: Bool = false
-    var onTap: (() -> Void)?
     @ViewBuilder var content: Content
 
     var body: some View {
@@ -32,9 +31,6 @@ struct LessonDetailsSectionView<Content: View>: View {
                     content
                 }
             }
-        }
-        .onTapGesture {
-            onTap?()
         }
     }
 }

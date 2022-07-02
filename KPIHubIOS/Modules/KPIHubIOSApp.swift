@@ -23,6 +23,7 @@ struct KPIHubIOSApp: SwiftUI.App {
     var body: some Scene {
         WindowGroup {
             AppCoordinatorView(store: KPIHubIOSApp.store)
+                .accentColor(.orange)
         }
     }
 

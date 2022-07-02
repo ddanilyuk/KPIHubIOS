@@ -19,9 +19,11 @@ struct LessonDetailsView: View {
 
                     LessonDetailsTitleView(
                         title: viewStore.lesson.names.joined(separator: ", "),
-                        isEditing: viewStore.isEditing,
-                        onTap: { viewStore.send(.editNames) }
+                        isEditing: viewStore.isEditing
                     )
+                    .onTapGesture {
+                        viewStore.send(.editNames)
+                    }
 
                     LessonDetailsDateAndTimeSection(
                         lessonPositionDescription: viewStore.lesson.position.description,
@@ -32,9 +34,11 @@ struct LessonDetailsView: View {
 
                     LessonDetailsTeacherSection(
                         teachers: viewStore.lesson.teachers ?? [],
-                        isEditing: viewStore.isEditing,
-                        onTap: { viewStore.send(.editTeachers) }
+                        isEditing: viewStore.isEditing
                     )
+                    .onTapGesture {
+                        viewStore.send(.editTeachers)
+                    }
 
                     LessonDetailsTypeSection(
                         type: viewStore.lesson.type

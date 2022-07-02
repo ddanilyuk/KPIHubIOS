@@ -11,13 +11,11 @@ struct LessonDetailsTeacherSection: View {
 
     var teachers: [String]
     var isEditing: Bool
-    var onTap: () -> Void
 
     var body: some View {
         LessonDetailsSectionView(
             title: "Викладач",
             isEditing: isEditing,
-            onTap: onTap,
             content: { content }
         )
     }
