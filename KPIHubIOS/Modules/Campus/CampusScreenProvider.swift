@@ -21,7 +21,6 @@ extension Campus.ScreenProvider {
 
         static var module: Any.Type = Campus.self
 
-        case empty(EmptyScreen.State)
         case campusLogin(CampusLogin.State)
         case campusHome(CampusHome.State)
         case studySheet(StudySheet.State)
@@ -32,7 +31,6 @@ extension Campus.ScreenProvider {
 
     enum Action: Equatable {
 
-        case empty(EmptyScreen.Action)
         case campusLogin(CampusLogin.Action)
         case campusHome(CampusHome.Action)
         case studySheet(StudySheet.Action)

@@ -21,7 +21,6 @@ extension Rozklad.ScreenProvider {
 
         static var module: Any.Type = Rozklad.self
 
-        case empty(EmptyScreen.State)
         case groupPicker(GroupPicker.State)
         case groupRozklad(GroupRozklad.State)
         case lessonDetails(LessonDetails.State)
@@ -33,7 +32,6 @@ extension Rozklad.ScreenProvider {
     // MARK: - Action handling
 
     enum Action: Equatable {
-        case empty(EmptyScreen.Action)
         case groupPicker(GroupPicker.Action)
         case groupRozklad(GroupRozklad.Action)
         case lessonDetails(LessonDetails.Action)

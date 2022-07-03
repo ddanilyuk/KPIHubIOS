@@ -22,11 +22,6 @@ struct RozkladFlowCoordinatorView: View {
                     then: GroupPickerView.init
                 )
                 CaseLet(
-                    state: /Rozklad.ScreenProvider.State.empty,
-                    action: Rozklad.ScreenProvider.Action.empty,
-                    then: EmptyScreenView.init
-                )
-                CaseLet(
                     state: /Rozklad.ScreenProvider.State.groupRozklad,
                     action: Rozklad.ScreenProvider.Action.groupRozklad,
                     then: GroupRozkladView.init

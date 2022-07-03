@@ -21,11 +21,6 @@ struct CampusFlowCoordinatorView: View {
         TCARouter(store) { screen in
             SwitchStore(screen) {
                 CaseLet(
-                    state: /Campus.ScreenProvider.State.empty,
-                    action: Campus.ScreenProvider.Action.empty,
-                    then: EmptyScreenView.init
-                )
-                CaseLet(
                     state: /Campus.ScreenProvider.State.campusLogin,
                     action: Campus.ScreenProvider.Action.campusLogin,
                     then: CampusLoginView.init
