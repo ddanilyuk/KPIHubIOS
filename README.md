@@ -20,13 +20,13 @@ This application works in cooperation with [server](https://github.com/ddanilyuk
 
 ## Demo
 
-![1](images/1.png)
+![1](Images/1.png)
 
 
-![2](images/2.png)
+![2](Images/2.png)
 
 
-![3](images/3.png)
+![3](Images/3.png)
 
 
 ## Plans
