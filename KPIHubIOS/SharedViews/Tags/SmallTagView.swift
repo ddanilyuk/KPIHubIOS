@@ -9,16 +9,17 @@ import SwiftUI
 
 struct SmallTagView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let icon: Image
     let text: String
-    let backgroundColor: Color
-    let accentColor: Color
+    let color: Color
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             ZStack {
                 Circle()
-                    .fill(accentColor)
+                    .fill(color)
 
                 icon
                     .font(.system(.footnote))
@@ -29,11 +30,11 @@ struct SmallTagView: View {
             Text("\(text)")
                 .lineLimit(1)
                 .font(.system(.footnote))
-                .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
+                .foregroundColor(.black)
                 .padding(.vertical, 3)
                 .padding(.horizontal, 6)
         }
-        .background(backgroundColor)
+        .background(color.lighter(by: colorScheme == .light ? 0.9 : 0.7))
         .cornerRadius(12)
     }
 
@@ -47,8 +48,7 @@ struct SmallTagView_Previews: PreviewProvider {
         SmallTagView(
             icon: Image(systemName: "graduationcap"),
             text: "Практика",
-            backgroundColor: Color.cyan.lighter(by: 0.9),
-            accentColor: Color.cyan
+            color: .cyan
         )
         .previewLayout(.fixed(width: 200, height: 100))
     }

@@ -9,12 +9,14 @@ import SwiftUI
 
 struct BorderGradientBackgroundView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     @State var gradientAngle: Double = 0
 
     var body: some View {
         RoundedRectangle(cornerRadius: 8)
             .fill(
-                Color.white,
+                colorScheme == .light ? Color.white : Color(.tertiarySystemFill),
                 strokeBorder: AngularGradient(
                     gradient: Gradient(colors: [
                         .red.opacity(0.7),

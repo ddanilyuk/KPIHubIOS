@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ProfileSectionView<Content: View>: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let title: String
     let content: Content
 
@@ -23,8 +25,11 @@ struct ProfileSectionView<Content: View>: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
-                .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                .if(colorScheme == .light) { view in
+                    view
+                        .shadow(color: .black.opacity(0.05), radius: 4, x: 0, y: 2)
+                }
 
             VStack(alignment: .leading, spacing: 20) {
                 Text(title)

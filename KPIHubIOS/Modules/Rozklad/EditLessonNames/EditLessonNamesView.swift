@@ -10,7 +10,13 @@ import ComposableArchitecture
 
 struct EditLessonNamesView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<EditLessonNames.State, EditLessonNames.Action>
+
+    init(store: Store<EditLessonNames.State, EditLessonNames.Action>) {
+        self.store = store
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -20,7 +26,7 @@ struct EditLessonNamesView: View {
                         let isSelected = viewStore.selected.contains(name)
                         ZStack {
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
+                                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
                                 .shadow(
                                     color: isSelected ? .orange.opacity(0.1) : .clear,
                                     radius: 6,
@@ -55,6 +61,7 @@ struct EditLessonNamesView: View {
                         action: { viewStore.send(.cancel) },
                         label: {
                             Text("Скасувати")
+                                .foregroundColor(.orange)
                         }
                     )
                 }
@@ -63,6 +70,7 @@ struct EditLessonNamesView: View {
                         action: { viewStore.send(.save) },
                         label: {
                             Text("Зберегти")
+                                .foregroundColor(.orange)
                         }
                     )
                 }

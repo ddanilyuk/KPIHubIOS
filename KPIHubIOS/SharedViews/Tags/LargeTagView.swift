@@ -9,16 +9,17 @@ import SwiftUI
 
 struct LargeTagView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let icon: Image
     let text: String
-    let backgroundColor: Color
-    let accentColor: Color
+    let color: Color
 
     var body: some View {
         HStack(alignment: .center, spacing: 0) {
             ZStack {
                 Circle()
-                    .fill(accentColor)
+                    .fill(color)
 
                 icon
                     .font(.system(.body))
@@ -27,13 +28,16 @@ struct LargeTagView: View {
             .frame(width: 30, height: 30)
 
             Text("\(text)")
-                .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
+                .foregroundColor(.black)
                 .padding(.vertical, 4)
                 .padding(.horizontal, 8)
         }
-        .background(backgroundColor)
+        .background(color.lighter(by: colorScheme == .light ? 0.9 : 0.7))
         .cornerRadius(15)
-        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
+        .if(colorScheme == .light) { view in
+            view
+                .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
+        }
     }
 
 }
@@ -45,8 +49,7 @@ struct LargeTagView_Previews: PreviewProvider {
         LargeTagView(
             icon: Image(systemName: "graduationcap"),
             text: "Практика",
-            backgroundColor: Color.cyan.lighter(by: 0.9),
-            accentColor: Color.cyan
+            color: .cyan
         )
         .previewLayout(.fixed(width: 200, height: 100))
     }

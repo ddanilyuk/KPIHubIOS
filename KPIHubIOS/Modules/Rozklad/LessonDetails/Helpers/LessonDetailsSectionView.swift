@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LessonDetailsSectionView<Content: View>: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let title: String
     var shadowColor: Color = Color.black.opacity(0.05)
     var shadowRadius: CGFloat = 4
@@ -25,7 +27,7 @@ struct LessonDetailsSectionView<Content: View>: View {
 
                 ZStack(alignment: .topLeading) {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(Color.white)
+                        .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
                         .shadow(color: shadowColor, radius: shadowRadius, x: 0, y: shadowRadius / 2)
 
                     content

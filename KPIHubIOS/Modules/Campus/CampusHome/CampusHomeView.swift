@@ -10,7 +10,13 @@ import SwiftUI
 
 struct CampusHomeView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<CampusHome.State, CampusHome.Action>
+
+    init(store: Store<CampusHome.State, CampusHome.Action>) {
+        self.store = store
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -18,7 +24,10 @@ struct CampusHomeView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(.orange.lighter(by: 0.85))
-                        .shadow(color: .orange.opacity(0.15), radius: 12, x: 0, y: 6)
+                        .if(colorScheme == .light) { view in
+                            view
+                                .shadow(color: .orange.opacity(0.15), radius: 12, x: 0, y: 6)
+                        }
 
                     VStack {
                         HStack(spacing: 16) {
@@ -28,17 +37,20 @@ struct CampusHomeView: View {
 
                                 Image(systemName: "graduationcap")
                                     .font(.system(.body).bold())
-                                    .foregroundColor(.orange.lighter(by: 0.9))
+                                    .foregroundColor(.orange.lighter(by: colorScheme == .light ? 0.9 : 0.7))
                             }
                             .frame(width: 40, height: 40)
 
                             Text("Поточний контроль")
                                 .font(.system(.body).bold())
+                                .foregroundColor(.black)
 
                             Spacer()
                         }
 
                         studySheetDescription(for: viewStore.state.studySheetState)
+                            .foregroundColor(.black)
+                            .tint(.black)
                             .font(.system(.callout))
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .frame(height: 25)

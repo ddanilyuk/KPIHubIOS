@@ -57,8 +57,11 @@ struct LessonDetailsDateAndTimeSection: View {
                     .font(.system(.subheadline).weight(.regular))
                 }
                 .padding(16)
-                .overlay(alignment: .topTrailing) {
-                    BadgeView(mode: mode)
+                .if(mode != .default) { view in
+                    view
+                        .overlay(alignment: .topTrailing) {
+                            BadgeView(mode: mode)
+                        }
                 }
             }
         )

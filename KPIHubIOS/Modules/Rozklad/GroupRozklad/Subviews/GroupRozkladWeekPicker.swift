@@ -34,7 +34,7 @@ struct GroupRozkladWeekPicker: View {
                     }
                 )
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .foregroundColor(element == displayedWeek ? .black : .secondary)
+                .foregroundColor(element == displayedWeek ? .primary : .secondary)
             }
         }
         .padding(.horizontal, 16)

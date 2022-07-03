@@ -10,15 +10,24 @@ import ComposableArchitecture
 
 struct StudySheetActivityCellView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<StudySheetActivity.State, StudySheetActivity.Action>
+
+    init(store: Store<StudySheetActivity.State, StudySheetActivity.Action>) {
+        self.store = store
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
-
+                    .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                    .if(colorScheme == .light) { view in
+                        view
+                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    }
+                
                 VStack(alignment: .leading, spacing: 10) {
                     Text("\(viewStore.activity.type)")
                         .font(.system(.body))
@@ -31,23 +40,20 @@ struct StudySheetActivityCellView: View {
                     SmallTagView(
                         icon: Image(systemName: "calendar"),
                         text: "\(viewStore.activity.date)",
-                        backgroundColor: Color.yellow.lighter(by: 0.9),
-                        accentColor: Color.yellow
+                        color: .yellow
                     )
 
                     SmallTagView(
                         icon: Image(systemName: "person"),
                         text: viewStore.activity.teacher,
-                        backgroundColor: Color.indigo.lighter(by: 0.9),
-                        accentColor: Color.indigo
+                        color: .indigo
                     )
 
                     if !viewStore.activity.note.isEmpty {
                         SmallTagView(
                             icon: Image(systemName: "note.text"),
                             text: "\(viewStore.activity.note)",
-                            backgroundColor: Color.yellow.lighter(by: 0.9),
-                            accentColor: Color.yellow
+                            color: .yellow
                         )
                     }
                 }

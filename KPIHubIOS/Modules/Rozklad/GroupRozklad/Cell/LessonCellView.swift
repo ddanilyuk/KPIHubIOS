@@ -10,6 +10,8 @@ import ComposableArchitecture
 
 struct LessonCellView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<LessonCell.State, LessonCell.Action>
 
     var body: some View {
@@ -64,16 +66,19 @@ struct LessonCellView: View {
 
             case .next:
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
+                    .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
                     .overlay(alignment: .topTrailing) {
                         BadgeView(mode: .next)
                     }
-                    .shadow(color: Color.blue.opacity(0.2), radius: 8, x: 0, y: 4)
+                    .shadow(color: Color.blue.opacity(colorScheme == .light ? 0.2 : 0.5), radius: 8, x: 0, y: 4)
 
             case .default:
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-                    .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                    .if(colorScheme == .light) { view in
+                        view
+                            .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    }
             }
         }
     }
@@ -90,8 +95,7 @@ struct LessonCellView: View {
                     SmallTagView(
                         icon: Image(systemName: "person"),
                         text: teacher,
-                        backgroundColor: Color.indigo.lighter(by: 0.9),
-                        accentColor: Color.indigo
+                        color: .indigo
                     )
                 }
 
@@ -99,15 +103,13 @@ struct LessonCellView: View {
                     SmallTagView(
                         icon: Image(systemName: "location"),
                         text: viewStore.lesson.locations?.first ?? "-",
-                        backgroundColor: Color.yellow.lighter(by: 0.9),
-                        accentColor: Color.yellow
+                        color: .yellow
                     )
 
                     SmallTagView(
                         icon: Image(systemName: "graduationcap"),
                         text: viewStore.lesson.type,
-                        backgroundColor: Color.cyan.lighter(by: 0.9),
-                        accentColor: Color.cyan
+                        color: .cyan
                     )
                 }
             }
