@@ -85,6 +85,7 @@ struct CampusLogin {
                 username: state.username,
                 password: state.password
             )
+            state.focusedField = nil
             state.isLoading = true
             let task: Effect<CampusUserInfo, Error> = Effect.task {
                 let result = try await environment.apiClient.request(
@@ -96,6 +97,8 @@ struct CampusLogin {
             return task
                 .mapError(APIError.init(error:))
                 .receive(on: DispatchQueue.main)
+                // Make keyboard hide to prevent tabBar opacity bugs
+                .delay(for: 0.3, scheduler: DispatchQueue.main)
                 .catchToEffect(Action.campusUserInfoResult)
 
         case let .campusUserInfoResult(.success(campusUserInfo)):

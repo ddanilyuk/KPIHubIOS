@@ -47,6 +47,7 @@ struct App {
     // MARK: - Environment
 
     struct Environment {
+        let appConfiguration: AppConfiguration
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let keychainClient: KeychainClientable
@@ -75,6 +76,7 @@ struct App {
             )
 
             return Self(
+                appConfiguration: appConfiguration,
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
                 keychainClient: keychainClient,
@@ -157,6 +159,7 @@ extension App.Environment {
 
     var main: Main.Environment {
         Main.Environment(
+            appConfiguration: appConfiguration,
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
             rozkladClient: rozkladClient,

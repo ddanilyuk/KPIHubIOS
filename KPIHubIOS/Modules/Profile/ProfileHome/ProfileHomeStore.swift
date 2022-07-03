@@ -18,6 +18,7 @@ struct ProfileHome {
         var campusState: CampusClientState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
         @BindableState var toggleWeek: Bool = false
+        var completeAppVersion: String = ""
 
         var confirmationDialog: ConfirmationDialogState<Action>?
         var alert: AlertState<Action>?
@@ -65,6 +66,7 @@ struct ProfileHome {
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
+        let appConfiguration: AppConfiguration
     }
 
     // MARK: - Reducer
@@ -73,6 +75,7 @@ struct ProfileHome {
         enum SubscriberCancelID { }
         switch action {
         case .onAppear:
+            state.completeAppVersion = environment.appConfiguration.completeAppVersion ?? ""
             state.toggleWeek = environment.userDefaultsClient.get(for: .toggleWeek)
             return Effect.setAndSubscribeOnAppear(
                 environment: environment,

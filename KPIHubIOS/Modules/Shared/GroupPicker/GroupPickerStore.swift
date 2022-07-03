@@ -86,6 +86,8 @@ struct GroupPicker {
             return task
                 .mapError { $0 as NSError }
                 .receive(on: DispatchQueue.main)
+                // Make keyboard hide to prevent tabBar opacity bugs
+                .delay(for: 0.3, scheduler: DispatchQueue.main)
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):

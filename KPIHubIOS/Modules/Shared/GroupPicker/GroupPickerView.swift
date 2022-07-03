@@ -28,14 +28,13 @@ struct GroupPickerView: View {
                     }
                     .frame(height: 44)
                     .frame(maxWidth: .infinity)
-                    .onTapGesture { viewStore.send(.groupSelected(group)) }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        UIApplication.shared.endEditing()
+                        viewStore.send(.groupSelected(group))
+                    }
                 }
             }
-            .searchable(
-                text: viewStore.binding(\.$searchedText),
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: Text("Пошук")
-            )
             .refreshable {
                 viewStore.send(.refresh)
             }
@@ -47,6 +46,11 @@ struct GroupPickerView: View {
             .alert(
                 self.store.scope(state: \.alert),
                 dismiss: .dismissAlert
+            )
+            .searchable(
+                text: viewStore.binding(\.$searchedText),
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Пошук")
             )
         }
     }

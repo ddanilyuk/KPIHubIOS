@@ -17,7 +17,7 @@ struct Rozklad {
         var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
 
         init() {
-            self.routes = [.root(.empty(.init()))]
+            self.routes = []
         }
     }
 

@@ -84,7 +84,6 @@
 		5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */; };
 		5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */; };
 		5F69BBDB284ACC4100FED83D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBDA284ACC4100FED83D /* APIClient.swift */; };
-		5F69BBDD284CBF7A00FED83D /* TCARouter+EmptyScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBDC284CBF7900FED83D /* TCARouter+EmptyScreen.swift */; };
 		5F69BBDF284CC0C900FED83D /* CampusScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBDE284CC0C900FED83D /* CampusScreenProvider.swift */; };
 		5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE1284CC12300FED83D /* CampusHome.swift */; };
 		5F69BBE4284CC12800FED83D /* CampusHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F69BBE3284CC12800FED83D /* CampusHomeView.swift */; };
@@ -128,6 +127,7 @@
 		5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE632D286DA06A002F7E9D /* Publisher+Ext.swift */; };
 		5FEE6330286DD9AC002F7E9D /* CurrentLesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE632F286DD9AC002F7E9D /* CurrentLesson.swift */; };
 		5FEE6332286DE483002F7E9D /* GroupRozkladScrollToView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEE6331286DE483002F7E9D /* GroupRozkladScrollToView.swift */; };
+		5FF18EA12871D9B8001474F6 /* UIApplication+endEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF18EA02871D9B8001474F6 /* UIApplication+endEditing.swift */; };
 		6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */; };
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
@@ -239,7 +239,6 @@
 		5F69BBD5284AAC4B00FED83D /* CampusLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusLoginView.swift; sourceTree = "<group>"; };
 		5F69BBD7284AAF3200FED83D /* BigButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButtonStyle.swift; sourceTree = "<group>"; };
 		5F69BBDA284ACC4100FED83D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		5F69BBDC284CBF7900FED83D /* TCARouter+EmptyScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TCARouter+EmptyScreen.swift"; sourceTree = "<group>"; };
 		5F69BBDE284CC0C900FED83D /* CampusScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusScreenProvider.swift; sourceTree = "<group>"; };
 		5F69BBE1284CC12300FED83D /* CampusHome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusHome.swift; sourceTree = "<group>"; };
 		5F69BBE3284CC12800FED83D /* CampusHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusHomeView.swift; sourceTree = "<group>"; };
@@ -286,6 +285,7 @@
 		5FEE632D286DA06A002F7E9D /* Publisher+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Ext.swift"; sourceTree = "<group>"; };
 		5FEE632F286DD9AC002F7E9D /* CurrentLesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLesson.swift; sourceTree = "<group>"; };
 		5FEE6331286DE483002F7E9D /* GroupRozkladScrollToView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladScrollToView.swift; sourceTree = "<group>"; };
+		5FF18EA02871D9B8001474F6 /* UIApplication+endEditing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+endEditing.swift"; sourceTree = "<group>"; };
 		81583112845865D55AD90E88 /* Pods-KPIHubIOSTests.debug-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.debug-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.debug-production.xcconfig"; sourceTree = "<group>"; };
 		8519F4CB701CA3A6820AA6C8 /* Pods-KPIHubIOS.debug-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.debug-development.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.debug-development.xcconfig"; sourceTree = "<group>"; };
 		917DCF191A061A5A66205385 /* Pods-KPIHubIOS-KPIHubIOSUITests.debug-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.debug-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.debug-production.xcconfig"; sourceTree = "<group>"; };
@@ -545,6 +545,7 @@
 				5F7C5903285B6D5A00900A90 /* View+If.swift */,
 				5F67124D2865CA1600A57E10 /* View+Preview.swift */,
 				5F198F5A286F83AA00D13782 /* View+sync.swift */,
+				5FF18EA02871D9B8001474F6 /* UIApplication+endEditing.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -562,7 +563,6 @@
 			children = (
 				5F198F58286E44AA00D13782 /* AlertState+Error.swift */,
 				5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */,
-				5F69BBDC284CBF7900FED83D /* TCARouter+EmptyScreen.swift */,
 			);
 			path = TCA;
 			sourceTree = "<group>";
@@ -1259,6 +1259,7 @@
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
 				5F69BBDF284CC0C900FED83D /* CampusScreenProvider.swift in Sources */,
 				5F137EF0284409F900514263 /* RozkladStore.swift in Sources */,
+				5FF18EA12871D9B8001474F6 /* UIApplication+endEditing.swift in Sources */,
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
 				5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */,
@@ -1286,7 +1287,6 @@
 				5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */,
 				5F67125B2866144000A57E10 /* LessonMode.swift in Sources */,
 				5F79DEB6284EB8BD0040C14A /* CampusSectionView.swift in Sources */,
-				5F69BBDD284CBF7A00FED83D /* TCARouter+EmptyScreen.swift in Sources */,
 				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
 				5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */,
 				5F198F5F2870511200D13782 /* SafeAreaInsetsKey.swift in Sources */,
