@@ -16,25 +16,28 @@ struct ProfileHomeView: View {
         WithViewStore(store) { viewStore in
             ScrollView {
                 VStack(spacing: 32) {
-                    RozkladSectionView(
-                        store: store.scope(
-                            state: RozkladSectionView.ViewState.init(profileHomeState:),
-                            action: ProfileHome.Action.init(rozkladSection:)
-                        )
+                    WithViewStore(
+                        self.store.scope(
+                            state: \ProfileHome.State.rozkladSectionView,
+                            action: ProfileHome.Action.rozkladSectionView
+                        ),
+                        content: RozkladSectionView.init(viewStore:)
                     )
 
-                    CampusSectionView(
-                        store: store.scope(
-                            state: CampusSectionView.ViewState.init(profileHomeState:),
-                            action: ProfileHome.Action.init(campusSection:)
-                        )
+                    WithViewStore(
+                        self.store.scope(
+                            state: \ProfileHome.State.campusSectionView,
+                            action: ProfileHome.Action.campusSectionView
+                        ),
+                        content: CampusSectionView.init(viewStore:)
                     )
 
-                    OtherSectionView(
-                        store: store.scope(
-                            state: { _ in OtherSectionView.ViewState() },
-                            action: ProfileHome.Action.init(otherSection:)
-                        )
+                    WithViewStore(
+                        self.store.scope(
+                            state: \ProfileHome.State.otherSectionView,
+                            action: ProfileHome.Action.otherSectionView
+                        ),
+                        content: OtherSectionView.init(viewStore:)
                     )
                 }
                 .padding(16)
@@ -73,9 +76,10 @@ struct ProfileHomeView_Previews: PreviewProvider {
                         reducer: ProfileHome.reducer,
                         environment: ProfileHome.Environment(
                             apiClient: .failing,
-                            userDefaultsClient: .live(),
-                            rozkladClient: .live(userDefaultsClient: .live()),
-                            campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
+                            userDefaultsClient: .mock(),
+                            rozkladClient: .mock(),
+                            campusClient: .mock(),
+                            currentDateClient: .mock()
                         )
                     )
                 )
@@ -85,15 +89,16 @@ struct ProfileHomeView_Previews: PreviewProvider {
                 ProfileHomeView(
                     store: Store(
                         initialState: ProfileHome.State(
-                            rozkladState: .selected(GroupResponse(id: UUID(), name: "ІВ-82")),
+                            rozkladState: .selected(GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")),
                             campusState: .loggedIn(CampusUserInfo.mock)
                         ),
                         reducer: ProfileHome.reducer,
                         environment: ProfileHome.Environment(
                             apiClient: .failing,
-                            userDefaultsClient: .live(),
-                            rozkladClient: .live(userDefaultsClient: .live()),
-                            campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live())
+                            userDefaultsClient: .mock(),
+                            rozkladClient: .mock(),
+                            campusClient: .mock(),
+                            currentDateClient: .mock()
                         )
                     )
                 )

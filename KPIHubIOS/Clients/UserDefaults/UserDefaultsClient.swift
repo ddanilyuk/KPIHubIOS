@@ -29,10 +29,6 @@ protocol UserDefaultsClientable {
         for defaultKey: UserDefaultKey<T>
     ) -> T?
 
-    func get<T: Codable>(
-        for defaultKey: UserDefaultKey<T?>
-    ) -> T?
-
     func get(
         for defaultKey: UserDefaultKey<Bool>
     ) -> Bool
@@ -40,20 +36,19 @@ protocol UserDefaultsClientable {
     // MARK: - Remove
 
     func remove<T: Codable>(for key: UserDefaultKey<T>)
+
 }
 
 
-final class UserDefaultsClient: UserDefaultsClientable {
+struct UserDefaultsClient: UserDefaultsClientable {
 
-    static func live() -> UserDefaultsClient {
-        return UserDefaultsClient()
+    init(_ defaults: UserDefaults) {
+        self.defaults = defaults
     }
-    
-    private init() { }
 
     // MARK: - Properties
 
-    private let defaults = UserDefaults.standard
+    private let defaults: UserDefaults
 
     // MARK: - Set
 
@@ -83,12 +78,7 @@ final class UserDefaultsClient: UserDefaultsClientable {
     func get<T: Codable>(
         for defaultKey: UserDefaultKey<T>
     ) -> T? {
-        return get(for: defaultKey.key)
-    }
 
-    func get<T: Codable>(
-        for defaultKey: UserDefaultKey<T?>
-    ) -> T? {
         return get(for: defaultKey.key)
     }
 
@@ -121,44 +111,40 @@ final class UserDefaultsClient: UserDefaultsClientable {
 
 }
 
-// MARK: - UserDefaultKey
-
 struct UserDefaultKey<T: Codable> {
-
     var key: String
-}
 
-// MARK: - UserDefaultKey + ExpressibleByStringLiteral
-
-extension UserDefaultKey: ExpressibleByStringLiteral {
-
-    init(stringLiteral value: String) {
-        self.key = value
+    init(key: String = #function) {
+        self.key = key
     }
-    
 }
 
 extension UserDefaultKey {
 
-    static var group: UserDefaultKey<GroupResponse> {
-        "group"
+    static var groupResponse: UserDefaultKey<GroupResponse> { .init() }
+
+    static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> { .init() }
+
+    static var lessonsUpdatedAt: UserDefaultKey<Date> { .init() }
+
+    static var campusUserInfo: UserDefaultKey<CampusUserInfo> { .init() }
+
+    static var onboardingPassed: UserDefaultKey<Bool> { .init() }
+
+    static var toggleWeek: UserDefaultKey<Bool> { .init() }
+
+}
+
+// MARK: - UserDefaultsClient
+
+extension UserDefaultsClientable where Self == UserDefaultsClient {
+
+    static func live() -> UserDefaultsClientable {
+        return UserDefaultsClient(UserDefaults.standard)
     }
 
-    static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> {
-        "lessons"
-    }
-
-    static var lessonsUpdatedAt: UserDefaultKey<Date> {
-        "lessonsUpdatedAt"
-    }
-
-
-    static var campusUserInfo: UserDefaultKey<CampusUserInfo> {
-        "campusUserInfo"
-    }
-
-    static var onboardingPassed: UserDefaultKey<Bool> {
-        "onboardingPassed"
+    static func mock() -> UserDefaultsClientable {
+        return UserDefaultsClient(UserDefaults(suiteName: "mock")!)
     }
 
 }

@@ -16,13 +16,13 @@ struct OtherSectionView: View {
         case forDevelopers
     }
 
-    let store: Store<ViewState, ViewAction>
+    @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
 
     var body: some View {
-        WithViewStore(store) { viewStore in
-            ProfileSectionView(
-                title: "Інше",
-                content: {
+        ProfileSectionView(
+            title: "Інше",
+            content: {
+                VStack(alignment: .leading, spacing: 16) {
                     ProfileCellView(
                         title: "",
                         value: .text("Для розробників"),
@@ -34,8 +34,19 @@ struct OtherSectionView: View {
                     )
                     .onTapGesture { viewStore.send(.forDevelopers) }
                 }
-            )
-        }
+
+            }
+        )
+    }
+
+}
+
+// MARK: - ViewState
+
+extension ProfileHome.State {
+
+    var otherSectionView: OtherSectionView.ViewState {
+        OtherSectionView.ViewState()
     }
 
 }
@@ -44,13 +55,13 @@ struct OtherSectionView: View {
 
 extension ProfileHome.Action {
 
-    init(otherSection: OtherSectionView.ViewAction) {
-        switch otherSection {
+    static func otherSectionView(_ viewAction: OtherSectionView.ViewAction) -> Self {
+        switch viewAction {
         case .forDevelopers:
-            self = .routeAction(.forDevelopers)
+            return .routeAction(.forDevelopers)
         }
     }
-
+    
 }
 
 // MARK: - Preview
@@ -60,10 +71,12 @@ struct OtherSectionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             OtherSectionView(
-                store: Store(
-                    initialState: OtherSectionView.ViewState(),
-                    reducer: Reducer.empty,
-                    environment: Void()
+                viewStore: ViewStore(
+                    Store(
+                        initialState: OtherSectionView.ViewState(),
+                        reducer: .empty,
+                        environment: ()
+                    )
                 )
             )
             .smallPreview

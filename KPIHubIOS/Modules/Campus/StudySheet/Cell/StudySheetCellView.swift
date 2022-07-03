@@ -28,8 +28,8 @@ struct StudySheetCellView: View {
                         SmallTagView(
                             icon: Image(systemName: "person"),
                             text: teacher,
-                            backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                            accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                            backgroundColor: Color.indigo.lighter(by: 0.9),
+                            accentColor: Color.indigo
                         )
                     }
 
@@ -37,15 +37,15 @@ struct StudySheetCellView: View {
                         SmallTagView(
                             icon: Image(systemName: "calendar"),
                             text: "\(viewStore.item.year)",
-                            backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                            accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                            backgroundColor: Color.yellow.lighter(by: 0.9),
+                            accentColor: Color.yellow
                         )
 
                         SmallTagView(
                             icon: Image(systemName: "calendar"),
                             text: "\(viewStore.item.semester) семетр",
-                            backgroundColor: Color(red: 254 / 255, green: 251 / 255, blue: 232 / 255),
-                            accentColor: Color(red: 243 / 255, green: 209 / 255, blue: 19 / 255)
+                            backgroundColor: Color.yellow.lighter(by: 0.9),
+                            accentColor: Color.yellow
                         )
                     }
                 }
@@ -74,10 +74,8 @@ struct StudySheetCellView_Previews: PreviewProvider {
                 environment: StudySheetCell.Environment()
             )
         )
-        .previewLayout(.sizeThatFits)
-        .fixedSize(horizontal: false, vertical: true)
+        .smallPreview
         .padding(16)
-        .frame(width: 375)
         .background(Color.screenBackground)
     }
 }

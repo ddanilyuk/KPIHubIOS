@@ -14,15 +14,12 @@ protocol KeychainClientable {
     func remove(for key: KeychainKey) throws
 
     static func live() -> Self
+    static func mock() -> Self
 }
 
 final class KeychainClient: KeychainClientable {
 
     let keychain: Keychain
-
-    static func live() -> Self {
-        Self()
-    }
 
     init(keychain: Keychain = Keychain()) {
         self.keychain = keychain
@@ -45,4 +42,15 @@ final class KeychainClient: KeychainClientable {
 enum KeychainKey: String {
     case campusUsername
     case campusPassword
+}
+
+extension KeychainClientable where Self == KeychainClient {
+
+    static func live() -> KeychainClient {
+        KeychainClient()
+    }
+
+    static func mock() -> KeychainClient {
+        KeychainClient(keychain: Keychain(service: "mock"))
+    }
 }

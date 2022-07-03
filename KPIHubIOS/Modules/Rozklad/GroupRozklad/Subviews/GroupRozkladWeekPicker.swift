@@ -9,15 +9,15 @@ import SwiftUI
 
 struct GroupRozkladWeekPicker: View {
 
-    @Binding var selectedWeek: Lesson.Week?
-    @Binding var displayedWeek: Lesson.Week
+    var displayedWeek: Lesson.Week
     var currentWeek: Lesson.Week
+    var selectWeek: (Lesson.Week) -> Void
 
     var body: some View {
         HStack {
             ForEach(Lesson.Week.allCases, id: \.self) { element in
                 Button(
-                    action: { selectedWeek = element },
+                    action: { selectWeek(element) },
                     label: {
                         Text("\(element.description)")
                             .font(.system(.body).bold())

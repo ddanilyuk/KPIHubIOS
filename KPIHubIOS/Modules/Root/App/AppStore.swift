@@ -48,29 +48,36 @@ struct App {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
+        let keychainClient: KeychainClientable
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
         let currentDateClient: CurrentDateClient
 
         static var live: Self {
+            let appConfiguration: AppConfiguration = .live(bundle: Bundle.main)
             let apiClient: APIClient = .live(
-                router: rootRouter.baseURL("http://192.168.31.30:8080")
-//                router: rootRouter.baseURL("http://kpihub.xyz")
+                router: rootRouter.baseURL(appConfiguration.apiURL)
             )
-            let userDefaultsClient: UserDefaultsClient = .live()
-            let keychainClient: KeychainClientable = KeychainClient.live()
-            let rozkladClient: RozkladClient = .live(userDefaultsClient: userDefaultsClient)
+            let userDefaultsClient: UserDefaultsClientable = .live()
+            let keychainClient: KeychainClientable = .live()
+            let rozkladClient: RozkladClient = .live(
+                userDefaultsClient: userDefaultsClient
+            )
             let campusClient: CampusClient = .live(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
                 keychainClient: keychainClient
             )
-            let currentDateClient: CurrentDateClient = .live(rozkladClient: rozkladClient)
+            let currentDateClient: CurrentDateClient = .live(
+                userDefaultsClient: userDefaultsClient,
+                rozkladClient: rozkladClient
+            )
 
             return Self(
                 apiClient: apiClient,
                 userDefaultsClient: userDefaultsClient,
+                keychainClient: keychainClient,
                 rozkladClient: rozkladClient,
                 campusClient: campusClient,
                 currentDateClient: currentDateClient
@@ -88,11 +95,9 @@ struct App {
             } else {
                 state.set(.login)
             }
-            environment.campusClient.studySheet.load()
             return .none
 
         case .login(.delegate(.done)):
-            environment.campusClient.studySheet.load()
             state.set(.main)
             return .none
 
@@ -130,7 +135,6 @@ struct App {
             ),
         reducerCore
     )
-//    .debug()
 
 }
 

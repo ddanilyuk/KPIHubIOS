@@ -26,6 +26,7 @@ struct Campus {
     enum Action: Equatable, IdentifiedRouterAction {
         case onSetup
 
+        case updateCampusState(CampusClientState.State)
         case setCampusLogin
         case setCampusHome
 
@@ -37,7 +38,7 @@ struct Campus {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let campusClient: CampusClient
         let rozkladClient: RozkladClient
     }
@@ -45,22 +46,32 @@ struct Campus {
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelID { }
         switch action {
         case .onSetup:
-            return Effect.run { subscriber in
-                environment.campusClient.state.subject
-                    .receive(on: DispatchQueue.main)
-                    .sink { state in
-                        switch state {
-                        case .loggedOut:
-                            subscriber.send(.setCampusLogin)
-                        case .loggedIn:
-                            subscriber.send(.setCampusHome)
+            return .merge(
+                Effect(value: .updateCampusState(environment.campusClient.state.subject.value)),
+                Effect.run { subscriber in
+                    environment.campusClient.state.subject
+                        .dropFirst()
+                        .removeDuplicates()
+                        .receive(on: DispatchQueue.main)
+                        .sink { state in
+                            subscriber.send(.updateCampusState(state))
                         }
-                    }
+                },
+                environment.campusClient.studySheet.load()
+                    .fireAndForget()
+            )
+            .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+
+        case let .updateCampusState(state):
+            switch state {
+            case .loggedOut:
+                return Effect(value: .setCampusLogin)
+            case .loggedIn:
+                return Effect(value: .setCampusHome)
             }
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .setCampusLogin:
             state.routes = [
@@ -82,8 +93,8 @@ struct Campus {
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
             environment.campusClient.state.commit()
-            environment.campusClient.studySheet.load()
-            return .none
+            return environment.campusClient.studySheet.load()
+                .fireAndForget()
 
         case let .routeAction(_, action: .campusHome(.routeAction(.studySheet(items)))):
             let studySheetState = StudySheet.State(items: items)

@@ -17,51 +17,55 @@ struct LessonDetailsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
 
-                    TitleView(
+                    LessonDetailsTitleView(
                         title: viewStore.lesson.names.joined(separator: ", "),
-                        isEditing: viewStore.isEditing,
-                        onTap: { viewStore.send(.editNames) }
+                        isEditing: viewStore.isEditing
                     )
+                    .onTapGesture {
+                        viewStore.send(.editNames)
+                    }
 
-                    DateAndTime(
+                    LessonDetailsDateAndTimeSection(
                         lessonPositionDescription: viewStore.lesson.position.description,
                         lessonWeek: viewStore.lesson.week,
-                        lessonDay: viewStore.lesson.day
+                        lessonDay: viewStore.lesson.day,
+                        mode: viewStore.mode
                     )
 
-                    TeacherSection(
+                    LessonDetailsTeacherSection(
                         teachers: viewStore.lesson.teachers ?? [],
-                        isEditing: viewStore.isEditing,
-                        onTap: { viewStore.send(.editTeachers) }
+                        isEditing: viewStore.isEditing
                     )
+                    .onTapGesture {
+                        viewStore.send(.editTeachers)
+                    }
 
-                    TypeSection(
+                    LessonDetailsTypeSection(
                         type: viewStore.lesson.type
                     )
 
-                    LocationsSection(
-                        locations: viewStore.lesson.locations ?? [],
-                        onTap: {}
+                    LessonDetailsLocationsSection(
+                        locations: viewStore.lesson.locations ?? []
                     )
                 }
                 .padding(16)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    toolbar(store: store)
+                    toolbar
                 }
             }
             .animation(.default, value: viewStore.state.isEditing)
             .onAppear {
                 viewStore.send(.onAppear)
             }
+            .background(Color.screenBackground)
+            .navigationTitle("Деталі")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        .background(Color.screenBackground)
-        .navigationTitle("Деталі")
-        .navigationBarTitleDisplayMode(.inline)
     }
 
-    func toolbar(store: Store<LessonDetails.State, LessonDetails.Action>) -> some View {
+    var toolbar: some View {
         WithViewStore(store) { viewStore in
             switch viewStore.state.isEditing {
             case true:
@@ -101,8 +105,9 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     ),
                     reducer: LessonDetails.reducer,
                     environment: LessonDetails.Environment(
-                        userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live())
+                        userDefaultsClient: .mock(),
+                        rozkladClient: .mock(),
+                        currentDateClient: .mock()
                     )
                 )
             )

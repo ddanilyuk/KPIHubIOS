@@ -21,14 +21,23 @@ struct CampusLogin {
             case campusAndGroup
         }
 
+        // MARK: - Field
+
+        enum Field: Int, CaseIterable {
+            case username
+            case password
+        }
+
         // MARK: - Properties
 
+        @BindableState var focusedField: Field?
         @BindableState var username: String = ""
         @BindableState var password: String = ""
         @BindableState var isLoading: Bool = false
 
-        var loginButtonEnabled: Bool = true
+        var loginButtonEnabled: Bool = false
 
+        var alert: AlertState<Action>?
         let mode: Mode
     }
 
@@ -36,10 +45,11 @@ struct CampusLogin {
 
     enum Action: Equatable, BindableAction {
         case login
-        case campusUserInfoResult(Result<CampusUserInfo, NSError>)
+        case campusUserInfoResult(Result<CampusUserInfo, APIError>)
         case groupSearchResult(Result<GroupResponse, APIError>)
         case lessonsResult(Result<[Lesson], NSError>)
 
+        case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
@@ -53,7 +63,7 @@ struct CampusLogin {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let campusClient: CampusClient
         let rozkladClient: RozkladClient
     }
@@ -77,19 +87,18 @@ struct CampusLogin {
             )
             state.isLoading = true
             let task: Effect<CampusUserInfo, Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
+                let result = try await environment.apiClient.request(
                     for: .api(.campus(.userInfo(campusLoginQuery))),
                     as: CampusUserInfo.self
                 )
-                return result.value
+                return result
             }
             return task
-                .mapError { $0 as NSError }
+                .mapError(APIError.init(error:))
                 .receive(on: DispatchQueue.main)
                 .catchToEffect(Action.campusUserInfoResult)
 
         case let .campusUserInfoResult(.success(campusUserInfo)):
-
             let groupSearchQuery = GroupSearchQuery(
                 groupName: campusUserInfo.studyGroup.name
             )
@@ -99,9 +108,13 @@ struct CampusLogin {
                 password: state.password
             )
             environment.campusClient.state.login(
-                credentials: campusCredentials,
-                userInfo: campusUserInfo,
-                commitChanges: false
+                ClientValue(
+                    CampusClientState.LoginRequest(
+                        credentials: campusCredentials,
+                        userInfo: campusUserInfo
+                    ),
+                    commitChanges: false
+                )
             )
 
             switch state.mode {
@@ -128,7 +141,7 @@ struct CampusLogin {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.state.select(group: group, commitChanges: false)
+                environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -137,7 +150,7 @@ struct CampusLogin {
                 .catchToEffect(Action.lessonsResult)
 
         case let .lessonsResult(.success(lessons)):
-            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
+            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: true))
             return Effect(value: .routeAction(.done))
 
         case let .groupSearchResult(.failure(error)):
@@ -151,9 +164,26 @@ struct CampusLogin {
                 return .none
             }
 
-        case let .campusUserInfoResult(.failure(error)),
-             let .lessonsResult(.failure(error)):
+        case let .campusUserInfoResult(.failure(error)):
             state.isLoading = false
+            switch error {
+            case .serviceError(404, _):
+                state.alert = AlertState(title: TextState("Схоже, логін або пароль невірний."))
+                return .none
+
+            case .serviceError,
+                 .unknown:
+                state.alert = AlertState.error(error)
+                return .none
+            }
+
+        case let .lessonsResult(.failure(error)):
+            state.isLoading = false
+            state.alert = AlertState.error(error)
+            return .none
+
+        case .dismissAlert:
+            state.alert = nil
             return .none
 
         case .binding:

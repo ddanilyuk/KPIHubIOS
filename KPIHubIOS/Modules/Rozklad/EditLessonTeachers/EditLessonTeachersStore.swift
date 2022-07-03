@@ -13,8 +13,8 @@ struct EditLessonTeachers {
 
     struct State: Equatable {
         let lesson: Lesson
-        let teachers: [Teacher]
-        var selected: [Teacher]
+        let teachers: [String]
+        var selected: [String]
 
         init(lesson: Lesson) {
             self.lesson = lesson
@@ -29,7 +29,7 @@ struct EditLessonTeachers {
         case save
         case cancel
 
-        case toggle(Teacher)
+        case toggle(String)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
@@ -40,7 +40,7 @@ struct EditLessonTeachers {
     // MARK: - Environment
 
     struct Environment {
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
     }
 
@@ -51,7 +51,7 @@ struct EditLessonTeachers {
         case .save:
             var newLesson = state.lesson
             newLesson.teachers = state.selected
-            environment.rozkladClient.lessons.modify(with: newLesson, commitChanges: true)
+            environment.rozkladClient.lessons.modify(.init(newLesson, commitChanges: true))
             return Effect(value: .routeAction(.dismiss))
 
         case .cancel:

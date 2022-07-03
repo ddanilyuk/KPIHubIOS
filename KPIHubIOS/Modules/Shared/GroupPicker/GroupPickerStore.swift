@@ -13,28 +13,24 @@ struct GroupPicker {
     // MARK: - State
 
     struct State: Equatable {
-        var groups: [GroupResponse]
-        var searchedGroups: [GroupResponse]
-        @BindableState var searchedText: String
-        @BindableState var isLoading: Bool
-
-        init() {
-            groups = []
-            searchedGroups = []
-            searchedText = ""
-            isLoading = true
-        }
+        var groups: [GroupResponse] = []
+        var searchedGroups: [GroupResponse] = []
+        @BindableState var searchedText: String = ""
+        @BindableState var isLoading: Bool = true
+        var alert: AlertState<Action>?
     }
 
     // MARK: - Action
 
     enum Action: Equatable, BindableAction {
         case onAppear
+        case refresh
         case groupSelected(GroupResponse)
 
         case allGroupsResult(Result<[GroupResponse], NSError>)
         case lessonsResult(Result<[Lesson], NSError>)
 
+        case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
@@ -47,7 +43,7 @@ struct GroupPicker {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
     }
 
@@ -56,10 +52,19 @@ struct GroupPicker {
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
         switch action {
         case .onAppear:
+            return Effect(value: .refresh)
+
+        case let .allGroupsResult(.success(groups)):
+            state.isLoading = false
+            state.groups = groups
+            state.searchedGroups = groups
+            return .none
+
+        case .refresh:
             let task: Effect<[GroupResponse], Error> = Effect.task {
                 let result = try await environment.apiClient.decodedResponse(
                     for: .api(.groups(.all)),
-                    as: AllGroupsResponse.self
+                    as: GroupsResponse.self
                 )
                 return result.value.groups
             }
@@ -68,12 +73,6 @@ struct GroupPicker {
                 .receive(on: DispatchQueue.main)
                 .catchToEffect(Action.allGroupsResult)
 
-        case let .allGroupsResult(.success(groups)):
-            state.isLoading = false
-            state.groups = groups
-            state.searchedGroups = groups
-            return .none
-
         case let .groupSelected(group):
             state.isLoading = true
             let task: Effect<[Lesson], Error> = Effect.task {
@@ -81,7 +80,7 @@ struct GroupPicker {
                     for: .api(.group(group.id, .lessons)),
                     as: LessonsResponse.self
                 )
-                environment.rozkladClient.state.select(group: group, commitChanges: false)
+                environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
                 return result.value.lessons.map { Lesson(lessonResponse: $0) }
             }
             return task
@@ -91,12 +90,13 @@ struct GroupPicker {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: false)
+            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: false))
             return Effect(value: .routeAction(.done))
 
         case let .allGroupsResult(.failure(error)),
              let .lessonsResult(.failure(error)):
             state.isLoading = false
+            state.alert = AlertState.error(error)
             return .none
 
         case .binding(\.$searchedText):
@@ -110,6 +110,10 @@ struct GroupPicker {
                 }
                 state.searchedGroups = filtered
             }
+            return .none
+
+        case .dismissAlert:
+            state.alert = nil
             return .none
 
         case .binding:

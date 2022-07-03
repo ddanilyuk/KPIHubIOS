@@ -10,19 +10,21 @@ import ComposableArchitecture
 
 struct CampusLoginView: View {
 
-    private enum Field: Int, CaseIterable {
-        case username
-        case password
-    }
-
     let store: Store<CampusLogin.State, CampusLogin.Action>
-    @FocusState private var focusedField: Field?
+    @FocusState private var focusedField: CampusLogin.State.Field?
 
     var body: some View {
         WithViewStore(store) { viewStore in
             GeometryReader { proxy in
-                ScrollView {
+                ScrollView(.vertical, showsIndicators: false) {
                     VStack {
+
+                        Text("Після входу буде відображатися поточний контроль")
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(.callout)
+                            .padding()
+
                         Spacer()
                         VStack(spacing: 24) {
                             TextField("Логін", text: viewStore.binding(\.$username))
@@ -67,8 +69,14 @@ struct CampusLoginView: View {
 
                 }
             }
+            .navigationBarTitle("Кампус")
             .background(Color.screenBackground)
             .loadable(viewStore.binding(\.$isLoading))
+            .alert(
+                self.store.scope(state: \.alert),
+                dismiss: .dismissAlert
+            )
+            .synchronize(viewStore.binding(\.$focusedField), self.$focusedField)
         }
     }
 }
@@ -81,13 +89,8 @@ struct CampusLoginView_Previews: PreviewProvider {
             CampusLoginView(
                 store: Store(
                     initialState: CampusLogin.State(mode: .onlyCampus),
-                    reducer: CampusLogin.reducer,
-                    environment: CampusLogin.Environment(
-                        apiClient: .failing,
-                        userDefaultsClient: .live(),
-                        campusClient: .live(apiClient: .failing, userDefaultsClient: .live(), keychainClient: KeychainClient.live()),
-                        rozkladClient: .live(userDefaultsClient: .live())
-                    )
+                    reducer: .empty,
+                    environment: ()
                 )
             )
         }

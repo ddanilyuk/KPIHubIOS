@@ -1,0 +1,14 @@
+//
+//  Production.xcconfig
+//  KPIHubIOS
+//
+//  Created by Denys Danyliuk on 02.07.2022.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+KPIHubIOS_APP_NAME = KPIHub
+KPIHubIOS_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS
+KPIHubIOS_ENVIRONMENT = production
+KPIHubIOS_APP_ICON = AppIconProduction

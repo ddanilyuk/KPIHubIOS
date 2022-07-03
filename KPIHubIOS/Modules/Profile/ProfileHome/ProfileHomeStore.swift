@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import Routes
 
 struct ProfileHome {
 
@@ -13,9 +14,10 @@ struct ProfileHome {
 
     struct State: Equatable {
 
-        var updatedDate: Date?
-        var rozkladState: RozkladClient.StateModule.State = .notSelected
-        var campusState: CampusClient.StateModule.State = .loggedOut
+        var rozkladState: RozkladClientState.State = .notSelected
+        var campusState: CampusClientState.State = .loggedOut
+        var lessonsUpdatedAtDate: Date?
+        @BindableState var toggleWeek: Bool = false
 
         var confirmationDialog: ConfirmationDialogState<Action>?
         var alert: AlertState<Action>?
@@ -27,9 +29,9 @@ struct ProfileHome {
     enum Action: Equatable, BindableAction {
         case onAppear
 
-        case setUpdatedDate(Date?)
-        case setRozkladState(RozkladClient.StateModule.State)
-        case setCampusState(CampusClient.StateModule.State)
+        case setRozkladState(RozkladClientState.State)
+        case setCampusState(CampusClientState.State)
+        case setLessonsUpdatedAtDate(Date?)
 
         case updateRozkladButtonTapped
         case updateRozklad
@@ -39,9 +41,9 @@ struct ProfileHome {
         case changeGroup
         case selectGroup
 
-        case campusLogoutButtonTapped
-        case campusLogout
-        case campusLogin
+        case logoutCampusButtonTapped
+        case logoutCampus
+        case loginCampus
 
         case dismissConfirmationDialog
         case dismissAlert
@@ -59,45 +61,23 @@ struct ProfileHome {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
+        let currentDateClient: CurrentDateClient
     }
 
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelID { }
         switch action {
         case .onAppear:
-            return .merge(
-                Effect.run { subscriber in
-                    environment.rozkladClient.lessons.uploadedAt
-                        .receive(on: DispatchQueue.main)
-                        .sink { date in
-                            subscriber.send(.setUpdatedDate(date))
-                        }
-                },
-                Effect.run { subscriber in
-                    environment.rozkladClient.state.subject
-                        .receive(on: DispatchQueue.main)
-                        .sink { rozkladState in
-                            subscriber.send(.setRozkladState(rozkladState))
-                        }
-                },
-                Effect.run { subscriber in
-                    environment.campusClient.state.subject
-                        .receive(on: DispatchQueue.main)
-                        .sink { campusState in
-                            subscriber.send(.setCampusState(campusState))
-                        }
-                }
+            state.toggleWeek = environment.userDefaultsClient.get(for: .toggleWeek)
+            return Effect.setAndSubscribeOnAppear(
+                environment: environment,
+                cancellable: SubscriberCancelID.self
             )
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
-
-        case let .setUpdatedDate(date):
-            state.updatedDate = date
-            return .none
 
         case let .setRozkladState(rozkladState):
             state.rozkladState = rozkladState
@@ -105,6 +85,10 @@ struct ProfileHome {
 
         case let .setCampusState(campusState):
             state.campusState = campusState
+            return .none
+            
+        case let .setLessonsUpdatedAtDate(date):
+            state.lessonsUpdatedAtDate = date
             return .none
 
         case .updateRozkladButtonTapped:
@@ -124,12 +108,18 @@ struct ProfileHome {
             case let .selected(group):
                 state.isLoading = true
                 let task: Effect<[Lesson], Error> = Effect.task {
-                    let result = try await environment.apiClient.decodedResponse(
-                        for: .api(.group(group.id, .lessons)),
+                    // Update group id using name
+                    let newGroup = try await environment.apiClient.decodedResponse(
+                        for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
+                        as: GroupResponse.self
+                    )
+                    // Update lessons
+                    let lessons = try await environment.apiClient.decodedResponse(
+                        for: .api(.group(newGroup.value.id, .lessons)),
                         as: LessonsResponse.self
                     )
-                    environment.rozkladClient.state.select(group: group, commitChanges: false)
-                    return result.value.lessons.map { Lesson(lessonResponse: $0) }
+                    environment.rozkladClient.state.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
+                    return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
                 }
                 return task
                     .mapError { $0 as NSError }
@@ -142,16 +132,12 @@ struct ProfileHome {
 
         case let .lessonsResult(.success(lessons)):
             state.isLoading = false
-            environment.rozkladClient.lessons.set(lessons: lessons, commitChanges: true)
+            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: true))
             return .none
 
         case let .lessonsResult(.failure(error)):
             state.isLoading = false
-            state.alert = AlertState(
-                title: TextState("Error"),
-                message: TextState("\(error.localizedDescription)"),
-                dismissButton: .default(TextState("Ok"))
-            )
+            state.alert = AlertState.error(error)
             return .none
 
         case .changeGroupButtonTapped:
@@ -167,30 +153,35 @@ struct ProfileHome {
             return .none
 
         case .changeGroup:
-            environment.rozkladClient.state.deselect(commitChanges: true)
+            environment.rozkladClient.state.setState(ClientValue(.notSelected, commitChanges: true))
             return Effect(value: .routeAction(.rozklad))
 
         case .selectGroup:
             return Effect(value: .routeAction(.rozklad))
 
-        case .campusLogoutButtonTapped:
+        case .logoutCampusButtonTapped:
             state.confirmationDialog = ConfirmationDialogState(
                 title: TextState("Ви впевнені?"),
                 titleVisibility: .visible,
                 buttons: [
-                    .destructive(TextState("Вийти"), action: .send(.campusLogout)),
+                    .destructive(TextState("Вийти"), action: .send(.logoutCampus)),
                     .cancel(TextState("Назад"))
                 ]
             )
             return .none
 
-        case .campusLogout:
-            environment.campusClient.state.logOut(commitChanges: true)
-            environment.campusClient.studySheet.removeLoaded()
+        case .logoutCampus:
+            environment.campusClient.state.logout(ClientValue(commitChanges: true))
+            environment.campusClient.studySheet.clean()
             return Effect(value: .routeAction(.campus))
 
-        case .campusLogin:
+        case .loginCampus:
             return Effect(value: .routeAction(.campus))
+
+        case .binding(\.rozkladSectionView.$toggleWeek):
+            environment.userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
+            environment.currentDateClient.forceUpdate()
+            return .none
 
         case .dismissConfirmationDialog:
             state.confirmationDialog = nil
@@ -200,7 +191,7 @@ struct ProfileHome {
             state.alert = nil
             return .none
 
-        case .binding:
+        case let .binding(action):
             return .none
 
         case .routeAction:
@@ -209,4 +200,40 @@ struct ProfileHome {
     }
     .binding()
 
+}
+
+extension Effect where Output == ProfileHome.Action, Failure == Never {
+
+    static func setAndSubscribeOnAppear(environment: ProfileHome.Environment, cancellable: Any.Type) -> Self {
+        return .merge(
+            Effect(value: .setRozkladState(environment.rozkladClient.state.subject.value)),
+            Effect(value: .setCampusState(environment.campusClient.state.subject.value)),
+            Effect(value: .setLessonsUpdatedAtDate(environment.rozkladClient.lessons.updatedAtSubject.value)),
+            Effect.run { subscriber in
+                environment.rozkladClient.state.subject
+                    .dropFirst()
+                    .receive(on: DispatchQueue.main)
+                    .sink { rozkladState in
+                        subscriber.send(.setRozkladState(rozkladState))
+                    }
+            },
+            Effect.run { subscriber in
+                environment.campusClient.state.subject
+                    .dropFirst()
+                    .receive(on: DispatchQueue.main)
+                    .sink { campusState in
+                        subscriber.send(.setCampusState(campusState))
+                    }
+            },
+            Effect.run { subscriber in
+                environment.rozkladClient.lessons.updatedAtSubject
+                    .dropFirst()
+                    .receive(on: DispatchQueue.main)
+                    .sink { date in
+                        subscriber.send(.setLessonsUpdatedAtDate(date))
+                    }
+            }
+        )
+        .cancellable(id: cancellable, cancelInFlight: true)
+    }
 }

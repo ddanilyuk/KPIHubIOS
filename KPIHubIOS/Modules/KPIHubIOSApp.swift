@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Routes
 import ComposableArchitecture
 
 @main
@@ -23,6 +22,7 @@ struct KPIHubIOSApp: SwiftUI.App {
     var body: some Scene {
         WindowGroup {
             AppCoordinatorView(store: KPIHubIOSApp.store)
+                .accentColor(.orange)
         }
     }
 

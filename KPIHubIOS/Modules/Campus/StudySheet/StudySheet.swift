@@ -35,22 +35,6 @@ struct StudySheet {
 
             sortedItems = []
             cells = []
-
-            sortedItems = self.items.filter { item in
-                switch (selectedYear, selectedSemester) {
-                case (.none, .none):
-                    return true
-                case let (.some(selectedYear), .none):
-                    return item.year == selectedYear
-                case let (.none, .some(selectedSemester)):
-                    return item.semester == selectedSemester
-                case let (.some(selectedYear), .some(selectedSemester)):
-                    return item.year == selectedYear && item.semester == selectedSemester
-                }
-            }
-            cells = IdentifiedArray(
-                uniqueElements: sortedItems.map { StudySheetCell.State(item: $0) }
-            )
         }
     }
 
@@ -79,13 +63,16 @@ struct StudySheet {
     static let reducer = Reducer<State, Action, Environment> { state, action, _ in
         switch action {
         case .onAppear:
-            return .none
+            return Effect(value: .sortCells)
+                .animation(nil)
 
         case .binding(\.$selectedYear):
             return Effect(value: .sortCells)
+                .animation()
 
         case .binding(\.$selectedSemester):
             return Effect(value: .sortCells)
+                .animation()
 
         case .sortCells:
             state.sortedItems = state.items.filter({ item in

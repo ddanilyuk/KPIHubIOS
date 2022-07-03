@@ -34,12 +34,6 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
         count: GroupRozklad.State.Section.Position.count
     )
 
-    init() {
-//        super.init()
-
-        print("INIT")
-    }
-
     // MARK: - Public methods
 
     func save() {
@@ -89,7 +83,6 @@ final class GroupRozkladAnimationViewModel: ObservableObject {
 
     private func calculateIndex() -> Int {
         let target: CGFloat = targetSize + 1
-//        print(target)
         let offsets = offsets
         let numberOfElements = offsets.compactMap { $0 }.count
 

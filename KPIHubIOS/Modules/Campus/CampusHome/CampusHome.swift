@@ -13,18 +13,10 @@ struct CampusHome {
     // MARK: - State
 
     struct State: Equatable {
+        var openStudySheetOnLoad: Bool = false
+        var studySheetState: CampusClientStudySheet.State = .notLoading
 
         @BindableState var isLoading: Bool = false
-
-        var openSheet: Bool = false
-        var studySheetState: CampusClient.StudySheetModule.State = .notLoading
-
-        enum LoadingState<T: Equatable>: Equatable {
-            case notLoading
-            case loading
-            case loaded
-            case openAfterLoading
-        }
     }
 
     // MARK: - Action
@@ -33,7 +25,7 @@ struct CampusHome {
         case onAppear
         case refresh
         case studySheetTap
-        case setStudySheetState(CampusClient.StudySheetModule.State)
+        case setStudySheetState(CampusClientStudySheet.State)
 
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
@@ -47,14 +39,14 @@ struct CampusHome {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let campusClient: CampusClient
     }
 
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
+        enum SubscriberCancelIDTest { }
         switch action {
         case .onAppear:
             return Effect.run { subscriber in
@@ -64,14 +56,14 @@ struct CampusHome {
                         subscriber.send(.setStudySheetState(state))
                     }
             }
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
+            .cancellable(id: SubscriberCancelIDTest.self, cancelInFlight: true)
 
         case .refresh:
             switch state.studySheetState {
             case .notLoading,
                  .loaded:
-                environment.campusClient.studySheet.load()
-                return .none
+                return environment.campusClient.studySheet.load()
+                    .fireAndForget()
 
             case .loading:
                 return .none
@@ -90,7 +82,7 @@ struct CampusHome {
 
             case let .loaded(items):
                 state.isLoading = false
-                if state.openSheet {
+                if state.openStudySheetOnLoad {
                     return Effect(value: .routeAction(
                         .studySheet(items)
                     ))
@@ -106,11 +98,10 @@ struct CampusHome {
 
             case .loading:
                 state.isLoading = true
-                state.openSheet = true
+                state.openStudySheetOnLoad = true
                 return .none
 
             case let .loaded(items):
-                state.isLoading = false
                 return Effect(value: .routeAction(
                     .studySheet(items)
                 ))

@@ -11,7 +11,7 @@ import ComposableArchitecture
 struct CampusSectionView: View {
 
     struct ViewState: Equatable {
-        let campusState: CampusClient.StateModule.State
+        let campusState: CampusClientState.State
         let fullName: String
         let cathedra: String
     }
@@ -21,13 +21,7 @@ struct CampusSectionView: View {
         case logoutCampus
     }
 
-    let store: Store<ViewState, ViewAction>
     @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
-
-    init(store: Store<ViewState, ViewAction>) {
-        self.store = store
-        self.viewStore = ViewStore(store)
-    }
 
     var body: some View {
         ProfileSectionView(
@@ -44,16 +38,16 @@ struct CampusSectionView: View {
     }
 
     var loggedInView: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 16) {
 
             ProfileCellView(
                 title: "Ім'я:",
                 value: .text(viewStore.fullName),
                 image: {
                     Image(systemName: "person")
-                        .foregroundColor(Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255))
+                        .foregroundColor(Color.mint.lighter(by: 0.9))
                 },
-                imageBackgroundColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                imageBackgroundColor: Color.mint
             )
 
             ProfileCellView(
@@ -61,9 +55,9 @@ struct CampusSectionView: View {
                 value: .text(viewStore.cathedra),
                 image: {
                     Image(systemName: "graduationcap")
-                        .foregroundColor(Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255))
+                        .foregroundColor(Color.cyan.lighter(by: 0.9))
                 },
-                imageBackgroundColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+                imageBackgroundColor: Color.cyan
             )
 
             Divider()
@@ -83,7 +77,7 @@ struct CampusSectionView: View {
     }
 
     var loggedOutView: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 16) {
             Divider()
 
             Button(
@@ -103,14 +97,16 @@ struct CampusSectionView: View {
 
 // MARK: - ViewState
 
-extension CampusSectionView.ViewState {
+extension ProfileHome.State {
 
-    init(profileHomeState: ProfileHome.State) {
-        self.campusState = profileHomeState.campusState
-        let campusUserInfoPath = /CampusClient.StateModule.State.loggedIn
-        let campusUserInfo = campusUserInfoPath.extract(from: campusState)
-        self.fullName = campusUserInfo?.fullName ?? "-"
-        self.cathedra = campusUserInfo?.subdivision.first?.name ?? "-"
+    var campusSectionView: CampusSectionView.ViewState {
+        let campusUserInfoPath = /CampusClientState.State.loggedIn
+        let campusUserInfo = campusUserInfoPath.extract(from: self.campusState)
+        return CampusSectionView.ViewState(
+            campusState: self.campusState,
+            fullName: campusUserInfo?.fullName ?? "-",
+            cathedra: campusUserInfo?.subdivision.first?.name ?? "-"
+        )
     }
 
 }
@@ -119,13 +115,13 @@ extension CampusSectionView.ViewState {
 
 extension ProfileHome.Action {
 
-    init(campusSection: CampusSectionView.ViewAction) {
-        switch campusSection {
+    static func campusSectionView(_ viewAction: CampusSectionView.ViewAction) -> Self {
+        switch viewAction {
         case .logoutCampus:
-            self = .campusLogoutButtonTapped
+            return .logoutCampusButtonTapped
 
         case .loginCampus:
-            self = .campusLogin
+            return .loginCampus
         }
     }
 
@@ -138,22 +134,22 @@ struct CampusSectionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CampusSectionView(
-                store: Store(
+                viewStore: ViewStore(Store(
                     initialState: CampusSectionView.ViewState(
                         campusState: .loggedOut,
                         fullName: "",
                         cathedra: ""
                     ),
-                    reducer: Reducer.empty,
-                    environment: Void()
-                )
+                    reducer: .empty,
+                    environment: ()
+                ))
             )
             .smallPreview
             .padding(16)
             .background(Color.screenBackground)
 
             CampusSectionView(
-                store: Store(
+                viewStore: ViewStore(Store(
                     initialState: CampusSectionView.ViewState(
                         campusState: .loggedIn(
                             CampusUserInfo.mock
@@ -162,13 +158,12 @@ struct CampusSectionView_Previews: PreviewProvider {
                         cathedra: CampusUserInfo.mock.subdivision.first?.name ?? "-"
                     ),
                     reducer: Reducer.empty,
-                    environment: Void()
-                )
+                    environment: ()
+                ))
             )
             .smallPreview
             .padding(16)
             .background(Color.screenBackground)
-
         }
     }
 }

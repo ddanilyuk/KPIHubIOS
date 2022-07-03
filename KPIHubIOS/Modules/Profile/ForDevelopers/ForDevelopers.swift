@@ -26,7 +26,10 @@ struct ForDevelopers {
     // MARK: - Reducer
 
     static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        return .none
+        switch action {
+        case .onAppear:
+            return .none
+        }
     }
 
 }

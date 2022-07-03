@@ -38,7 +38,7 @@ struct Login {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
         let campusClient: CampusClient
     }
@@ -64,7 +64,6 @@ struct Login {
 
         case .routeAction(_, .campusLogin(.routeAction(.done))):
             environment.campusClient.state.commit()
-            environment.campusClient.studySheet.load()
             environment.rozkladClient.state.commit()
             environment.rozkladClient.lessons.commit()
             environment.userDefaultsClient.set(true, for: .onboardingPassed)

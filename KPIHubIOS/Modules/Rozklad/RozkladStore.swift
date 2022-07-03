@@ -24,8 +24,9 @@ struct Rozklad {
     // MARK: - Action
 
     enum Action: Equatable, IdentifiedRouterAction {
-
         case onSetup
+
+        case updateRozkladState(RozkladClientState.State)
         case setGroupRozklad
         case setGroupPicker
 
@@ -37,7 +38,7 @@ struct Rozklad {
 
     struct Environment {
         let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClient
+        let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
         let currentDateClient: CurrentDateClient
     }
@@ -45,22 +46,28 @@ struct Rozklad {
     // MARK: - Reducer
 
     static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelId { }
         switch action {
         case .onSetup:
-            return Effect.run { subscriber in
-                environment.rozkladClient.state.subject
-                    .receive(on: DispatchQueue.main)
-                    .sink { state in
-                        switch state {
-                        case .selected:
-                            subscriber.send(.setGroupRozklad)
-                        case .notSelected:
-                            subscriber.send(.setGroupPicker)
+            return Effect.merge(
+                Effect(value: .updateRozkladState(environment.rozkladClient.state.subject.value)),
+                Effect.run { subscriber in
+                    environment.rozkladClient.state.subject
+                        .dropFirst()
+                        .removeDuplicates()
+                        .receive(on: DispatchQueue.main)
+                        .sink { state in
+                            subscriber.send(.updateRozkladState(state))
                         }
-                    }
+                }
+            )
+
+        case let .updateRozkladState(state):
+            switch state {
+            case .selected:
+                return Effect(value: .setGroupRozklad)
+            case .notSelected:
+                return Effect(value: .setGroupPicker)
             }
-            .cancellable(id: SubscriberCancelId.self, cancelInFlight: true)
 
         case .setGroupRozklad:
             state.routes = [

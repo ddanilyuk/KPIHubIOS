@@ -36,9 +36,9 @@ struct EditLessonTeachersView: View {
 
                                 LargeTagView(
                                     icon: Image(systemName: "person"),
-                                    text: teacher.fullName,
-                                    backgroundColor: Color(red: 247 / 255, green: 244 / 255, blue: 255 / 255),
-                                    accentColor: Color(red: 91 / 255, green: 46 / 255, blue: 255 / 255)
+                                    text: teacher,
+                                    backgroundColor: Color.indigo.lighter(by: 0.9),
+                                    accentColor: Color.indigo
                                 )
                                 
                                 Spacer()
@@ -92,8 +92,8 @@ struct EditLessonTeachersView_Previews: PreviewProvider {
                     ),
                     reducer: EditLessonTeachers.reducer,
                     environment: EditLessonTeachers.Environment(
-                        userDefaultsClient: .live(),
-                        rozkladClient: .live(userDefaultsClient: .live())
+                        userDefaultsClient: .mock(),
+                        rozkladClient: .mock()
                     )
                 )
             )

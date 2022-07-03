@@ -27,6 +27,7 @@ struct SmallTagView: View {
             .frame(width: 24, height: 24)
 
             Text("\(text)")
+                .lineLimit(1)
                 .font(.system(.footnote))
                 .foregroundColor(.init(red: 37 / 255, green: 45 / 255, blue: 57 / 255))
                 .padding(.vertical, 3)
@@ -34,8 +35,6 @@ struct SmallTagView: View {
         }
         .background(backgroundColor)
         .cornerRadius(12)
-//        .shadow(radius: 4)
-//        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
     }
 
 }
@@ -48,8 +47,8 @@ struct SmallTagView_Previews: PreviewProvider {
         SmallTagView(
             icon: Image(systemName: "graduationcap"),
             text: "Практика",
-            backgroundColor: Color(red: 237 / 255, green: 246 / 255, blue: 254 / 255),
-            accentColor: Color(red: 37 / 255, green: 114 / 255, blue: 228 / 255)
+            backgroundColor: Color.cyan.lighter(by: 0.9),
+            accentColor: Color.cyan
         )
         .previewLayout(.fixed(width: 200, height: 100))
     }

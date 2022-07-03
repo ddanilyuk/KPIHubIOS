@@ -15,6 +15,7 @@ struct Loadable: ViewModifier {
         content
             .disabled(isVisible)
             .overlay(isVisible ? Loader() : nil)
+            .animation(.easeInOut(duration: 0.3), value: isVisible)
     }
 
 }
