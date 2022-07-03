@@ -11,7 +11,6 @@
 		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
 		5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* LessonResponse.swift */; };
 		5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EAD28439EA100514263 /* ComposableArchitecture */; };
-		5F137EB428439F2400514263 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EB328439F2400514263 /* Introspect */; };
 		5F137EC22843A35D00514263 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppStore.swift */; };
 		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
 		5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC52843A36C00514263 /* AppDelegate.swift */; };
@@ -303,7 +302,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */,
-				5F137EB428439F2400514263 /* Introspect in Frameworks */,
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 				5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */,
@@ -1013,7 +1011,6 @@
 			packageProductDependencies = (
 				5FD570B4283680DA00D8E869 /* Routes */,
 				5F137EAD28439EA100514263 /* ComposableArchitecture */,
-				5F137EB328439F2400514263 /* Introspect */,
 				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
 				5FA65DDB286A4C370048182C /* TCACoordinators */,
 			);
@@ -1093,7 +1090,6 @@
 			mainGroup = 5F97B3B2283677C200350368;
 			packageReferences = (
 				5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 			);
@@ -1965,14 +1961,6 @@
 				version = 0.37.0;
 			};
 		};
-		5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.4;
-			};
-		};
 		5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
@@ -1996,11 +1984,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
-		};
-		5F137EB328439F2400514263 /* Introspect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5F137EB228439F2400514263 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = Introspect;
 		};
 		5F28FB8C2858D55B00579A75 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
