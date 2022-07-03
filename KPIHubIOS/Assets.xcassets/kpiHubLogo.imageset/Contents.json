@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "iconWhite.png",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "iconBlack.png",
+      "filename" : "IOS .png",
       "idiom" : "universal"
     }
   ],

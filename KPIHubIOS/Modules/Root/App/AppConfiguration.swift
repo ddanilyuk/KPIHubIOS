@@ -72,7 +72,7 @@ enum ApiEnvironment: String {
     var url: String {
         switch self {
         case .development:
-            return "http://192.168.31.179:8080"
+            return "http://192.168.31.105:8080"
         case .production:
             return "http://kpihub.xyz"
         }

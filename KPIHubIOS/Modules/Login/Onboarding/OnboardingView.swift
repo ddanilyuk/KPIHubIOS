@@ -22,12 +22,13 @@ struct OnboardingView: View {
         WithViewStore(store) { viewStore in
 
             VStack {
-                ZStack {
+                ZStack(alignment: .center) {
                     colorScheme == .light ? Color.white : Color.black
 
                     Image("kpiHubLogo")
                         .resizable()
                         .frame(width: 200, height: 200, alignment: .center)
+                        .shadow(color: .orange.opacity(0.2), radius: 24, x: 0, y: 12)
                 }
                 .frame(
                     maxWidth: .infinity,
