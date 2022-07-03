@@ -6,17 +6,16 @@ This application works in cooperation with [server](https://github.com/ddanilyuk
 
 ## This app provides
 
-- Great design for schedule with convenient navigation
-- CAMPUS studysheet integration
-- Displaying elective disciplines
-- Editing elective disciplines
+- Practical design for schedule with convenient navigation between weeks and days
+- Campus study sheet integration
+- Schedule personalization (Editing elective disciplines)
 
 ##  Used technologies
 
-- SwiftUI (every view in app written with it)
-- [TCA](https://github.com/pointfreeco/swift-composable-architecture) (The Composable Architecture)
-- [TCACoordinators](https://github.com/johnpatrickmorgan/TCACoordinators) (Convinent, but not perfect way for navigation in SwiftUI)
-- [vapor-routing](https://github.com/pointfreeco/vapor-routing) (receiving api client for free from server library)
+- SwiftUI (No UIKit view in app)
+- [The Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture)
+- [TCACoordinators](https://github.com/johnpatrickmorgan/TCACoordinators) (Flexible TCA navigation for SwiftUI)
+- [vapor-routing](https://github.com/pointfreeco/vapor-routing) (Receiving API client for free from server library)
 
 ## Demo
 
@@ -31,29 +30,30 @@ This application works in cooperation with [server](https://github.com/ddanilyuk
 
 ## Plans
 
-Feel free to write me if you have an feature idea or u want to implement something. All contacts in my profile
+> Feel free to write me if you have an feature idea or u want to implement something. All contacts in my profile.
 
 ### Architecture
 
-- [ ] Use new SwiftUI navigation
-- [ ] Update TCA for async / await
+- [ ] Use new SwiftUI 4 Navigation Stacks
+- [ ] Update TCA for async / await (this feauture is not released by point-free yet)
 
 ### Rozklad
 
 - [ ] Exams schedule
 - [ ] Teachers schedule
-- [ ] Other groups schedule
+- [ ] Ability to check other groups schedule
 - [ ] Widget
-- [ ] Check if rozklad changed
+- [ ] Check rozklad updates on app start 
 
 ### Campus
 
-- [ ] Campus exams ratings
-- [ ] API integration (no parsing)
+- [ ] Exams marks
+- [ ] Attestations
+- [ ] API integration (no used parsing)
 
 ## How to build?
 
-This application uses routing for api client from server written in swift. So, you need to somehow get this code. There are **two** variants
+This application use routing for API client from server written with swift. There are **two** variants to get routing code:
 
 - Clone iOS app and Server app in to one folder
 - Use SPM on iOS app to add library `Routes` from server repository
