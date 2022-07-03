@@ -10,7 +10,13 @@ import ComposableArchitecture
 
 struct EditLessonTeachersView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>
+
+    init(store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>) {
+        self.store = store
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -20,7 +26,7 @@ struct EditLessonTeachersView: View {
                         let isSelected = viewStore.selected.contains(teacher)
                         ZStack {
                             RoundedRectangle(cornerRadius: 8)
-                                .fill(Color.white)
+                                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
                                 .shadow(
                                     color: isSelected ? .orange.opacity(0.1) : .clear,
                                     radius: 6,
@@ -37,8 +43,7 @@ struct EditLessonTeachersView: View {
                                 LargeTagView(
                                     icon: Image(systemName: "person"),
                                     text: teacher,
-                                    backgroundColor: Color.indigo.lighter(by: 0.9),
-                                    accentColor: Color.indigo
+                                    color: .indigo
                                 )
                                 
                                 Spacer()
@@ -60,6 +65,7 @@ struct EditLessonTeachersView: View {
                         action: { viewStore.send(.cancel) },
                         label: {
                             Text("Скасувати")
+                                .foregroundColor(.orange)
                         }
                     )
                 }
@@ -68,6 +74,7 @@ struct EditLessonTeachersView: View {
                         action: { viewStore.send(.save) },
                         label: {
                             Text("Зберегти")
+                                .foregroundColor(.orange)
                         }
                     )
                 }

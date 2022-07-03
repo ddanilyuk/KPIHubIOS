@@ -10,14 +10,23 @@ import ComposableArchitecture
 
 struct StudySheetCellView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<StudySheetCell.State, StudySheetCell.Action>
+
+    init(store: Store<StudySheetCell.State, StudySheetCell.Action>) {
+        self.store = store
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
-                    .fill(Color.white)
-                    .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                    .if(colorScheme == .light) { view in
+                        view
+                            .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                    }
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text(viewStore.item.name)
@@ -28,8 +37,7 @@ struct StudySheetCellView: View {
                         SmallTagView(
                             icon: Image(systemName: "person"),
                             text: teacher,
-                            backgroundColor: Color.indigo.lighter(by: 0.9),
-                            accentColor: Color.indigo
+                            color: .indigo
                         )
                     }
 
@@ -37,15 +45,13 @@ struct StudySheetCellView: View {
                         SmallTagView(
                             icon: Image(systemName: "calendar"),
                             text: "\(viewStore.item.year)",
-                            backgroundColor: Color.yellow.lighter(by: 0.9),
-                            accentColor: Color.yellow
+                            color: .yellow
                         )
 
                         SmallTagView(
                             icon: Image(systemName: "calendar"),
                             text: "\(viewStore.item.semester) семетр",
-                            backgroundColor: Color.yellow.lighter(by: 0.9),
-                            accentColor: Color.yellow
+                            color: .yellow
                         )
                     }
                 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LessonDetailsTypeSection: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     var type: String
 
     var body: some View {
@@ -19,8 +21,7 @@ struct LessonDetailsTypeSection: View {
                     LargeTagView(
                         icon: Image(systemName: "graduationcap"),
                         text: type,
-                        backgroundColor: Color.cyan.lighter(by: 0.9),
-                        accentColor: Color.cyan
+                        color: .cyan
                     )
                     Spacer()
                 }

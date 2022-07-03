@@ -160,7 +160,7 @@ struct GroupRozkladView: View {
             let week = section.position.week.description
             Text("\(day). \(week)")
                 .font(.system(.headline))
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .padding(.horizontal)
                 .padding(.top)
                 .textCase(nil)

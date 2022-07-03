@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LessonDetailsTeacherSection: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     var teachers: [String]
     var isEditing: Bool
 
@@ -28,8 +30,7 @@ struct LessonDetailsTeacherSection: View {
                         LargeTagView(
                             icon: Image(systemName: "person"),
                             text: teacher,
-                            backgroundColor: Color.indigo.lighter(by: 0.9),
-                            accentColor: Color.indigo
+                            color: .indigo
                         )
                         Spacer()
                     }

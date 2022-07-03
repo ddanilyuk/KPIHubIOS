@@ -10,14 +10,20 @@ import ComposableArchitecture
 
 struct OnboardingView: View {
 
+    @Environment(\.colorScheme) var colorScheme
+
     let store: Store<Onboarding.State, Onboarding.Action>
+
+    init(store: Store<Onboarding.State, Onboarding.Action>) {
+        self.store = store
+    }
 
     var body: some View {
         WithViewStore(store) { viewStore in
 
             VStack {
                 ZStack {
-                    Color.white
+                    colorScheme == .light ? Color.white : Color.black
 
                     Image("kpiHubLogo")
                         .resizable()

@@ -41,7 +41,7 @@ struct StudySheetView: View {
                     } label: {
                         VStack {
                             Text("Рік:")
-                                .foregroundColor(.black)
+                                .foregroundColor(.primary)
                             Text("\(viewStore.selectedYear ?? "Будь який")")
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -67,7 +67,7 @@ struct StudySheetView: View {
                     } label: {
                         VStack {
                             Text("Семестр:")
-                                .foregroundColor(.black)
+                                .foregroundColor(.primary)
                             Text("\(viewStore.selectedSemester?.stringValue ?? "Будь який")")
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)

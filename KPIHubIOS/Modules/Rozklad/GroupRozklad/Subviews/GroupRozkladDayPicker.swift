@@ -34,7 +34,7 @@ struct GroupRozkladDayPicker: View {
                     }
                 )
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .foregroundColor(element == displayedDay ? .black : .secondary)
+                .foregroundColor(element == displayedDay ? .primary : .secondary)
             }
         }
         .padding(.horizontal, 16)
