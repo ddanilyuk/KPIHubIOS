@@ -14,7 +14,7 @@ struct ProfileHomeView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 32) {
                     WithViewStore(
                         self.store.scope(
@@ -79,7 +79,8 @@ struct ProfileHomeView_Previews: PreviewProvider {
                             userDefaultsClient: .mock(),
                             rozkladClient: .mock(),
                             campusClient: .mock(),
-                            currentDateClient: .mock()
+                            currentDateClient: .mock(),
+                            appConfiguration: .mock()
                         )
                     )
                 )
@@ -98,7 +99,8 @@ struct ProfileHomeView_Previews: PreviewProvider {
                             userDefaultsClient: .mock(),
                             rozkladClient: .mock(),
                             campusClient: .mock(),
-                            currentDateClient: .mock()
+                            currentDateClient: .mock(),
+                            appConfiguration: .mock()
                         )
                     )
                 )

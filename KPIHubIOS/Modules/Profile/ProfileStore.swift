@@ -39,6 +39,7 @@ struct Profile {
     // MARK: - Environment
 
     struct Environment {
+        let appConfiguration: AppConfiguration
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient

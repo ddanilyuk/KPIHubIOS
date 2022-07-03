@@ -48,6 +48,7 @@ struct Main {
     // MARK: - Environment
 
     struct Environment {
+        let appConfiguration: AppConfiguration
         let apiClient: APIClient
         let userDefaultsClient: UserDefaultsClientable
         let rozkladClient: RozkladClient
@@ -133,6 +134,7 @@ extension Main.Environment {
 
     var profile: Profile.Environment {
         Profile.Environment(
+            appConfiguration: appConfiguration,
             apiClient: apiClient,
             userDefaultsClient: userDefaultsClient,
             rozkladClient: rozkladClient,

@@ -10,7 +10,9 @@ import ComposableArchitecture
 
 struct OtherSectionView: View {
 
-    struct ViewState: Equatable { }
+    struct ViewState: Equatable {
+        let completeAppVersion: String
+    }
 
     enum ViewAction {
         case forDevelopers
@@ -33,6 +35,17 @@ struct OtherSectionView: View {
                         imageBackgroundColor: .red
                     )
                     .onTapGesture { viewStore.send(.forDevelopers) }
+
+                    ProfileCellView(
+                        title: "Версія:",
+                        value: .text(viewStore.completeAppVersion),
+                        image: {
+                            Image(systemName: "number")
+                                .foregroundColor(.blue.lighter(by: 0.9))
+                        },
+                        imageBackgroundColor: .blue
+                    )
+
                 }
 
             }
@@ -46,7 +59,9 @@ struct OtherSectionView: View {
 extension ProfileHome.State {
 
     var otherSectionView: OtherSectionView.ViewState {
-        OtherSectionView.ViewState()
+        OtherSectionView.ViewState(
+            completeAppVersion: completeAppVersion
+        )
     }
 
 }
@@ -73,7 +88,9 @@ struct OtherSectionView_Previews: PreviewProvider {
             OtherSectionView(
                 viewStore: ViewStore(
                     Store(
-                        initialState: OtherSectionView.ViewState(),
+                        initialState: OtherSectionView.ViewState(
+                            completeAppVersion: "1.0 (1)"
+                        ),
                         reducer: .empty,
                         environment: ()
                     )

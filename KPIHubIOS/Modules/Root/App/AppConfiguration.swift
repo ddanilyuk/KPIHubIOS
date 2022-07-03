@@ -8,16 +8,21 @@
 import Foundation
 
 struct AppConfiguration {
+
     let appName: String
     let apiURL: String
     let apiEnvironment: ApiEnvironment
     let completeAppVersion: String?
 
+}
+
+extension AppConfiguration {
+
     static func live(bundle: Bundle) -> AppConfiguration {
         AppConfiguration(bundle: bundle)
     }
 
-    private init(bundle: Bundle) {
+    init(bundle: Bundle) {
         guard
             let appName = bundle.object(forInfoDictionaryKey: Keys.appName) as? String,
             let apiEnvironmentKey = bundle.object(forInfoDictionaryKey: Keys.apiEnvironment) as? String,
@@ -39,6 +44,19 @@ struct AppConfiguration {
         self.appName = appName
         self.apiURL = apiEnvironment.url
         self.apiEnvironment = apiEnvironment
+    }
+    
+}
+
+extension AppConfiguration {
+
+    static func mock() -> AppConfiguration {
+        AppConfiguration(
+            appName: "KPI Hub",
+            apiURL: "http://kpihub.xyz",
+            apiEnvironment: .development,
+            completeAppVersion: "1.0 (1)"
+        )
     }
     
 }
