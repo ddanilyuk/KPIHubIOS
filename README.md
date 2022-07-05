@@ -1,8 +1,10 @@
-# KPIHub
+# KPI Hub
 
 An iOS application for KPI students for schedule and campus.
 
 This application works in cooperation with [server](https://github.com/ddanilyuk/KPIHubServer) written by me using Vapor. All detailed information about the server can be found in the README.md of server repository.
+
+[<img width="180" alt="Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917 1" src="https://user-images.githubusercontent.com/26975779/177416320-58f25b75-3143-4a14-ad5e-a038b16c10fc.png">](https://apps.apple.com/app/kpi-hub/id1632823831)
 
 ## This app provides
 
@@ -12,7 +14,7 @@ This application works in cooperation with [server](https://github.com/ddanilyuk
 
 ##  Used technologies
 
-- SwiftUI (No UIKit view in app)
+- SwiftUI (No UIKit views in app)
 - [The Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture)
 - [TCACoordinators](https://github.com/johnpatrickmorgan/TCACoordinators) (Flexible TCA navigation for SwiftUI)
 - [vapor-routing](https://github.com/pointfreeco/vapor-routing) (Receiving API client for free from server library)
