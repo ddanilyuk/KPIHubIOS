@@ -23,7 +23,7 @@ extension DependencyValues {
     }
 }
 
-\
+
 struct AnalyticsClient {
     var track: (_ event: Event) -> Void
     var setUserProperty: (_ userProperty: UserProperty) -> Void
