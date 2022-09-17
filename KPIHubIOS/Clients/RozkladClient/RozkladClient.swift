@@ -16,6 +16,12 @@ private enum RozkladClientStateKey: TestDependencyKey {
     static let testValue = RozkladClientState.mock()
 }
 
+extension RozkladClientStateKey: DependencyKey {
+    static let liveValue = RozkladClientState.live(
+        userDefaultsClient: DependencyValues.current.userDefaultsClient
+    )
+}
+
 extension DependencyValues {
     var rozkladClientState: RozkladClientState {
         get { self[RozkladClientStateKey.self] }
@@ -27,6 +33,12 @@ extension DependencyValues {
 private enum RozkladClientLessonsKey: TestDependencyKey {
 //    static let liveValue = RozkladClientState.live()
     static let testValue = RozkladClientLessons.mock()
+}
+
+extension RozkladClientLessonsKey: DependencyKey {
+    static let liveValue = RozkladClientLessons.live(
+        userDefaultsClient: DependencyValues.current.userDefaultsClient
+    )
 }
 
 extension DependencyValues {

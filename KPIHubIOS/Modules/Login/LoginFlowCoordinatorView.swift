@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct LoginFlowCoordinatorView: View {
 
-    let store: Store<Login.State, Login.Action>
+    let store: StoreOf<Login>
 
     var body: some View {
         TCARouter(store) { screen in

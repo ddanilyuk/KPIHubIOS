@@ -9,7 +9,7 @@ import ComposableArchitecture
 import URLRouting
 import Foundation
 
-struct GroupPicker {
+struct GroupPicker: ReducerProtocol {
 
     // MARK: - State
 
@@ -41,91 +41,93 @@ struct GroupPicker {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-    }
+    
+    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladClientState) var rozkladClientState
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        switch action {
-        case .onAppear:
-            return Effect(value: .refresh)
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return Effect(value: .refresh)
 
-        case let .allGroupsResult(.success(groups)):
-            state.isLoading = false
-            state.groups = groups
-            state.searchedGroups = groups
-            return .none
+            case let .allGroupsResult(.success(groups)):
+                state.isLoading = false
+                state.groups = groups
+                state.searchedGroups = groups
+                return .none
 
-        case .refresh:
-            let task: Effect<[GroupResponse], Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
-                    for: .api(.groups(.all)),
-                    as: GroupsResponse.self
-                )
-                return result.value.groups
-            }
-            return task
-                .mapError { $0 as NSError }
-                .receive(on: DispatchQueue.main)
-                .catchToEffect(Action.allGroupsResult)
-
-        case let .groupSelected(group):
-            state.isLoading = true
-            let task: Effect<[Lesson], Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
-                    for: .api(.group(group.id, .lessons)),
-                    as: LessonsResponse.self
-                )
-                environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
-                return result.value.lessons.map { Lesson(lessonResponse: $0) }
-            }
-            return task
-                .mapError { $0 as NSError }
-                .receive(on: DispatchQueue.main)
-                // Make keyboard hide to prevent tabBar opacity bugs
-                .delay(for: 0.3, scheduler: DispatchQueue.main)
-                .catchToEffect(Action.lessonsResult)
-
-        case let .lessonsResult(.success(lessons)):
-            state.isLoading = false
-            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: false))
-            return Effect(value: .routeAction(.done))
-
-        case let .allGroupsResult(.failure(error)),
-             let .lessonsResult(.failure(error)):
-            state.isLoading = false
-            state.alert = AlertState.error(error)
-            return .none
-
-        case .binding(\.$searchedText):
-            if state.searchedText.isEmpty {
-                state.searchedGroups = state.groups
-            } else {
-                let filtered = state.groups.filter { group in
-                    let groupName = group.name.lowercased()
-                    let searchedText = state.searchedText.lowercased()
-                    return groupName.contains(searchedText)
+            case .refresh:
+                let task: Effect<[GroupResponse], Error> = Effect.task {
+                    let result = try await apiClient.decodedResponse(
+                        for: .api(.groups(.all)),
+                        as: GroupsResponse.self
+                    )
+                    return result.value.groups
                 }
-                state.searchedGroups = filtered
+                return task
+                    .mapError { $0 as NSError }
+                    .receive(on: DispatchQueue.main)
+                    .catchToEffect(Action.allGroupsResult)
+
+            case let .groupSelected(group):
+                state.isLoading = true
+                let task: Effect<[Lesson], Error> = Effect.task {
+                    let result = try await apiClient.decodedResponse(
+                        for: .api(.group(group.id, .lessons)),
+                        as: LessonsResponse.self
+                    )
+                    rozkladClientState.setState(ClientValue(.selected(group), commitChanges: false))
+                    return result.value.lessons.map { Lesson(lessonResponse: $0) }
+                }
+                return task
+                    .mapError { $0 as NSError }
+                    .receive(on: DispatchQueue.main)
+                    // Make keyboard hide to prevent tabBar opacity bugs
+                    .delay(for: 0.3, scheduler: DispatchQueue.main)
+                    .catchToEffect(Action.lessonsResult)
+
+            case let .lessonsResult(.success(lessons)):
+                state.isLoading = false
+                rozkladClientLessons.set(.init(lessons, commitChanges: false))
+                return Effect(value: .routeAction(.done))
+
+            case let .allGroupsResult(.failure(error)),
+                 let .lessonsResult(.failure(error)):
+                state.isLoading = false
+                state.alert = AlertState.error(error)
+                return .none
+
+            case .binding(\.$searchedText):
+                if state.searchedText.isEmpty {
+                    state.searchedGroups = state.groups
+                } else {
+                    let filtered = state.groups.filter { group in
+                        let groupName = group.name.lowercased()
+                        let searchedText = state.searchedText.lowercased()
+                        return groupName.contains(searchedText)
+                    }
+                    state.searchedGroups = filtered
+                }
+                return .none
+
+            case .dismissAlert:
+                state.alert = nil
+                return .none
+
+            case .binding:
+                return .none
+
+            case .routeAction:
+                return .none
             }
-            return .none
-
-        case .dismissAlert:
-            state.alert = nil
-            return .none
-
-        case .binding:
-            return .none
-
-        case .routeAction:
-            return .none
         }
     }
-    .binding()
 
 }

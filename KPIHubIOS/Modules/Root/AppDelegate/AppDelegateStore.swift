@@ -9,7 +9,6 @@ import ComposableArchitecture
 
 struct AppDelegateReducer: ReducerProtocol {
     
-
     // MARK: - State
 
     struct State: Equatable { }

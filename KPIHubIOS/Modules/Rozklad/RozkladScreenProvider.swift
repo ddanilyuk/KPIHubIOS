@@ -55,17 +55,11 @@ extension Rozklad.ScreenProvider {
                     )
                 }
             ),
-        GroupPicker.reducer
+        AnyReducer(GroupPicker())
             .pullback(
                 state: /State.groupPicker,
                 action: /Action.groupPicker,
-                environment: {
-                    GroupPicker.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
+                environment: { _ in }
             ),
         LessonDetails.reducer
             .pullback(

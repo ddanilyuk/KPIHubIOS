@@ -40,19 +40,25 @@ extension Campus.ScreenProvider {
     // MARK: - Reducer handling
 
     static let reducer = Reducer<State, Action, Campus.Environment>.combine(
-        CampusLogin.reducer
-            .pullback(
-                state: /State.campusLogin,
-                action: /Action.campusLogin,
-                environment: {
-                    CampusLogin.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        campusClient: $0.campusClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            ),
+        Reducer(
+            Scope(state: /State.campusLogin, action: /Action.campusLogin) {
+                CampusLogin()
+            }
+            
+        ),
+//        CampusLogin.reducer
+//            .pullback(
+//                state: /State.campusLogin,
+//                action: /Action.campusLogin,
+//                environment: {
+//                    CampusLogin.Environment(
+//                        apiClient: $0.apiClient,
+//                        userDefaultsClient: $0.userDefaultsClient,
+//                        campusClient: $0.campusClient,
+//                        rozkladClient: $0.rozkladClient
+//                    )
+//                }
+//            ),
         CampusHome.reducer
             .pullback(
                 state: /State.campusHome,

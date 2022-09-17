@@ -16,6 +16,13 @@ private enum CampusClientStateKey: TestDependencyKey {
     static let testValue = CampusClientState.mock()
 }
 
+extension CampusClientStateKey: DependencyKey {
+    static let liveValue = CampusClientState.live(
+        userDefaultsClient: DependencyValues.current.userDefaultsClient,
+        keychainClient: DependencyValues.current.keychainClient
+    )
+}
+
 extension DependencyValues {
     var campusClientState: CampusClientState {
         get { self[CampusClientStateKey.self] }
@@ -27,6 +34,15 @@ private enum CampusClientStudySheetKey: TestDependencyKey {
 //    static let liveValue = RozkladClientState.live()
     static let testValue = CampusClientStudySheet.mock()
 }
+
+extension CampusClientStudySheetKey: DependencyKey {
+    static let liveValue = CampusClientStudySheet.live(
+        apiClient: DependencyValues.current.apiClient,
+        userDefaultsClient: DependencyValues.current.userDefaultsClient,
+        keychainClient: DependencyValues.current.keychainClient
+    )
+}
+
 
 extension DependencyValues {
     var campusClientStudySheet: CampusClientStudySheet {

@@ -14,6 +14,10 @@ private enum UserDefaultsClientKey: TestDependencyKey {
     static let testValue = UserDefaultsClient.mock()
 }
 
+extension UserDefaultsClientKey: DependencyKey {
+    static let liveValue = UserDefaultsClient.live()
+}
+
 extension DependencyValues {
     var userDefaultsClient: UserDefaultsClientable {
         get { self[UserDefaultsClientKey.self] }

@@ -7,35 +7,35 @@
 
 import ComposableArchitecture
 
-struct Onboarding {
-
+struct Onboarding: ReducerProtocol {
+    
     // MARK: - State
-
+    
     struct State: Equatable { }
-
+    
     // MARK: - Action
-
+    
     enum Action: Equatable {
-
+        
         case routeAction(RouteAction)
-
+        
         enum RouteAction: Equatable {
             case groupPicker
             case campusLogin
         }
     }
-
+    
     // MARK: - Environment
-
+    
     struct Environment { }
-
+    
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .routeAction:
             return .none
         }
     }
-
+    
 }

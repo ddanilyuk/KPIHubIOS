@@ -16,6 +16,14 @@ private enum CurrentDateClientKey: TestDependencyKey {
     static let testValue = CurrentDateClient.mock()
 }
 
+extension CurrentDateClientKey: DependencyKey {
+    static let liveValue = CurrentDateClient.live(
+        userDefaultsClient: DependencyValues.current.userDefaultsClient,
+        rozkladClientLessons: DependencyValues.current.rozkladClientLessons
+    )
+}
+
+
 extension DependencyValues {
     var currentDateClient: CurrentDateClient {
         get { self[CurrentDateClientKey.self] }

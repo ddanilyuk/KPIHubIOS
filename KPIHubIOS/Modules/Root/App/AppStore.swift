@@ -90,28 +90,12 @@ struct App: ReducerProtocol {
         Scope(state: \State.appDelegate, action: /Action.appDelegate) {
             AppDelegateReducer()
         }
-                
-        Scope(state: \State.login, action: /Action.login) {
-            Reduce(
-                Login.reducer.optional(),
-                environment: Login.Environment(
-                    apiClient: apiClient,
-                    userDefaultsClient: userDefaultsClient,
-                    rozkladClient: RozkladClient(
-                        state: rozkladClientState,
-                        lessons: rozkladClientLessons
-                    ),
-                    campusClient: CampusClient(
-                        state: campusClientState,
-                        studySheet: campusClientStudySheet
-                    )
-                )
-            )
+        .ifLet(\State.login, action: /Action.login) {
+            Login()
         }
-        
-        Scope(state: \State.main, action: /Action.main) {
+        .ifLet(\State.main, action: /Action.main) {
             Reduce(
-                Main.reducer.optional(),
+                Main.reducer,
                 environment: Main.Environment(
                     appConfiguration: appConfiguration,
                     apiClient: apiClient,
@@ -128,7 +112,7 @@ struct App: ReducerProtocol {
                 )
             )
         }
-        
+
         core
     }
 

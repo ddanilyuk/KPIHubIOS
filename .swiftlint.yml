@@ -22,7 +22,6 @@ opt_in_rules:
   - first_where
   - operator_usage_whitespace
   - vertical_parameter_alignment_on_call
-  - let_var_whitespace
   - switch_case_on_newline
   - closure_spacing
   - discouraged_direct_init
