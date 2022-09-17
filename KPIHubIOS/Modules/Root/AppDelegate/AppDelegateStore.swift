@@ -7,7 +7,8 @@
 
 import ComposableArchitecture
 
-extension AppDelegate {
+struct AppDelegateReducer: ReducerProtocol {
+    
 
     // MARK: - State
 
@@ -21,12 +22,11 @@ extension AppDelegate {
 
     // MARK: - Environment
 
-    struct Environment {
-    }
+    struct Environment { }
 
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .didFinishLaunching:
             return .none

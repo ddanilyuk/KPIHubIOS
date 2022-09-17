@@ -9,6 +9,32 @@ import Combine
 import Routes
 import ComposableArchitecture
 import KeychainAccess
+import ComposableArchitecture
+
+private enum CampusClientStateKey: TestDependencyKey {
+//    static let liveValue = RozkladClientState.live()
+    static let testValue = CampusClientState.mock()
+}
+
+extension DependencyValues {
+    var campusClientState: CampusClientState {
+        get { self[CampusClientStateKey.self] }
+        set { self[CampusClientStateKey.self] = newValue }
+    }
+}
+
+private enum CampusClientStudySheetKey: TestDependencyKey {
+//    static let liveValue = RozkladClientState.live()
+    static let testValue = CampusClientStudySheet.mock()
+}
+
+extension DependencyValues {
+    var campusClientStudySheet: CampusClientStudySheet {
+        get { self[CampusClientStudySheetKey.self] }
+        set { self[CampusClientStudySheetKey.self] = newValue }
+    }
+}
+
 
 struct CampusClient {
 

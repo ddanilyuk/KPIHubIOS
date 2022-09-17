@@ -61,6 +61,20 @@ extension AppConfiguration {
     
 }
 
+import Dependencies
+
+private enum AppConfigurationKey: TestDependencyKey {
+//    static let liveValue = AppConfiguration.live()
+    static let testValue = AppConfiguration.mock()
+}
+
+extension DependencyValues {
+    var appConfiguration: AppConfiguration {
+        get { self[AppConfigurationKey.self] }
+        set { self[AppConfigurationKey.self] = newValue }
+    }
+}
+
 enum ApiEnvironment: String {
     case development
     case production

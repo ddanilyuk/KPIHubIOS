@@ -8,8 +8,20 @@
 import URLRouting
 import Foundation
 import Routes
+import Dependencies
 
 typealias APIClient = URLRoutingClient<RootRoute>
+private enum APIClientKey: TestDependencyKey {
+//    static let liveValue = RozkladClientState.live()
+    static let testValue = APIClient.failing
+}
+
+extension DependencyValues {
+    var apiClient: APIClient {
+        get { self[APIClientKey.self] }
+        set { self[APIClientKey.self] = newValue }
+    }
+}
 
 enum APIError: Error {
     case serviceError(statusCode: Int, APIErrorPayload)

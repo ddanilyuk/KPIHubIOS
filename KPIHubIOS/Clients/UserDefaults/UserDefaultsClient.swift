@@ -7,6 +7,20 @@
 
 import Foundation
 import IdentifiedCollections
+import ComposableArchitecture
+
+private enum UserDefaultsClientKey: TestDependencyKey {
+//    static let liveValue = RozkladClientState.live()
+    static let testValue = UserDefaultsClient.mock()
+}
+
+extension DependencyValues {
+    var userDefaultsClient: UserDefaultsClientable {
+        get { self[UserDefaultsClientKey.self] }
+        set { self[UserDefaultsClientKey.self] = newValue }
+    }
+}
+
 
 protocol UserDefaultsClientable {
 

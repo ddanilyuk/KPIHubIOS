@@ -9,6 +9,34 @@ import Combine
 import IdentifiedCollections
 import Foundation
 import CasePaths
+import ComposableArchitecture
+
+private enum RozkladClientStateKey: TestDependencyKey {
+//    static let liveValue = RozkladClientState.live()
+    static let testValue = RozkladClientState.mock()
+}
+
+extension DependencyValues {
+    var rozkladClientState: RozkladClientState {
+        get { self[RozkladClientStateKey.self] }
+        set { self[RozkladClientStateKey.self] = newValue }
+    }
+}
+
+
+private enum RozkladClientLessonsKey: TestDependencyKey {
+//    static let liveValue = RozkladClientState.live()
+    static let testValue = RozkladClientLessons.mock()
+}
+
+extension DependencyValues {
+    var rozkladClientLessons: RozkladClientLessons {
+        get { self[RozkladClientLessonsKey.self] }
+        set { self[RozkladClientLessonsKey.self] = newValue }
+    }
+}
+
+
 
 struct RozkladClient {
 
