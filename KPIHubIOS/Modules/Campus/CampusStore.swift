@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import TCACoordinators
 import Combine
+import Foundation
 
 struct Campus {
 

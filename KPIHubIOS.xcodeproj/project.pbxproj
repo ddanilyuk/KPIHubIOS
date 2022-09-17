@@ -1957,8 +1957,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = exactVersion;
-				version = 0.37.0;
+				branch = "protocol-beta";
+				kind = branch;
 			};
 		};
 		5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
