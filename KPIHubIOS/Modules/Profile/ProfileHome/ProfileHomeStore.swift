@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 
-struct ProfileHome {
+struct ProfileHome: ReducerProtocol {
 
     // MARK: - State
 
@@ -60,161 +60,158 @@ struct ProfileHome {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-        let campusClient: CampusClient
-        let currentDateClient: CurrentDateClient
-        let appConfiguration: AppConfiguration
-    }
+    
+    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.campusClientState) var campusClientState
+    @Dependency(\.campusClientStudySheet) var campusClientStudySheet
+    @Dependency(\.currentDateClient) var currentDateClient
+    @Dependency(\.appConfiguration) var appConfiguration
 
     // MARK: - Reducer
+    
+    enum SubscriberCancelID { }
+    
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                state.completeAppVersion = appConfiguration.completeAppVersion ?? ""
+                state.toggleWeek = userDefaultsClient.get(for: .toggleWeek)
+                return onAppear()
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelID { }
-        switch action {
-        case .onAppear:
-            state.completeAppVersion = environment.appConfiguration.completeAppVersion ?? ""
-            state.toggleWeek = environment.userDefaultsClient.get(for: .toggleWeek)
-            return Effect.setAndSubscribeOnAppear(
-                environment: environment,
-                cancellable: SubscriberCancelID.self
-            )
+            case let .setRozkladState(rozkladState):
+                state.rozkladState = rozkladState
+                return .none
 
-        case let .setRozkladState(rozkladState):
-            state.rozkladState = rozkladState
-            return .none
+            case let .setCampusState(campusState):
+                state.campusState = campusState
+                return .none
+                
+            case let .setLessonsUpdatedAtDate(date):
+                state.lessonsUpdatedAtDate = date
+                return .none
 
-        case let .setCampusState(campusState):
-            state.campusState = campusState
-            return .none
-            
-        case let .setLessonsUpdatedAtDate(date):
-            state.lessonsUpdatedAtDate = date
-            return .none
+            case .updateRozkladButtonTapped:
+                state.confirmationDialog = ConfirmationDialogState(
+                    title: TextState("Ви впевнені?"),
+                    titleVisibility: .visible,
+                    message: TextState("Оновлення розкладу видалить всі редагування!"),
+                    buttons: [
+                        .destructive(TextState("Оновити розклад"), action: .send(.updateRozklad)),
+                        .cancel(TextState("Назад"))
+                    ]
+                )
+                return .none
 
-        case .updateRozkladButtonTapped:
-            state.confirmationDialog = ConfirmationDialogState(
-                title: TextState("Ви впевнені?"),
-                titleVisibility: .visible,
-                message: TextState("Оновлення розкладу видалить всі редагування!"),
-                buttons: [
-                    .destructive(TextState("Оновити розклад"), action: .send(.updateRozklad)),
-                    .cancel(TextState("Назад"))
-                ]
-            )
-            return .none
+            case .updateRozklad:
+                switch state.rozkladState {
+                case let .selected(group):
+                    state.isLoading = true
+                    let task: Effect<[Lesson], Error> = Effect.task {
+                        // Update group id using name
+                        let newGroup = try await apiClient.decodedResponse(
+                            for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
+                            as: GroupResponse.self
+                        )
+                        // Update lessons
+                        let lessons = try await apiClient.decodedResponse(
+                            for: .api(.group(newGroup.value.id, .lessons)),
+                            as: LessonsResponse.self
+                        )
+                        rozkladClientState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
+                        return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
+                    }
+                    return task
+                        .mapError { $0 as NSError }
+                        .receive(on: DispatchQueue.main)
+                        .catchToEffect(Action.lessonsResult)
 
-        case .updateRozklad:
-            switch state.rozkladState {
-            case let .selected(group):
-                state.isLoading = true
-                let task: Effect<[Lesson], Error> = Effect.task {
-                    // Update group id using name
-                    let newGroup = try await environment.apiClient.decodedResponse(
-                        for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
-                        as: GroupResponse.self
-                    )
-                    // Update lessons
-                    let lessons = try await environment.apiClient.decodedResponse(
-                        for: .api(.group(newGroup.value.id, .lessons)),
-                        as: LessonsResponse.self
-                    )
-                    environment.rozkladClient.state.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
-                    return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
+                case .notSelected:
+                    return .none
                 }
-                return task
-                    .mapError { $0 as NSError }
-                    .receive(on: DispatchQueue.main)
-                    .catchToEffect(Action.lessonsResult)
 
-            case .notSelected:
+            case let .lessonsResult(.success(lessons)):
+                state.isLoading = false
+                rozkladClientLessons.set(.init(lessons, commitChanges: true))
+                return .none
+
+            case let .lessonsResult(.failure(error)):
+                state.isLoading = false
+                state.alert = AlertState.error(error)
+                return .none
+
+            case .changeGroupButtonTapped:
+                state.confirmationDialog = ConfirmationDialogState(
+                    title: TextState("Ви впевнені?"),
+                    titleVisibility: .visible,
+                    message: TextState("Зміна групи видалить всі редагування!"),
+                    buttons: [
+                        .destructive(TextState("Змінити"), action: .send(.changeGroup)),
+                        .cancel(TextState("Назад"))
+                    ]
+                )
+                return .none
+
+            case .changeGroup:
+                rozkladClientState.setState(ClientValue(.notSelected, commitChanges: true))
+                return Effect(value: .routeAction(.rozklad))
+
+            case .selectGroup:
+                return Effect(value: .routeAction(.rozklad))
+
+            case .logoutCampusButtonTapped:
+                state.confirmationDialog = ConfirmationDialogState(
+                    title: TextState("Ви впевнені?"),
+                    titleVisibility: .visible,
+                    buttons: [
+                        .destructive(TextState("Вийти"), action: .send(.logoutCampus)),
+                        .cancel(TextState("Назад"))
+                    ]
+                )
+                return .none
+
+            case .logoutCampus:
+                campusClientState.logout(ClientValue(commitChanges: true))
+                campusClientStudySheet.clean()
+                return Effect(value: .routeAction(.campus))
+
+            case .loginCampus:
+                return Effect(value: .routeAction(.campus))
+
+            case .binding(\.rozkladSectionView.$toggleWeek):
+                userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
+                currentDateClient.forceUpdate()
+                return .none
+
+            case .dismissConfirmationDialog:
+                state.confirmationDialog = nil
+                return .none
+
+            case .dismissAlert:
+                state.alert = nil
+                return .none
+
+            case .binding:
+                return .none
+
+            case .routeAction:
                 return .none
             }
-
-        case let .lessonsResult(.success(lessons)):
-            state.isLoading = false
-            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: true))
-            return .none
-
-        case let .lessonsResult(.failure(error)):
-            state.isLoading = false
-            state.alert = AlertState.error(error)
-            return .none
-
-        case .changeGroupButtonTapped:
-            state.confirmationDialog = ConfirmationDialogState(
-                title: TextState("Ви впевнені?"),
-                titleVisibility: .visible,
-                message: TextState("Зміна групи видалить всі редагування!"),
-                buttons: [
-                    .destructive(TextState("Змінити"), action: .send(.changeGroup)),
-                    .cancel(TextState("Назад"))
-                ]
-            )
-            return .none
-
-        case .changeGroup:
-            environment.rozkladClient.state.setState(ClientValue(.notSelected, commitChanges: true))
-            return Effect(value: .routeAction(.rozklad))
-
-        case .selectGroup:
-            return Effect(value: .routeAction(.rozklad))
-
-        case .logoutCampusButtonTapped:
-            state.confirmationDialog = ConfirmationDialogState(
-                title: TextState("Ви впевнені?"),
-                titleVisibility: .visible,
-                buttons: [
-                    .destructive(TextState("Вийти"), action: .send(.logoutCampus)),
-                    .cancel(TextState("Назад"))
-                ]
-            )
-            return .none
-
-        case .logoutCampus:
-            environment.campusClient.state.logout(ClientValue(commitChanges: true))
-            environment.campusClient.studySheet.clean()
-            return Effect(value: .routeAction(.campus))
-
-        case .loginCampus:
-            return Effect(value: .routeAction(.campus))
-
-        case .binding(\.rozkladSectionView.$toggleWeek):
-            environment.userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
-            environment.currentDateClient.forceUpdate()
-            return .none
-
-        case .dismissConfirmationDialog:
-            state.confirmationDialog = nil
-            return .none
-
-        case .dismissAlert:
-            state.alert = nil
-            return .none
-
-        case let .binding(action):
-            return .none
-
-        case .routeAction:
-            return .none
         }
     }
-    .binding()
-
-}
-
-extension Effect where Output == ProfileHome.Action, Failure == Never {
-
-    static func setAndSubscribeOnAppear(environment: ProfileHome.Environment, cancellable: Any.Type) -> Self {
+    
+    private func onAppear() -> Effect<Action, Never> {
         return .merge(
-            Effect(value: .setRozkladState(environment.rozkladClient.state.subject.value)),
-            Effect(value: .setCampusState(environment.campusClient.state.subject.value)),
-            Effect(value: .setLessonsUpdatedAtDate(environment.rozkladClient.lessons.updatedAtSubject.value)),
+            Effect(value: .setRozkladState(rozkladClientState.subject.value)),
+            Effect(value: .setCampusState(campusClientState.subject.value)),
+            Effect(value: .setLessonsUpdatedAtDate(rozkladClientLessons.updatedAtSubject.value)),
             Effect.run { subscriber in
-                environment.rozkladClient.state.subject
+                rozkladClientState.subject
                     .dropFirst()
                     .receive(on: DispatchQueue.main)
                     .sink { rozkladState in
@@ -222,7 +219,7 @@ extension Effect where Output == ProfileHome.Action, Failure == Never {
                     }
             },
             Effect.run { subscriber in
-                environment.campusClient.state.subject
+                campusClientState.subject
                     .dropFirst()
                     .receive(on: DispatchQueue.main)
                     .sink { campusState in
@@ -230,7 +227,7 @@ extension Effect where Output == ProfileHome.Action, Failure == Never {
                     }
             },
             Effect.run { subscriber in
-                environment.rozkladClient.lessons.updatedAtSubject
+                rozkladClientLessons.updatedAtSubject
                     .dropFirst()
                     .receive(on: DispatchQueue.main)
                     .sink { date in
@@ -238,6 +235,7 @@ extension Effect where Output == ProfileHome.Action, Failure == Never {
                     }
             }
         )
-        .cancellable(id: cancellable, cancelInFlight: true)
+        .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
     }
+    
 }

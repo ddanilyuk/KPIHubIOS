@@ -43,8 +43,7 @@ struct StudySheetItemDetailView_Previews: PreviewProvider {
                     initialState: StudySheetItemDetail.State(
                         item: StudySheetItem.mock1
                     ),
-                    reducer: StudySheetItemDetail.reducer,
-                    environment: StudySheetItemDetail.Environment()
+                    reducer: StudySheetItemDetail()
                 )
             )
         }

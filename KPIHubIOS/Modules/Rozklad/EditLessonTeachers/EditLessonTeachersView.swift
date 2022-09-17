@@ -97,11 +97,7 @@ struct EditLessonTeachersView_Previews: PreviewProvider {
                     initialState: EditLessonTeachers.State(
                         lesson: .init(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: EditLessonTeachers.reducer,
-                    environment: EditLessonTeachers.Environment(
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock()
-                    )
+                    reducer: EditLessonTeachers()
                 )
             )
         }

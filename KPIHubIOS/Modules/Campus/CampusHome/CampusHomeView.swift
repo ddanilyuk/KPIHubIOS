@@ -109,12 +109,7 @@ struct CampusHomeView_Previews: PreviewProvider {
                 store: Store(
                     initialState: CampusHome.State(
                     ),
-                    reducer: CampusHome.reducer,
-                    environment: CampusHome.Environment(
-                        apiClient: .failing,
-                        userDefaultsClient: .mock(),
-                        campusClient: .mock()
-                    )
+                    reducer: CampusHome()
                 )
             )
         }

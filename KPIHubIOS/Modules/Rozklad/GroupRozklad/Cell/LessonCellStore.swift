@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import CoreGraphics
 
-struct LessonCell {
+struct LessonCell: ReducerProtocol {
 
     // MARK: - State
 
@@ -29,13 +29,9 @@ struct LessonCell {
         case onDisappear
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .onTap:
             return .none

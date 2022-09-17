@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct ForDevelopers {
+struct ForDevelopers: ReducerProtocol {
 
     // MARK: - State
 
@@ -24,8 +24,8 @@ struct ForDevelopers {
     struct Environment { }
 
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
+    
+    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
         switch action {
         case .onAppear:
             return .none

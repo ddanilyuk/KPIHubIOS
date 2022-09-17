@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import Foundation
 
-struct LessonDetails {
+struct LessonDetails: ReducerProtocol {
 
     // MARK: - State
 
@@ -41,78 +41,79 @@ struct LessonDetails {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-        let currentDateClient: CurrentDateClient
-    }
+    
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.currentDateClient) var currentDateClient
 
     // MARK: - Reducer
+    
+    enum SubscriberCancelID { }
+    
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                let lessonID = state.lesson.id
+                return Effect.merge(
+                    Effect(value: .updateCurrentDate),
+                    Effect.run { subscriber in
+                        rozkladClientLessons.subject
+                            .compactMap { $0[id: lessonID] }
+                            .receive(on: DispatchQueue.main)
+                            .sink { lesson in
+                                subscriber.send(.updateLesson(lesson))
+                            }
+                    },
+                    Effect.run { subscriber in
+                        currentDateClient.updated
+                            .dropFirst()
+                            .receive(on: DispatchQueue.main)
+                            .sink { _ in
+                                subscriber.send(.updateCurrentDate)
+                            }
+                    }
+                )
+                .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelID { }
-        switch action {
-        case .onAppear:
-            let lessonID = state.lesson.id
-            return Effect.merge(
-                Effect(value: .updateCurrentDate),
-                Effect.run { subscriber in
-                    environment.rozkladClient.lessons.subject
-                        .compactMap { $0[id: lessonID] }
-                        .receive(on: DispatchQueue.main)
-                        .sink { lesson in
-                            subscriber.send(.updateLesson(lesson))
-                        }
-                },
-                Effect.run { subscriber in
-                    environment.currentDateClient.updated
-                        .dropFirst()
-                        .receive(on: DispatchQueue.main)
-                        .sink { _ in
-                            subscriber.send(.updateCurrentDate)
-                        }
+            case .updateCurrentDate:
+                let lessonID = state.lesson.id
+                let currentLesson = currentDateClient.currentLesson.value
+                let nextLessonID = currentDateClient.nextLessonID.value
+
+                if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
+                    state.mode = .current(currentLesson.percent)
+                } else if lessonID == nextLessonID {
+                    state.mode = .next
+                } else {
+                    state.mode = .default
                 }
-            )
-            .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+                return .none
 
-        case .updateCurrentDate:
-            let lessonID = state.lesson.id
-            let currentLesson = environment.currentDateClient.currentLesson.value
-            let nextLessonID = environment.currentDateClient.nextLessonID.value
+            case let .updateLesson(lesson):
+                state.lesson = lesson
+                return .none
 
-            if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
-                state.mode = .current(currentLesson.percent)
-            } else if lessonID == nextLessonID {
-                state.mode = .next
-            } else {
-                state.mode = .default
-            }
-            return .none
+            case .editNames:
+                guard state.isEditing else {
+                    return .none
+                }
+                return Effect(value: .routeAction(.editNames(state.lesson)))
 
-        case let .updateLesson(lesson):
-            state.lesson = lesson
-            return .none
+            case .editTeachers:
+                guard state.isEditing else {
+                    return .none
+                }
+                return Effect(value: .routeAction(.editTeachers(state.lesson)))
 
-        case .editNames:
-            guard state.isEditing else {
+            case .binding:
+                return .none
+
+            case .routeAction:
                 return .none
             }
-            return Effect(value: .routeAction(.editNames(state.lesson)))
-
-        case .editTeachers:
-            guard state.isEditing else {
-                return .none
-            }
-            return Effect(value: .routeAction(.editTeachers(state.lesson)))
-
-        case .binding:
-            return .none
-
-        case .routeAction:
-            return .none
         }
     }
-    .binding()
 
 }

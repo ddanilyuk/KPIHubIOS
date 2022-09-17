@@ -13,7 +13,7 @@ extension Campus {
 
 }
 
-extension Campus.ScreenProvider {
+extension Campus.ScreenProvider: ReducerProtocol {
 
     // MARK: - State handling
 
@@ -37,56 +37,21 @@ extension Campus.ScreenProvider {
         case studySheetItemDetail(StudySheetItemDetail.Action)
     }
 
-    // MARK: - Reducer handling
-
-    static let reducer = Reducer<State, Action, Campus.Environment>.combine(
-        Reducer(
-            Scope(state: /State.campusLogin, action: /Action.campusLogin) {
-                CampusLogin()
-            }
-            
-        ),
-//        CampusLogin.reducer
-//            .pullback(
-//                state: /State.campusLogin,
-//                action: /Action.campusLogin,
-//                environment: {
-//                    CampusLogin.Environment(
-//                        apiClient: $0.apiClient,
-//                        userDefaultsClient: $0.userDefaultsClient,
-//                        campusClient: $0.campusClient,
-//                        rozkladClient: $0.rozkladClient
-//                    )
-//                }
-//            ),
-        CampusHome.reducer
-            .pullback(
-                state: /State.campusHome,
-                action: /Action.campusHome,
-                environment: {
-                    CampusHome.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        campusClient: $0.campusClient
-                    )
-                }
-            ),
-        StudySheet.reducer
-            .pullback(
-                state: /State.studySheet,
-                action: /Action.studySheet,
-                environment: { _ in
-                    StudySheet.Environment()
-                }
-            ),
-        StudySheetItemDetail.reducer
-            .pullback(
-                state: /State.studySheetItemDetail,
-                action: /Action.studySheetItemDetail,
-                environment: { _ in
-                    StudySheetItemDetail.Environment()
-                }
-            )
-    )
+    // MARK: - Reducer
+    
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: /State.campusLogin, action: /Action.campusLogin) {
+            CampusLogin()
+        }
+        Scope(state: /State.campusHome, action: /Action.campusHome) {
+            CampusHome()
+        }
+        Scope(state: /State.studySheet, action: /Action.studySheet) {
+            StudySheet()
+        }
+        Scope(state: /State.studySheetItemDetail, action: /Action.studySheetItemDetail) {
+            StudySheetItemDetail()
+        }
+    }
 
 }

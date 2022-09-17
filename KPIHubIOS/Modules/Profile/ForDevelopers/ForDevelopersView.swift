@@ -121,8 +121,7 @@ struct ForDevelopersView_Previews: PreviewProvider {
             ForDevelopersView(
                 store: Store(
                     initialState: ForDevelopers.State(),
-                    reducer: ForDevelopers.reducer,
-                    environment: ForDevelopers.Environment()
+                    reducer: ForDevelopers()
                 )
             )
         }

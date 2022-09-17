@@ -94,23 +94,7 @@ struct App: ReducerProtocol {
             Login()
         }
         .ifLet(\State.main, action: /Action.main) {
-            Reduce(
-                Main.reducer,
-                environment: Main.Environment(
-                    appConfiguration: appConfiguration,
-                    apiClient: apiClient,
-                    userDefaultsClient: userDefaultsClient,
-                    rozkladClient: RozkladClient(
-                        state: rozkladClientState,
-                        lessons: rozkladClientLessons
-                    ),
-                    campusClient: CampusClient(
-                        state: campusClientState,
-                        studySheet: campusClientStudySheet
-                    ),
-                    currentDateClient: currentDateClient
-                )
-            )
+            Main()
         }
 
         core

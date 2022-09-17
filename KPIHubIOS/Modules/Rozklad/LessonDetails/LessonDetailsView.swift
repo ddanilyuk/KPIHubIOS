@@ -103,12 +103,7 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     initialState: LessonDetails.State(
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: LessonDetails.reducer,
-                    environment: LessonDetails.Environment(
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock(),
-                        currentDateClient: .mock()
-                    )
+                    reducer: LessonDetails()
                 )
             )
         }

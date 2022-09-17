@@ -9,7 +9,7 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
-struct GroupRozklad {
+struct GroupRozklad: ReducerProtocol {
 
     // MARK: - State
 
@@ -70,126 +70,130 @@ struct GroupRozklad {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-        let currentDateClient: CurrentDateClient
-    }
+    
+    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.currentDateClient) var currentDateClient
 
     // MARK: - Reducer
+    
+    enum SubscriberCancelID { }
 
-    static let coreReducer = Reducer<State, Action, Environment> { state, action, environment in
-        enum SubscriberCancelID { }
-        switch action {
-        case .onAppear:
-            state.isAppeared = true
-            return Effect.merge(
-                Effect(value: .updateCurrentDate),
-                Effect.concatenate(
-                    Effect(value: .updateLessons(environment.rozkladClient.lessons.subject.value)),
-                    Effect(value: .scrollToNearest(state.needToScrollOnAppear)),
-                    Effect(value: .binding(.set(\.$needToScrollOnAppear, false)))
-                ),
-                Effect.run { subscriber in
-                    environment.rozkladClient.lessons.subject
-                        .dropFirst()
-                        .receive(on: DispatchQueue.main)
-                        .sink { lessons in
-                            subscriber.send(.updateLessons(lessons))
-                        }
-                },
-                Effect.run { subscriber in
-                    environment.currentDateClient.updated
-                        .dropFirst()
-                        .receive(on: DispatchQueue.main)
-                        .sink { _ in
-                            subscriber.send(.updateCurrentDate)
-                        }
-                }
-            )
-            .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+//    @ReducerBuilder<State, Action>
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                state.isAppeared = true
+                return Effect.merge(
+                    Effect(value: .updateCurrentDate),
+                    Effect.concatenate(
+                        Effect(value: .updateLessons(rozkladClientLessons.subject.value)),
+                        Effect(value: .scrollToNearest(state.needToScrollOnAppear)),
+                        Effect(value: .binding(.set(\.$needToScrollOnAppear, false)))
+                    ),
+                    Effect.run { subscriber in
+                        rozkladClientLessons.subject
+                            .dropFirst()
+                            .receive(on: DispatchQueue.main)
+                            .sink { lessons in
+                                subscriber.send(.updateLessons(lessons))
+                            }
+                    },
+                    Effect.run { subscriber in
+                        currentDateClient.updated
+                            .dropFirst()
+                            .receive(on: DispatchQueue.main)
+                            .sink { _ in
+                                subscriber.send(.updateCurrentDate)
+                            }
+                    }
+                )
+                .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
 
-        case .onDisappear:
-            state.isAppeared = false
-            return .none
+            case .onDisappear:
+                state.isAppeared = false
+                return .none
 
-        case .updateCurrentDate:
-            let oldCurrentLesson = state.currentLesson
-            let oldNextLessonID = state.nextLessonID
-            state.currentDay = environment.currentDateClient.currentDay.value
-            state.currentWeek = environment.currentDateClient.currentWeek.value
-            state.currentLesson = environment.currentDateClient.currentLesson.value
-            state.nextLessonID = environment.currentDateClient.nextLessonID.value
-            state.sections = [State.Section](
-                lessons: state.lessons,
-                currentLesson: state.currentLesson,
-                nextLesson: state.nextLessonID
-            )
-            if oldCurrentLesson?.lessonID != state.currentLesson?.lessonID || oldNextLessonID != state.nextLessonID {
-                if state.isAppeared {
-                    return Effect(value: .scrollToNearest())
-                        .delay(for: 0.3, scheduler: DispatchQueue.main)
-                        .eraseToEffect()
+            case .updateCurrentDate:
+                let oldCurrentLesson = state.currentLesson
+                let oldNextLessonID = state.nextLessonID
+                state.currentDay = currentDateClient.currentDay.value
+                state.currentWeek = currentDateClient.currentWeek.value
+                state.currentLesson = currentDateClient.currentLesson.value
+                state.nextLessonID = currentDateClient.nextLessonID.value
+                state.sections = [State.Section](
+                    lessons: state.lessons,
+                    currentLesson: state.currentLesson,
+                    nextLesson: state.nextLessonID
+                )
+                if oldCurrentLesson?.lessonID != state.currentLesson?.lessonID || oldNextLessonID != state.nextLessonID {
+                    if state.isAppeared {
+                        return Effect(value: .scrollToNearest())
+                            .delay(for: 0.3, scheduler: DispatchQueue.main)
+                            .eraseToEffect()
+                    } else {
+                        state.needToScrollOnAppear = true
+                        return .none
+                    }
+
                 } else {
-                    state.needToScrollOnAppear = true
                     return .none
                 }
 
-            } else {
+            case let .updateLessons(lessons):
+                state.groupName = rozkladClientState.group()?.name ?? "-"
+                state.lessons = lessons
+                state.sections = [State.Section](
+                    lessons: state.lessons,
+                    currentLesson: state.currentLesson,
+                    nextLesson: state.nextLessonID
+                )
+                return .none
+
+            case let .scrollToNearest(needToScroll):
+                if needToScroll {
+                    let scrollTo = state.currentLesson?.lessonID ?? state.nextLessonID
+                    state.scrollTo = scrollTo
+                }
+                return .none
+
+            case .resetScrollTo:
+                state.scrollTo = nil
+                return .none
+
+            case let .lessonCells(id, .onTap):
+                guard
+                    let selectedLesson = state.lessons[id: id]
+                else {
+                    return .none
+                }
+                return Effect(value: .routeAction(.openDetails(selectedLesson)))
+
+            case .routeAction:
+                return .none
+
+            case .lessonCells:
+                return .none
+
+            case .binding:
                 return .none
             }
-
-        case let .updateLessons(lessons):
-            state.groupName = environment.rozkladClient.state.group()?.name ?? "-"
-            state.lessons = lessons
-            state.sections = [State.Section](
-                lessons: state.lessons,
-                currentLesson: state.currentLesson,
-                nextLesson: state.nextLessonID
-            )
-            return .none
-
-        case let .scrollToNearest(needToScroll):
-            if needToScroll {
-                let scrollTo = state.currentLesson?.lessonID ?? state.nextLessonID
-                state.scrollTo = scrollTo
-            }
-            return .none
-
-        case .resetScrollTo:
-            state.scrollTo = nil
-            return .none
-
-        case let .lessonCells(id, .onTap):
-            guard
-                let selectedLesson = state.lessons[id: id]
-            else {
-                return .none
-            }
-            return Effect(value: .routeAction(.openDetails(selectedLesson)))
-
-        case .routeAction:
-            return .none
-
-        case .lessonCells:
-            return .none
-
-        case .binding:
-            return .none
+        }
+        .forEach(\State.lessonCells, action: /Action.lessonCells) {
+            LessonCell()
         }
     }
-    .binding()
-
-    static let reducer = Reducer<State, Action, Environment>.combine(
-        LessonCell.reducer
-            .forEach(
-                state: \State.lessonCells,
-                action: /Action.lessonCells,
-                environment: { _ in LessonCell.Environment() }
-            ),
-        coreReducer
-    )
-
+    
+//    var body: some ReducerProtocol<State, Action> {
+//        Reduce(
+//            AnyReducer(GroupRozklad.ScreenProvider())
+//                .forEachIdentifiedRoute(environment: { () })
+//                .withRouteReducer(AnyReducer(core)),
+//            environment: ()
+//        )
+//    }
+    
 }

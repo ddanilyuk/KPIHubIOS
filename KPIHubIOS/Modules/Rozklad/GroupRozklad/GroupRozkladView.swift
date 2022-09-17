@@ -257,13 +257,7 @@ struct GroupRozkladView_Previews: PreviewProvider {
             GroupRozkladView(
                 store: Store(
                     initialState: GroupRozklad.State(),
-                    reducer: GroupRozklad.reducer,
-                    environment: GroupRozklad.Environment(
-                        apiClient: .failing,
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock(),
-                        currentDateClient: .mock()
-                    )
+                    reducer: GroupRozklad()
                 )
             )
             .navigationBarHidden(true)

@@ -131,8 +131,7 @@ struct LessonCellView_Previews: PreviewProvider {
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0]),
                         mode: .default
                     ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
+                    reducer: LessonCell()
                 )
             )
             .smallPreview
@@ -143,8 +142,7 @@ struct LessonCellView_Previews: PreviewProvider {
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0]),
                         mode: .current(0.34)
                     ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
+                    reducer: LessonCell()
                 )
             )
             .smallPreview
@@ -155,8 +153,7 @@ struct LessonCellView_Previews: PreviewProvider {
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0]),
                         mode: .next
                     ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
+                    reducer: LessonCell()
                 )
             )
             .smallPreview

@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import TCACoordinators
 
-struct Main {
+struct Main: ReducerProtocol {
 
     // MARK: - State
 
@@ -44,103 +44,48 @@ struct Main {
 
         case binding(BindingAction<State>)
     }
-
-    // MARK: - Environment
-
-    struct Environment {
-        let appConfiguration: AppConfiguration
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-        let campusClient: CampusClient
-        let currentDateClient: CurrentDateClient
-    }
-
+    
     // MARK: - Reducer
+    
+    @ReducerBuilder<State, Action>
+    var core: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .profile(.delegate(.selectRozkladTab)):
+                state.selectedTab = .rozklad
+                return .none
 
-    static let coreReducer = Reducer<State, Action, Environment> { state, action, _ in
-        switch action {
-        case .profile(.delegate(.selectRozkladTab)):
-            state.selectedTab = .rozklad
-            return .none
+            case .profile(.delegate(.selectCampusTab)):
+                state.selectedTab = .campus
+                return .none
 
-        case .profile(.delegate(.selectCampusTab)):
-            state.selectedTab = .campus
-            return .none
+            case .rozklad:
+                return .none
+                
+            case .campus:
+                return .none
 
-        case .rozklad:
-            return .none
-            
-        case .campus:
-            return .none
+            case .profile:
+                return .none
 
-        case .profile:
-            return .none
-
-        case .binding:
-            return .none
+            case .binding:
+                return .none
+            }
         }
     }
-    .binding()
 
-    static let reducer = Reducer<State, Action, Environment>.combine(
-        Rozklad.reducer
-            .pullback(
-                state: \State.rozklad,
-                action: /Action.rozklad,
-                environment: { $0.rozklad }
-            ),
-
-        Campus.reducer
-            .pullback(
-                state: \State.campus,
-                action: /Action.campus,
-                environment: { $0.campus }
-            ),
-
-        Profile.reducer
-            .pullback(
-                state: \State.profile,
-                action: /Action.profile,
-                environment: { $0.profile }
-            ),
-
-        coreReducer
-    )
-
-}
-
-// MARK: Main.Environment + Extensions
-
-extension Main.Environment {
-
-    var rozklad: Rozklad.Environment {
-        Rozklad.Environment(
-            apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient,
-            rozkladClient: rozkladClient,
-            currentDateClient: currentDateClient
-        )
-    }
-
-    var campus: Campus.Environment {
-        Campus.Environment(
-            apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient,
-            campusClient: campusClient,
-            rozkladClient: rozkladClient
-        )
-    }
-
-    var profile: Profile.Environment {
-        Profile.Environment(
-            appConfiguration: appConfiguration,
-            apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient,
-            rozkladClient: rozkladClient,
-            campusClient: campusClient,
-            currentDateClient: currentDateClient
-        )
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: \State.rozklad, action: /Action.rozklad) {
+            Rozklad()
+        }
+        Scope(state: \State.campus, action: /Action.campus) {
+            Campus()
+        }
+        Scope(state: \State.profile, action: /Action.profile) {
+            Profile()
+        }
     }
 
 }
