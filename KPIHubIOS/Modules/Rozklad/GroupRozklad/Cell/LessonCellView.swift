@@ -12,7 +12,7 @@ struct LessonCellView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<LessonCell.State, LessonCell.Action>
+    let store: StoreOf<LessonCell>
 
     var body: some View {
         WithViewStore(store) { viewStore in

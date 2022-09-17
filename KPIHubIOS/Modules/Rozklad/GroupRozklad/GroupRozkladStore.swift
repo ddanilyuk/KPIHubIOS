@@ -79,7 +79,6 @@ struct GroupRozklad: ReducerProtocol {
     
     enum SubscriberCancelID { }
 
-//    @ReducerBuilder<State, Action>
     var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         
@@ -186,14 +185,5 @@ struct GroupRozklad: ReducerProtocol {
             LessonCell()
         }
     }
-    
-//    var body: some ReducerProtocol<State, Action> {
-//        Reduce(
-//            AnyReducer(GroupRozklad.ScreenProvider())
-//                .forEachIdentifiedRoute(environment: { () })
-//                .withRouteReducer(AnyReducer(core)),
-//            environment: ()
-//        )
-//    }
-    
+
 }

@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct StudySheetItemDetailView: View {
 
-    let store: Store<StudySheetItemDetail.State, StudySheetItemDetail.Action>
+    let store: StoreOf<StudySheetItemDetail>
 
     var body: some View {
         WithViewStore(store) { viewStore in

@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ForDevelopersView: View {
 
-    let store: Store<ForDevelopers.State, ForDevelopers.Action>
+    let store: StoreOf<ForDevelopers>
 
     var body: some View {
         WithViewStore(store) { _ in

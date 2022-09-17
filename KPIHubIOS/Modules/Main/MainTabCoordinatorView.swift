@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct MainTabCoordinatorView: View {
 
-    let store: Store<Main.State, Main.Action>
+    let store: StoreOf<Main>
 
     var body: some View {
         WithViewStore(store) { viewStore in

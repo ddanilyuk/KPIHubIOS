@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct LessonDetailsView: View {
 
-    let store: Store<LessonDetails.State, LessonDetails.Action>
+    let store: StoreOf<LessonDetails>
 
     var body: some View {
         WithViewStore(store) { viewStore in

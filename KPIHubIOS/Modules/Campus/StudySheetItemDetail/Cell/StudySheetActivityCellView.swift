@@ -12,9 +12,9 @@ struct StudySheetActivityCellView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<StudySheetActivity.State, StudySheetActivity.Action>
+    let store: StoreOf<StudySheetActivity>
 
-    init(store: Store<StudySheetActivity.State, StudySheetActivity.Action>) {
+    init(store: StoreOf<StudySheetActivity>) {
         self.store = store
     }
 
@@ -78,8 +78,7 @@ struct StudySheetActivityCellView_Previews: PreviewProvider {
                 initialState: StudySheetActivity.State(
                     activity: StudySheetItem.mock1.activities[0]
                 ),
-                reducer: StudySheetActivity.reducer,
-                environment: StudySheetActivity.Environment()
+                reducer: StudySheetActivity()
             )
         )
         .previewLayout(.sizeThatFits)

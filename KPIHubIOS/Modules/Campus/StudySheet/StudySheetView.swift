@@ -16,7 +16,7 @@ extension Int {
 
 struct StudySheetView: View {
 
-    let store: Store<StudySheet.State, StudySheet.Action>
+    let store: StoreOf<StudySheet>
 
     var body: some View {
         WithViewStore(store) { viewStore in

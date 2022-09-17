@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ProfileHomeView: View {
 
-    let store: Store<ProfileHome.State, ProfileHome.Action>
+    let store: StoreOf<ProfileHome>
 
     var body: some View {
         WithViewStore(store) { viewStore in

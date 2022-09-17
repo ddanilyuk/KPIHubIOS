@@ -19,16 +19,14 @@ struct AppDelegateReducer: ReducerProtocol {
         case didFinishLaunching
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
-        switch action {
-        case .didFinishLaunching:
-            return .none
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .didFinishLaunching:
+                return .none
+            }
         }
     }
 

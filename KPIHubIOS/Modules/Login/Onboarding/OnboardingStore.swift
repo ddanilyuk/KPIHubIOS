@@ -25,17 +25,15 @@ struct Onboarding: ReducerProtocol {
         }
     }
     
-    // MARK: - Environment
-    
-    struct Environment { }
-    
     // MARK: - Reducer
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
-        switch action {
-        case .routeAction:
-            return .none
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .routeAction:
+                return .none
+            }
         }
     }
-    
+
 }

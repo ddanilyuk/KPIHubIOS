@@ -31,16 +31,18 @@ struct LessonCell: ReducerProtocol {
 
     // MARK: - Reducer
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
-        switch action {
-        case .onTap:
-            return .none
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .onTap:
+                return .none
 
-        case .onAppear:
-            return .none
+            case .onAppear:
+                return .none
 
-        case .onDisappear:
-            return .none
+            case .onDisappear:
+                return .none
+            }
         }
     }
 

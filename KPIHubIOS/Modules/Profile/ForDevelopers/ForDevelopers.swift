@@ -19,16 +19,14 @@ struct ForDevelopers: ReducerProtocol {
         case onAppear
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
     
-    func reduce(into state: inout State, action: Action) -> Effect<Action, Never> {
-        switch action {
-        case .onAppear:
-            return .none
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return .none
+            }
         }
     }
 

@@ -12,9 +12,9 @@ struct EditLessonTeachersView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>
+    let store: StoreOf<EditLessonTeachers>
 
-    init(store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>) {
+    init(store: StoreOf<EditLessonTeachers>) {
         self.store = store
     }
 

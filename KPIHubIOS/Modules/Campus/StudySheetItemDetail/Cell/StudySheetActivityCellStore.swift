@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct StudySheetActivity {
+struct StudySheetActivity: ReducerProtocol {
 
     // MARK: - State
 
@@ -25,16 +25,14 @@ struct StudySheetActivity {
         case onTap
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        switch action {
-        case .onTap:
-            return .none
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .onTap:
+                return .none
+            }
         }
     }
 
