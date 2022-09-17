@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Routes
 import URLRouting
 import Foundation
+import Firebase
 
 struct App: ReducerProtocol {
 
@@ -63,6 +64,7 @@ struct App: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .appDelegate(.didFinishLaunching):
+                FirebaseApp.configure()
                 if userDefaultsClient.get(for: .onboardingPassed) {
                     state.set(.main)
                 } else {

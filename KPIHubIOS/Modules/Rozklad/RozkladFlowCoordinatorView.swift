@@ -8,6 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
+import FirebaseCore
+import FirebaseAnalytics
 
 struct RozkladFlowCoordinatorView: View {
 
@@ -42,6 +44,10 @@ struct RozkladFlowCoordinatorView: View {
                     then: EditLessonTeachersView.init
                 )
             }
+        }
+        .onAppear {
+            Analytics.logEvent("group_rozklad_tab_appeared", parameters: nil)
+//            Analytics.logEvent(
         }
     }
 

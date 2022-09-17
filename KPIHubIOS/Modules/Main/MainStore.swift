@@ -86,6 +86,7 @@ struct Main: ReducerProtocol {
         Scope(state: \State.profile, action: /Action.profile) {
             Profile()
         }
+        core
     }
 
 }
