@@ -167,6 +167,7 @@ struct ProfileHome: ReducerProtocol {
             case .changeGroup:
                 rozkladClientState.setState(ClientValue(.notSelected, commitChanges: true))
                 analyticsClient.track(Event.Profile.changeGroup)
+                analyticsClient.setGroup(nil)
                 return Effect(value: .routeAction(.rozklad))
 
             case .selectGroup:
@@ -189,6 +190,7 @@ struct ProfileHome: ReducerProtocol {
                 campusClientState.logout(ClientValue(commitChanges: true))
                 campusClientStudySheet.clean()
                 analyticsClient.track(Event.Profile.campusLogout)
+                analyticsClient.setUserProperty(UserProperty.cathedra(nil))
                 return Effect(value: .routeAction(.campus))
 
             case .loginCampus:

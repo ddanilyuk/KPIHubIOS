@@ -8,9 +8,9 @@
 import Foundation
 
 extension AnalyticsClient {
-    func setGroup(_ group: GroupResponse) {
-        setUserProperty(UserProperty.groupID(group.id.uuidString))
-        setUserProperty(UserProperty.groupName(group.name))
-        setUserProperty(UserProperty.groupFaculty(group.faculty))
+    func setGroup(_ group: GroupResponse?) {
+        setUserProperty(UserProperty.groupID(group?.id.uuidString))
+        setUserProperty(UserProperty.groupName(group?.name))
+        setUserProperty(UserProperty.groupFaculty(group?.faculty))
     }
 }
