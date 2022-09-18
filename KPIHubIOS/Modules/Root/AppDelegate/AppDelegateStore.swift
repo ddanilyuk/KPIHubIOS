@@ -21,10 +21,13 @@ struct AppDelegateReducer: ReducerProtocol {
 
     // MARK: - Reducer
     
+    @Dependency(\.firebaseClient) var firebaseClient
+    
     var body: some ReducerProtocol<State, Action> {
         Reduce { _, action in
             switch action {
             case .didFinishLaunching:
+                firebaseClient.setup()
                 return .none
             }
         }

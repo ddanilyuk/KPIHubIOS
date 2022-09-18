@@ -130,6 +130,9 @@
 		6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */; };
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
+		DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */; };
+		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
+		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -138,8 +141,6 @@
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
 		DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5328D70F8A004C5CAC /* Event.swift */; };
-		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
-		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -301,13 +302,14 @@
 		ABE84473594E67C1BE4A5774 /* Pods-KPIHubIOS.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-development.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-development.xcconfig"; sourceTree = "<group>"; };
 		AC884E8709013BB4ECE15DB6 /* Pods-KPIHubIOS.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-production.xcconfig"; sourceTree = "<group>"; };
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
+		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
+		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
 		DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Group.swift"; sourceTree = "<group>"; };
 		DBD22F5128D70F75004C5CAC /* UserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProperty.swift; sourceTree = "<group>"; };
 		DBD22F5328D70F8A004C5CAC /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
-		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
 		DC9FB22C82EF9CED3A31FBD7 /* Pods-KPIHubIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE920022D9C94B235B666887 /* Pods-KPIHubIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8441509BC2A3EFC0CFBE577 /* Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -663,6 +665,7 @@
 				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
 				5F856A3F2864725500AB63AC /* CurrentDateClient */,
 				DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */,
+				DB16750928D77D9300F6596D /* FirebaseClient */,
 				5FEE632A286D9B1C002F7E9D /* Helpers */,
 			);
 			path = Clients;
@@ -989,6 +992,30 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		DB16750228D75DAE00F6596D /* RozkladClientLessons */ = {
+			isa = PBXGroup;
+			children = (
+				DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */,
+			);
+			path = RozkladClientLessons;
+			sourceTree = "<group>";
+		};
+		DB16750528D75E3500F6596D /* CampusClientStudySheet */ = {
+			isa = PBXGroup;
+			children = (
+				DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */,
+			);
+			path = CampusClientStudySheet;
+			sourceTree = "<group>";
+		};
+		DB16750928D77D9300F6596D /* FirebaseClient */ = {
+			isa = PBXGroup;
+			children = (
+				DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */,
+			);
+			path = FirebaseClient;
+			sourceTree = "<group>";
+		};
 		DB27C6D328D674FF00F4FA1B /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -1006,22 +1033,6 @@
 				DBD22F5328D70F8A004C5CAC /* Event.swift */,
 			);
 			path = AnalyticsClient;
-			sourceTree = "<group>";
-		};
-		DB16750228D75DAE00F6596D /* RozkladClientLessons */ = {
-			isa = PBXGroup;
-			children = (
-				DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */,
-			);
-			path = RozkladClientLessons;
-			sourceTree = "<group>";
-		};
-		DB16750528D75E3500F6596D /* CampusClientStudySheet */ = {
-			isa = PBXGroup;
-			children = (
-				DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */,
-			);
-			path = CampusClientStudySheet;
 			sourceTree = "<group>";
 		};
 		FF0C919360EE4E6E309E3087 /* Pods */ = {
@@ -1397,6 +1408,7 @@
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */,
+				DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5FEE6330286DD9AC002F7E9D /* CurrentLesson.swift in Sources */,

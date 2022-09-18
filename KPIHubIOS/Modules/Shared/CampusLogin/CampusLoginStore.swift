@@ -129,7 +129,6 @@ struct CampusLogin: ReducerProtocol {
                         commitChanges: false
                     )
                 )
-                // TODO: Save more info?
                 analyticsClient.setUserProperty(
                     UserProperty.cathedra(campusUserInfo.subdivision.first?.name)
                 )

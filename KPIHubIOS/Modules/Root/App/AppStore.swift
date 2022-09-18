@@ -64,7 +64,6 @@ struct App: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .appDelegate(.didFinishLaunching):
-                FirebaseApp.configure()
                 if userDefaultsClient.get(for: .onboardingPassed) {
                     state.set(.main)
                 } else {
