@@ -12,7 +12,6 @@ import CasePaths
 import Dependencies
 
 private enum RozkladClientStateKey: TestDependencyKey {
-//    static let liveValue = RozkladClientState.live()
     static let testValue = RozkladClientState.mock()
 }
 
@@ -28,8 +27,6 @@ extension DependencyValues {
         set { self[RozkladClientStateKey.self] = newValue }
     }
 }
-
-// MARK: - RozkladClientState
 
 struct RozkladClientState {
 

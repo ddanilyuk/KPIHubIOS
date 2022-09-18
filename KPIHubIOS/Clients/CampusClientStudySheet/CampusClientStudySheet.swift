@@ -22,14 +22,12 @@ extension CampusClientStudySheetKey: DependencyKey {
     )
 }
 
-
 extension DependencyValues {
     var campusClientStudySheet: CampusClientStudySheet {
         get { self[CampusClientStudySheetKey.self] }
         set { self[CampusClientStudySheetKey.self] = newValue }
     }
 }
-
 
 struct CampusClientStudySheet {
 
@@ -67,6 +65,7 @@ struct CampusClientStudySheet {
                     password: password
                 )
                 subject.send(.loading)
+                
                 let task: Effect<[StudySheetItem], Error> = Effect.task {
                     let result = try await apiClient.decodedResponse(
                         for: .api(.campus(.studySheet(campusLoginQuery))),

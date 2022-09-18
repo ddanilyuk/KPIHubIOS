@@ -12,7 +12,6 @@ import UIKit
 import ComposableArchitecture
 
 private enum CurrentDateClientKey: TestDependencyKey {
-//    static let liveValue = RozkladClientState.live()
     static let testValue = CurrentDateClient.mock()
 }
 
@@ -22,7 +21,6 @@ extension CurrentDateClientKey: DependencyKey {
         rozkladClientLessons: DependencyValues.current.rozkladClientLessons
     )
 }
-
 
 extension DependencyValues {
     var currentDateClient: CurrentDateClient {
