@@ -106,9 +106,21 @@ extension Event {
     }
 
     enum Rozklad {
-        static let groupRozkladTabAppeared = Event(name: "group_rozklad_tab_appeared")
-        static let lessonSelected = Event(name: "lesson_selected")
+        static let tabAppeared = Event(name: "rozklad_tab_appeared") // DONE
         
+        static func lessonDetailsAppeared(id: String, name: String) -> Event {
+            Event(
+                name: "lesson_details_appeared",
+                parameters: ["lesson_id": id, "lesson_name": name]
+            )
+        } // DONE
+        
+        static let lessonDetailsEditTapped = Event(name: "lesson_details_edit_tapped") // DONE
+        static let lessonDetailsEditNamesAppeared = Event(name: "lesson_details_edit_names_appeared") // DONE
+        static let lessonDetailsEditTeachersAppeared = Event(name: "lesson_details_edit_teachers_appeared") // DONE
+        static let lessonDetailsEditNamesApply = Event(name: "lesson_details_edit_names_apply") // DONE
+        static let lessonDetailsEditTeachersApply = Event(name: "lesson_details_edit_teachers_apply") // DONE
+
         enum GroupOrigin: String {
             case campus = "campus"
             case campusUserInput = "campus_user_input"
@@ -132,18 +144,22 @@ extension Event {
     
     enum Campus {
         static let campusTabAppeared = Event(name: "campus_tab_appeared")
+        // TODO: If study sheet loaded
         static let studySheetAppeared = Event(name: "study_sheet_appeared")
     }
     
     enum Profile {
         static let profileTabAppeared = Event(name: "profile_tab_appeared")
-        static let rozkladRefreshed = Event(name: "rozklad_refreshed")
-        static let groupChanged = Event(name: "group_changed")
-        static let campusLogout = Event(name: "campus_logout")
-        static let weekChanged = Event(name: "week_changed")
-        static let openForDevelopers = Event(name: "open_for_developers")
+        static let refreshRozklad = Event(name: "profile_refresh_rozklad")
+        static let changeGroup = Event(name: "profile_change_group")
+        static let selectGroup = Event(name: "profile_select_group")
+        static let campusLogin = Event(name: "profile_campus_login")
+        static let campusLogout = Event(name: "profile_campus_logout")
+        static func changeWeek(_ value: Bool) -> Event {
+            Event(name: "profile_change_week", parameters: ["week_toggle_value": value ? "true" : "false"])
+        }
+        static let forDevelopersAppeared = Event(name: "profile_for_developers_appeared")
     }
-    
 }
 
 // User data

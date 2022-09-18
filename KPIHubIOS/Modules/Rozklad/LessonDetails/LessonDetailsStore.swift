@@ -44,6 +44,7 @@ struct LessonDetails: ReducerProtocol {
     
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.currentDateClient) var currentDateClient
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
     
@@ -56,6 +57,10 @@ struct LessonDetails: ReducerProtocol {
             switch action {
             case .onAppear:
                 let lessonID = state.lesson.id
+                analyticsClient.track(Event.Rozklad.lessonDetailsAppeared(
+                    id: "\(lessonID)",
+                    name: String(state.lesson.names.joined(separator: ", ").prefix(39))
+                ))
                 return Effect.merge(
                     Effect(value: .updateCurrentDate),
                     Effect.run { subscriber in
@@ -76,6 +81,12 @@ struct LessonDetails: ReducerProtocol {
                     }
                 )
                 .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+                
+            case .binding(\.$isEditing):
+                if state.isEditing {
+                    analyticsClient.track(Event.Rozklad.lessonDetailsEditTapped)
+                }
+                return .none
 
             case .updateCurrentDate:
                 let lessonID = state.lesson.id

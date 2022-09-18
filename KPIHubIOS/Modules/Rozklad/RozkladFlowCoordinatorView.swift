@@ -14,6 +14,12 @@ import FirebaseAnalytics
 struct RozkladFlowCoordinatorView: View {
 
     let store: StoreOf<Rozklad>
+    @ObservedObject var viewStore: ViewStoreOf<Rozklad>
+    
+    init(store: StoreOf<Rozklad>) {
+        self.store = store
+        self.viewStore = ViewStore(store)
+    }
 
     var body: some View {
         TCARouter(store) { screen in
@@ -46,8 +52,7 @@ struct RozkladFlowCoordinatorView: View {
             }
         }
         .onAppear {
-            Analytics.logEvent("group_rozklad_tab_appeared", parameters: nil)
-//            Analytics.logEvent(
+            viewStore.send(.onAppear)
         }
     }
 

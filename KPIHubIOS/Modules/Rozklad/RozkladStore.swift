@@ -26,6 +26,7 @@ struct Rozklad: ReducerProtocol {
 
     enum Action: Equatable, IdentifiedRouterAction {
         case onSetup
+        case onAppear
 
         case updateRozkladState(RozkladClientState.State)
         case setGroupRozklad
@@ -39,6 +40,7 @@ struct Rozklad: ReducerProtocol {
     
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
     
@@ -59,7 +61,11 @@ struct Rozklad: ReducerProtocol {
                             }
                     }
                 )
-
+                
+            case .onAppear:
+                analyticsClient.track(Event.Rozklad.tabAppeared)
+                return .none
+                
             case let .updateRozkladState(state):
                 switch state {
                 case .selected:
