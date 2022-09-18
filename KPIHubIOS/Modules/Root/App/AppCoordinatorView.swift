@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct AppCoordinatorView: View {
 
-    let store: Store<App.State, App.Action>
+    let store: StoreOf<App>
 
     var body: some View {
         Group {

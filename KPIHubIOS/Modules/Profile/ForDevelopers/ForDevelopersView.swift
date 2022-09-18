@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ForDevelopersView: View {
 
-    let store: Store<ForDevelopers.State, ForDevelopers.Action>
+    let store: StoreOf<ForDevelopers>
 
     var body: some View {
         WithViewStore(store) { _ in
@@ -121,8 +121,7 @@ struct ForDevelopersView_Previews: PreviewProvider {
             ForDevelopersView(
                 store: Store(
                     initialState: ForDevelopers.State(),
-                    reducer: ForDevelopers.reducer,
-                    environment: ForDevelopers.Environment()
+                    reducer: ForDevelopers()
                 )
             )
         }

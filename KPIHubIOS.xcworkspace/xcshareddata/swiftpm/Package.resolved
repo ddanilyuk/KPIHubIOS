@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",
       "state" : {
-        "revision" : "4cf088c29a20f52be0f2ca54992b492c54e0076b",
-        "version" : "0.5.3"
+        "revision" : "aa3e575929f2bcc5bad012bd2575eae716cbcdf7",
+        "version" : "0.8.0"
       }
     },
     {
@@ -176,8 +176,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-composable-architecture",
       "state" : {
-        "revision" : "cfcf8b43adc7d521a8ed26992d7ad8b979d386d2",
-        "version" : "0.37.0"
+        "branch" : "protocol-beta",
+        "revision" : "335336e3a227fc3beb5323d2dc4c06dd947871db"
       }
     },
     {
@@ -284,8 +284,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-url-routing",
       "state" : {
-        "revision" : "318b239b6d818eba275cd7c35a680e9e51f6d84b",
-        "version" : "0.2.0"
+        "revision" : "5bf79bb370015e43842a61d558a9ee053171124e",
+        "version" : "0.3.0"
       }
     },
     {
@@ -293,8 +293,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnpatrickmorgan/TCACoordinators",
       "state" : {
-        "revision" : "02a33494c85628d639755f7abc5373d7a51dcde9",
-        "version" : "0.2.0"
+        "revision" : "d44cce852aae359a40b92d4468791acc23803fb8",
+        "version" : "0.2.1"
       }
     },
     {
@@ -338,8 +338,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "50a70a9d3583fe228ce672e8923010c8df2deddd",
-        "version" : "0.2.1"
+        "revision" : "30314f1ece684dd60679d598a9b89107557b67d9",
+        "version" : "0.4.1"
       }
     }
   ],

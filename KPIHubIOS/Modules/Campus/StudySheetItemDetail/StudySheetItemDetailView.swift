@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct StudySheetItemDetailView: View {
 
-    let store: Store<StudySheetItemDetail.State, StudySheetItemDetail.Action>
+    let store: StoreOf<StudySheetItemDetail>
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -43,8 +43,7 @@ struct StudySheetItemDetailView_Previews: PreviewProvider {
                     initialState: StudySheetItemDetail.State(
                         item: StudySheetItem.mock1
                     ),
-                    reducer: StudySheetItemDetail.reducer,
-                    environment: StudySheetItemDetail.Environment()
+                    reducer: StudySheetItemDetail()
                 )
             )
         }

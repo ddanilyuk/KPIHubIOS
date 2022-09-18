@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct ProfileHomeView: View {
 
-    let store: Store<ProfileHome.State, ProfileHome.Action>
+    let store: StoreOf<ProfileHome>
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -73,15 +73,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                             rozkladState: .notSelected,
                             campusState: .loggedOut
                         ),
-                        reducer: ProfileHome.reducer,
-                        environment: ProfileHome.Environment(
-                            apiClient: .failing,
-                            userDefaultsClient: .mock(),
-                            rozkladClient: .mock(),
-                            campusClient: .mock(),
-                            currentDateClient: .mock(),
-                            appConfiguration: .mock()
-                        )
+                        reducer: ProfileHome()
                     )
                 )
             }
@@ -93,15 +85,7 @@ struct ProfileHomeView_Previews: PreviewProvider {
                             rozkladState: .selected(GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")),
                             campusState: .loggedIn(CampusUserInfo.mock)
                         ),
-                        reducer: ProfileHome.reducer,
-                        environment: ProfileHome.Environment(
-                            apiClient: .failing,
-                            userDefaultsClient: .mock(),
-                            rozkladClient: .mock(),
-                            campusClient: .mock(),
-                            currentDateClient: .mock(),
-                            appConfiguration: .mock()
-                        )
+                        reducer: ProfileHome()
                     )
                 )
             }

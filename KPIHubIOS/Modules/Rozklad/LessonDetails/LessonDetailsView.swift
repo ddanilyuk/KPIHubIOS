@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct LessonDetailsView: View {
 
-    let store: Store<LessonDetails.State, LessonDetails.Action>
+    let store: StoreOf<LessonDetails>
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -103,12 +103,7 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     initialState: LessonDetails.State(
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: LessonDetails.reducer,
-                    environment: LessonDetails.Environment(
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock(),
-                        currentDateClient: .mock()
-                    )
+                    reducer: LessonDetails()
                 )
             )
         }

@@ -9,7 +9,7 @@ import ComposableArchitecture
 import TCACoordinators
 import Combine
 
-struct Profile {
+struct Profile: ReducerProtocol {
 
     // MARK: - State
 
@@ -36,47 +36,42 @@ struct Profile {
         }
     }
 
-    // MARK: - Environment
-
-    struct Environment {
-        let appConfiguration: AppConfiguration
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-        let campusClient: CampusClient
-        let currentDateClient: CurrentDateClient
-    }
-
     // MARK: - Reducer
+    
+    @ReducerBuilder<State, Action>
+    var core: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .routeAction(_, .profileHome(.routeAction(.rozklad))):
+                return Effect(value: .delegate(.selectRozkladTab))
 
-    static let reducerCore = Reducer<State, Action, Environment> { state, action, _ in
-        switch action {
-        case .routeAction(_, .profileHome(.routeAction(.rozklad))):
-            return Effect(value: .delegate(.selectRozkladTab))
+            case .routeAction(_, .profileHome(.routeAction(.campus))):
+                return Effect(value: .delegate(.selectCampusTab))
 
-        case .routeAction(_, .profileHome(.routeAction(.campus))):
-            return Effect(value: .delegate(.selectCampusTab))
+            case .routeAction(_, .profileHome(.routeAction(.forDevelopers))):
+                let forDevelopersState = ForDevelopers.State()
+                state.routes.push(.forDevelopers(forDevelopersState))
+                return .none
 
-        case .routeAction(_, .profileHome(.routeAction(.forDevelopers))):
-            let forDevelopersState = ForDevelopers.State()
-            state.routes.push(.forDevelopers(forDevelopersState))
-            return .none
+            case .routeAction:
+                return .none
 
-        case .routeAction:
-            return .none
+            case .updateRoutes:
+                return .none
 
-        case .updateRoutes:
-            return .none
-
-        case .delegate:
-            return .none
+            case .delegate:
+                return .none
+            }
         }
     }
 
-    static let reducer = Reducer<State, Action, Environment>.combine(
-        ScreenProvider.reducer
-            .forEachIdentifiedRoute(environment: { $0 })
-            .withRouteReducer(reducerCore)
-    )
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(
+            AnyReducer(Profile.ScreenProvider())
+                .forEachIdentifiedRoute(environment: { () })
+                .withRouteReducer(AnyReducer(core)),
+            environment: ()
+        )
+    }
 
 }

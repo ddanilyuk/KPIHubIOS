@@ -16,7 +16,7 @@ extension Int {
 
 struct StudySheetView: View {
 
-    let store: Store<StudySheet.State, StudySheet.Action>
+    let store: StoreOf<StudySheet>
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -112,8 +112,7 @@ struct StudySheetView_Previews: PreviewProvider {
                         initialState: StudySheet.State(
                             items: [StudySheetItem.mock1, .mock2, .mock3, .mock4]
                         ),
-                        reducer: StudySheet.reducer,
-                        environment: StudySheet.Environment()
+                        reducer: StudySheet()
                     )
                 )
             }

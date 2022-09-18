@@ -7,8 +7,8 @@
 
 import ComposableArchitecture
 
-extension AppDelegate {
-
+struct AppDelegateReducer: ReducerProtocol {
+    
     // MARK: - State
 
     struct State: Equatable { }
@@ -19,17 +19,14 @@ extension AppDelegate {
         case didFinishLaunching
     }
 
-    // MARK: - Environment
-
-    struct Environment {
-    }
-
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        switch action {
-        case .didFinishLaunching:
-            return .none
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { _, action in
+            switch action {
+            case .didFinishLaunching:
+                return .none
+            }
         }
     }
 

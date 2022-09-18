@@ -12,9 +12,9 @@ struct OnboardingView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<Onboarding.State, Onboarding.Action>
+    let store: StoreOf<Onboarding>
 
-    init(store: Store<Onboarding.State, Onboarding.Action>) {
+    init(store: StoreOf<Onboarding>) {
         self.store = store
     }
 
@@ -87,8 +87,7 @@ struct OnboardingView_Previews: PreviewProvider {
             OnboardingView(
                 store: Store(
                     initialState: Onboarding.State(),
-                    reducer: .empty,
-                    environment: ()
+                    reducer: Onboarding()
                 )
             )
         }

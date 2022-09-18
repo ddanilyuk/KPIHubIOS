@@ -7,8 +7,9 @@
 
 import ComposableArchitecture
 import Routes
+import Foundation
 
-struct CampusLogin {
+struct CampusLogin: ReducerProtocol {
 
     // MARK: - State
 
@@ -60,142 +61,144 @@ struct CampusLogin {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let campusClient: CampusClient
-        let rozkladClient: RozkladClient
-    }
+    
+    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.campusClientState) var campusClientState
+    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
 
     // MARK: - Reducer
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        switch action {
-        case .binding(\.$username):
-            state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
-            return .none
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
 
-        case .binding(\.$password):
-            state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
-            return .none
+        Reduce { state, action in
+            switch action {
+            case .binding(\.$username):
+                state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
+                return .none
 
-        case .login:
-            let campusLoginQuery = CampusLoginQuery(
-                username: state.username,
-                password: state.password
-            )
-            state.focusedField = nil
-            state.isLoading = true
-            let task: Effect<CampusUserInfo, Error> = Effect.task {
-                let result = try await environment.apiClient.request(
-                    for: .api(.campus(.userInfo(campusLoginQuery))),
-                    as: CampusUserInfo.self
+            case .binding(\.$password):
+                state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
+                return .none
+
+            case .login:
+                let campusLoginQuery = CampusLoginQuery(
+                    username: state.username,
+                    password: state.password
                 )
-                return result
-            }
-            return task
-                .mapError(APIError.init(error:))
-                .receive(on: DispatchQueue.main)
-                // Make keyboard hide to prevent tabBar opacity bugs
-                .delay(for: 0.3, scheduler: DispatchQueue.main)
-                .catchToEffect(Action.campusUserInfoResult)
-
-        case let .campusUserInfoResult(.success(campusUserInfo)):
-            let groupSearchQuery = GroupSearchQuery(
-                groupName: campusUserInfo.studyGroup.name
-            )
-            /// Saving credentials after finding group
-            let campusCredentials = CampusCredentials(
-                username: state.username,
-                password: state.password
-            )
-            environment.campusClient.state.login(
-                ClientValue(
-                    CampusClientState.LoginRequest(
-                        credentials: campusCredentials,
-                        userInfo: campusUserInfo
-                    ),
-                    commitChanges: false
-                )
-            )
-
-            switch state.mode {
-            case .onlyCampus:
-                return Effect(value: .routeAction(.done))
-
-            case .campusAndGroup:
-                let task: Effect<GroupResponse, Error> = Effect.task {
-                    let result = try await environment.apiClient.request(
-                        for: .api(.groups(.search(groupSearchQuery))),
-                        as: GroupResponse.self
+                state.focusedField = nil
+                state.isLoading = true
+                let task: Effect<CampusUserInfo, Error> = Effect.task {
+                    let result = try await apiClient.request(
+                        for: .api(.campus(.userInfo(campusLoginQuery))),
+                        as: CampusUserInfo.self
                     )
                     return result
                 }
                 return task
                     .mapError(APIError.init(error:))
                     .receive(on: DispatchQueue.main)
-                    .catchToEffect(Action.groupSearchResult)
-            }
+                    // Make keyboard hide to prevent tabBar opacity bugs
+                    .delay(for: 0.3, scheduler: DispatchQueue.main)
+                    .catchToEffect(Action.campusUserInfoResult)
 
-        case let .groupSearchResult(.success(group)):
-            let task: Effect<[Lesson], Error> = Effect.task {
-                let result = try await environment.apiClient.decodedResponse(
-                    for: .api(.group(group.id, .lessons)),
-                    as: LessonsResponse.self
+            case let .campusUserInfoResult(.success(campusUserInfo)):
+                let groupSearchQuery = GroupSearchQuery(
+                    groupName: campusUserInfo.studyGroup.name
                 )
-                environment.rozkladClient.state.setState(ClientValue(.selected(group), commitChanges: false))
-                return result.value.lessons.map { Lesson(lessonResponse: $0) }
-            }
-            return task
-                .mapError { $0 as NSError }
-                .receive(on: DispatchQueue.main)
-                .catchToEffect(Action.lessonsResult)
+                /// Saving credentials after finding group
+                let campusCredentials = CampusCredentials(
+                    username: state.username,
+                    password: state.password
+                )
+                campusClientState.login(
+                    ClientValue(
+                        CampusClientState.LoginRequest(
+                            credentials: campusCredentials,
+                            userInfo: campusUserInfo
+                        ),
+                        commitChanges: false
+                    )
+                )
 
-        case let .lessonsResult(.success(lessons)):
-            environment.rozkladClient.lessons.set(.init(lessons, commitChanges: true))
-            return Effect(value: .routeAction(.done))
+                switch state.mode {
+                case .onlyCampus:
+                    return Effect(value: .routeAction(.done))
 
-        case let .groupSearchResult(.failure(error)):
-            state.isLoading = false
-            switch error {
-            case .serviceError(404, _):
-                return Effect(value: .routeAction(.groupPicker))
+                case .campusAndGroup:
+                    let task: Effect<GroupResponse, Error> = Effect.task {
+                        let result = try await apiClient.request(
+                            for: .api(.groups(.search(groupSearchQuery))),
+                            as: GroupResponse.self
+                        )
+                        return result
+                    }
+                    return task
+                        .mapError(APIError.init(error:))
+                        .receive(on: DispatchQueue.main)
+                        .catchToEffect(Action.groupSearchResult)
+                }
 
-            case .serviceError,
-                 .unknown:
-                return .none
-            }
+            case let .groupSearchResult(.success(group)):
+                let task: Effect<[Lesson], Error> = Effect.task {
+                    let result = try await apiClient.decodedResponse(
+                        for: .api(.group(group.id, .lessons)),
+                        as: LessonsResponse.self
+                    )
+                    rozkladClientState.setState(ClientValue(.selected(group), commitChanges: false))
+                    return result.value.lessons.map { Lesson(lessonResponse: $0) }
+                }
+                return task
+                    .mapError { $0 as NSError }
+                    .receive(on: DispatchQueue.main)
+                    .catchToEffect(Action.lessonsResult)
 
-        case let .campusUserInfoResult(.failure(error)):
-            state.isLoading = false
-            switch error {
-            case .serviceError(404, _):
-                state.alert = AlertState(title: TextState("Схоже, логін або пароль невірний."))
-                return .none
+            case let .lessonsResult(.success(lessons)):
+                rozkladClientLessons.set(.init(lessons, commitChanges: true))
+                return Effect(value: .routeAction(.done))
 
-            case .serviceError,
-                 .unknown:
+            case let .groupSearchResult(.failure(error)):
+                state.isLoading = false
+                switch error {
+                case .serviceError(404, _):
+                    return Effect(value: .routeAction(.groupPicker))
+
+                case .serviceError,
+                     .unknown:
+                    return .none
+                }
+
+            case let .campusUserInfoResult(.failure(error)):
+                state.isLoading = false
+                switch error {
+                case .serviceError(404, _):
+                    state.alert = AlertState(title: TextState("Схоже, логін або пароль невірний."))
+                    return .none
+
+                case .serviceError,
+                     .unknown:
+                    state.alert = AlertState.error(error)
+                    return .none
+                }
+
+            case let .lessonsResult(.failure(error)):
+                state.isLoading = false
                 state.alert = AlertState.error(error)
                 return .none
+
+            case .dismissAlert:
+                state.alert = nil
+                return .none
+
+            case .binding:
+                return .none
+
+            case .routeAction:
+                return .none
             }
-
-        case let .lessonsResult(.failure(error)):
-            state.isLoading = false
-            state.alert = AlertState.error(error)
-            return .none
-
-        case .dismissAlert:
-            state.alert = nil
-            return .none
-
-        case .binding:
-            return .none
-
-        case .routeAction:
-            return .none
         }
     }
-    .binding()
 
 }

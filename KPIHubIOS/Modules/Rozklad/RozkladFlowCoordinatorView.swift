@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct RozkladFlowCoordinatorView: View {
 
-    let store: Store<Rozklad.State, Rozklad.Action>
+    let store: StoreOf<Rozklad>
 
     var body: some View {
         TCARouter(store) { screen in

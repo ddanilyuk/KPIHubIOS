@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import IdentifiedCollections
 
-struct StudySheet {
+struct StudySheet: ReducerProtocol {
 
     // MARK: - State
 
@@ -54,57 +54,56 @@ struct StudySheet {
         }
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
+    
+    var body: some ReducerProtocol<State, Action> {
+        BindingReducer()
+        
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                return Effect(value: .sortCells)
+                    .animation(nil)
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, _ in
-        switch action {
-        case .onAppear:
-            return Effect(value: .sortCells)
-                .animation(nil)
+            case .binding(\.$selectedYear):
+                return Effect(value: .sortCells)
+                    .animation()
 
-        case .binding(\.$selectedYear):
-            return Effect(value: .sortCells)
-                .animation()
+            case .binding(\.$selectedSemester):
+                return Effect(value: .sortCells)
+                    .animation()
 
-        case .binding(\.$selectedSemester):
-            return Effect(value: .sortCells)
-                .animation()
+            case .sortCells:
+                state.sortedItems = state.items.filter({ item in
+                    switch (state.selectedYear, state.selectedSemester) {
+                    case (.none, .none):
+                        return true
+                    case let (.some(selectedYear), .none):
+                        return item.year == selectedYear
+                    case let (.none, .some(selectedSemester)):
+                        return item.semester == selectedSemester
+                    case let (.some(selectedYear), .some(selectedSemester)):
+                        return item.year == selectedYear && item.semester == selectedSemester
+                    }
+                })
+                state.cells = IdentifiedArray(
+                    uniqueElements: state.sortedItems.map { StudySheetCell.State(item: $0) }
+                )
+                return .none
 
-        case .sortCells:
-            state.sortedItems = state.items.filter({ item in
-                switch (state.selectedYear, state.selectedSemester) {
-                case (.none, .none):
-                    return true
-                case let (.some(selectedYear), .none):
-                    return item.year == selectedYear
-                case let (.none, .some(selectedSemester)):
-                    return item.semester == selectedSemester
-                case let (.some(selectedYear), .some(selectedSemester)):
-                    return item.year == selectedYear && item.semester == selectedSemester
+            case let .cells(id, .onTap):
+                guard let selectedItem = state.items[id: id] else {
+                    return .none
                 }
-            })
-            state.cells = IdentifiedArray(
-                uniqueElements: state.sortedItems.map { StudySheetCell.State(item: $0) }
-            )
-            return .none
+                return Effect(value: .routeAction(.openDetail(selectedItem)))
 
-        case let .cells(id, .onTap):
-            guard let selectedItem = state.items[id: id] else {
+            case .binding:
+                return .none
+
+            case .routeAction:
                 return .none
             }
-            return Effect(value: .routeAction(.openDetail(selectedItem)))
-
-        case .binding:
-            return .none
-
-        case .routeAction:
-            return .none
         }
     }
-    .binding()
 
 }

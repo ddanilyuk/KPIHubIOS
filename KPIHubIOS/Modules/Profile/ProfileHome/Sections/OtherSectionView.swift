@@ -91,8 +91,7 @@ struct OtherSectionView_Previews: PreviewProvider {
                         initialState: OtherSectionView.ViewState(
                             completeAppVersion: "1.0 (1)"
                         ),
-                        reducer: .empty,
-                        environment: ()
+                        reducer: EmptyReducer()
                     )
                 )
             )

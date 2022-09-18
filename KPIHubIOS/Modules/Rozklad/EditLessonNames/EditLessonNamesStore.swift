@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct EditLessonNames {
+struct EditLessonNames: ReducerProtocol {
 
     // MARK: - State
 
@@ -38,37 +38,36 @@ struct EditLessonNames {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-    }
+    
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
 
     // MARK: - Reducer
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .save:
+                var newLesson = state.lesson
+                newLesson.names = state.selected
+                rozkladClientLessons.modify(.init(newLesson, commitChanges: true))
+                return Effect(value: .routeAction(.dismiss))
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        switch action {
-        case .save:
-            var newLesson = state.lesson
-            newLesson.names = state.selected
-            environment.rozkladClient.lessons.modify(.init(newLesson, commitChanges: true))
-            return Effect(value: .routeAction(.dismiss))
+            case .cancel:
+                return Effect(value: .routeAction(.dismiss))
 
-        case .cancel:
-            return Effect(value: .routeAction(.dismiss))
-
-        case let .toggle(element):
-            if let index = state.selected.firstIndex(of: element) {
-                if state.selected.count > 1 {
-                    state.selected.remove(at: index)
+            case let .toggle(element):
+                if let index = state.selected.firstIndex(of: element) {
+                    if state.selected.count > 1 {
+                        state.selected.remove(at: index)
+                    }
+                } else {
+                    state.selected.append(element)
                 }
-            } else {
-                state.selected.append(element)
-            }
-            return .none
+                return .none
 
-        case .routeAction:
-            return .none
+            case .routeAction:
+                return .none
+            }
         }
     }
 

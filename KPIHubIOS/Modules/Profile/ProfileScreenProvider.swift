@@ -13,7 +13,7 @@ extension Profile {
 
 }
 
-extension Profile.ScreenProvider {
+extension Profile.ScreenProvider: ReducerProtocol {
 
     // MARK: - State handling
 
@@ -33,31 +33,14 @@ extension Profile.ScreenProvider {
     }
 
     // MARK: - Reducer handling
-
-    static let reducer = Reducer<State, Action, Profile.Environment>.combine(
-        ProfileHome.reducer
-            .pullback(
-                state: /State.profileHome,
-                action: /Action.profileHome,
-                environment: {
-                    ProfileHome.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient,
-                        campusClient: $0.campusClient,
-                        currentDateClient: $0.currentDateClient,
-                        appConfiguration: $0.appConfiguration
-                    )
-                }
-            ),
-        ForDevelopers.reducer
-            .pullback(
-                state: /State.forDevelopers,
-                action: /Action.forDevelopers,
-                environment: { _ in
-                    ForDevelopers.Environment()
-                }
-            )
-    )
+    
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: /State.profileHome, action: /Action.profileHome) {
+            ProfileHome()
+        }
+        Scope(state: /State.forDevelopers, action: /Action.forDevelopers) {
+            ForDevelopers()
+        }
+    }
 
 }

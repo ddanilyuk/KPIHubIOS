@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct CampusLoginView: View {
 
-    let store: Store<CampusLogin.State, CampusLogin.Action>
+    let store: StoreOf<CampusLogin>
     @FocusState private var focusedField: CampusLogin.State.Field?
 
     var body: some View {
@@ -89,8 +89,7 @@ struct CampusLoginView_Previews: PreviewProvider {
             CampusLoginView(
                 store: Store(
                     initialState: CampusLogin.State(mode: .onlyCampus),
-                    reducer: .empty,
-                    environment: ()
+                    reducer: CampusLogin()
                 )
             )
         }

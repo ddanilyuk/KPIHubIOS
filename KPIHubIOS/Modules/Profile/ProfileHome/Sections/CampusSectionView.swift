@@ -140,8 +140,7 @@ struct CampusSectionView_Previews: PreviewProvider {
                         fullName: "",
                         cathedra: ""
                     ),
-                    reducer: .empty,
-                    environment: ()
+                    reducer: EmptyReducer()
                 ))
             )
             .smallPreview
@@ -157,8 +156,7 @@ struct CampusSectionView_Previews: PreviewProvider {
                         fullName: CampusUserInfo.mock.fullName,
                         cathedra: CampusUserInfo.mock.subdivision.first?.name ?? "-"
                     ),
-                    reducer: Reducer.empty,
-                    environment: ()
+                    reducer: EmptyReducer()
                 ))
             )
             .smallPreview

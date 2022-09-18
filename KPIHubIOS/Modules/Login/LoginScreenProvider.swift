@@ -13,7 +13,7 @@ extension Login {
 
 }
 
-extension Login.ScreenProvider {
+extension Login.ScreenProvider: ReducerProtocol {
 
     // MARK: - State handling
 
@@ -35,39 +35,17 @@ extension Login.ScreenProvider {
     }
 
     // MARK: - Reducer handling
-
-    static let reducer = Reducer<State, Action, Login.Environment>.combine(
-        Onboarding.reducer
-            .pullback(
-                state: /State.onboarding,
-                action: /Action.onboarding,
-                environment: { _ in Onboarding.Environment() }
-            ),
-        CampusLogin.reducer
-            .pullback(
-                state: /State.campusLogin,
-                action: /Action.campusLogin,
-                environment: {
-                    CampusLogin.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        campusClient: $0.campusClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            ),
-        GroupPicker.reducer
-            .pullback(
-                state: /State.groupPicker,
-                action: /Action.groupPicker,
-                environment: {
-                    GroupPicker.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            )
-    )
-
+    
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: /State.onboarding, action: /Action.onboarding) {
+            Onboarding()
+        }
+        Scope(state: /State.campusLogin, action: /Action.campusLogin) {
+            CampusLogin()
+        }
+        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
+            GroupPicker()
+        }
+    }
+    
 }

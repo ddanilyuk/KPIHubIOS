@@ -12,9 +12,9 @@ struct EditLessonTeachersView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>
+    let store: StoreOf<EditLessonTeachers>
 
-    init(store: Store<EditLessonTeachers.State, EditLessonTeachers.Action>) {
+    init(store: StoreOf<EditLessonTeachers>) {
         self.store = store
     }
 
@@ -97,11 +97,7 @@ struct EditLessonTeachersView_Previews: PreviewProvider {
                     initialState: EditLessonTeachers.State(
                         lesson: .init(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: EditLessonTeachers.reducer,
-                    environment: EditLessonTeachers.Environment(
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock()
-                    )
+                    reducer: EditLessonTeachers()
                 )
             )
         }

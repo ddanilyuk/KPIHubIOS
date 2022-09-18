@@ -9,6 +9,25 @@ import Foundation
 import Combine
 import IdentifiedCollections
 import UIKit
+import ComposableArchitecture
+
+private enum CurrentDateClientKey: TestDependencyKey {
+    static let testValue = CurrentDateClient.mock()
+}
+
+extension CurrentDateClientKey: DependencyKey {
+    static let liveValue = CurrentDateClient.live(
+        userDefaultsClient: DependencyValues.current.userDefaultsClient,
+        rozkladClientLessons: DependencyValues.current.rozkladClientLessons
+    )
+}
+
+extension DependencyValues {
+    var currentDateClient: CurrentDateClient {
+        get { self[CurrentDateClientKey.self] }
+        set { self[CurrentDateClientKey.self] = newValue }
+    }
+}
 
 struct CurrentDateClient {
 
@@ -30,7 +49,7 @@ extension CurrentDateClient {
     // swiftlint:disable function_body_length
     static func live(
         userDefaultsClient: UserDefaultsClientable,
-        rozkladClient: RozkladClient
+        rozkladClientLessons: RozkladClientLessons
     ) -> Self {
 
         var calendar = Calendar(identifier: .gregorian)
@@ -48,7 +67,7 @@ extension CurrentDateClient {
         setTimer()
 
         // Setup lesson changes update
-        rozkladClient.lessons.subject.eraseToAnyPublisher()
+        rozkladClientLessons.subject.eraseToAnyPublisher()
             .dropFirst()
             .sink { _ in
                 updateSubjects(with: Date())
@@ -78,9 +97,9 @@ extension CurrentDateClient {
             currentDaySubject.value = currentDay
             currentWeekSubject.value = currentWeek
 
-            if !rozkladClient.lessons.subject.value.isEmpty {
+            if !rozkladClientLessons.subject.value.isEmpty {
                 let (currentLesson, nextLesson) = currentAndNextLesson(
-                    lessons: rozkladClient.lessons.subject.value,
+                    lessons: rozkladClientLessons.subject.value,
                     currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
                     currentWeek: currentWeek,
                     currentDay: currentDay

@@ -12,9 +12,9 @@ struct CampusHomeView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<CampusHome.State, CampusHome.Action>
+    let store: StoreOf<CampusHome>
 
-    init(store: Store<CampusHome.State, CampusHome.Action>) {
+    init(store: StoreOf<CampusHome>) {
         self.store = store
     }
 
@@ -109,12 +109,7 @@ struct CampusHomeView_Previews: PreviewProvider {
                 store: Store(
                     initialState: CampusHome.State(
                     ),
-                    reducer: CampusHome.reducer,
-                    environment: CampusHome.Environment(
-                        apiClient: .failing,
-                        userDefaultsClient: .mock(),
-                        campusClient: .mock()
-                    )
+                    reducer: CampusHome()
                 )
             )
         }
