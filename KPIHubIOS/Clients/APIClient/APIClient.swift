@@ -13,7 +13,6 @@ import Dependencies
 typealias APIClient = URLRoutingClient<RootRoute>
 
 private enum APIClientKey: TestDependencyKey {
-//    static let liveValue = RozkladClientState.live()
     static let testValue = APIClient.failing
 }
 
@@ -22,8 +21,6 @@ extension APIClientKey: DependencyKey {
         router: rootRouter.baseURL(DependencyValues.current.appConfiguration.apiURL)
     )
 }
-
-//let some =
 
 extension DependencyValues {
     var apiClient: APIClient {
