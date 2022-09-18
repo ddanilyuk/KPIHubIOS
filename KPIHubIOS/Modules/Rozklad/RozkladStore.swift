@@ -80,7 +80,7 @@ struct Rozklad: ReducerProtocol {
             case .setGroupPicker:
                 state.routes = [
                     .root(
-                        .groupPicker(GroupPicker.State()),
+                        .groupPicker(GroupPicker.State(mode: .rozkladTab)),
                         embedInNavigationView: true
                     )
                 ]

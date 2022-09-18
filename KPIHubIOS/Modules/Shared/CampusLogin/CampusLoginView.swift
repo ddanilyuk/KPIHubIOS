@@ -77,6 +77,9 @@ struct CampusLoginView: View {
                 dismiss: .dismissAlert
             )
             .synchronize(viewStore.binding(\.$focusedField), self.$focusedField)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
 }

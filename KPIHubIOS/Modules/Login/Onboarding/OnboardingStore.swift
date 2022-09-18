@@ -16,7 +16,7 @@ struct Onboarding: ReducerProtocol {
     // MARK: - Action
     
     enum Action: Equatable {
-        
+        case onAppear
         case routeAction(RouteAction)
         
         enum RouteAction: Equatable {
@@ -27,9 +27,15 @@ struct Onboarding: ReducerProtocol {
     
     // MARK: - Reducer
     
+    @Dependency(\.analyticsClient) var analyticsClient
+    
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                analyticsClient.track(Event.Onboarding.onboardingAppeared)
+                return .none
+                
             case .routeAction:
                 return .none
             }

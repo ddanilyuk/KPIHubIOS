@@ -20,7 +20,6 @@ struct OnboardingView: View {
 
     var body: some View {
         WithViewStore(store) { viewStore in
-
             VStack {
                 ZStack(alignment: .center) {
                     colorScheme == .light ? Color.white : Color.black
@@ -74,6 +73,9 @@ struct OnboardingView: View {
             }
             .navigationBarHidden(true)
             .background(Color.screenBackground)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
 

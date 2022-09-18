@@ -29,6 +29,8 @@ struct AnalyticsClient {
     var setUserProperty: (_ userProperty: UserProperty) -> Void
 }
 
+
+
 extension AnalyticsClient {
     
     static func live() -> Self {
@@ -51,7 +53,26 @@ extension AnalyticsClient {
 
 struct UserProperty: Equatable {
     let name: String
-    let value: String
+    var value: String?
+}
+
+extension UserProperty {
+    
+    static func groupID(_ value: String?) -> UserProperty {
+        UserProperty(name: "groupID", value: value)
+    }
+    
+    static func groupName(_ value: String?) -> UserProperty {
+        UserProperty(name: "groupName", value: value)
+    }
+    
+    static func groupFaculty(_ value: String?) -> UserProperty {
+        UserProperty(name: "groupFaculty", value: value)
+    }
+    
+    static func cathedra(_ value: String?) -> UserProperty {
+        UserProperty(name: "cathedra", value: value)
+    }
 }
 
 
@@ -63,14 +84,50 @@ struct Event: Equatable {
 extension Event {
     
     enum Onboarding {
-        static let onboardingPassed = Event(name: "onboarding_passed")
-        static let selectGroup = Event(name: "select_group")
-        static let campusLogin = Event(name: "campus_login")
+        static let onboardingAppeared = Event(name: "onboarding_appeared") // Done
+        static let onboardingPassed = Event(name: "onboarding_passed") // Done
+        
+        static let groupPickerAppeared = Event(name: "group_picker_appeared") // Done
+        static let groupsLoadSuccess = Event(name: "groups_load_success") // Done
+        static let groupsLoadFailed = Event(name: "groups_load_failed") // Done
+        
+        static let groupPickerSelect = Event(name: "group_picker_select") // Done
+        
+        static let campusLoginAppeared = Event(name: "campus_login_appeared") // Done
+        static let campusLogin = Event(name: "campus_login") // Done
+        
+        static let campusUserLoadSuccess = Event(name: "campus_user_load_success") // Done
+        static let campusUserLoadInvalidCredentials = Event(name: "campus_user_load_invalid_credentials") // Done
+        static let campusUserLoadFailed = Event(name: "campus_user_load_failed") // Done
+
+        static let campusUserGroupFound = Event(name: "campus_user_group_found") // Done
+        static let campusUserGroupNotFound = Event(name: "campus_user_group_not_found") // Done
+        static let campusUserGroupFailed = Event(name: "campus_user_group_failed") // Done
     }
 
     enum Rozklad {
         static let groupRozkladTabAppeared = Event(name: "group_rozklad_tab_appeared")
         static let lessonSelected = Event(name: "lesson_selected")
+        
+        enum GroupOrigin: String {
+            case campus = "campus"
+            case campusUserInput = "campus_user_input"
+            case onboarding = "onboarding"
+            case rozkladTab = "rozkladTab"
+            case reload = "reload"
+        }
+        static func lessonsLoadSuccess(groupOrigin: GroupOrigin) -> Event {
+            Event(
+                name: "lessons_load_success",
+                parameters: ["groupOrigin": groupOrigin.rawValue]
+            )
+        }
+        static func lessonsLoadFailed(groupOrigin: GroupOrigin) -> Event {
+            Event(
+                name: "lessons_load_failed",
+                parameters: ["groupOrigin": groupOrigin.rawValue]
+            )
+        }
     }
     
     enum Campus {
