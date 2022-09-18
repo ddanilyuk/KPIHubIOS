@@ -116,8 +116,8 @@
 		5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC03284E30B50041FE74 /* Color+Extension.swift */; };
 		5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5FA65DDB286A4C370048182C /* TCACoordinators */; };
 		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
-		5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClient.swift */; };
-		5FDFBE2A284D48A2007E9F3A /* RozkladClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */; };
+		5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */; };
+		5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */; };
 		5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */; };
 		5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */; };
 		5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */; };
@@ -130,6 +130,9 @@
 		6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */; };
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
+		DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */; };
+		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
+		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -282,8 +285,8 @@
 		5FA2AC03284E30B50041FE74 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		5FD570B2283680CE00D8E869 /* KPIHubServer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = KPIHubServer; path = ../KPIHubServer; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		5FDFBE26284D46FD007E9F3A /* CampusClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClient.swift; sourceTree = "<group>"; };
-		5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClient.swift; sourceTree = "<group>"; };
+		5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientState.swift; sourceTree = "<group>"; };
+		5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientState.swift; sourceTree = "<group>"; };
 		5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusCredentials.swift; sourceTree = "<group>"; };
 		5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusUserInfo.swift; sourceTree = "<group>"; };
 		5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetResponse.swift; sourceTree = "<group>"; };
@@ -299,6 +302,9 @@
 		ABE84473594E67C1BE4A5774 /* Pods-KPIHubIOS.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-development.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-development.xcconfig"; sourceTree = "<group>"; };
 		AC884E8709013BB4ECE15DB6 /* Pods-KPIHubIOS.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-production.xcconfig"; sourceTree = "<group>"; };
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
+		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
+		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
 		DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Group.swift"; sourceTree = "<group>"; };
@@ -653,10 +659,13 @@
 				5F69BBD9284ACC3600FED83D /* APIClient */,
 				5F5F463828480B2D00202DA5 /* UserDefaults */,
 				5F28FB8E2858D64100579A75 /* Keychain */,
-				5FDFBE28284D4894007E9F3A /* RozkladClient */,
-				5FDFBE25284D46EC007E9F3A /* CampusClient */,
+				5FDFBE28284D4894007E9F3A /* RozkladClientState */,
+				DB16750228D75DAE00F6596D /* RozkladClientLessons */,
+				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
+				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
 				5F856A3F2864725500AB63AC /* CurrentDateClient */,
 				DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */,
+				DB16750928D77D9300F6596D /* FirebaseClient */,
 				5FEE632A286D9B1C002F7E9D /* Helpers */,
 			);
 			path = Clients;
@@ -931,20 +940,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5FDFBE25284D46EC007E9F3A /* CampusClient */ = {
+		5FDFBE25284D46EC007E9F3A /* CampusClientState */ = {
 			isa = PBXGroup;
 			children = (
-				5FDFBE26284D46FD007E9F3A /* CampusClient.swift */,
+				5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */,
 			);
-			path = CampusClient;
+			path = CampusClientState;
 			sourceTree = "<group>";
 		};
-		5FDFBE28284D4894007E9F3A /* RozkladClient */ = {
+		5FDFBE28284D4894007E9F3A /* RozkladClientState */ = {
 			isa = PBXGroup;
 			children = (
-				5FDFBE29284D48A2007E9F3A /* RozkladClient.swift */,
+				5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */,
 			);
-			path = RozkladClient;
+			path = RozkladClientState;
 			sourceTree = "<group>";
 		};
 		5FDFBE2F284D4F89007E9F3A /* Shared */ = {
@@ -981,6 +990,30 @@
 				5FEE632B286D9B2D002F7E9D /* ClientValue.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DB16750228D75DAE00F6596D /* RozkladClientLessons */ = {
+			isa = PBXGroup;
+			children = (
+				DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */,
+			);
+			path = RozkladClientLessons;
+			sourceTree = "<group>";
+		};
+		DB16750528D75E3500F6596D /* CampusClientStudySheet */ = {
+			isa = PBXGroup;
+			children = (
+				DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */,
+			);
+			path = CampusClientStudySheet;
+			sourceTree = "<group>";
+		};
+		DB16750928D77D9300F6596D /* FirebaseClient */ = {
+			isa = PBXGroup;
+			children = (
+				DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */,
+			);
+			path = FirebaseClient;
 			sourceTree = "<group>";
 		};
 		DB27C6D328D674FF00F4FA1B /* Firebase */ = {
@@ -1264,7 +1297,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FDFBE2A284D48A2007E9F3A /* RozkladClient.swift in Sources */,
+				5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */,
 				5F5F46432848EDF700202DA5 /* OffsetModifier.swift in Sources */,
 				5F69BBF4284CEC1600FED83D /* StudySheetCellView.swift in Sources */,
 				5F137ECD2843A3C500514263 /* LoginStore.swift in Sources */,
@@ -1290,7 +1323,7 @@
 				5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */,
 				5F137EDB2843A85600514263 /* GroupsResponse.swift in Sources */,
 				DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */,
-				5FDFBE27284D46FD007E9F3A /* CampusClient.swift in Sources */,
+				5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F1B200C287072BB00E1D2A6 /* AppConfiguration.swift in Sources */,
 				5F69BBF7284D163C00FED83D /* StudySheetActivityCellStore.swift in Sources */,
@@ -1321,6 +1354,7 @@
 				DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */,
 				5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */,
 				5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */,
+				DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */,
 				5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
 				5F137EFA28440A2400514263 /* ProfileFlowCoordinatorView.swift in Sources */,
@@ -1366,6 +1400,7 @@
 				5F667CF6284E3E62006D3AB7 /* LessonDetailsTypeSection.swift in Sources */,
 				5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */,
 				5F6712442865055800A57E10 /* OtherSectionView.swift in Sources */,
+				DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */,
 				5F97F11D284D5A6200DB0576 /* EditLessonNamesView.swift in Sources */,
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */,
@@ -1373,6 +1408,7 @@
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */,
+				DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5FEE6330286DD9AC002F7E9D /* CurrentLesson.swift in Sources */,
@@ -1469,7 +1505,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(KPIHubIOS_APP_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1502,7 +1538,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1521,7 +1557,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1600,7 +1636,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(KPIHubIOS_APP_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1634,7 +1670,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1653,7 +1689,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1737,7 +1773,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(KPIHubIOS_APP_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1795,7 +1831,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "$(KPIHubIOS_APP_NAME)";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1828,7 +1864,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1860,7 +1896,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1879,7 +1915,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1900,7 +1936,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

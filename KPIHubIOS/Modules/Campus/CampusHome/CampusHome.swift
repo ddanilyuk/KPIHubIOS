@@ -78,7 +78,6 @@ struct CampusHome: ReducerProtocol {
                 switch studySheetState {
                 case .notLoading:
                     state.isLoading = false
-                    // TODO: Add error state?
                     analyticsClient.track(Event.Campus.studySheetLoadFail)
                     return .none
 

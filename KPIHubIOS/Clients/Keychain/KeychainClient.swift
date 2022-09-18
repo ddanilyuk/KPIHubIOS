@@ -25,9 +25,6 @@ protocol KeychainClientable {
     func set(_ value: String?, for key: KeychainKey)
     func get(key: KeychainKey) -> String?
     func remove(for key: KeychainKey) throws
-
-//    static func live() -> Self
-//    static func mock() -> Self
 }
 
 final class KeychainClient: KeychainClientable {
