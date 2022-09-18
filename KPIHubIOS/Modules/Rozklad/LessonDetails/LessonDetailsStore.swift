@@ -16,7 +16,15 @@ struct LessonDetails: ReducerProtocol {
 
         var lesson: Lesson
         var mode: LessonMode = .default
-
+        var showTeachers: Bool {
+            !lesson.isTeachersEmpty
+        }
+        var showLocations: Bool {
+            !lesson.isLocationsEmpty
+        }
+        var showType: Bool {
+            !lesson.isTypeEmpty
+        }
         @BindableState var isEditing: Bool = false
     }
 

@@ -15,3 +15,14 @@ extension Collection {
     }
     
 }
+
+extension Array where Element == String {
+    
+    var isContentEmpty: Bool {
+        self
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .joined()
+            .isEmpty
+    }
+    
+}
