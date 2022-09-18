@@ -38,7 +38,7 @@ struct StudySheetItemDetail: ReducerProtocol {
     // MARK: - Reducer
     
     var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .cells:
                 return .none

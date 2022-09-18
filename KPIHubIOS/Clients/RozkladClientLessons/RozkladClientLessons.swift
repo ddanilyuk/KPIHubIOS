@@ -8,7 +8,6 @@
 import Foundation
 import IdentifiedCollections
 import Combine
-import Foundation
 import Dependencies
 
 private enum RozkladClientLessonsKey: TestDependencyKey {

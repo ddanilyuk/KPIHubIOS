@@ -22,7 +22,7 @@ struct AppDelegateReducer: ReducerProtocol {
     // MARK: - Reducer
     
     var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .didFinishLaunching:
                 return .none
