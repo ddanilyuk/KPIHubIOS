@@ -108,8 +108,8 @@ struct GroupPicker: ReducerProtocol {
             case let .lessonsResult(.success(lessons)):
                 state.isLoading = false
                 rozkladClientLessons.set(.init(lessons, commitChanges: false))
-                let groupOrigin = analyticsGroupOrigin(from: state.mode)
-                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(groupOrigin: groupOrigin))
+                let place = analyticsLessonsLoadPlace(from: state.mode)
+                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: place))
                 return Effect(value: .routeAction(.done))
 
             case let .allGroupsResult(.failure(error)):
@@ -121,8 +121,8 @@ struct GroupPicker: ReducerProtocol {
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
-                let groupOrigin = analyticsGroupOrigin(from: state.mode)
-                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(groupOrigin: groupOrigin))
+                let place = analyticsLessonsLoadPlace(from: state.mode)
+                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: place))
                 return .none
 
             case .binding(\.$searchedText):
@@ -151,7 +151,7 @@ struct GroupPicker: ReducerProtocol {
         }
     }
     
-    func analyticsGroupOrigin(from mode: Mode) -> Event.Rozklad.GroupOrigin {
+    func analyticsLessonsLoadPlace(from mode: Mode) -> Event.Rozklad.Place {
         switch mode {
         case .onboarding:
             return .onboarding

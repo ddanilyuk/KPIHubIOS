@@ -171,7 +171,7 @@ struct CampusLogin: ReducerProtocol {
 
             case let .lessonsResult(.success(lessons)):
                 rozkladClientLessons.set(.init(lessons, commitChanges: true))
-                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(groupOrigin: .campus))
+                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: .campus))
                 return Effect(value: .routeAction(.done))
 
             case let .groupSearchResult(.failure(error)):
@@ -205,7 +205,7 @@ struct CampusLogin: ReducerProtocol {
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
-                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(groupOrigin: .campus))
+                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: .campus))
                 return .none
 
             case .dismissAlert:

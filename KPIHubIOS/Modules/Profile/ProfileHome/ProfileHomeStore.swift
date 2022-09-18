@@ -142,13 +142,13 @@ struct ProfileHome: ReducerProtocol {
             case let .lessonsResult(.success(lessons)):
                 state.isLoading = false
                 rozkladClientLessons.set(.init(lessons, commitChanges: true))
-                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(groupOrigin: .profileReload))
+                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: .profileReload))
                 return .none
 
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
-                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(groupOrigin: .profileReload))
+                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: .profileReload))
                 return .none
 
             case .changeGroupButtonTapped:

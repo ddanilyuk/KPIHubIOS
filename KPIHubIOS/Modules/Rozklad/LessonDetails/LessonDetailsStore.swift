@@ -57,7 +57,7 @@ struct LessonDetails: ReducerProtocol {
             switch action {
             case .onAppear:
                 let lessonID = state.lesson.id
-                analyticsClient.track(Event.Rozklad.lessonDetailsAppeared(
+                analyticsClient.track(Event.LessonDetails.appeared(
                     id: "\(lessonID)",
                     name: String(state.lesson.names.joined(separator: ", ").prefix(39))
                 ))
@@ -84,7 +84,7 @@ struct LessonDetails: ReducerProtocol {
                 
             case .binding(\.$isEditing):
                 if state.isEditing {
-                    analyticsClient.track(Event.Rozklad.lessonDetailsEditTapped)
+                    analyticsClient.track(Event.LessonDetails.editTapped)
                 }
                 return .none
 

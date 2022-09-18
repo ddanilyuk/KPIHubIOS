@@ -49,14 +49,14 @@ struct EditLessonNames: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                analyticsClient.track(Event.Rozklad.lessonDetailsEditNamesAppeared)
+                analyticsClient.track(Event.LessonDetails.editNamesAppeared)
                 return .none
                 
             case .save:
                 var newLesson = state.lesson
                 newLesson.names = state.selected
                 rozkladClientLessons.modify(.init(newLesson, commitChanges: true))
-                analyticsClient.track(Event.Rozklad.lessonDetailsEditNamesApply)
+                analyticsClient.track(Event.LessonDetails.editNamesApply)
                 return Effect(value: .routeAction(.dismiss))
 
             case .cancel:
