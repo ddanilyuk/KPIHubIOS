@@ -143,9 +143,14 @@ extension Event {
     }
     
     enum Campus {
-        static let campusTabAppeared = Event(name: "campus_tab_appeared")
-        // TODO: If study sheet loaded
+        static let campusHomeAppeared = Event(name: "campus_home_appeared")
+        
+        static func studySheetLoadSuccess(itemsCount: Int) -> Event {
+            Event(name: "study_sheet_load_success", parameters: ["study_sheet_items_count": "\(itemsCount)"])
+        }
+        static let studySheetLoadFail = Event(name: "study_sheet_load_fail")
         static let studySheetAppeared = Event(name: "study_sheet_appeared")
+        static let studySheetItemDetailAppeared = Event(name: "study_sheet_item_detail_appeared")
     }
     
     enum Profile {

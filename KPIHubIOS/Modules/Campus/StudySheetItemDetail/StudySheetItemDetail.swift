@@ -32,14 +32,20 @@ struct StudySheetItemDetail: ReducerProtocol {
     // MARK: - Action
 
     enum Action: Equatable {
+        case onAppear
         case cells(id: StudySheetActivity.State.ID, action: StudySheetActivity.Action)
     }
 
     // MARK: - Reducer
     
+    @Dependency(\.analyticsClient) var analyticsClient
+    
     var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
+            case .onAppear:
+                analyticsClient.track(Event.Campus.studySheetItemDetailAppeared)
+                return .none
             case .cells:
                 return .none
             }

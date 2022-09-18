@@ -37,8 +37,6 @@ struct Campus: ReducerProtocol {
 
     // MARK: - Environment
     
-//    @Dependency(\.apiClient) var apiClient
-//    @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
 
