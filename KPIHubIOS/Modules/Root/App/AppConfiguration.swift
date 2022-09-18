@@ -63,8 +63,8 @@ extension AppConfiguration {
 
 import Dependencies
 
-private enum AppConfigurationKey: TestDependencyKey {
-//    static let liveValue = AppConfiguration.live()
+private enum AppConfigurationKey: DependencyKey {
+    static let liveValue = AppConfiguration.live(bundle: Bundle.main)
     static let testValue = AppConfiguration.mock()
 }
 

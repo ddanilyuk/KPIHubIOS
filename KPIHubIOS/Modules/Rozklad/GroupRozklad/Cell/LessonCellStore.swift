@@ -15,6 +15,19 @@ struct LessonCell: ReducerProtocol {
     struct State: Equatable, Identifiable {
         let lesson: Lesson
         var mode: LessonMode = .default
+        
+        var showTeachers: Bool {
+            !lesson.isTeachersEmpty
+        }
+        var showLocationsAndType: Bool {
+            !lesson.isTypeEmpty || !lesson.isLocationsEmpty
+        }
+        var showLocations: Bool {
+            !lesson.isLocationsEmpty
+        }
+        var showType: Bool {
+            !lesson.isTypeEmpty
+        }
 
         var id: Lesson.ID {
             return lesson.id
@@ -32,7 +45,7 @@ struct LessonCell: ReducerProtocol {
     // MARK: - Reducer
     
     var body: some ReducerProtocol<State, Action> {
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .onTap:
                 return .none
