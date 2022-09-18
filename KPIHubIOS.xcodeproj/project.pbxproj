@@ -130,8 +130,17 @@
 		6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */; };
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
+		DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */; };
 		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
 		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
+		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
+		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
+		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
+		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
+		DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */; };
+		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
+		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
+		DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5328D70F8A004C5CAC /* Event.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -293,8 +302,14 @@
 		ABE84473594E67C1BE4A5774 /* Pods-KPIHubIOS.release-development.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-development.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-development.xcconfig"; sourceTree = "<group>"; };
 		AC884E8709013BB4ECE15DB6 /* Pods-KPIHubIOS.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-production.xcconfig"; sourceTree = "<group>"; };
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
 		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
 		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
+		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
+		DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Group.swift"; sourceTree = "<group>"; };
+		DBD22F5128D70F75004C5CAC /* UserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProperty.swift; sourceTree = "<group>"; };
+		DBD22F5328D70F8A004C5CAC /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		DC9FB22C82EF9CED3A31FBD7 /* Pods-KPIHubIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE920022D9C94B235B666887 /* Pods-KPIHubIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8441509BC2A3EFC0CFBE577 /* Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -307,8 +322,11 @@
 			files = (
 				5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */,
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
+				DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */,
+				DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 				5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */,
+				DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,6 +541,7 @@
 		5F1B20052870715D00E1D2A6 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				DB27C6D328D674FF00F4FA1B /* Firebase */,
 				5F1B20062870716800E1D2A6 /* AppConfigs */,
 			);
 			path = Configs;
@@ -645,6 +664,8 @@
 				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
 				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
 				5F856A3F2864725500AB63AC /* CurrentDateClient */,
+				DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */,
+				DB16750928D77D9300F6596D /* FirebaseClient */,
 				5FEE632A286D9B1C002F7E9D /* Helpers */,
 			);
 			path = Clients;
@@ -987,6 +1008,33 @@
 			path = CampusClientStudySheet;
 			sourceTree = "<group>";
 		};
+		DB16750928D77D9300F6596D /* FirebaseClient */ = {
+			isa = PBXGroup;
+			children = (
+				DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */,
+			);
+			path = FirebaseClient;
+			sourceTree = "<group>";
+		};
+		DB27C6D328D674FF00F4FA1B /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */ = {
+			isa = PBXGroup;
+			children = (
+				DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */,
+				DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */,
+				DBD22F5128D70F75004C5CAC /* UserProperty.swift */,
+				DBD22F5328D70F8A004C5CAC /* Event.swift */,
+			);
+			path = AnalyticsClient;
+			sourceTree = "<group>";
+		};
 		FF0C919360EE4E6E309E3087 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1035,6 +1083,9 @@
 				5F137EAD28439EA100514263 /* ComposableArchitecture */,
 				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
 				5FA65DDB286A4C370048182C /* TCACoordinators */,
+				DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */,
+				DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */,
+				DB27C6E528D67B1500F4FA1B /* FirebasePerformance */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1114,6 +1165,7 @@
 				5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -1133,6 +1185,7 @@
 			files = (
 				5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */,
 				5F97B3C3283677C500350368 /* Assets.xcassets in Resources */,
+				DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1269,6 +1322,7 @@
 				5F1B201E2870A1E000E1D2A6 /* StudySheetActivityResponse.swift in Sources */,
 				5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */,
 				5F137EDB2843A85600514263 /* GroupsResponse.swift in Sources */,
+				DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */,
 				5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F1B200C287072BB00E1D2A6 /* AppConfiguration.swift in Sources */,
@@ -1283,6 +1337,7 @@
 				5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */,
 				5F671255286611FC00A57E10 /* BadgeView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
+				DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */,
 				5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
@@ -1296,6 +1351,7 @@
 				5FEE632C286D9B2D002F7E9D /* ClientValue.swift in Sources */,
 				5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */,
 				5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */,
+				DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */,
 				5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */,
 				5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */,
 				DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */,
@@ -1339,6 +1395,7 @@
 				5F5F463D284814E800202DA5 /* Lesson.swift in Sources */,
 				5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */,
 				5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */,
+				DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */,
 				5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */,
 				5F667CF6284E3E62006D3AB7 /* LessonDetailsTypeSection.swift in Sources */,
 				5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */,
@@ -1351,6 +1408,7 @@
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */,
+				DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5FEE6330286DD9AC002F7E9D /* CurrentLesson.swift in Sources */,
@@ -2001,6 +2059,14 @@
 				minimumVersion = 0.2.0;
 			};
 		};
+		DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2022,6 +2088,21 @@
 		5FD570B4283680DA00D8E869 /* Routes */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Routes;
+		};
+		DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		DB27C6E528D67B1500F4FA1B /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

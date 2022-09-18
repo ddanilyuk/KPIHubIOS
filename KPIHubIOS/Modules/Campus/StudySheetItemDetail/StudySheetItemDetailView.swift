@@ -28,6 +28,9 @@ struct StudySheetItemDetailView: View {
             .navigationBarTitle("\(viewStore.item.name)")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.screenBackground)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
 

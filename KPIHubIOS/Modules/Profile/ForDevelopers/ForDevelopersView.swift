@@ -13,7 +13,7 @@ struct ForDevelopersView: View {
     let store: StoreOf<ForDevelopers>
 
     var body: some View {
-        WithViewStore(store) { _ in
+        WithViewStore(store) { viewStore in
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 32) {
 
@@ -30,6 +30,9 @@ struct ForDevelopersView: View {
                     contactsSection
                 }
                 .padding(16)
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
             }
         }
         .background(Color.screenBackground)

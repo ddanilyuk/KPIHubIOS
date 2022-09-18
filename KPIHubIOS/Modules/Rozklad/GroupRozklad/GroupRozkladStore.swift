@@ -74,6 +74,7 @@ struct GroupRozklad: ReducerProtocol {
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.currentDateClient) var currentDateClient
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
     
@@ -86,6 +87,8 @@ struct GroupRozklad: ReducerProtocol {
             switch action {
             case .onAppear:
                 state.isAppeared = true
+                analyticsClient.track(Event.Rozklad.groupRozkladAppeared)
+
                 return Effect.merge(
                     Effect(value: .updateCurrentDate),
                     Effect.concatenate(

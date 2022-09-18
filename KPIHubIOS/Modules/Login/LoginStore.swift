@@ -41,6 +41,7 @@ struct Login: ReducerProtocol {
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.campusClientState) var campusClientState
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
 
@@ -49,7 +50,7 @@ struct Login: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
-                let groupPickerState = GroupPicker.State()
+                let groupPickerState = GroupPicker.State(mode: .onboarding)
                 state.routes.push(.groupPicker(groupPickerState))
                 return .none
 
@@ -59,7 +60,7 @@ struct Login: ReducerProtocol {
                 return .none
 
             case .routeAction(_, .campusLogin(.routeAction(.groupPicker))):
-                let groupPickerState = GroupPicker.State()
+                let groupPickerState = GroupPicker.State(mode: .campus)
                 state.routes.push(.groupPicker(groupPickerState))
                 return .none
 
@@ -68,12 +69,14 @@ struct Login: ReducerProtocol {
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
+                analyticsClient.track(Event.Onboarding.onboardingPassed)
                 return Effect(value: .delegate(.done))
 
             case .routeAction(_, .groupPicker(.routeAction(.done))):
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
+                analyticsClient.track(Event.Onboarding.onboardingPassed)
                 return Effect(value: .delegate(.done))
 
             case .routeAction:

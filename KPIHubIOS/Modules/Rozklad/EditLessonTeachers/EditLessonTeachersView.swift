@@ -82,6 +82,9 @@ struct EditLessonTeachersView: View {
             .navigationTitle("Редагувати вчителів")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.screenBackground)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
 

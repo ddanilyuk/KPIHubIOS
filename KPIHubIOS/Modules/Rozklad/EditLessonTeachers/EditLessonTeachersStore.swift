@@ -26,6 +26,7 @@ struct EditLessonTeachers: ReducerProtocol {
     // MARK: - Action
 
     enum Action: Equatable {
+        case onAppear
         case save
         case cancel
 
@@ -40,16 +41,22 @@ struct EditLessonTeachers: ReducerProtocol {
     // MARK: - Environment
     
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
     
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                analyticsClient.track(Event.LessonDetails.editTeachersAppeared)
+                return .none
+
             case .save:
                 var newLesson = state.lesson
                 newLesson.teachers = state.selected
                 rozkladClientLessons.modify(.init(newLesson, commitChanges: true))
+                analyticsClient.track(Event.LessonDetails.editTeachersApply)
                 return Effect(value: .routeAction(.dismiss))
 
             case .cancel:

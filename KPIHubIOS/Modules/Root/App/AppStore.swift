@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Routes
 import URLRouting
 import Foundation
+import Firebase
 
 struct App: ReducerProtocol {
 

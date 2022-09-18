@@ -24,7 +24,6 @@ struct Profile: ReducerProtocol {
     // MARK: - Action
 
     enum Action: Equatable, IdentifiedRouterAction {
-
         case delegate(Delegate)
 
         case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
@@ -35,7 +34,7 @@ struct Profile: ReducerProtocol {
             case selectCampusTab
         }
     }
-
+    
     // MARK: - Reducer
     
     @ReducerBuilder<State, Action>

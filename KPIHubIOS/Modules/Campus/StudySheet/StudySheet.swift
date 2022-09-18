@@ -56,12 +56,15 @@ struct StudySheet: ReducerProtocol {
 
     // MARK: - Reducer
     
+    @Dependency(\.analyticsClient) var analyticsClient
+    
     var body: some ReducerProtocol<State, Action> {
         BindingReducer()
         
         Reduce { state, action in
             switch action {
             case .onAppear:
+                analyticsClient.track(Event.Campus.studySheetAppeared)
                 return Effect(value: .sortCells)
                     .animation(nil)
 

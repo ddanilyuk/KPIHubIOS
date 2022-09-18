@@ -39,6 +39,7 @@ struct CampusHome: ReducerProtocol {
     // MARK: - Environment
     
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
     
@@ -50,6 +51,7 @@ struct CampusHome: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                analyticsClient.track(Event.Campus.campusHomeAppeared)
                 return Effect.run { subscriber in
                     campusClientStudySheet.subject
                         .receive(on: DispatchQueue.main)
@@ -76,6 +78,7 @@ struct CampusHome: ReducerProtocol {
                 switch studySheetState {
                 case .notLoading:
                     state.isLoading = false
+                    analyticsClient.track(Event.Campus.studySheetLoadFail)
                     return .none
 
                 case .loading:
@@ -83,6 +86,9 @@ struct CampusHome: ReducerProtocol {
 
                 case let .loaded(items):
                     state.isLoading = false
+                    analyticsClient.track(
+                        Event.Campus.studySheetLoadSuccess(itemsCount: items.count)
+                    )
                     if state.openStudySheetOnLoad {
                         return Effect(value: .routeAction(
                             .studySheet(items)

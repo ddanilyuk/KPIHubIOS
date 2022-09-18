@@ -69,6 +69,7 @@ struct ProfileHome: ReducerProtocol {
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
     @Dependency(\.currentDateClient) var currentDateClient
     @Dependency(\.appConfiguration) var appConfiguration
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
     
@@ -82,6 +83,7 @@ struct ProfileHome: ReducerProtocol {
             case .onAppear:
                 state.completeAppVersion = appConfiguration.completeAppVersion ?? ""
                 state.toggleWeek = userDefaultsClient.get(for: .toggleWeek)
+                analyticsClient.track(Event.Profile.profileHomeAppeared)
                 return onAppear()
 
             case let .setRozkladState(rozkladState):
@@ -97,6 +99,7 @@ struct ProfileHome: ReducerProtocol {
                 return .none
 
             case .updateRozkladButtonTapped:
+                analyticsClient.track(Event.Profile.reloadRozkladTapped)
                 state.confirmationDialog = ConfirmationDialogState(
                     title: TextState("Ви впевнені?"),
                     titleVisibility: .visible,
@@ -112,6 +115,7 @@ struct ProfileHome: ReducerProtocol {
                 switch state.rozkladState {
                 case let .selected(group):
                     state.isLoading = true
+                    analyticsClient.track(Event.Profile.reloadRozklad)
                     let task: Effect<[Lesson], Error> = Effect.task {
                         // Update group id using name
                         let newGroup = try await apiClient.decodedResponse(
@@ -138,14 +142,17 @@ struct ProfileHome: ReducerProtocol {
             case let .lessonsResult(.success(lessons)):
                 state.isLoading = false
                 rozkladClientLessons.set(.init(lessons, commitChanges: true))
+                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: .profileReload))
                 return .none
 
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
+                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: .profileReload))
                 return .none
 
             case .changeGroupButtonTapped:
+                analyticsClient.track(Event.Profile.changeGroupTapped)
                 state.confirmationDialog = ConfirmationDialogState(
                     title: TextState("Ви впевнені?"),
                     titleVisibility: .visible,
@@ -159,12 +166,16 @@ struct ProfileHome: ReducerProtocol {
 
             case .changeGroup:
                 rozkladClientState.setState(ClientValue(.notSelected, commitChanges: true))
+                analyticsClient.track(Event.Profile.changeGroup)
+                analyticsClient.setGroup(nil)
                 return Effect(value: .routeAction(.rozklad))
 
             case .selectGroup:
+                analyticsClient.track(Event.Profile.selectGroup)
                 return Effect(value: .routeAction(.rozklad))
 
             case .logoutCampusButtonTapped:
+                analyticsClient.track(Event.Profile.campusLogoutTapped)
                 state.confirmationDialog = ConfirmationDialogState(
                     title: TextState("Ви впевнені?"),
                     titleVisibility: .visible,
@@ -178,14 +189,18 @@ struct ProfileHome: ReducerProtocol {
             case .logoutCampus:
                 campusClientState.logout(ClientValue(commitChanges: true))
                 campusClientStudySheet.clean()
+                analyticsClient.track(Event.Profile.campusLogout)
+                analyticsClient.setUserProperty(UserProperty.cathedra(nil))
                 return Effect(value: .routeAction(.campus))
 
             case .loginCampus:
+                analyticsClient.track(Event.Profile.campusLogin)
                 return Effect(value: .routeAction(.campus))
 
             case .binding(\.rozkladSectionView.$toggleWeek):
                 userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
                 currentDateClient.forceUpdate()
+                analyticsClient.track(Event.Profile.changeWeek(state.toggleWeek))
                 return .none
 
             case .dismissConfirmationDialog:

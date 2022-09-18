@@ -45,6 +45,7 @@ struct CampusLogin: ReducerProtocol {
     // MARK: - Action
 
     enum Action: Equatable, BindableAction {
+        case onAppear
         case login
         case campusUserInfoResult(Result<CampusUserInfo, APIError>)
         case groupSearchResult(Result<GroupResponse, APIError>)
@@ -67,6 +68,7 @@ struct CampusLogin: ReducerProtocol {
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
 
@@ -75,6 +77,10 @@ struct CampusLogin: ReducerProtocol {
 
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                analyticsClient.track(Event.Onboarding.campusLoginAppeared)
+                return .none
+
             case .binding(\.$username):
                 state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
                 return .none
@@ -90,6 +96,7 @@ struct CampusLogin: ReducerProtocol {
                 )
                 state.focusedField = nil
                 state.isLoading = true
+                analyticsClient.track(Event.Onboarding.campusLogin)
                 let task: Effect<CampusUserInfo, Error> = Effect.task {
                     let result = try await apiClient.request(
                         for: .api(.campus(.userInfo(campusLoginQuery))),
@@ -122,6 +129,10 @@ struct CampusLogin: ReducerProtocol {
                         commitChanges: false
                     )
                 )
+                analyticsClient.setUserProperty(
+                    UserProperty.cathedra(campusUserInfo.subdivision.first?.name)
+                )
+                analyticsClient.track(Event.Onboarding.campusUserLoadSuccess)
 
                 switch state.mode {
                 case .onlyCampus:
@@ -142,6 +153,8 @@ struct CampusLogin: ReducerProtocol {
                 }
 
             case let .groupSearchResult(.success(group)):
+                analyticsClient.setGroup(group)
+                analyticsClient.track(Event.Onboarding.campusUserGroupFound)
                 let task: Effect<[Lesson], Error> = Effect.task {
                     let result = try await apiClient.decodedResponse(
                         for: .api(.group(group.id, .lessons)),
@@ -157,16 +170,19 @@ struct CampusLogin: ReducerProtocol {
 
             case let .lessonsResult(.success(lessons)):
                 rozkladClientLessons.set(.init(lessons, commitChanges: true))
+                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: .campus))
                 return Effect(value: .routeAction(.done))
 
             case let .groupSearchResult(.failure(error)):
                 state.isLoading = false
                 switch error {
                 case .serviceError(404, _):
+                    analyticsClient.track(Event.Onboarding.campusUserGroupNotFound)
                     return Effect(value: .routeAction(.groupPicker))
 
                 case .serviceError,
                      .unknown:
+                    analyticsClient.track(Event.Onboarding.campusUserGroupFailed)
                     return .none
                 }
 
@@ -175,17 +191,20 @@ struct CampusLogin: ReducerProtocol {
                 switch error {
                 case .serviceError(404, _):
                     state.alert = AlertState(title: TextState("Схоже, логін або пароль невірний."))
+                    analyticsClient.track(Event.Onboarding.campusUserLoadInvalidCredentials)
                     return .none
 
                 case .serviceError,
                      .unknown:
                     state.alert = AlertState.error(error)
+                    analyticsClient.track(Event.Onboarding.campusUserLoadFailed)
                     return .none
                 }
 
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
+                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: .campus))
                 return .none
 
             case .dismissAlert:
