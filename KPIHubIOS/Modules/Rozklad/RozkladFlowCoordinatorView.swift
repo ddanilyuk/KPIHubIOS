@@ -14,12 +14,6 @@ import FirebaseAnalytics
 struct RozkladFlowCoordinatorView: View {
 
     let store: StoreOf<Rozklad>
-    @ObservedObject var viewStore: ViewStoreOf<Rozklad>
-    
-    init(store: StoreOf<Rozklad>) {
-        self.store = store
-        self.viewStore = ViewStore(store)
-    }
 
     var body: some View {
         TCARouter(store) { screen in
@@ -50,9 +44,6 @@ struct RozkladFlowCoordinatorView: View {
                     then: EditLessonTeachersView.init
                 )
             }
-        }
-        .onAppear {
-            viewStore.send(.onAppear)
         }
     }
 

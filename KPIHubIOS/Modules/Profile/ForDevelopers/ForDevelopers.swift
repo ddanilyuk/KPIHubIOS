@@ -21,10 +21,13 @@ struct ForDevelopers: ReducerProtocol {
 
     // MARK: - Reducer
     
+    @Dependency(\.analyticsClient) var analyticsClient
+    
     var body: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                analyticsClient.track(Event.Profile.forDevelopersAppeared)
                 return .none
             }
         }

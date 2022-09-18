@@ -50,7 +50,7 @@ extension AnalyticsClient {
     )
     
 }
-
+// TODO: Cleon on logout
 struct UserProperty: Equatable {
     let name: String
     var value: String?
@@ -106,7 +106,7 @@ extension Event {
     }
 
     enum Rozklad {
-        static let tabAppeared = Event(name: "rozklad_tab_appeared") // DONE
+        static let groupRozkladAppeared = Event(name: "group_rozklad_appeared") // DONE
         
         static func lessonDetailsAppeared(id: String, name: String) -> Event {
             Event(
@@ -126,7 +126,7 @@ extension Event {
             case campusUserInput = "campus_user_input"
             case onboarding = "onboarding"
             case rozkladTab = "rozkladTab"
-            case reload = "reload"
+            case profileReload = "profile_reload"
         }
         static func lessonsLoadSuccess(groupOrigin: GroupOrigin) -> Event {
             Event(
@@ -149,16 +149,19 @@ extension Event {
     }
     
     enum Profile {
-        static let profileTabAppeared = Event(name: "profile_tab_appeared")
-        static let refreshRozklad = Event(name: "profile_refresh_rozklad")
-        static let changeGroup = Event(name: "profile_change_group")
-        static let selectGroup = Event(name: "profile_select_group")
-        static let campusLogin = Event(name: "profile_campus_login")
-        static let campusLogout = Event(name: "profile_campus_logout")
+        static let profileHomeAppeared = Event(name: "profile_home_appeared") // DONE    MOVE to ProfileHome?
+        static let reloadRozkladTapped = Event(name: "profile_reload_rozklad_tapped") // DONE
+        static let reloadRozklad = Event(name: "profile_reload_rozklad") // DONE
+        static let changeGroupTapped = Event(name: "profile_change_group") // DONE
+        static let changeGroup = Event(name: "profile_change_group") // DONE
+        static let selectGroup = Event(name: "profile_select_group") // DONE
+        static let campusLogout = Event(name: "profile_campus_logout") // DONE
+        static let campusLogoutTapped = Event(name: "profile_campus_logout") // DONE
+        static let campusLogin = Event(name: "profile_campus_login") // DONE
         static func changeWeek(_ value: Bool) -> Event {
             Event(name: "profile_change_week", parameters: ["week_toggle_value": value ? "true" : "false"])
-        }
-        static let forDevelopersAppeared = Event(name: "profile_for_developers_appeared")
+        } // DONE
+        static let forDevelopersAppeared = Event(name: "profile_for_developers_appeared") // DONE
     }
 }
 
