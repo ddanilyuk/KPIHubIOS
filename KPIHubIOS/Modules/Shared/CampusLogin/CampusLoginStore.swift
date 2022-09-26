@@ -129,9 +129,7 @@ struct CampusLogin: ReducerProtocol {
                         commitChanges: false
                     )
                 )
-                analyticsClient.setUserProperty(
-                    UserProperty.cathedra(campusUserInfo.subdivision.first?.name)
-                )
+                analyticsClient.setCampusUser(campusUserInfo)
                 analyticsClient.track(Event.Onboarding.campusUserLoadSuccess)
 
                 switch state.mode {

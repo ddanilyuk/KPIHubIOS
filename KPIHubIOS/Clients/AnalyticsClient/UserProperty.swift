@@ -29,5 +29,13 @@ extension UserProperty {
     static func cathedra(_ value: String?) -> UserProperty {
         UserProperty(name: "cathedra", value: value)
     }
+    
+    static func userFullName(_ value: String?) -> UserProperty {
+        UserProperty(name: "userFullName", value: value)
+    }
+    
+    static func userEmail(_ value: String?) -> UserProperty {
+        UserProperty(name: "userEmail", value: value)
+    }
 
 }

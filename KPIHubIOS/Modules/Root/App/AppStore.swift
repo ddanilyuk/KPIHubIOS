@@ -91,14 +91,13 @@ struct App: ReducerProtocol {
         Scope(state: \State.appDelegate, action: /Action.appDelegate) {
             AppDelegateReducer()
         }
-        .ifLet(\State.login, action: /Action.login) {
-            Login()
-        }
-        .ifLet(\State.main, action: /Action.main) {
-            Main()
-        }
-
         core
+            .ifLet(\State.login, action: /Action.login) {
+                Login()
+            }
+            .ifLet(\State.main, action: /Action.main) {
+                Main()
+            }
     }
 
 }

@@ -137,6 +137,7 @@
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
+		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
 		DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */; };
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
@@ -306,6 +307,7 @@
 		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
 		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
 		DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Group.swift"; sourceTree = "<group>"; };
 		DBD22F5128D70F75004C5CAC /* UserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProperty.swift; sourceTree = "<group>"; };
@@ -1029,6 +1031,7 @@
 			children = (
 				DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */,
 				DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */,
+				DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */,
 				DBD22F5128D70F75004C5CAC /* UserProperty.swift */,
 				DBD22F5328D70F8A004C5CAC /* Event.swift */,
 			);
@@ -1374,6 +1377,7 @@
 				5F667D07284E5566006D3AB7 /* ProfileScreenProvider.swift in Sources */,
 				5F67124728650EF900A57E10 /* ForDevelopers.swift in Sources */,
 				5F69BBF9284D164600FED83D /* StudySheetActivityCellView.swift in Sources */,
+				DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */,
 				5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
 				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,

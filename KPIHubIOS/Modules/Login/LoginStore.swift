@@ -73,6 +73,7 @@ struct Login: ReducerProtocol {
                 return Effect(value: .delegate(.done))
 
             case .routeAction(_, .groupPicker(.routeAction(.done))):
+                campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
