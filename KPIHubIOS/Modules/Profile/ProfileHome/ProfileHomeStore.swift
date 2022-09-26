@@ -190,7 +190,7 @@ struct ProfileHome: ReducerProtocol {
                 campusClientState.logout(ClientValue(commitChanges: true))
                 campusClientStudySheet.clean()
                 analyticsClient.track(Event.Profile.campusLogout)
-                analyticsClient.setUserProperty(UserProperty.cathedra(nil))
+                analyticsClient.setCampusUser(nil)
                 return Effect(value: .routeAction(.campus))
 
             case .loginCampus:
