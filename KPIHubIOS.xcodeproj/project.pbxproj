@@ -10,7 +10,6 @@
 		5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */; };
 		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
 		5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* LessonResponse.swift */; };
-		5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5F137EAD28439EA100514263 /* ComposableArchitecture */; };
 		5F137EC22843A35D00514263 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppStore.swift */; };
 		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
 		5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC52843A36C00514263 /* AppDelegate.swift */; };
@@ -137,6 +136,7 @@
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
+		DB534FD228E2554700BB6BC6 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB534FD128E2554700BB6BC6 /* ComposableArchitecture */; };
 		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
 		DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */; };
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
@@ -322,13 +322,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5F137EAE28439EA100514263 /* ComposableArchitecture in Frameworks */,
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
 				DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */,
 				DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 				5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */,
 				DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */,
+				DB534FD228E2554700BB6BC6 /* ComposableArchitecture in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1083,12 +1083,12 @@
 			name = KPIHubIOS;
 			packageProductDependencies = (
 				5FD570B4283680DA00D8E869 /* Routes */,
-				5F137EAD28439EA100514263 /* ComposableArchitecture */,
 				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
 				5FA65DDB286A4C370048182C /* TCACoordinators */,
 				DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */,
 				DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */,
 				DB27C6E528D67B1500F4FA1B /* FirebasePerformance */,
+				DB534FD128E2554700BB6BC6 /* ComposableArchitecture */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1628,6 +1628,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1659,9 +1660,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = "$(inherited)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KPIHubIOS/Info.plist;
@@ -1825,6 +1827,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1886,9 +1889,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = "$(inherited)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KPIHubIOS/Info.plist;
@@ -2076,11 +2080,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5F137EAD28439EA100514263 /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
-		};
 		5F28FB8C2858D55B00579A75 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
@@ -2109,6 +2108,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
+		};
+		DB534FD128E2554700BB6BC6 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
