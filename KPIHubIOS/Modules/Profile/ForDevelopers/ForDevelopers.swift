@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct ForDevelopers {
+struct ForDevelopers: ReducerProtocol {
 
     // MARK: - State
 
@@ -19,16 +19,17 @@ struct ForDevelopers {
         case onAppear
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        switch action {
-        case .onAppear:
-            return .none
+    
+    @Dependency(\.analyticsClient) var analyticsClient
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { _, action in
+            switch action {
+            case .onAppear:
+                analyticsClient.track(Event.Profile.forDevelopersAppeared)
+                return .none
+            }
         }
     }
 

@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct LessonDetailsView: View {
 
-    let store: Store<LessonDetails.State, LessonDetails.Action>
+    let store: StoreOf<LessonDetails>
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -32,21 +32,27 @@ struct LessonDetailsView: View {
                         mode: viewStore.mode
                     )
 
-                    LessonDetailsTeacherSection(
-                        teachers: viewStore.lesson.teachers ?? [],
-                        isEditing: viewStore.isEditing
-                    )
-                    .onTapGesture {
-                        viewStore.send(.editTeachers)
+                    if viewStore.showTeachers {
+                        LessonDetailsTeacherSection(
+                            teachers: viewStore.lesson.teachers ?? [],
+                            isEditing: viewStore.isEditing
+                        )
+                        .onTapGesture {
+                            viewStore.send(.editTeachers)
+                        }
                     }
 
-                    LessonDetailsTypeSection(
-                        type: viewStore.lesson.type
-                    )
+                    if viewStore.showType {
+                        LessonDetailsTypeSection(
+                            type: viewStore.lesson.type
+                        )
+                    }
 
-                    LessonDetailsLocationsSection(
-                        locations: viewStore.lesson.locations ?? []
-                    )
+                    if viewStore.showLocations {
+                        LessonDetailsLocationsSection(
+                            locations: viewStore.lesson.locations ?? []
+                        )
+                    }
                 }
                 .padding(16)
             }
@@ -103,12 +109,7 @@ struct LessonDetailsView_Previews: PreviewProvider {
                     initialState: LessonDetails.State(
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: LessonDetails.reducer,
-                    environment: LessonDetails.Environment(
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock(),
-                        currentDateClient: .mock()
-                    )
+                    reducer: LessonDetails()
                 )
             )
         }

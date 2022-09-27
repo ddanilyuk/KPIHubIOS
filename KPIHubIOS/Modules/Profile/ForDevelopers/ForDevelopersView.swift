@@ -10,10 +10,10 @@ import ComposableArchitecture
 
 struct ForDevelopersView: View {
 
-    let store: Store<ForDevelopers.State, ForDevelopers.Action>
+    let store: StoreOf<ForDevelopers>
 
     var body: some View {
-        WithViewStore(store) { _ in
+        WithViewStore(store) { viewStore in
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 32) {
 
@@ -22,7 +22,7 @@ struct ForDevelopersView: View {
                             .font(.title)
 
                         Text("Цей додаток з відкритим кодом. Вся детальна інформація у README.md в репозиторіях")
-                        Text("Якщо є будь-які питанням, напиши мені.")
+                        Text("Якщо є будь-які питання, напиши мені.")
                     }
 
                     gitHubSection
@@ -30,6 +30,9 @@ struct ForDevelopersView: View {
                     contactsSection
                 }
                 .padding(16)
+            }
+            .onAppear {
+                viewStore.send(.onAppear)
             }
         }
         .background(Color.screenBackground)
@@ -121,8 +124,7 @@ struct ForDevelopersView_Previews: PreviewProvider {
             ForDevelopersView(
                 store: Store(
                     initialState: ForDevelopers.State(),
-                    reducer: ForDevelopers.reducer,
-                    environment: ForDevelopers.Environment()
+                    reducer: ForDevelopers()
                 )
             )
         }

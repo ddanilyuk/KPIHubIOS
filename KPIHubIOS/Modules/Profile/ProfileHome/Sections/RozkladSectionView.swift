@@ -196,36 +196,38 @@ struct RozkladSectionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             RozkladSectionView(
-                viewStore: ViewStore(Store(
-                    initialState: RozkladSectionView.ViewState(
-                        updatedAt: Date(),
-                        rozkladState: .notSelected,
-                        toggleWeek: true
-                    ),
-                    reducer: Reducer.empty,
-                    environment: Void()
-                ))
+                viewStore: ViewStore(
+                    Store(
+                        initialState: RozkladSectionView.ViewState(
+                            updatedAt: Date(),
+                            rozkladState: .notSelected,
+                            toggleWeek: true
+                        ),
+                        reducer: EmptyReducer()
+                    )
+                )
             )
             .smallPreview
             .padding(16)
             .background(Color.screenBackground)
 
             RozkladSectionView(
-                viewStore: ViewStore(Store(
-                    initialState: RozkladSectionView.ViewState(
-                        updatedAt: Date(),
-                        rozkladState: .selected(
-                            GroupResponse(
-                                id: UUID(),
-                                name: "ІВ-82",
-                                faculty: "ФІОТ"
-                            )
+                viewStore: ViewStore(
+                    Store(
+                        initialState: RozkladSectionView.ViewState(
+                            updatedAt: Date(),
+                            rozkladState: .selected(
+                                GroupResponse(
+                                    id: UUID(),
+                                    name: "ІВ-82",
+                                    faculty: "ФІОТ"
+                                )
+                            ),
+                            toggleWeek: false
                         ),
-                        toggleWeek: false
-                    ),
-                    reducer: Reducer.empty,
-                    environment: Void()
-                ))
+                        reducer: EmptyReducer()
+                    )
+                )
             )
             .smallPreview
             .padding(16)

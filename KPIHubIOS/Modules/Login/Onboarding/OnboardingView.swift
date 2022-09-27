@@ -12,15 +12,14 @@ struct OnboardingView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<Onboarding.State, Onboarding.Action>
+    let store: StoreOf<Onboarding>
 
-    init(store: Store<Onboarding.State, Onboarding.Action>) {
+    init(store: StoreOf<Onboarding>) {
         self.store = store
     }
 
     var body: some View {
         WithViewStore(store) { viewStore in
-
             VStack {
                 ZStack(alignment: .center) {
                     colorScheme == .light ? Color.white : Color.black
@@ -74,6 +73,9 @@ struct OnboardingView: View {
             }
             .navigationBarHidden(true)
             .background(Color.screenBackground)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
 
@@ -87,8 +89,7 @@ struct OnboardingView_Previews: PreviewProvider {
             OnboardingView(
                 store: Store(
                     initialState: Onboarding.State(),
-                    reducer: .empty,
-                    environment: ()
+                    reducer: Onboarding()
                 )
             )
         }

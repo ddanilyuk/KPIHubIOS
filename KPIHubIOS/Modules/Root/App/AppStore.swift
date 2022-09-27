@@ -8,13 +8,15 @@
 import ComposableArchitecture
 import Routes
 import URLRouting
+import Foundation
+import Firebase
 
-struct App {
+struct App: ReducerProtocol {
 
     // MARK: - State
 
     struct State: Equatable {
-        var appDelegate: AppDelegate.State = AppDelegate.State()
+        var appDelegate: AppDelegateReducer.State = AppDelegateReducer.State()
         var login: Login.State?
         var main: Main.State?
 
@@ -39,133 +41,63 @@ struct App {
     // MARK: - Action
 
     enum Action: Equatable {
-        case appDelegate(AppDelegate.Action)
+        case appDelegate(AppDelegateReducer.Action)
         case login(Login.Action)
         case main(Main.Action)
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let appConfiguration: AppConfiguration
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let keychainClient: KeychainClientable
-        let rozkladClient: RozkladClient
-        let campusClient: CampusClient
-        let currentDateClient: CurrentDateClient
-
-        static var live: Self {
-            let appConfiguration: AppConfiguration = .live(bundle: Bundle.main)
-            let apiClient: APIClient = .live(
-                router: rootRouter.baseURL(appConfiguration.apiURL)
-            )
-            let userDefaultsClient: UserDefaultsClientable = .live()
-            let keychainClient: KeychainClientable = .live()
-            let rozkladClient: RozkladClient = .live(
-                userDefaultsClient: userDefaultsClient
-            )
-            let campusClient: CampusClient = .live(
-                apiClient: apiClient,
-                userDefaultsClient: userDefaultsClient,
-                keychainClient: keychainClient
-            )
-            let currentDateClient: CurrentDateClient = .live(
-                userDefaultsClient: userDefaultsClient,
-                rozkladClient: rozkladClient
-            )
-
-            return Self(
-                appConfiguration: appConfiguration,
-                apiClient: apiClient,
-                userDefaultsClient: userDefaultsClient,
-                keychainClient: keychainClient,
-                rozkladClient: rozkladClient,
-                campusClient: campusClient,
-                currentDateClient: currentDateClient
-            )
-        }
-    }
+    
+    @Dependency(\.appConfiguration) var appConfiguration
+    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.campusClientState) var campusClientState
+    @Dependency(\.campusClientStudySheet) var campusClientStudySheet
+    @Dependency(\.currentDateClient) var currentDateClient
 
     // MARK: - Reducer
 
-    static var reducerCore = Reducer<State, Action, Environment> { state, action, environment in
-        switch action {
-        case .appDelegate(.didFinishLaunching):
-            if environment.userDefaultsClient.get(for: .onboardingPassed) {
+    @ReducerBuilder<State, Action>
+    var core: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .appDelegate(.didFinishLaunching):
+                if userDefaultsClient.get(for: .onboardingPassed) {
+                    state.set(.main)
+                } else {
+                    state.set(.login)
+                }
+                return .none
+                
+            case .login(.delegate(.done)):
                 state.set(.main)
-            } else {
-                state.set(.login)
+                return .none
+                
+            case .appDelegate:
+                return .none
+                
+            case .login:
+                return .none
+                
+            case .main:
+                return .none
             }
-            return .none
-
-        case .login(.delegate(.done)):
-            state.set(.main)
-            return .none
-
-        case .appDelegate:
-            return .none
-
-        case .login:
-            return .none
-
-        case .main:
-            return .none
         }
     }
-
-    static var reducer = Reducer<State, Action, Environment>.combine(
-        AppDelegate.reducer
-            .pullback(
-                state: \State.appDelegate,
-                action: /Action.appDelegate,
-                environment: { $0.appDelegate }
-            ),
-        Login.reducer
-            .optional()
-            .pullback(
-                state: \State.login,
-                action: /Action.login,
-                environment: { $0.login }
-            ),
-        Main.reducer
-            .optional()
-            .pullback(
-                state: \State.main,
-                action: /Action.main,
-                environment: { $0.main }
-            ),
-        reducerCore
-    )
-
-}
-
-// MARK: App.Environment + Extensions
-
-extension App.Environment {
-
-    var appDelegate: AppDelegate.Environment {
-        AppDelegate.Environment()
-    }
-
-    var login: Login.Environment {
-        Login.Environment(
-            apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient,
-            rozkladClient: rozkladClient,
-            campusClient: campusClient
-        )
-    }
-
-    var main: Main.Environment {
-        Main.Environment(
-            appConfiguration: appConfiguration,
-            apiClient: apiClient,
-            userDefaultsClient: userDefaultsClient,
-            rozkladClient: rozkladClient,
-            campusClient: campusClient,
-            currentDateClient: currentDateClient
-        )
+    
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: \State.appDelegate, action: /Action.appDelegate) {
+            AppDelegateReducer()
+        }
+        core
+            .ifLet(\State.login, action: /Action.login) {
+                Login()
+            }
+            .ifLet(\State.main, action: /Action.main) {
+                Main()
+            }
     }
 
 }

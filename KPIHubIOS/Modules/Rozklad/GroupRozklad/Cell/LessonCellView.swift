@@ -12,7 +12,7 @@ struct LessonCellView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<LessonCell.State, LessonCell.Action>
+    let store: StoreOf<LessonCell>
 
     var body: some View {
         WithViewStore(store) { viewStore in
@@ -90,27 +90,34 @@ struct LessonCellView: View {
                     .font(.system(.callout).bold())
                     .lineLimit(2)
 
-
-                ForEach(viewStore.lesson.teachers ?? [], id: \.self) { teacher in
-                    SmallTagView(
-                        icon: Image(systemName: "person"),
-                        text: teacher,
-                        color: .indigo
-                    )
+                
+                if viewStore.showTeachers {
+                    ForEach(viewStore.lesson.teachers ?? [], id: \.self) { teacher in
+                        SmallTagView(
+                            icon: Image(systemName: "person"),
+                            text: teacher,
+                            color: .indigo
+                        )
+                    }
                 }
-
-                HStack {
-                    SmallTagView(
-                        icon: Image(systemName: "location"),
-                        text: viewStore.lesson.locations?.first ?? "-",
-                        color: .yellow
-                    )
-
-                    SmallTagView(
-                        icon: Image(systemName: "graduationcap"),
-                        text: viewStore.lesson.type,
-                        color: .cyan
-                    )
+                
+                if viewStore.showLocationsAndType {
+                    HStack {
+                        if viewStore.showLocations {
+                            SmallTagView(
+                                icon: Image(systemName: "location"),
+                                text: viewStore.lesson.locations?.first ?? "-",
+                                color: .yellow
+                            )
+                        }
+                        if viewStore.showType {
+                            SmallTagView(
+                                icon: Image(systemName: "graduationcap"),
+                                text: viewStore.lesson.type,
+                                color: .cyan
+                            )
+                        }
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -131,8 +138,7 @@ struct LessonCellView_Previews: PreviewProvider {
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0]),
                         mode: .default
                     ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
+                    reducer: LessonCell()
                 )
             )
             .smallPreview
@@ -143,8 +149,7 @@ struct LessonCellView_Previews: PreviewProvider {
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0]),
                         mode: .current(0.34)
                     ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
+                    reducer: LessonCell()
                 )
             )
             .smallPreview
@@ -155,8 +160,7 @@ struct LessonCellView_Previews: PreviewProvider {
                         lesson: Lesson(lessonResponse: LessonResponse.mocked[0]),
                         mode: .next
                     ),
-                    reducer: LessonCell.reducer,
-                    environment: LessonCell.Environment()
+                    reducer: LessonCell()
                 )
             )
             .smallPreview

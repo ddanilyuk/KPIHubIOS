@@ -7,14 +7,24 @@
 
 import Foundation
 import KeychainAccess
+import ComposableArchitecture
+
+private enum KeychainClientKey: DependencyKey {
+    static let liveValue = KeychainClient.live()
+    static let testValue = KeychainClient.mock()
+}
+
+extension DependencyValues {
+    var keychainClient: KeychainClientable {
+        get { self[KeychainClientKey.self] }
+        set { self[KeychainClientKey.self] = newValue }
+    }
+}
 
 protocol KeychainClientable {
     func set(_ value: String?, for key: KeychainKey)
     func get(key: KeychainKey) -> String?
     func remove(for key: KeychainKey) throws
-
-    static func live() -> Self
-    static func mock() -> Self
 }
 
 final class KeychainClient: KeychainClientable {
@@ -46,11 +56,11 @@ enum KeychainKey: String {
 
 extension KeychainClientable where Self == KeychainClient {
 
-    static func live() -> KeychainClient {
+    static func live() -> KeychainClientable {
         KeychainClient()
     }
 
-    static func mock() -> KeychainClient {
+    static func mock() -> KeychainClientable {
         KeychainClient(keychain: Keychain(service: "mock"))
     }
 }

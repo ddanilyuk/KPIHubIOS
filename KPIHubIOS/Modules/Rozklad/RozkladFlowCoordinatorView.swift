@@ -8,10 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
+import FirebaseCore
+import FirebaseAnalytics
 
 struct RozkladFlowCoordinatorView: View {
 
-    let store: Store<Rozklad.State, Rozklad.Action>
+    let store: StoreOf<Rozklad>
 
     var body: some View {
         TCARouter(store) { screen in

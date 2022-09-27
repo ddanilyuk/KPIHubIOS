@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 struct GroupPickerView: View {
 
-    let store: Store<GroupPicker.State, GroupPicker.Action>
+    let store: StoreOf<GroupPicker>
 
     var body: some View {
         WithViewStore(store) { viewStore in

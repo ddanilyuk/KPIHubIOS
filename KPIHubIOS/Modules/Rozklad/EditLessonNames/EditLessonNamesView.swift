@@ -12,9 +12,9 @@ struct EditLessonNamesView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: Store<EditLessonNames.State, EditLessonNames.Action>
+    let store: StoreOf<EditLessonNames>
 
-    init(store: Store<EditLessonNames.State, EditLessonNames.Action>) {
+    init(store: StoreOf<EditLessonNames>) {
         self.store = store
     }
 
@@ -78,6 +78,9 @@ struct EditLessonNamesView: View {
             .navigationTitle("Редагувати назву")
             .navigationBarTitleDisplayMode(.inline)
             .background(Color.screenBackground)
+            .onAppear {
+                viewStore.send(.onAppear)
+            }
         }
     }
     
@@ -93,8 +96,7 @@ struct EditLessonNamesView_Previews: PreviewProvider {
                     initialState: EditLessonNames.State(
                         lesson: .init(lessonResponse: LessonResponse.mocked[0])
                     ),
-                    reducer: .empty,
-                    environment: ()
+                    reducer: EditLessonNames()
                 )
             )
         }

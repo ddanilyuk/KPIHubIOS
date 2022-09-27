@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import TCACoordinators
 
-struct Login {
+struct Login: ReducerProtocol {
 
     // MARK: - State
 
@@ -36,60 +36,69 @@ struct Login {
 
     // MARK: - Environment
 
-    struct Environment {
-        let apiClient: APIClient
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-        let campusClient: CampusClient
-    }
+    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.campusClientState) var campusClientState
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
 
-    static let reducerCore = Reducer<State, Action, Environment> { state, action, environment in
-        switch action {
-        case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
-            let groupPickerState = GroupPicker.State()
-            state.routes.push(.groupPicker(groupPickerState))
-            return .none
+    @ReducerBuilder<State, Action>
+    var core: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
+                let groupPickerState = GroupPicker.State(mode: .onboarding)
+                state.routes.push(.groupPicker(groupPickerState))
+                return .none
 
-        case .routeAction(_, .onboarding(.routeAction(.campusLogin))):
-            let campusLoginState = CampusLogin.State(mode: .campusAndGroup)
-            state.routes.push(.campusLogin(campusLoginState))
-            return .none
+            case .routeAction(_, .onboarding(.routeAction(.campusLogin))):
+                let campusLoginState = CampusLogin.State(mode: .campusAndGroup)
+                state.routes.push(.campusLogin(campusLoginState))
+                return .none
 
-        case .routeAction(_, .campusLogin(.routeAction(.groupPicker))):
-            let groupPickerState = GroupPicker.State()
-            state.routes.push(.groupPicker(groupPickerState))
-            return .none
+            case .routeAction(_, .campusLogin(.routeAction(.groupPicker))):
+                let groupPickerState = GroupPicker.State(mode: .campus)
+                state.routes.push(.groupPicker(groupPickerState))
+                return .none
 
-        case .routeAction(_, .campusLogin(.routeAction(.done))):
-            environment.campusClient.state.commit()
-            environment.rozkladClient.state.commit()
-            environment.rozkladClient.lessons.commit()
-            environment.userDefaultsClient.set(true, for: .onboardingPassed)
-            return Effect(value: .delegate(.done))
+            case .routeAction(_, .campusLogin(.routeAction(.done))):
+                campusClientState.commit()
+                rozkladClientState.commit()
+                rozkladClientLessons.commit()
+                userDefaultsClient.set(true, for: .onboardingPassed)
+                analyticsClient.track(Event.Onboarding.onboardingPassed)
+                return Effect(value: .delegate(.done))
 
-        case .routeAction(_, .groupPicker(.routeAction(.done))):
-            environment.rozkladClient.state.commit()
-            environment.rozkladClient.lessons.commit()
-            environment.userDefaultsClient.set(true, for: .onboardingPassed)
-            return Effect(value: .delegate(.done))
+            case .routeAction(_, .groupPicker(.routeAction(.done))):
+                campusClientState.commit()
+                rozkladClientState.commit()
+                rozkladClientLessons.commit()
+                userDefaultsClient.set(true, for: .onboardingPassed)
+                analyticsClient.track(Event.Onboarding.onboardingPassed)
+                return Effect(value: .delegate(.done))
 
-        case .routeAction:
-            return .none
+            case .routeAction:
+                return .none
 
-        case .updateRoutes:
-            return .none
+            case .updateRoutes:
+                return .none
 
-        case .delegate:
-            return .none
+            case .delegate:
+                return .none
+            }
         }
     }
-
-    static let reducer = Reducer<State, Action, Environment>.combine(
-        Login.ScreenProvider.reducer
-            .forEachIdentifiedRoute(environment: { $0 })
-            .withRouteReducer(reducerCore)
-    )
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce(
+            AnyReducer(Login.ScreenProvider())
+                .forEachIdentifiedRoute(environment: { () })
+                .withRouteReducer(AnyReducer(core)),
+            environment: ()
+        )
+    }
 
 }

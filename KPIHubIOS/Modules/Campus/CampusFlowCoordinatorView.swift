@@ -11,9 +11,9 @@ import TCACoordinators
 
 struct CampusFlowCoordinatorView: View {
 
-    let store: Store<Campus.State, Campus.Action>
+    let store: StoreOf<Campus>
 
-    init(store: Store<Campus.State, Campus.Action>) {
+    init(store: StoreOf<Campus>) {
         self.store = store
     }
 

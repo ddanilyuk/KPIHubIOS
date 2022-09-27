@@ -11,7 +11,7 @@ import TCACoordinators
 
 struct ProfileFlowCoordinatorView: View {
 
-    let store: Store<Profile.State, Profile.Action>
+    let store: StoreOf<Profile>
 
     var body: some View {
         TCARouter(store) { screen in

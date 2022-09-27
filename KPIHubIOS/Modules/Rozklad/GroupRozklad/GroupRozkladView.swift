@@ -26,9 +26,9 @@ struct GroupRozkladView: View {
     @State var headerHeight: CGFloat = 0
     @State var headerBackgroundOpacity: CGFloat = 0
 
-    let store: Store<GroupRozklad.State, GroupRozklad.Action>
+    let store: StoreOf<GroupRozklad>
 
-    init(store: Store<GroupRozklad.State, GroupRozklad.Action>) {
+    init(store: StoreOf<GroupRozklad>) {
         self.store = store
 
         UITableView.appearance().sectionHeaderTopPadding = 0
@@ -257,13 +257,7 @@ struct GroupRozkladView_Previews: PreviewProvider {
             GroupRozkladView(
                 store: Store(
                     initialState: GroupRozklad.State(),
-                    reducer: GroupRozklad.reducer,
-                    environment: GroupRozklad.Environment(
-                        apiClient: .failing,
-                        userDefaultsClient: .mock(),
-                        rozkladClient: .mock(),
-                        currentDateClient: .mock()
-                    )
+                    reducer: GroupRozklad()
                 )
             )
             .navigationBarHidden(true)

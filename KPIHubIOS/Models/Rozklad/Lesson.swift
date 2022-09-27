@@ -264,3 +264,17 @@ extension Lesson: Identifiable {
     }
     
 }
+
+extension Lesson {
+    
+    var isTeachersEmpty: Bool {
+        (teachers ?? []).isContentEmpty
+    }
+    var isTypeEmpty: Bool {
+        type.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+    var isLocationsEmpty: Bool {
+        (locations ?? []).isContentEmpty
+    }
+
+}

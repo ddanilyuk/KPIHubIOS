@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import IdentifiedCollections
 
-struct StudySheetItemDetail {
+struct StudySheetItemDetail: ReducerProtocol {
 
     // MARK: - State
 
@@ -32,19 +32,23 @@ struct StudySheetItemDetail {
     // MARK: - Action
 
     enum Action: Equatable {
+        case onAppear
         case cells(id: StudySheetActivity.State.ID, action: StudySheetActivity.Action)
     }
 
-    // MARK: - Environment
-
-    struct Environment { }
-
     // MARK: - Reducer
-
-    static let reducer = Reducer<State, Action, Environment> { _, action, _ in
-        switch action {
-        case .cells:
-            return .none
+    
+    @Dependency(\.analyticsClient) var analyticsClient
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { _, action in
+            switch action {
+            case .onAppear:
+                analyticsClient.track(Event.Campus.studySheetItemDetailAppeared)
+                return .none
+            case .cells:
+                return .none
+            }
         }
     }
 

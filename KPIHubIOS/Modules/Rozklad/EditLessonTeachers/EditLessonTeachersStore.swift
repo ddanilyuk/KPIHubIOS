@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct EditLessonTeachers {
+struct EditLessonTeachers: ReducerProtocol {
 
     // MARK: - State
 
@@ -26,6 +26,7 @@ struct EditLessonTeachers {
     // MARK: - Action
 
     enum Action: Equatable {
+        case onAppear
         case save
         case cancel
 
@@ -38,37 +39,42 @@ struct EditLessonTeachers {
     }
 
     // MARK: - Environment
-
-    struct Environment {
-        let userDefaultsClient: UserDefaultsClientable
-        let rozkladClient: RozkladClient
-    }
+    
+    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
+    
+    var body: some ReducerProtocol<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .onAppear:
+                analyticsClient.track(Event.LessonDetails.editTeachersAppeared)
+                return .none
 
-    static let reducer = Reducer<State, Action, Environment> { state, action, environment in
-        switch action {
-        case .save:
-            var newLesson = state.lesson
-            newLesson.teachers = state.selected
-            environment.rozkladClient.lessons.modify(.init(newLesson, commitChanges: true))
-            return Effect(value: .routeAction(.dismiss))
+            case .save:
+                var newLesson = state.lesson
+                newLesson.teachers = state.selected
+                rozkladClientLessons.modify(.init(newLesson, commitChanges: true))
+                analyticsClient.track(Event.LessonDetails.editTeachersApply)
+                return Effect(value: .routeAction(.dismiss))
 
-        case .cancel:
-            return Effect(value: .routeAction(.dismiss))
+            case .cancel:
+                return Effect(value: .routeAction(.dismiss))
 
-        case let .toggle(element):
-            if let index = state.selected.firstIndex(of: element) {
-                if state.selected.count > 1 {
-                    state.selected.remove(at: index)
+            case let .toggle(element):
+                if let index = state.selected.firstIndex(of: element) {
+                    if state.selected.count > 1 {
+                        state.selected.remove(at: index)
+                    }
+                } else {
+                    state.selected.append(element)
                 }
-            } else {
-                state.selected.append(element)
-            }
-            return .none
+                return .none
 
-        case .routeAction:
-            return .none
+            case .routeAction:
+                return .none
+            }
         }
     }
 

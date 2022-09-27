@@ -13,7 +13,7 @@ extension Rozklad {
 
 }
 
-extension Rozklad.ScreenProvider {
+extension Rozklad.ScreenProvider: ReducerProtocol {
 
     // MARK: - State handling
 
@@ -39,68 +39,24 @@ extension Rozklad.ScreenProvider {
         case editLessonTeachers(EditLessonTeachers.Action)
     }
 
-    // MARK: - Reducer handling
-
-    static let reducer = Reducer<State, Action, Rozklad.Environment>.combine(
-        GroupRozklad.reducer
-            .pullback(
-                state: /State.groupRozklad,
-                action: /Action.groupRozklad,
-                environment: {
-                    GroupRozklad.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient,
-                        currentDateClient: $0.currentDateClient
-                    )
-                }
-            ),
-        GroupPicker.reducer
-            .pullback(
-                state: /State.groupPicker,
-                action: /Action.groupPicker,
-                environment: {
-                    GroupPicker.Environment(
-                        apiClient: $0.apiClient,
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            ),
-        LessonDetails.reducer
-            .pullback(
-                state: /State.lessonDetails,
-                action: /Action.lessonDetails,
-                environment: {
-                    LessonDetails.Environment(
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient,
-                        currentDateClient: $0.currentDateClient
-                    )
-                }
-            ),
-        EditLessonNames.reducer
-            .pullback(
-                state: /State.editLessonNames,
-                action: /Action.editLessonNames,
-                environment: {
-                    EditLessonNames.Environment(
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            ),
-        EditLessonTeachers.reducer
-            .pullback(
-                state: /State.editLessonTeachers,
-                action: /Action.editLessonTeachers,
-                environment: {
-                    EditLessonTeachers.Environment(
-                        userDefaultsClient: $0.userDefaultsClient,
-                        rozkladClient: $0.rozkladClient
-                    )
-                }
-            )
-    )
+    // MARK: - Reducer
+    
+    var body: some ReducerProtocol<State, Action> {
+        Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
+            GroupRozklad()
+        }
+        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
+            GroupPicker()
+        }
+        Scope(state: /State.lessonDetails, action: /Action.lessonDetails) {
+            LessonDetails()
+        }
+        Scope(state: /State.editLessonNames, action: /Action.editLessonNames) {
+            EditLessonNames()
+        }
+        Scope(state: /State.editLessonTeachers, action: /Action.editLessonTeachers) {
+            EditLessonTeachers()
+        }
+    }
 
 }

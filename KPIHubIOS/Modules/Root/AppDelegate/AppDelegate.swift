@@ -7,16 +7,24 @@
 
 import UIKit
 import ComposableArchitecture
+import Routes
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    let store: StoreOf<App> = {
+        Store(
+            initialState: App.State(),
+            reducer: App()
+        )
+    }()
 
     // MARK: - Store
 
-    lazy var appDelegateStore = KPIHubIOSApp.store.scope(
+    lazy var appDelegateStore = store.scope(
         state: \App.State.appDelegate,
         action: App.Action.appDelegate
     )
-    lazy var viewStore: ViewStore<State, Action> = ViewStore(appDelegateStore)
+    lazy var viewStore: ViewStoreOf<AppDelegateReducer> = ViewStore(appDelegateStore)
 
     // MARK: - Methods
 
