@@ -18,7 +18,7 @@ private enum APIClientKey: TestDependencyKey {
 
 extension APIClientKey: DependencyKey {
     static let liveValue: APIClient = APIClient.live(
-        router: rootRouter.baseURL(DependencyValues.current.appConfiguration.apiURL)
+        router: rootRouter.baseURL(DependencyValues._current.appConfiguration.apiURL)
     )
 }
 

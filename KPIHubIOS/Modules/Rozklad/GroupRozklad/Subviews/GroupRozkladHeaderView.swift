@@ -6,53 +6,57 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct GroupRozkladHeaderView: View {
-
-    @ObservedObject var animation: GroupRozkladAnimationViewModel
-    let groupName: String
-
+    
+    struct ViewState: Equatable {
+        var position: GroupRozklad.State.Section.Position
+        let groupName: String
+        var currentDay: Lesson.Day?
+        var currentWeek: Lesson.Week = .first
+        
+        init(_ groupRozklad: GroupRozklad.State) {
+            self.position = groupRozklad.position
+            self.groupName = groupRozklad.groupName
+            self.currentWeek = groupRozklad.currentWeek
+            self.currentDay = groupRozklad.currentDay
+        }
+    }
+    
+    @ObservedObject var viewStore: ViewStore<ViewState, GroupRozklad.Action>    
     @Binding var displayedWeek: Lesson.Week
     @Binding var displayedDay: Lesson.Day
-
     @Binding var headerBackgroundOpacity: CGFloat
 
     var selectWeek: (Lesson.Week) -> Void
     var selectDay: (Lesson.Day?) -> Void
 
-    var currentWeek: Lesson.Week
-    var currentDay: Lesson.Day?
-
     @Environment(\.safeAreaInsets) var safeAreaInsets
 
+    @ViewBuilder
     var body: some View {
         VStack(spacing: 0) {
             HStack {
                 GroupRozkladTitleView(
-                    title: groupName
+                    title: viewStore.groupName
                 )
 
                 GroupRozkladWeekPicker(
-                    displayedWeek: displayedWeek,
-                    currentWeek: currentWeek,
+                    displayedWeek: viewStore.position.week,
+                    currentWeek: viewStore.currentWeek,
                     selectWeek: selectWeek
                 )
             }
 
             GroupRozkladDayPicker(
-                displayedDay: displayedDay,
-                currentDay: currentDay,
+                displayedDay: viewStore.position.day,
+                currentDay: viewStore.currentDay,
                 selectDay: selectDay
             )
             .padding(.bottom, 4)
         }
         .padding(.top, safeAreaInsets.top)
-        .onChange(of: animation.position) { newValue in
-            DispatchQueue.main.async {
-                displayedDay = newValue.day
-                displayedWeek = newValue.week
-            }
-        }
         .background(
             ZStack {
                 Color.clear

@@ -98,7 +98,6 @@
 		5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F79DEB7284EB99C0040C14A /* GroupResponse.swift */; };
 		5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7B0BE3285B717800F8FB4C /* GroupRozkladHeaderView.swift */; };
 		5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C5903285B6D5A00900A90 /* View+If.swift */; };
-		5F7C5906285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C5905285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift */; };
 		5F856A3E286471AE00AB63AC /* Shape+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A3D286471AE00AB63AC /* Shape+Ext.swift */; };
 		5F856A412864727000AB63AC /* CurrentDateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A402864727000AB63AC /* CurrentDateClient.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
@@ -113,7 +112,6 @@
 		5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */; };
 		5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */; };
 		5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC03284E30B50041FE74 /* Color+Extension.swift */; };
-		5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 5FA65DDB286A4C370048182C /* TCACoordinators */; };
 		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
 		5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */; };
 		5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */; };
@@ -136,8 +134,10 @@
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
-		DB534FD228E2554700BB6BC6 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB534FD128E2554700BB6BC6 /* ComposableArchitecture */; };
+		DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277728EB9604006EBA99 /* ComposableArchitecture */; };
+		DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277928EB9604006EBA99 /* Dependencies */; };
 		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
+		DB8A517128EE15F100A6D939 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DB8A517028EE15F100A6D939 /* TCACoordinators */; };
 		DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */; };
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
@@ -266,7 +266,6 @@
 		5F79DEB7284EB99C0040C14A /* GroupResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupResponse.swift; sourceTree = "<group>"; };
 		5F7B0BE3285B717800F8FB4C /* GroupRozkladHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladHeaderView.swift; sourceTree = "<group>"; };
 		5F7C5903285B6D5A00900A90 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
-		5F7C5905285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladAnimationViewModel.swift; sourceTree = "<group>"; };
 		5F856A3D286471AE00AB63AC /* Shape+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shape+Ext.swift"; sourceTree = "<group>"; };
 		5F856A402864727000AB63AC /* CurrentDateClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateClient.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -325,10 +324,11 @@
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
 				DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */,
 				DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */,
+				DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
-				5FA65DDC286A4C370048182C /* TCACoordinators in Frameworks */,
 				DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */,
-				DB534FD228E2554700BB6BC6 /* ComposableArchitecture in Frameworks */,
+				DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */,
+				DB8A517128EE15F100A6D939 /* TCACoordinators in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,7 +522,6 @@
 				5F137EFC28440DF500514263 /* GroupRozkladStore.swift */,
 				5F198F5C28704DE300D13782 /* GroupRozkladSection.swift */,
 				5F137EFE28440DFD00514263 /* GroupRozkladView.swift */,
-				5F7C5905285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift */,
 				5F5F46442849005300202DA5 /* Subviews */,
 				5F5F4628284569CC00202DA5 /* Cell */,
 			);
@@ -1084,11 +1083,12 @@
 			packageProductDependencies = (
 				5FD570B4283680DA00D8E869 /* Routes */,
 				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
-				5FA65DDB286A4C370048182C /* TCACoordinators */,
 				DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */,
 				DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */,
 				DB27C6E528D67B1500F4FA1B /* FirebasePerformance */,
-				DB534FD128E2554700BB6BC6 /* ComposableArchitecture */,
+				DB66277728EB9604006EBA99 /* ComposableArchitecture */,
+				DB66277928EB9604006EBA99 /* Dependencies */,
+				DB8A517028EE15F100A6D939 /* TCACoordinators */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1165,10 +1165,10 @@
 			);
 			mainGroup = 5F97B3B2283677C200350368;
 			packageReferences = (
-				5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -1394,7 +1394,6 @@
 				5F137EFF28440DFD00514263 /* GroupRozkladView.swift in Sources */,
 				5F5F464A284900C200202DA5 /* GroupRozkladDayPicker.swift in Sources */,
 				5F6712512865FB8600A57E10 /* LessonDetailsSectionView.swift in Sources */,
-				5F7C5906285B6D8400900A90 /* GroupRozkladAnimationViewModel.swift in Sources */,
 				5F667CFA284E3E78006D3AB7 /* LessonDetailsLocationsSection.swift in Sources */,
 				5F5F463D284814E800202DA5 /* Lesson.swift in Sources */,
 				5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */,
@@ -1526,7 +1525,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_PREVIEWS = YES;
@@ -1542,7 +1541,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1659,7 +1658,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
@@ -1677,7 +1676,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1856,7 +1855,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_PREVIEWS = YES;
@@ -1872,7 +1871,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1888,7 +1887,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "$(KPIHubIOS_APP_ICON)";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
@@ -1906,7 +1905,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.KPIHubIOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -2045,28 +2044,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				branch = "protocol-beta";
-				kind = branch;
-			};
-		};
 		5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 4.2.0;
-			};
-		};
-		5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
 			};
 		};
 		DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -2077,6 +2060,22 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				branch = "protocol-beta";
+				kind = branch;
+			};
+		};
+		DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2084,11 +2083,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
-		};
-		5FA65DDB286A4C370048182C /* TCACoordinators */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5FA65DDA286A4C370048182C /* XCRemoteSwiftPackageReference "TCACoordinators" */;
-			productName = TCACoordinators;
 		};
 		5FD570B4283680DA00D8E869 /* Routes */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2109,10 +2103,20 @@
 			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
 		};
-		DB534FD128E2554700BB6BC6 /* ComposableArchitecture */ = {
+		DB66277728EB9604006EBA99 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5F137EAC28439EA100514263 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		DB66277928EB9604006EBA99 /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
+		};
+		DB8A517028EE15F100A6D939 /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -68,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnpatrickmorgan/FlowStacks",
       "state" : {
-        "revision" : "6ef15945183e983d0de8c69a2750ed44d1f3645e",
-        "version" : "0.2.3"
+        "revision" : "8d1bc577fcab0c09d599f1f2f6747db2d15f84f4",
+        "version" : "0.3.0"
       }
     },
     {
@@ -276,7 +276,7 @@
       "location" : "https://github.com/pointfreeco/swift-composable-architecture",
       "state" : {
         "branch" : "protocol-beta",
-        "revision" : "62b7bc415fba01249346d704aa60d2bfe9483ff6"
+        "revision" : "6ab2c918dcc2c46e4c167bb8a100e441b782a63b"
       }
     },
     {
@@ -401,8 +401,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnpatrickmorgan/TCACoordinators",
       "state" : {
-        "revision" : "d44cce852aae359a40b92d4468791acc23803fb8",
-        "version" : "0.2.1"
+        "branch" : "main",
+        "revision" : "6f7ae3cac128f6f5b5e88255d3210dcd01f17baa"
       }
     },
     {
