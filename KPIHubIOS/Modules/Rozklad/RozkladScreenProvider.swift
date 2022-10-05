@@ -26,7 +26,6 @@ extension Rozklad.ScreenProvider: ReducerProtocol {
         case lessonDetails(LessonDetails.State)
         case editLessonNames(EditLessonNames.State)
         case editLessonTeachers(EditLessonTeachers.State)
-
     }
 
     // MARK: - Action handling

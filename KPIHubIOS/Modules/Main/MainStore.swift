@@ -14,7 +14,7 @@ struct Main: ReducerProtocol {
 
     struct State: Equatable {
 
-        @BindableState var selectedTab: Tab
+        var selectedTab: Tab
 
         enum Tab: Hashable {
             case rozklad
@@ -37,20 +37,18 @@ struct Main: ReducerProtocol {
 
     // MARK: - Action
 
-    enum Action: Equatable, BindableAction {
+    enum Action: Equatable {
         case rozklad(Rozklad.Action)
         case campus(Campus.Action)
         case profile(Profile.Action)
 
-        case binding(BindingAction<State>)
+        case tabSelected(State.Tab)
     }
     
     // MARK: - Reducer
     
     @ReducerBuilder<State, Action>
     var core: some ReducerProtocol<State, Action> {
-        BindingReducer()
-        
         Reduce { state, action in
             switch action {
             case .profile(.delegate(.selectRozkladTab)):
@@ -60,6 +58,10 @@ struct Main: ReducerProtocol {
             case .profile(.delegate(.selectCampusTab)):
                 state.selectedTab = .campus
                 return .none
+                
+            case let .tabSelected(tab):
+                state.selectedTab = tab
+                return .none
 
             case .rozklad:
                 return .none
@@ -68,9 +70,6 @@ struct Main: ReducerProtocol {
                 return .none
 
             case .profile:
-                return .none
-
-            case .binding:
                 return .none
             }
         }

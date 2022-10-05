@@ -17,7 +17,7 @@ private enum RozkladClientStateKey: TestDependencyKey {
 
 extension RozkladClientStateKey: DependencyKey {
     static let liveValue = RozkladClientState.live(
-        userDefaultsClient: DependencyValues.current.userDefaultsClient
+        userDefaultsClient: DependencyValues._current.userDefaultsClient
     )
 }
 

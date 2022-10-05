@@ -13,8 +13,8 @@ struct MainTabCoordinatorView: View {
     let store: StoreOf<Main>
 
     var body: some View {
-        WithViewStore(store) { viewStore in
-            TabView(selection: viewStore.binding(\.$selectedTab)) {
+        WithViewStore(self.store, observe: \.selectedTab) { viewStore in
+            TabView(selection: viewStore.binding(send: Main.Action.tabSelected)) {
                 RozkladFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.rozklad,
@@ -28,7 +28,7 @@ struct MainTabCoordinatorView: View {
                     }
                 }
                 .tag(Main.State.Tab.rozklad)
-
+                
                 CampusFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.campus,
@@ -42,7 +42,7 @@ struct MainTabCoordinatorView: View {
                     }
                 }
                 .tag(Main.State.Tab.campus)
-
+                
                 ProfileFlowCoordinatorView(
                     store: store.scope(
                         state: \Main.State.profile,

@@ -16,8 +16,8 @@ private enum CampusClientStateKey: TestDependencyKey {
 
 extension CampusClientStateKey: DependencyKey {
     static let liveValue = CampusClientState.live(
-        userDefaultsClient: DependencyValues.current.userDefaultsClient,
-        keychainClient: DependencyValues.current.keychainClient
+        userDefaultsClient: DependencyValues._current.userDefaultsClient,
+        keychainClient: DependencyValues._current.keychainClient
     )
 }
 

@@ -14,7 +14,6 @@ struct GroupRozklad: ReducerProtocol {
     // MARK: - State
 
     struct State: Equatable {
-
         var currentDay: Lesson.Day?
         var currentWeek: Lesson.Week = .first
         var currentLesson: CurrentLesson?
@@ -28,6 +27,14 @@ struct GroupRozklad: ReducerProtocol {
 
         @BindableState var needToScrollOnAppear: Bool = false
         var scrollTo: Lesson.ID?
+        
+        // Animations
+        @BindableState var position = GroupRozklad.State.Section.Position(week: .first, day: .monday)
+        @BindableState var lastShownElement: LastShownElement?
+        var offsets: [CGFloat?] = Array(
+            repeating: nil,
+            count: GroupRozklad.State.Section.Position.count
+        )
 
         var lessonCells: IdentifiedArrayOf<LessonCell.State> {
             get {
@@ -63,6 +70,8 @@ struct GroupRozklad: ReducerProtocol {
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
         case routeAction(RouteAction)
         case binding(BindingAction<State>)
+        
+        case setOffset(index: Int, value: CGFloat?, headerHeight: CGFloat)
 
         enum RouteAction: Equatable {
             case openDetails(Lesson)
@@ -79,6 +88,7 @@ struct GroupRozklad: ReducerProtocol {
     // MARK: - Reducer
     
     enum SubscriberCancelID { }
+    enum SetOffsetID { }
 
     var body: some ReducerProtocol<State, Action> {
         BindingReducer()
@@ -173,6 +183,31 @@ struct GroupRozklad: ReducerProtocol {
                     return .none
                 }
                 return Effect(value: .routeAction(.openDetails(selectedLesson)))
+                
+            case let .setOffset(index, value, headerHeight):
+                guard
+                    state.isAppeared,
+                    state.offsets[index] != value
+                else {
+                    return .none
+                }
+                state.offsets[index] = value
+                let offset = state.offsets
+                let lastShownElement = state.lastShownElement
+                return .run { send in
+                    let calculatedIndex = await calculateIndex(
+                        headerHeight: headerHeight,
+                        offsets: offset,
+                        lastShownElement: lastShownElement
+                    ) { lastShownElement in
+                        await send(.binding(.set(\.$lastShownElement, lastShownElement)))
+                    }
+                    let newPosition = GroupRozklad.State.Section.Position(
+                        index: min(max(0, calculatedIndex), 11)
+                    )
+                    await send(.binding(.set(\.$position, newPosition)))
+                }
+                .cancellable(id: SetOffsetID.self, cancelInFlight: true)
 
             case .routeAction:
                 return .none
@@ -189,4 +224,57 @@ struct GroupRozklad: ReducerProtocol {
         }
     }
 
+}
+
+func calculateIndex(
+    headerHeight: CGFloat,
+    offsets: [CGFloat?],
+    lastShownElement: LastShownElement?,
+    onChangeLastShownElement: @escaping (LastShownElement) async -> Void
+) async -> Int {
+    let target = headerHeight + 1
+    let offsets = offsets
+    let numberOfElements = offsets.compactMap { $0 }.count
+
+    func compareWithTarget(element: CGFloat, index: Int) -> Int {
+        element < target ? index : index - 1
+    }
+    
+//    let debug = offsets.map { optionalFloat in
+//        if let float = optionalFloat {
+//            return "\(float.rounded())"
+//        } else {
+//            return "nil"
+//        }
+//    }
+//    .joined(separator: " | ")
+//    print(debug)
+    
+    switch numberOfElements {
+    case 1:
+        let index = offsets.firstIndex(where: { $0 != nil })!
+        let element = offsets[index]!
+        await onChangeLastShownElement(LastShownElement(index: index, value: element))
+        return compareWithTarget(element: element, index: index)
+
+    case 0:
+        guard let lastShownElement = lastShownElement else {
+            return 0
+        }
+        return compareWithTarget(element: lastShownElement.value, index: lastShownElement.index)
+
+    default:
+        let index = offsets.firstIndex(where: { $0 != nil })!
+        let element = offsets[index]!
+        if element < target {
+            return offsets.lastIndex(where: { $0 != nil ? $0! < target : false }) ?? index
+        } else {
+            return index - 1
+        }
+    }
+}
+
+struct LastShownElement: Equatable {
+    var index: Int
+    var value: CGFloat
 }
