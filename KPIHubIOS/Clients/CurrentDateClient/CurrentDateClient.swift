@@ -17,8 +17,8 @@ private enum CurrentDateClientKey: TestDependencyKey {
 
 extension CurrentDateClientKey: DependencyKey {
     static let liveValue = CurrentDateClient.live(
-        userDefaultsClient: DependencyValues.current.userDefaultsClient,
-        rozkladClientLessons: DependencyValues.current.rozkladClientLessons
+        userDefaultsClient: DependencyValues._current.userDefaultsClient,
+        rozkladClientLessons: DependencyValues._current.rozkladClientLessons
     )
 }
 
