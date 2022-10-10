@@ -53,6 +53,7 @@ struct GroupPicker: ReducerProtocol {
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientStateV2) var rozkladClientStateV2
     @Dependency(\.analyticsClient) var analyticsClient
 
     // MARK: - Reducer
@@ -93,7 +94,10 @@ struct GroupPicker: ReducerProtocol {
                         for: .api(.group(group.id, .lessons)),
                         as: LessonsResponse.self
                     )
-                    rozkladClientState.setState(ClientValue(.selected(group), commitChanges: false))
+                    rozkladClientStateV2.setState(
+                        ClientValue(.selected(group), commitChanges: false)
+                    )
+//                    rozkladClientState.setState(ClientValue(.selected(group), commitChanges: false))
                     return result.value.lessons.map { Lesson(lessonResponse: $0) }
                 }
                 analyticsClient.setGroup(group)

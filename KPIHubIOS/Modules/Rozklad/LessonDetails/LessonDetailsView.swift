@@ -65,6 +65,9 @@ struct LessonDetailsView: View {
             .onAppear {
                 viewStore.send(.onAppear)
             }
+            .task {
+                await viewStore.send(.task).finish()
+            }
             .background(Color.screenBackground)
             .navigationTitle("Деталі")
             .navigationBarTitleDisplayMode(.inline)

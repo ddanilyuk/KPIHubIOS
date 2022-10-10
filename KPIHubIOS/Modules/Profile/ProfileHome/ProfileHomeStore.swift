@@ -64,6 +64,8 @@ struct ProfileHome: ReducerProtocol {
     @Dependency(\.apiClient) var apiClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladClientStateV2) var rozkladClientStateV2
+
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
@@ -127,7 +129,10 @@ struct ProfileHome: ReducerProtocol {
                             for: .api(.group(newGroup.value.id, .lessons)),
                             as: LessonsResponse.self
                         )
-                        rozkladClientState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
+                        rozkladClientStateV2.setState(
+                            ClientValue(.selected(newGroup.value), commitChanges: false)
+                        )
+//                        rozkladClientState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
                         return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
                     }
                     return task
@@ -165,7 +170,8 @@ struct ProfileHome: ReducerProtocol {
                 return .none
 
             case .changeGroup:
-                rozkladClientState.setState(ClientValue(.notSelected, commitChanges: true))
+                rozkladClientStateV2.setState(ClientValue(.notSelected, commitChanges: true))
+//                rozkladClientState.setState(ClientValue(.notSelected, commitChanges: true))
                 analyticsClient.track(Event.Profile.changeGroup)
                 analyticsClient.setGroup(nil)
                 return Effect(value: .routeAction(.rozklad))

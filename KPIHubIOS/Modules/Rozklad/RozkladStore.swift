@@ -26,8 +26,11 @@ struct Rozklad: ReducerProtocol {
 
     enum Action: Equatable, IdentifiedRouterAction {
         case onSetup
+        case task
         
         case updateRozkladState(RozkladClientState.State)
+        case updateRozkladStateV2(RozkladClientStateV2.State)
+
         case setGroupRozklad
         case setGroupPicker
 
@@ -37,6 +40,7 @@ struct Rozklad: ReducerProtocol {
 
     // MARK: - Environment
     
+    @Dependency(\.rozkladClientStateV2) var rozkladClientStateV2
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.analyticsClient) var analyticsClient
@@ -47,19 +51,40 @@ struct Rozklad: ReducerProtocol {
     var core: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .onSetup:
-                return Effect.merge(
-                    Effect(value: .updateRozkladState(rozkladClientState.subject.value)),
-                    Effect.run { subscriber in
-                        rozkladClientState.subject
-                            .dropFirst()
-                            .removeDuplicates()
-                            .receive(on: DispatchQueue.main)
-                            .sink { state in
-                                subscriber.send(.updateRozkladState(state))
-                            }
+            case .task:
+                print("!!! Rozklad Store task")
+                return .run { send in
+                    print("!!! Rozklad Store inside")
+                    await send(.updateRozkladStateV2(rozkladClientStateV2.state()))
+                    print("!!! Rozklad Store before for loop")
+                    for await result in await rozkladClientStateV2.observer() {
+                        print("!!! Rozklad Store new result \(result)")
+                        await send(.updateRozkladStateV2(result))
+                        print("!!! Rozklad Store after new result")
                     }
-                )
+                }
+                
+            case .onSetup:
+                return .none
+//                return .run { send in
+//                    await send(.updateRozkladStateV2(rozkladClientStateV2.state()))
+//                    for await result in await rozkladClientStateV2.observer() {
+//                        await send(.updateRozkladStateV2(result))
+//                    }
+//                }
+//                return rozkladClientStateV2.observer.
+//                return Effect.merge(
+//                    Effect(value: .updateRozkladState(rozkladClientState.subject.value)),
+//                    Effect.run { subscriber in
+//                        rozkladClientState.subject
+//                            .dropFirst()
+//                            .removeDuplicates()
+//                            .receive(on: DispatchQueue.main)
+//                            .sink { state in
+//                                subscriber.send(.updateRozkladState(state))
+//                            }
+//                    }
+//                )
                 
             case let .updateRozkladState(state):
                 switch state {
@@ -69,6 +94,14 @@ struct Rozklad: ReducerProtocol {
                     return Effect(value: .setGroupPicker)
                 }
 
+            case let .updateRozkladStateV2(state):
+                switch state {
+                case .selected:
+                    return Effect(value: .setGroupRozklad)
+                case .notSelected:
+                    return Effect(value: .setGroupPicker)
+                }
+                
             case .setGroupRozklad:
                 state.routes = [
                     .root(

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Asynchrone
 
 struct LessonDetails: ReducerProtocol {
 
@@ -32,6 +33,7 @@ struct LessonDetails: ReducerProtocol {
 
     enum Action: Equatable, BindableAction {
         case onAppear
+        case task
 
         case updateCurrentDate
         case updateLesson(Lesson)
@@ -63,6 +65,13 @@ struct LessonDetails: ReducerProtocol {
         
         Reduce { state, action in
             switch action {
+            case .task:
+                return .run { send in
+                    for try await _ in currentDateClient.updated.asyncStream().shared() {
+                        await send(.updateCurrentDate)
+                    }
+                }
+            
             case .onAppear:
                 let lessonID = state.lesson.id
                 analyticsClient.track(Event.LessonDetails.appeared(
@@ -78,15 +87,15 @@ struct LessonDetails: ReducerProtocol {
                             .sink { lesson in
                                 subscriber.send(.updateLesson(lesson))
                             }
-                    },
-                    Effect.run { subscriber in
-                        currentDateClient.updated
-                            .dropFirst()
-                            .receive(on: DispatchQueue.main)
-                            .sink { _ in
-                                subscriber.send(.updateCurrentDate)
-                            }
                     }
+//                    Effect.run { subscriber in
+//                        currentDateClient.updated
+//                            .dropFirst()
+//                            .receive(on: DispatchQueue.main)
+//                            .sink { _ in
+//                                subscriber.send(.updateCurrentDate)
+//                            }
+//                    }
                 )
                 .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
                 

@@ -57,6 +57,7 @@ struct MainTabCoordinatorView: View {
                 }
                 .tag(Main.State.Tab.profile)
             }
+            .task { await viewStore.send(.rozklad(.task)).finish() }
             .onAppear {
                 viewStore.send(.rozklad(.onSetup))
                 viewStore.send(.campus(.onSetup))

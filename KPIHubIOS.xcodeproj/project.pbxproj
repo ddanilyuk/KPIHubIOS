@@ -142,6 +142,9 @@
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
 		DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5328D70F8A004C5CAC /* Event.swift */; };
+		DBEE7ABB28F353410004C284 /* AsyncHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE7ABA28F353410004C284 /* AsyncHelpers.swift */; };
+		DBEE7AC228F355730004C284 /* Asynchrone in Frameworks */ = {isa = PBXBuildFile; productRef = DBEE7AC128F355730004C284 /* Asynchrone */; };
+		DBEE7AC428F35D660004C284 /* AsyncCurrentDateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEE7AC328F35D660004C284 /* AsyncCurrentDateClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -311,6 +314,8 @@
 		DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Group.swift"; sourceTree = "<group>"; };
 		DBD22F5128D70F75004C5CAC /* UserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProperty.swift; sourceTree = "<group>"; };
 		DBD22F5328D70F8A004C5CAC /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		DBEE7ABA28F353410004C284 /* AsyncHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncHelpers.swift; sourceTree = "<group>"; };
+		DBEE7AC328F35D660004C284 /* AsyncCurrentDateClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCurrentDateClient.swift; sourceTree = "<group>"; };
 		DC9FB22C82EF9CED3A31FBD7 /* Pods-KPIHubIOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE920022D9C94B235B666887 /* Pods-KPIHubIOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E8441509BC2A3EFC0CFBE577 /* Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -323,6 +328,7 @@
 			files = (
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
 				DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */,
+				DBEE7AC228F355730004C284 /* Asynchrone in Frameworks */,
 				DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */,
 				DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */,
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
@@ -668,6 +674,7 @@
 				DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */,
 				DB16750928D77D9300F6596D /* FirebaseClient */,
 				5FEE632A286D9B1C002F7E9D /* Helpers */,
+				DBEE7ABA28F353410004C284 /* AsyncHelpers.swift */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
@@ -844,6 +851,7 @@
 		5F856A3F2864725500AB63AC /* CurrentDateClient */ = {
 			isa = PBXGroup;
 			children = (
+				DBEE7AC328F35D660004C284 /* AsyncCurrentDateClient.swift */,
 				5F856A402864727000AB63AC /* CurrentDateClient.swift */,
 			);
 			path = CurrentDateClient;
@@ -1089,6 +1097,7 @@
 				DB66277728EB9604006EBA99 /* ComposableArchitecture */,
 				DB66277928EB9604006EBA99 /* Dependencies */,
 				DB8A517028EE15F100A6D939 /* TCACoordinators */,
+				DBEE7AC128F355730004C284 /* Asynchrone */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1169,6 +1178,7 @@
 				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				DBEE7AC028F355730004C284 /* XCRemoteSwiftPackageReference "Asynchrone" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -1408,10 +1418,12 @@
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */,
 				5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */,
+				DBEE7AC428F35D660004C284 /* AsyncCurrentDateClient.swift in Sources */,
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
 				5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */,
 				DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */,
+				DBEE7ABB28F353410004C284 /* AsyncHelpers.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5FEE6330286DD9AC002F7E9D /* CurrentLesson.swift in Sources */,
@@ -2076,6 +2088,14 @@
 				kind = branch;
 			};
 		};
+		DBEE7AC028F355730004C284 /* XCRemoteSwiftPackageReference "Asynchrone" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/reddavis/Asynchrone";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2117,6 +2137,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
 			productName = TCACoordinators;
+		};
+		DBEE7AC128F355730004C284 /* Asynchrone */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBEE7AC028F355730004C284 /* XCRemoteSwiftPackageReference "Asynchrone" */;
+			productName = Asynchrone;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

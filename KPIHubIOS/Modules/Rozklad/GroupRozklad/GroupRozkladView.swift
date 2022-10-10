@@ -79,6 +79,9 @@ struct GroupRozkladView: View {
         .onAppear {
             viewStore.send(.onAppear)
         }
+        .task {
+            await viewStore.send(.task).finish()
+        }
         .onDisappear {
             viewStore.send(.onDisappear)
         }

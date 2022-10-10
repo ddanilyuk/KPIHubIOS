@@ -59,6 +59,7 @@ struct GroupRozklad: ReducerProtocol {
 
     enum Action: Equatable, BindableAction {
         case onAppear
+        case task
         case onDisappear
 
         case updateLessons(IdentifiedArrayOf<Lesson>)
@@ -81,6 +82,7 @@ struct GroupRozklad: ReducerProtocol {
     // MARK: - Environment
     
     @Dependency(\.rozkladClientState) var rozkladClientState
+
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.currentDateClient) var currentDateClient
     @Dependency(\.analyticsClient) var analyticsClient
@@ -95,6 +97,13 @@ struct GroupRozklad: ReducerProtocol {
         
         Reduce { state, action in
             switch action {
+            case .task:
+                return .run { send in
+                    for try await _ in currentDateClient.updated.asyncStream().shared() {
+                        await send(.updateCurrentDate)
+                    }
+                }
+            
             case .onAppear:
                 state.isAppeared = true
                 analyticsClient.track(Event.Rozklad.groupRozkladAppeared)
@@ -113,15 +122,12 @@ struct GroupRozklad: ReducerProtocol {
                             .sink { lessons in
                                 subscriber.send(.updateLessons(lessons))
                             }
-                    },
-                    Effect.run { subscriber in
-                        currentDateClient.updated
-                            .dropFirst()
-                            .receive(on: DispatchQueue.main)
-                            .sink { _ in
-                                subscriber.send(.updateCurrentDate)
-                            }
                     }
+//                    Effect.run { send in
+//                        for try await _ in currentDateClient.updated {
+//                            await send(.updateCurrentDate)
+//                        }
+//                    }
                 )
                 .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
 
