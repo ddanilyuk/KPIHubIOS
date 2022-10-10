@@ -275,8 +275,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-composable-architecture",
       "state" : {
-        "branch" : "protocol-beta",
-        "revision" : "6ab2c918dcc2c46e4c167bb8a100e441b782a63b"
+        "revision" : "4228ff40e0df1cb849f6a158e018b1c13d6bd9c9",
+        "version" : "0.41.2"
       }
     },
     {
@@ -401,8 +401,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/johnpatrickmorgan/TCACoordinators",
       "state" : {
-        "branch" : "main",
-        "revision" : "6f7ae3cac128f6f5b5e88255d3210dcd01f17baa"
+        "revision" : "6f7ae3cac128f6f5b5e88255d3210dcd01f17baa",
+        "version" : "0.2.2"
       }
     },
     {
