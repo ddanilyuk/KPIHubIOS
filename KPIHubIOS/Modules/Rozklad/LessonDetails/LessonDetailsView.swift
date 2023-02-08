@@ -53,6 +53,13 @@ struct LessonDetailsView: View {
                             locations: viewStore.lesson.locations ?? []
                         )
                     }
+                    
+                    if viewStore.isEditing {
+                        Button("ВИДАЛИТИ", role: .destructive) {
+                            viewStore.send(.deleteLessonTapped)
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
                 }
                 .padding(16)
             }
@@ -66,6 +73,10 @@ struct LessonDetailsView: View {
                 viewStore.send(.onAppear)
             }
             .background(Color.screenBackground)
+            .alert(
+                self.store.scope(state: \.alert),
+                dismiss: .dismissAlert
+            )
             .navigationTitle("Деталі")
             .navigationBarTitleDisplayMode(.inline)
         }

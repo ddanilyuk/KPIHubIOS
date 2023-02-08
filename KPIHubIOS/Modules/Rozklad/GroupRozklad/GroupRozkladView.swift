@@ -50,7 +50,6 @@ struct GroupRozkladView: View {
 
     // MARK: - Views
 
-    @ViewBuilder
     var body: some View {
         ZStack(alignment: .top) {
             WithViewStore(
