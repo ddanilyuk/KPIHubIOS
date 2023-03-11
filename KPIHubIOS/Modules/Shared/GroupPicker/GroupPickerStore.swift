@@ -23,9 +23,10 @@ struct GroupPicker: ReducerProtocol {
         let mode: Mode
         var groups: [GroupResponse] = []
         var searchedGroups: [GroupResponse] = []
-        @BindableState var searchedText: String = ""
-        @BindableState var isLoading: Bool = true
+        @BindingState var searchedText: String = ""
+        @BindingState var isLoading: Bool = true
         var alert: AlertState<Action>?
+        var selectedGroup: GroupResponse?
     }
 
     // MARK: - Action
@@ -35,8 +36,8 @@ struct GroupPicker: ReducerProtocol {
         case refresh
         case groupSelected(GroupResponse)
 
-        case allGroupsResult(Result<[GroupResponse], NSError>)
-        case lessonsResult(Result<[Lesson], NSError>)
+        case allGroupsResult(TaskResult<[GroupResponse]>)
+        case lessonsResult(TaskResult<[Lesson]>)
 
         case dismissAlert
         case binding(BindingAction<State>)
@@ -64,7 +65,10 @@ struct GroupPicker: ReducerProtocol {
             switch action {
             case .onAppear:
                 analyticsClient.track(Event.Onboarding.groupPickerAppeared)
-                return Effect(value: .refresh)
+                return loadGroups()
+                
+            case .refresh:
+                return loadGroups()
 
             case let .allGroupsResult(.success(groups)):
                 state.isLoading = false
@@ -73,44 +77,34 @@ struct GroupPicker: ReducerProtocol {
                 analyticsClient.track(Event.Onboarding.groupsLoadSuccess)
                 return .none
 
-            case .refresh:
-                let task: EffectPublisher<[GroupResponse], Error> = EffectPublisher.task {
-                    let result = try await apiClient.decodedResponse(
-                        for: .api(.groups(.all)),
-                        as: GroupsResponse.self
-                    )
-                    return result.value.groups
-                }
-                return task
-                    .mapError { $0 as NSError }
-                    .receive(on: DispatchQueue.main)
-                    .catchToEffect(Action.allGroupsResult)
-
             case let .groupSelected(group):
                 state.isLoading = true
-                let task: EffectPublisher<[Lesson], Error> = EffectPublisher.task {
-                    let result = try await apiClient.decodedResponse(
-                        for: .api(.group(group.id, .lessons)),
-                        as: LessonsResponse.self
-                    )
-                    rozkladClientState.setState(ClientValue(.selected(group), commitChanges: false))
-                    return result.value.lessons.map { Lesson(lessonResponse: $0) }
-                }
-                analyticsClient.setGroup(group)
+                state.selectedGroup = group
                 analyticsClient.track(Event.Onboarding.groupPickerSelect)
-                return task
-                    .mapError { $0 as NSError }
-                    .receive(on: DispatchQueue.main)
+                return .task {
+                    let taskResult = await TaskResult {
+                        let decodedResponse = try await apiClient.decodedResponse(
+                            for: .api(.group(group.id, .lessons)),
+                            as: LessonsResponse.self
+                        )
+                        let lessons = decodedResponse.value.lessons.map { Lesson(lessonResponse: $0) }
+                        return lessons
+                    }
                     // Make keyboard hide to prevent tabBar opacity bugs
-                    .delay(for: 0.3, scheduler: DispatchQueue.main)
-                    .catchToEffect(Action.lessonsResult)
+                    try await Task.sleep(for: .milliseconds(300))
+                    return .lessonsResult(taskResult)
+                }
 
             case let .lessonsResult(.success(lessons)):
+                if let selectedGroup = state.selectedGroup {
+                    rozkladClientState.setState(ClientValue(.selected(selectedGroup), commitChanges: false))
+                    analyticsClient.setGroup(selectedGroup)
+                }
                 state.isLoading = false
                 rozkladClientLessons.set(.init(lessons, commitChanges: false))
                 let place = analyticsLessonsLoadPlace(from: state.mode)
                 analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: place))
-                return Effect(value: .routeAction(.done))
+                return .send(.routeAction(.done))
 
             case let .allGroupsResult(.failure(error)):
                 state.isLoading = false
@@ -149,6 +143,7 @@ struct GroupPicker: ReducerProtocol {
                 return .none
             }
         }
+        ._printChanges()
     }
     
     func analyticsLessonsLoadPlace(from mode: Mode) -> Event.Rozklad.Place {
@@ -159,6 +154,20 @@ struct GroupPicker: ReducerProtocol {
             return .rozkladTab
         case .campus:
             return .campusUserInput
+        }
+    }
+    
+    func loadGroups() -> Effect<Action> {
+        .task {
+            let taskResult = await TaskResult {
+                try await apiClient
+                    .decodedResponse(
+                        for: .api(.groups(.all)),
+                        as: GroupsResponse.self
+                    )
+                    .value.groups
+            }
+            return .allGroupsResult(taskResult)
         }
     }
 

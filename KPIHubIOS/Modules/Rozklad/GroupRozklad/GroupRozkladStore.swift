@@ -25,12 +25,12 @@ struct GroupRozklad: ReducerProtocol {
 
         var isAppeared: Bool = false
 
-        @BindableState var needToScrollOnAppear: Bool = false
+        @BindingState var needToScrollOnAppear: Bool = false
         var scrollTo: Lesson.ID?
         
         // Animations
-        @BindableState var position = GroupRozklad.State.Section.Position(week: .first, day: .monday)
-        @BindableState var lastShownElement: LastShownElement?
+        @BindingState var position = GroupRozklad.State.Section.Position(week: .first, day: .monday)
+        @BindingState var lastShownElement: LastShownElement?
         var offsets: [CGFloat?] = Array(
             repeating: nil,
             count: GroupRozklad.State.Section.Position.count

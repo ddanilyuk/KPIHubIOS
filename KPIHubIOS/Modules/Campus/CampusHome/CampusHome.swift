@@ -17,7 +17,7 @@ struct CampusHome: ReducerProtocol {
         var openStudySheetOnLoad: Bool = false
         var studySheetState: CampusClientStudySheet.State = .notLoading
 
-        @BindableState var isLoading: Bool = false
+        @BindingState var isLoading: Bool = false
     }
 
     // MARK: - Action

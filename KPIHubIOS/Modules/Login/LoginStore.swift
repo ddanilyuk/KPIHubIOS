@@ -70,7 +70,7 @@ struct Login: ReducerProtocol {
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
-                return Effect(value: .delegate(.done))
+                return .send(.delegate(.done))
 
             case .routeAction(_, .groupPicker(.routeAction(.done))):
                 campusClientState.commit()
@@ -78,7 +78,7 @@ struct Login: ReducerProtocol {
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
-                return Effect(value: .delegate(.done))
+                return .send(.delegate(.done))
 
             case .routeAction:
                 return .none

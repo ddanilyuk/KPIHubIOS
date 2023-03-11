@@ -24,7 +24,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         state: \App.State.appDelegate,
         action: App.Action.appDelegate
     )
-    lazy var viewStore: ViewStoreOf<AppDelegateReducer> = ViewStore(appDelegateStore)
+    lazy var viewStore: ViewStore<Void, AppDelegateReducer.Action> = ViewStore(appDelegateStore.stateless)
 
     // MARK: - Methods
 

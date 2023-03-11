@@ -18,12 +18,12 @@ struct ProfileHome: ReducerProtocol {
         var rozkladState: RozkladClientState.State = .notSelected
         var campusState: CampusClientState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
-        @BindableState var toggleWeek: Bool = false
+        @BindingState var toggleWeek: Bool = false
         var completeAppVersion: String = ""
 
         var confirmationDialog: ConfirmationDialogState<Action>?
         var alert: AlertState<Action>?
-        @BindableState var isLoading: Bool = false
+        @BindingState var isLoading: Bool = false
     }
 
     // MARK: - Action

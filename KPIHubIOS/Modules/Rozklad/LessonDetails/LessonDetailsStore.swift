@@ -25,7 +25,7 @@ struct LessonDetails: ReducerProtocol {
         var showType: Bool {
             !lesson.isTypeEmpty
         }
-        @BindableState var isEditing: Bool = false
+        @BindingState var isEditing: Bool = false
         
         var alert: AlertState<Action>?
     }

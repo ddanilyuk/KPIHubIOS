@@ -31,10 +31,10 @@ struct CampusLogin: ReducerProtocol {
 
         // MARK: - Properties
 
-        @BindableState var focusedField: Field?
-        @BindableState var username: String = ""
-        @BindableState var password: String = ""
-        @BindableState var isLoading: Bool = false
+        @BindingState var focusedField: Field?
+        @BindingState var username: String = ""
+        @BindingState var password: String = ""
+        @BindingState var isLoading: Bool = false
 
         var loginButtonEnabled: Bool = false
 

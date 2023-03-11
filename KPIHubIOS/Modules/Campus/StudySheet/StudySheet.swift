@@ -21,8 +21,8 @@ struct StudySheet: ReducerProtocol {
         var possibleYears: [String] = []
         var possibleSemesters: [Int] = []
 
-        @BindableState var selectedYear: String?
-        @BindableState var selectedSemester: Int?
+        @BindingState var selectedYear: String?
+        @BindingState var selectedSemester: Int?
 
         init(items: [StudySheetItem]) {
             self.items = IdentifiedArray(uniqueElements: items)
