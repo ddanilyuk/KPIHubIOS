@@ -72,6 +72,7 @@ extension Event {
         static let editTeachersAppeared = Event(name: "lesson_details_edit_teachers_appeared")
         static let editNamesApply = Event(name: "lesson_details_edit_names_apply")
         static let editTeachersApply = Event(name: "lesson_details_edit_teachers_apply")
+        static let removeLessonApply = Event(name: "lesson_details_remove_lesson_apply")
     }
     
     enum Campus {

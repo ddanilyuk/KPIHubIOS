@@ -114,6 +114,10 @@ struct Rozklad: ReducerProtocol {
                     embedInNavigationView: true
                 )
                 return .none
+                
+            case .routeAction(_, .lessonDetails(.routeAction(.dismiss))):
+                state.routes.pop()
+                return .none
 
             case .routeAction(_, .editLessonNames(.routeAction(.dismiss))):
                 state.routes.dismiss()

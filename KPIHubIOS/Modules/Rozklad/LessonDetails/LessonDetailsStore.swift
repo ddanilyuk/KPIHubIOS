@@ -26,6 +26,8 @@ struct LessonDetails: ReducerProtocol {
             !lesson.isTypeEmpty
         }
         @BindableState var isEditing: Bool = false
+        
+        var alert: AlertState<Action>?
     }
 
     // MARK: - Action
@@ -38,11 +40,15 @@ struct LessonDetails: ReducerProtocol {
 
         case editNames
         case editTeachers
+        case deleteLessonTapped
+        case deleteLessonConfirm
 
+        case dismissAlert
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
+            case dismiss
             case editNames(_ lesson: Lesson)
             case editTeachers(_ lesson: Lesson)
         }
@@ -108,6 +114,36 @@ struct LessonDetails: ReducerProtocol {
                 } else {
                     state.mode = .default
                 }
+                return .none
+                
+            case .deleteLessonTapped:
+                state.alert = AlertState(
+                    title: {
+                        TextState("Ви впевнені?")
+                    },
+                    actions: {
+                        ButtonState(role: .destructive, action: .send(.deleteLessonConfirm)) {
+                            TextState("Видалити")
+                        }
+                        ButtonState(role: .cancel, action: .send(.dismissAlert)) {
+                            TextState("Назад")
+                        }
+                    },
+                    message: {
+                        TextState("Після видалення цей урок стане недоступний.")
+                    }
+                )
+                return .none
+                
+            case .deleteLessonConfirm:
+                var lessons = rozkladClientLessons.subject.value
+                lessons.remove(id: state.lesson.id)
+                rozkladClientLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
+                analyticsClient.track(Event.LessonDetails.removeLessonApply)
+                return Effect(value: .routeAction(.dismiss))
+            
+            case .dismissAlert:
+                state.alert = nil
                 return .none
 
             case let .updateLesson(lesson):
