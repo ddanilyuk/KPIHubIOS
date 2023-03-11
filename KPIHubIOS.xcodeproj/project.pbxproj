@@ -134,10 +134,10 @@
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
+		DB5D89E929BC8D070061ACDE /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DB5D89E829BC8D070061ACDE /* TCACoordinators */; };
 		DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277728EB9604006EBA99 /* ComposableArchitecture */; };
 		DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277928EB9604006EBA99 /* Dependencies */; };
 		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
-		DB8A517128EE15F100A6D939 /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DB8A517028EE15F100A6D939 /* TCACoordinators */; };
 		DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */; };
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
@@ -328,7 +328,7 @@
 				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 				DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */,
 				DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */,
-				DB8A517128EE15F100A6D939 /* TCACoordinators in Frameworks */,
+				DB5D89E929BC8D070061ACDE /* TCACoordinators in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1088,7 +1088,7 @@
 				DB27C6E528D67B1500F4FA1B /* FirebasePerformance */,
 				DB66277728EB9604006EBA99 /* ComposableArchitecture */,
 				DB66277928EB9604006EBA99 /* Dependencies */,
-				DB8A517028EE15F100A6D939 /* TCACoordinators */,
+				DB5D89E829BC8D070061ACDE /* TCACoordinators */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1168,7 +1168,7 @@
 				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -2060,20 +2060,20 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ddanilyuk/TCACoordinators";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.41.2;
-			};
-		};
-		DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.2;
+				branch = prerelease/1.0;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2103,6 +2103,11 @@
 			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
 		};
+		DB5D89E829BC8D070061ACDE /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
+		};
 		DB66277728EB9604006EBA99 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
@@ -2112,11 +2117,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = Dependencies;
-		};
-		DB8A517028EE15F100A6D939 /* TCACoordinators */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DB8A516F28EE15F100A6D939 /* XCRemoteSwiftPackageReference "TCACoordinators" */;
-			productName = TCACoordinators;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

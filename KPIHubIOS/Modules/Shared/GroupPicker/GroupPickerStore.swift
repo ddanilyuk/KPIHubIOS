@@ -74,7 +74,7 @@ struct GroupPicker: ReducerProtocol {
                 return .none
 
             case .refresh:
-                let task: Effect<[GroupResponse], Error> = Effect.task {
+                let task: EffectPublisher<[GroupResponse], Error> = EffectPublisher.task {
                     let result = try await apiClient.decodedResponse(
                         for: .api(.groups(.all)),
                         as: GroupsResponse.self
@@ -88,7 +88,7 @@ struct GroupPicker: ReducerProtocol {
 
             case let .groupSelected(group):
                 state.isLoading = true
-                let task: Effect<[Lesson], Error> = Effect.task {
+                let task: EffectPublisher<[Lesson], Error> = EffectPublisher.task {
                     let result = try await apiClient.decodedResponse(
                         for: .api(.group(group.id, .lessons)),
                         as: LessonsResponse.self

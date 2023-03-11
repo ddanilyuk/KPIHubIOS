@@ -97,7 +97,7 @@ struct CampusLogin: ReducerProtocol {
                 state.focusedField = nil
                 state.isLoading = true
                 analyticsClient.track(Event.Onboarding.campusLogin)
-                let task: Effect<CampusUserInfo, Error> = Effect.task {
+                let task: EffectPublisher<CampusUserInfo, Error> = EffectPublisher.task {
                     let result = try await apiClient.request(
                         for: .api(.campus(.userInfo(campusLoginQuery))),
                         as: CampusUserInfo.self
@@ -137,7 +137,7 @@ struct CampusLogin: ReducerProtocol {
                     return Effect(value: .routeAction(.done))
 
                 case .campusAndGroup:
-                    let task: Effect<GroupResponse, Error> = Effect.task {
+                    let task: EffectPublisher<GroupResponse, Error> = EffectPublisher.task {
                         let result = try await apiClient.request(
                             for: .api(.groups(.search(groupSearchQuery))),
                             as: GroupResponse.self
@@ -153,7 +153,7 @@ struct CampusLogin: ReducerProtocol {
             case let .groupSearchResult(.success(group)):
                 analyticsClient.setGroup(group)
                 analyticsClient.track(Event.Onboarding.campusUserGroupFound)
-                let task: Effect<[Lesson], Error> = Effect.task {
+                let task: EffectPublisher<[Lesson], Error> = EffectPublisher.task {
                     let result = try await apiClient.decodedResponse(
                         for: .api(.group(group.id, .lessons)),
                         as: LessonsResponse.self

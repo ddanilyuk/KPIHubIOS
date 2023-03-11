@@ -93,12 +93,8 @@ struct Login: ReducerProtocol {
     }
     
     var body: some ReducerProtocol<State, Action> {
-        Reduce(
-            AnyReducer(Login.ScreenProvider())
-                .forEachIdentifiedRoute(environment: { () })
-                .withRouteReducer(AnyReducer(core)),
-            environment: ()
-        )
+        core.forEachRoute {
+            Login.ScreenProvider()
+        }
     }
-
 }

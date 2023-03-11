@@ -116,7 +116,7 @@ struct ProfileHome: ReducerProtocol {
                 case let .selected(group):
                     state.isLoading = true
                     analyticsClient.track(Event.Profile.reloadRozklad)
-                    let task: Effect<[Lesson], Error> = Effect.task {
+                    let task: EffectPublisher<[Lesson], Error> = EffectPublisher.task {
                         // Update group id using name
                         let newGroup = try await apiClient.decodedResponse(
                             for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
@@ -220,7 +220,7 @@ struct ProfileHome: ReducerProtocol {
         }
     }
     
-    private func onAppear() -> Effect<Action, Never> {
+    private func onAppear() -> Effect<Action> {
         return .merge(
             Effect(value: .setRozkladState(rozkladClientState.subject.value)),
             Effect(value: .setCampusState(campusClientState.subject.value)),

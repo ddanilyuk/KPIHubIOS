@@ -116,12 +116,9 @@ struct Campus: ReducerProtocol {
     }
 
     var body: some ReducerProtocol<State, Action> {
-        Reduce(
-            AnyReducer(Campus.ScreenProvider())
-                .forEachIdentifiedRoute(environment: { () })
-                .withRouteReducer(AnyReducer(core)),
-            environment: ()
-        )
+        core.forEachRoute {
+            Campus.ScreenProvider()
+        }
     }
     
 }

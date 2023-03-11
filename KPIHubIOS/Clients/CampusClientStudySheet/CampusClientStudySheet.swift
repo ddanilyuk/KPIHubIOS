@@ -39,7 +39,7 @@ struct CampusClientStudySheet {
 
     let subject: CurrentValueSubject<State, Never>
 
-    let load: () -> Effect<Void, Never>
+    let load: () -> Effect<Void>
     let clean: () -> Void
 
     static func live(
@@ -66,7 +66,7 @@ struct CampusClientStudySheet {
                 )
                 subject.send(.loading)
                 
-                let task: Effect<[StudySheetItem], Error> = Effect.task {
+                let task: EffectPublisher<[StudySheetItem], Error> = EffectPublisher.task {
                     let result = try await apiClient.decodedResponse(
                         for: .api(.campus(.studySheet(campusLoginQuery))),
                         as: StudySheetResponse.self

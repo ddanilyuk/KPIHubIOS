@@ -135,14 +135,11 @@ struct Rozklad: ReducerProtocol {
             }
         }
     }
-
+    
     var body: some ReducerProtocol<State, Action> {
-        Reduce(
-            AnyReducer(Rozklad.ScreenProvider())
-                .forEachIdentifiedRoute(environment: { () })
-                .withRouteReducer(AnyReducer(core)),
-            environment: ()
-        )
+        core.forEachRoute {
+            Rozklad.ScreenProvider()
+        }
     }
 
 }
