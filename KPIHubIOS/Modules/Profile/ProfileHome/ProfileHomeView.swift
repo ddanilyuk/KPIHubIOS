@@ -42,6 +42,7 @@ struct ProfileHomeView: View {
                 }
                 .padding(16)
             }
+            .navigationBarBackButtonHidden(true)
             .navigationTitle("Профіль")
             .onAppear {
                 viewStore.send(.onAppear)

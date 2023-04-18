@@ -8,31 +8,19 @@
 import ComposableArchitecture
 
 extension Profile {
-
     struct ScreenProvider {}
-
 }
 
 extension Profile.ScreenProvider: ReducerProtocol {
-
-    // MARK: - State handling
-
-    enum State: Equatable, CoordinatorStateIdentifiable {
-
-        static var module: Any.Type = Profile.self
-
+    enum State: Equatable {
         case profileHome(ProfileHome.State)
         case forDevelopers(ForDevelopers.State)
     }
-
-    // MARK: - Action handling
-
+    
     enum Action: Equatable {
         case profileHome(ProfileHome.Action)
         case forDevelopers(ForDevelopers.Action)
     }
-
-    // MARK: - Reducer handling
     
     var body: some ReducerProtocol<State, Action> {
         Scope(state: /State.profileHome, action: /Action.profileHome) {
@@ -42,5 +30,4 @@ extension Profile.ScreenProvider: ReducerProtocol {
             ForDevelopers()
         }
     }
-
 }

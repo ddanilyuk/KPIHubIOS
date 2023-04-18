@@ -10,54 +10,42 @@ import TCACoordinators
 import Combine
 
 struct Profile: ReducerProtocol {
-
-    // MARK: - State
-
-    struct State: Equatable, IdentifiedRouterState {
-        var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
-
+    struct State: Equatable {
+        var path = StackState<ScreenProvider.State>()
+        
         init() {
-            self.routes = [.root(.profileHome(.init()), embedInNavigationView: true)]
+            path.append(.profileHome(ProfileHome.State()))
         }
     }
-
-    // MARK: - Action
-
-    enum Action: Equatable, IdentifiedRouterAction {
+    
+    enum Action: Equatable {
         case delegate(Delegate)
-
-        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
-        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
-
+        case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
+        
         enum Delegate: Equatable {
             case selectRozkladTab
             case selectCampusTab
         }
     }
-    
-    // MARK: - Reducer
-    
+        
     @ReducerBuilder<State, Action>
     var core: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-            case .routeAction(_, .profileHome(.routeAction(.rozklad))):
-                return Effect(value: .delegate(.selectRozkladTab))
-
-            case .routeAction(_, .profileHome(.routeAction(.campus))):
-                return Effect(value: .delegate(.selectCampusTab))
-
-            case .routeAction(_, .profileHome(.routeAction(.forDevelopers))):
+            case .path(.element(_, action: .profileHome(.routeAction(.rozklad)))):
+                return .send(.delegate(.selectRozkladTab))
+                
+            case .path(.element(_, action: .profileHome(.routeAction(.campus)))):
+                return .send(.delegate(.selectCampusTab))
+                
+            case .path(.element(_, action: .profileHome(.routeAction(.forDevelopers)))):
                 let forDevelopersState = ForDevelopers.State()
-                state.routes.push(.forDevelopers(forDevelopersState))
+                state.path.append(.forDevelopers(forDevelopersState))
                 return .none
-
-            case .routeAction:
+                
+            case .path:
                 return .none
-
-            case .updateRoutes:
-                return .none
-
+            
             case .delegate:
                 return .none
             }
@@ -65,9 +53,8 @@ struct Profile: ReducerProtocol {
     }
 
     var body: some ReducerProtocol<State, Action> {
-        core.forEachRoute {
-            Profile.ScreenProvider()
+        core.forEach(\.path, action: /Action.path) {
+          ScreenProvider()
         }
     }
-
 }
