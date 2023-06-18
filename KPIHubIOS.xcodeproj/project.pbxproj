@@ -112,7 +112,6 @@
 		5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */; };
 		5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */; };
 		5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC03284E30B50041FE74 /* Color+Extension.swift */; };
-		5FD570B5283680DA00D8E869 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD570B4283680DA00D8E869 /* Routes */; };
 		5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */; };
 		5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */; };
 		5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */; };
@@ -284,7 +283,6 @@
 		5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonTeachersStore.swift; sourceTree = "<group>"; };
 		5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonTeachersView.swift; sourceTree = "<group>"; };
 		5FA2AC03284E30B50041FE74 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
-		5FD570B2283680CE00D8E869 /* KPIHubServer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = KPIHubServer; path = ../KPIHubServer; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientState.swift; sourceTree = "<group>"; };
 		5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientState.swift; sourceTree = "<group>"; };
@@ -327,7 +325,6 @@
 				DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */,
 				DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */,
 				DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */,
-				5FD570B5283680DA00D8E869 /* Routes in Frameworks */,
 				DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */,
 				DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */,
 				DB5D89E929BC8D070061ACDE /* TCACoordinators in Frameworks */,
@@ -854,7 +851,6 @@
 		5F97B3B2283677C200350368 = {
 			isa = PBXGroup;
 			children = (
-				5FD570B2283680CE00D8E869 /* KPIHubServer */,
 				5F97B3BD283677C200350368 /* KPIHubIOS */,
 				5F97B3CE283677C600350368 /* KPIHubIOSTests */,
 				5F97B3D8283677C600350368 /* KPIHubIOSUITests */,
@@ -1083,7 +1079,6 @@
 			);
 			name = KPIHubIOS;
 			packageProductDependencies = (
-				5FD570B4283680DA00D8E869 /* Routes */,
 				5F28FB8C2858D55B00579A75 /* KeychainAccess */,
 				DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */,
 				DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */,
@@ -2084,8 +2079,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ddanilyuk/KPIHubServer";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.2;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2095,10 +2090,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
-		};
-		5FD570B4283680DA00D8E869 /* Routes */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Routes;
 		};
 		DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
