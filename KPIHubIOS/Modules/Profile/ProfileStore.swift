@@ -9,7 +9,8 @@ import ComposableArchitecture
 import TCACoordinators
 import Combine
 
-struct Profile: ReducerProtocol {
+// ProfileFlowCoordinator
+struct Profile: Reducer {
     struct State: Equatable {
         var path = StackState<ScreenProvider.State>()
         
@@ -29,7 +30,7 @@ struct Profile: ReducerProtocol {
     }
         
     @ReducerBuilder<State, Action>
-    var core: some ReducerProtocol<State, Action> {
+    var core: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .path(.element(_, action: .profileHome(.routeAction(.rozklad)))):
@@ -45,16 +46,16 @@ struct Profile: ReducerProtocol {
                 
             case .path:
                 return .none
-            
+                
             case .delegate:
                 return .none
             }
         }
     }
-
-    var body: some ReducerProtocol<State, Action> {
+    
+    var body: some Reducer<State, Action> {
         core.forEach(\.path, action: /Action.path) {
-          ScreenProvider()
+            ScreenProvider()
         }
     }
 }
