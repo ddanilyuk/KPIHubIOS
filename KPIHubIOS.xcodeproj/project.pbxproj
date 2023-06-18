@@ -142,6 +142,7 @@
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
 		DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5328D70F8A004C5CAC /* Event.swift */; };
+		DBD6B1112A3F58E900AE5AE8 /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = DBD6B1102A3F58E900AE5AE8 /* Routes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -321,6 +322,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBD6B1112A3F58E900AE5AE8 /* Routes in Frameworks */,
 				5F28FB8D2858D55B00579A75 /* KeychainAccess in Frameworks */,
 				DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */,
 				DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */,
@@ -1089,6 +1091,7 @@
 				DB66277728EB9604006EBA99 /* ComposableArchitecture */,
 				DB66277928EB9604006EBA99 /* Dependencies */,
 				DB5D89E829BC8D070061ACDE /* TCACoordinators */,
+				DBD6B1102A3F58E900AE5AE8 /* Routes */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1169,6 +1172,7 @@
 				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				DBD6B10F2A3F58E900AE5AE8 /* XCRemoteSwiftPackageReference "KPIHubServer" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -2076,6 +2080,14 @@
 				kind = branch;
 			};
 		};
+		DBD6B10F2A3F58E900AE5AE8 /* XCRemoteSwiftPackageReference "KPIHubServer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ddanilyuk/KPIHubServer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2117,6 +2129,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = Dependencies;
+		};
+		DBD6B1102A3F58E900AE5AE8 /* Routes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBD6B10F2A3F58E900AE5AE8 /* XCRemoteSwiftPackageReference "KPIHubServer" */;
+			productName = Routes;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
