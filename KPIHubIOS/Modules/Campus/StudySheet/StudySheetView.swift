@@ -80,8 +80,8 @@ struct StudySheetView: View {
                 ScrollView(.vertical) {
                     LazyVStack(alignment: .leading, spacing: 0) {
                         ForEachStore(
-                            self.store.scope(
-                                state: \StudySheet.State.cells,
+                            store.scope(
+                                state: \.cells,
                                 action: StudySheet.Action.cells(id:action:)
                             ),
                             content: StudySheetCellView.init(store:)

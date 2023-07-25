@@ -17,7 +17,7 @@ struct MainTabCoordinatorView: View {
             TabView(selection: viewStore.binding(send: Main.Action.tabSelected)) {
                 RozkladFlowCoordinatorView(
                     store: store.scope(
-                        state: \Main.State.rozklad,
+                        state: \.rozklad,
                         action: Main.Action.rozklad
                     )
                 )
@@ -31,7 +31,7 @@ struct MainTabCoordinatorView: View {
                 
                 CampusFlowCoordinatorView(
                     store: store.scope(
-                        state: \Main.State.campus,
+                        state: \.campus,
                         action: Main.Action.campus
                     )
                 )
@@ -45,7 +45,7 @@ struct MainTabCoordinatorView: View {
                 
                 FlowCoordinatorView(
                     store: store.scope(
-                        state: \Main.State.profile,
+                        state: \.profile,
                         action: Main.Action.profile
                     )
                 )

@@ -15,11 +15,11 @@ struct AppCoordinatorView: View {
     var body: some View {
         Group {
             IfLetStore(
-                store.scope(state: \App.State.login, action: App.Action.login),
+                store.scope(state: \.login, action: App.Action.login),
                 then: LoginFlowCoordinatorView.init
             )
             IfLetStore(
-                store.scope(state: \App.State.main, action: App.Action.main),
+                store.scope(state:  \.main, action: App.Action.main),
                 then: MainTabCoordinatorView.init
             )
         }

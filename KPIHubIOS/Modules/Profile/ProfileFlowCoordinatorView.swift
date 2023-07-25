@@ -15,7 +15,7 @@ struct ProfileFlowCoordinatorView: View {
 
     var body: some View {
         NavigationStackStore(
-            self.store.scope(state: \Profile.State.path, action: Profile.Action.path),
+            self.store.scope(state: \.path, action: Profile.Action.path),
             root: {
                 // TODO: Do we need Root?
                 Text("Root")
@@ -24,14 +24,14 @@ struct ProfileFlowCoordinatorView: View {
                 switch destination {
                 case .profileHome:
                     CaseLet(
-                        state: /Profile.ScreenProvider.State.profileHome,
+                        /Profile.ScreenProvider.State.profileHome,
                         action: Profile.ScreenProvider.Action.profileHome,
                         then: ProfileHomeView.init(store:)
                     )
                     
                 case .forDevelopers:
                     CaseLet(
-                        state: /Profile.ScreenProvider.State.forDevelopers,
+                        /Profile.ScreenProvider.State.forDevelopers,
                         action: Profile.ScreenProvider.Action.forDevelopers,
                         then: ForDevelopersView.init(store:)
                     )

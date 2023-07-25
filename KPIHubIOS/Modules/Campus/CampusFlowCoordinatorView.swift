@@ -19,27 +19,36 @@ struct CampusFlowCoordinatorView: View {
 
     var body: some View {
         TCARouter(store) { screen in
-            SwitchStore(screen) {
-                CaseLet(
-                    state: /Campus.ScreenProvider.State.campusLogin,
-                    action: Campus.ScreenProvider.Action.campusLogin,
-                    then: CampusLoginView.init
-                )
-                CaseLet(
-                    state: /Campus.ScreenProvider.State.campusHome,
-                    action: Campus.ScreenProvider.Action.campusHome,
-                    then: CampusHomeView.init
-                )
-                CaseLet(
-                    state: /Campus.ScreenProvider.State.studySheet,
-                    action: Campus.ScreenProvider.Action.studySheet,
-                    then: StudySheetView.init
-                )
-                CaseLet(
-                    state: /Campus.ScreenProvider.State.studySheetItemDetail,
-                    action: Campus.ScreenProvider.Action.studySheetItemDetail,
-                    then: StudySheetItemDetailView.init
-                )
+            SwitchStore(screen) { state in
+                switch state {
+                case .studySheet:
+                    CaseLet(
+                        /Campus.ScreenProvider.State.studySheet,
+                        action: Campus.ScreenProvider.Action.studySheet,
+                        then: StudySheetView.init
+                    )
+
+                case .campusHome:
+                    CaseLet(
+                        /Campus.ScreenProvider.State.campusHome,
+                        action: Campus.ScreenProvider.Action.campusHome,
+                        then: CampusHomeView.init
+                    )
+                    
+                case .campusLogin:
+                    CaseLet(
+                        /Campus.ScreenProvider.State.campusLogin,
+                        action: Campus.ScreenProvider.Action.campusLogin,
+                        then: CampusLoginView.init
+                    )
+                
+                case .studySheetItemDetail:
+                    CaseLet(
+                        /Campus.ScreenProvider.State.studySheetItemDetail,
+                        action: Campus.ScreenProvider.Action.studySheetItemDetail,
+                        then: StudySheetItemDetailView.init
+                    )
+                }
             }
         }
     }

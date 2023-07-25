@@ -93,7 +93,7 @@ struct FlowCoordinatorView: View {
     
     var body: some View {
         NavigationStackStore(
-            store.scope(state: \FlowCoordinator.State.path, action: FlowCoordinator.Action.path),
+            store.scope(state: \.path, action: FlowCoordinator.Action.path),
             root: {
                 // TODO: Embed FeatureView here?
                 // TODO: Do we need Root?
@@ -108,14 +108,14 @@ struct FlowCoordinatorView: View {
                 switch destination {
                 case .profileHome:
                     CaseLet(
-                        state: /FlowCoordinator.Path.State.profileHome,
+                        /FlowCoordinator.Path.State.profileHome,
                         action: FlowCoordinator.Path.Action.profileHome,
                         then: ProfileHomeView.init(store:)
                     )
                     
                 case .forDevelopers:
                     CaseLet(
-                        state: /FlowCoordinator.Path.State.forDevelopers,
+                        /FlowCoordinator.Path.State.forDevelopers,
                         action: FlowCoordinator.Path.Action.forDevelopers,
                         then: ForDevelopersView.init(store:)
                     )

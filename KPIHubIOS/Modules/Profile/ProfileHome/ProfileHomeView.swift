@@ -18,7 +18,7 @@ struct ProfileHomeView: View {
                 VStack(spacing: 32) {
                     WithViewStore(
                         self.store.scope(
-                            state: \ProfileHome.State.rozkladSectionView,
+                            state: \.rozkladSectionView,
                             action: ProfileHome.Action.rozkladSectionView
                         ),
                         content: RozkladSectionView.init(viewStore:)
@@ -26,7 +26,7 @@ struct ProfileHomeView: View {
 
                     WithViewStore(
                         self.store.scope(
-                            state: \ProfileHome.State.campusSectionView,
+                            state: \.campusSectionView,
                             action: ProfileHome.Action.campusSectionView
                         ),
                         content: CampusSectionView.init(viewStore:)
@@ -34,7 +34,7 @@ struct ProfileHomeView: View {
 
                     WithViewStore(
                         self.store.scope(
-                            state: \ProfileHome.State.otherSectionView,
+                            state: \.otherSectionView,
                             action: ProfileHome.Action.otherSectionView
                         ),
                         content: OtherSectionView.init(viewStore:)

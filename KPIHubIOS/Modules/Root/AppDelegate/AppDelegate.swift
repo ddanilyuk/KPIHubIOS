@@ -21,7 +21,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     // MARK: - Store
 
     lazy var appDelegateStore = store.scope(
-        state: \App.State.appDelegate,
+        state: \.appDelegate,
         action: App.Action.appDelegate
     )
     lazy var viewStore: ViewStore<Void, AppDelegateReducer.Action> = ViewStore(appDelegateStore.stateless)

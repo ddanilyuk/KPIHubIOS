@@ -17,12 +17,16 @@ struct StudySheetItemDetailView: View {
             ScrollView {
                 LazyVStack {
                     ForEachStore(
-                        self.store.scope(
-                            state: \StudySheetItemDetail.State.cells,
-                            action: StudySheetItemDetail.Action.cells(id:action:)
-                        ),
+                        store.scope(state: \.cells, action: { .cells(id: $0, action: $1) }),
                         content: StudySheetActivityCellView.init(store:)
                     )
+//                    ForEachStore(
+//                        self.store.scope(
+//                            state: \StudySheetItemDetail.State.cells,
+//                            action: StudySheetItemDetail.Action.cells(id:action:)
+//                        ),
+//                        content: StudySheetActivityCellView.init(store:)
+//                    )
                 }
             }
             .navigationBarTitle("\(viewStore.item.name)")
