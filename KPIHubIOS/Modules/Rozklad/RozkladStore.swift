@@ -10,29 +10,77 @@ import TCACoordinators
 import IdentifiedCollections
 import Foundation
 
-struct Rozklad: ReducerProtocol {
+struct RozkladRoot: Reducer {
+    enum State: Equatable {
+        case groupRozklad(GroupRozklad.State)
+        case groupPicker(GroupPicker.State)
+    }
+    
+    enum Action: Equatable {
+        case groupRozklad(GroupRozklad.Action)
+        case groupPicker(GroupPicker.Action)
+    }
+
+    var body: some ReducerOf<Self> {
+        Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
+            GroupRozklad()
+        }
+        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
+            GroupPicker()
+        }
+    }
+}
+
+import SwiftUI
+struct RozkladRootView: View {
+    let store: StoreOf<RozkladRoot>
+    
+    var body: some View {
+        SwitchStore(store) { state in
+            switch state {
+            case .groupRozklad:
+                CaseLet(
+                    /RozkladRoot.State.groupRozklad,
+                    action: RozkladRoot.Action.groupRozklad,
+                    then: GroupRozkladView.init(store:)
+                )
+            case .groupPicker:
+                CaseLet(
+                    /RozkladRoot.State.groupPicker,
+                    action: RozkladRoot.Action.groupPicker,
+                    then: GroupPickerView.init(store:)
+                )
+            }
+        }
+    }
+}
+
+struct Rozklad: Reducer {
 
     // MARK: - State
 
-    struct State: Equatable, IdentifiedRouterState {
-        var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
+    struct State: Equatable {
+        var rozkladRoot: RozkladRoot.State
+        var path = StackState<ScreenProvider.State>()// <Route<ScreenProvider.State>>
 
         init() {
-            self.routes = []
+            self.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
         }
     }
 
     // MARK: - Action
 
-    enum Action: Equatable, IdentifiedRouterAction {
+    enum Action: Equatable {
         case onSetup
         
         case updateRozkladState(RozkladClientState.State)
         case setGroupRozklad
         case setGroupPicker
+        case rozkladRoot(RozkladRoot.Action)
+        case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
 
-        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
-        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
+//        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
+//        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
     }
 
     // MARK: - Environment
@@ -45,6 +93,9 @@ struct Rozklad: ReducerProtocol {
     
     @ReducerBuilder<State, Action>
     var core: some ReducerProtocol<State, Action> {
+        Scope(state: \.rozkladRoot, action: /Action.rozkladRoot) {
+            RozkladRoot()
+        }
         Reduce { state, action in
             switch action {
             case .onSetup:
@@ -70,76 +121,93 @@ struct Rozklad: ReducerProtocol {
                 }
 
             case .setGroupRozklad:
-                state.routes = [
-                    .root(
-                        .groupRozklad(GroupRozklad.State()),
-                        embedInNavigationView: true
-                    )
-                ]
+                state.rozkladRoot = .groupRozklad(GroupRozklad.State())
+//                state.routes = [
+//                    .root(
+//                        .groupRozklad(GroupRozklad.State()),
+//                        embedInNavigationView: true
+//                    )
+//                ]
                 return .none
 
             case .setGroupPicker:
-                state.routes = [
-                    .root(
-                        .groupPicker(GroupPicker.State(mode: .rozkladTab)),
-                        embedInNavigationView: true
-                    )
-                ]
+                state.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
+//                state.routes = [
+//                    .root(
+//                        .groupPicker(GroupPicker.State(mode: .rozkladTab)),
+//                        embedInNavigationView: true
+//                    )
+//                ]
                 return .none
-
-            case let .routeAction(_, .groupRozklad(.routeAction(.openDetails(lesson)))):
+                
+            case let .rozkladRoot(.groupRozklad(.routeAction(.openDetails(lesson)))):
+//            case let .path(.element(_, .groupRozklad(.routeAction(.openDetails(lesson))))):
                 let lessonDetailsState = LessonDetails.State(
                     lesson: lesson
                 )
-                state.routes.push(.lessonDetails(lessonDetailsState))
+                state.path.append(.lessonDetails(lessonDetailsState))
                 return .none
+                
 
-            case .routeAction(_, .groupPicker(.routeAction(.done))):
+//            case let .routeAction(_, .groupRozklad(.routeAction(.openDetails(lesson)))):
+//                let lessonDetailsState = LessonDetails.State(
+//                    lesson: lesson
+//                )
+//                state.routes.push(.lessonDetails(lessonDetailsState))
+//                return .none
+
+            case .rozkladRoot(.groupPicker(.routeAction(.done))):
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 return .none
 
-            case let .routeAction(_, .lessonDetails(.routeAction(.editNames(lesson)))):
+            case let .path(.element(_, .lessonDetails(.routeAction(.editNames(lesson))))):
+                // TODO: Use another approach
                 let editLessonNamesState = EditLessonNames.State(lesson: lesson)
-                state.routes.presentSheet(
-                    .editLessonNames(editLessonNamesState),
-                    embedInNavigationView: true
-                )
+                state.path.append(.editLessonNames(editLessonNamesState))
+//                let editLessonNamesState = EditLessonNames.State(lesson: lesson)
+//                state.routes.presentSheet(
+//                    .editLessonNames(editLessonNamesState),
+//                    embedInNavigationView: true
+//                )
                 return .none
 
-            case let .routeAction(_, .lessonDetails(.routeAction(.editTeachers(lesson)))):
+            case let .path(.element(_, .lessonDetails(.routeAction(.editTeachers(lesson))))):
+                // TODO: Use another approach
                 let editLessonTeachersState = EditLessonTeachers.State(lesson: lesson)
-                state.routes.presentSheet(
-                    .editLessonTeachers(editLessonTeachersState),
-                    embedInNavigationView: true
-                )
+                state.path.append(.editLessonTeachers(editLessonTeachersState))
+//                state.routes.presentSheet(
+//                    .editLessonTeachers(editLessonTeachersState),
+//                    embedInNavigationView: true
+//                )
                 return .none
                 
-            case .routeAction(_, .lessonDetails(.routeAction(.dismiss))):
-                state.routes.pop()
+            case .path(.element(_, .lessonDetails(.routeAction(.dismiss)))):
+                state.path.removeLast()
                 return .none
 
-            case .routeAction(_, .editLessonNames(.routeAction(.dismiss))):
-                state.routes.dismiss()
+            case .path(.element(_, .editLessonNames(.routeAction(.dismiss)))):
+                state.path.removeLast()
                 return .none
 
-            case .routeAction(_, .editLessonTeachers(.routeAction(.dismiss))):
-                state.routes.dismiss()
+            case .path(.element(_, .editLessonTeachers(.routeAction(.dismiss)))):
+                state.path.removeLast()
                 return .none
 
-            case .routeAction:
+            case .path:
                 return .none
-
-            case .updateRoutes:
+                
+            case .rozkladRoot:
                 return .none
             }
         }
     }
     
     var body: some ReducerProtocol<State, Action> {
-        core.forEachRoute {
-            Rozklad.ScreenProvider()
-        }
+        core
+            .forEach(\.path, action: /Action.path) {
+                ScreenProvider()
+            }
     }
 
 }

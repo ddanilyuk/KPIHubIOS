@@ -16,35 +16,75 @@ struct RozkladFlowCoordinatorView: View {
     let store: StoreOf<Rozklad>
 
     var body: some View {
-        TCARouter(store) { screen in
-            SwitchStore(screen) {
-                CaseLet(
-                    /Rozklad.ScreenProvider.State.groupPicker,
-                    action: Rozklad.ScreenProvider.Action.groupPicker,
-                    then: GroupPickerView.init
+        NavigationStackStore(
+            self.store.scope(state: \.path, action: Rozklad.Action.path),
+            root: {
+                RozkladRootView(
+                    store: store.scope(
+                        state: \.rozkladRoot,
+                        action: Rozklad.Action.rozkladRoot
+                    )
                 )
-                CaseLet(
-                    /Rozklad.ScreenProvider.State.groupRozklad,
-                    action: Rozklad.ScreenProvider.Action.groupRozklad,
-                    then: GroupRozkladView.init
-                )
-                CaseLet(
-                    /Rozklad.ScreenProvider.State.lessonDetails,
-                    action: Rozklad.ScreenProvider.Action.lessonDetails,
-                    then: LessonDetailsView.init
-                )
-                CaseLet(
-                    /Rozklad.ScreenProvider.State.editLessonNames,
-                    action: Rozklad.ScreenProvider.Action.editLessonNames,
-                    then: EditLessonNamesView.init
-                )
-                CaseLet(
-                    /Rozklad.ScreenProvider.State.editLessonTeachers,
-                    action: Rozklad.ScreenProvider.Action.editLessonTeachers,
-                    then: EditLessonTeachersView.init
-                )
+//                ProfileHomeView(
+//                    store: store.scope(
+//                        state: \.profileHome,
+//                        action: Profile.Action.profileHome
+//                    )
+//                )
+            },
+            destination: { destination in
+                switch destination {
+                case .lessonDetails:
+                    CaseLet(
+                        /Rozklad.ScreenProvider.State.lessonDetails,
+                        action: Rozklad.ScreenProvider.Action.lessonDetails,
+                        then: LessonDetailsView.init
+                    )
+                case .editLessonNames:
+                    CaseLet(
+                        /Rozklad.ScreenProvider.State.editLessonNames,
+                        action: Rozklad.ScreenProvider.Action.editLessonNames,
+                        then: EditLessonNamesView.init
+                    )
+                case .editLessonTeachers:
+                    CaseLet(
+                        /Rozklad.ScreenProvider.State.editLessonTeachers,
+                        action: Rozklad.ScreenProvider.Action.editLessonTeachers,
+                        then: EditLessonTeachersView.init
+                    )
+                }
             }
-        }
+        )
+        
+//        TCARouter(store) { screen in
+//            SwitchStore(screen) {
+//                CaseLet(
+//                    /Rozklad.ScreenProvider.State.groupPicker,
+//                    action: Rozklad.ScreenProvider.Action.groupPicker,
+//                    then: GroupPickerView.init
+//                )
+//                CaseLet(
+//                    /Rozklad.ScreenProvider.State.groupRozklad,
+//                    action: Rozklad.ScreenProvider.Action.groupRozklad,
+//                    then: GroupRozkladView.init
+//                )
+//                CaseLet(
+//                    /Rozklad.ScreenProvider.State.lessonDetails,
+//                    action: Rozklad.ScreenProvider.Action.lessonDetails,
+//                    then: LessonDetailsView.init
+//                )
+//                CaseLet(
+//                    /Rozklad.ScreenProvider.State.editLessonNames,
+//                    action: Rozklad.ScreenProvider.Action.editLessonNames,
+//                    then: EditLessonNamesView.init
+//                )
+//                CaseLet(
+//                    /Rozklad.ScreenProvider.State.editLessonTeachers,
+//                    action: Rozklad.ScreenProvider.Action.editLessonTeachers,
+//                    then: EditLessonTeachersView.init
+//                )
+//            }
+//        }
     }
 
 }

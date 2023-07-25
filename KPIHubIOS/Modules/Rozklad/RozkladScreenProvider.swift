@@ -21,8 +21,8 @@ extension Rozklad.ScreenProvider: ReducerProtocol {
 
         static var module: Any.Type = Rozklad.self
 
-        case groupPicker(GroupPicker.State)
-        case groupRozklad(GroupRozklad.State)
+//        case groupPicker(GroupPicker.State)
+//        case groupRozklad(GroupRozklad.State)
         case lessonDetails(LessonDetails.State)
         case editLessonNames(EditLessonNames.State)
         case editLessonTeachers(EditLessonTeachers.State)
@@ -31,8 +31,8 @@ extension Rozklad.ScreenProvider: ReducerProtocol {
     // MARK: - Action handling
 
     enum Action: Equatable {
-        case groupPicker(GroupPicker.Action)
-        case groupRozklad(GroupRozklad.Action)
+//        case groupPicker(GroupPicker.Action)
+//        case groupRozklad(GroupRozklad.Action)
         case lessonDetails(LessonDetails.Action)
         case editLessonNames(EditLessonNames.Action)
         case editLessonTeachers(EditLessonTeachers.Action)
@@ -41,12 +41,12 @@ extension Rozklad.ScreenProvider: ReducerProtocol {
     // MARK: - Reducer
     
     var body: some ReducerProtocol<State, Action> {
-        Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
-            GroupRozklad()
-        }
-        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
-            GroupPicker()
-        }
+//        Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
+//            GroupRozklad()
+//        }
+//        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
+//            GroupPicker()
+//        }
         Scope(state: /State.lessonDetails, action: /Action.lessonDetails) {
             LessonDetails()
         }
