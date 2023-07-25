@@ -43,18 +43,18 @@ struct MainTabCoordinatorView: View {
                 }
                 .tag(Main.State.Tab.campus)
                 
-                FlowCoordinatorView(
+//                FlowCoordinatorView(
+//                    store: store.scope(
+//                        state: \.profile,
+//                        action: Main.Action.profile
+//                    )
+//                )
+                ProfileFlowCoordinatorView(
                     store: store.scope(
                         state: \.profile,
                         action: Main.Action.profile
                     )
                 )
-//                ProfileFlowCoordinatorView(
-//                    store: store.scope(
-//                        state: \Main.State.profile,
-//                        action: Main.Action.profile
-//                    )
-//                )
                 .tabItem {
                     VStack {
                         Image(systemName: "person")

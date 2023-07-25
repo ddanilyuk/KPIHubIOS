@@ -24,12 +24,12 @@ struct Main: ReducerProtocol {
 
         var rozklad: Rozklad.State
         var campus: Campus.State
-        var profile: FlowCoordinator.State
+        var profile: Profile.State
 
         init() {
             rozklad = Rozklad.State()
             campus = Campus.State()
-            profile = FlowCoordinator.State(feature: SomeFeature.State())
+            profile = Profile.State()// FlowCoordinator.State(feature: SomeFeature.State())
 
             selectedTab = .rozklad
         }
@@ -40,7 +40,7 @@ struct Main: ReducerProtocol {
     enum Action: Equatable {
         case rozklad(Rozklad.Action)
         case campus(Campus.Action)
-        case profile(FlowCoordinator.Action)
+        case profile(Profile.Action)
 
         case tabSelected(State.Tab)
     }
@@ -51,13 +51,13 @@ struct Main: ReducerProtocol {
     var core: some ReducerProtocol<State, Action> {
         Reduce { state, action in
             switch action {
-//            case .profile(.delegate(.selectRozkladTab)):
-//                state.selectedTab = .rozklad
-//                return .none
-//
-//            case .profile(.delegate(.selectCampusTab)):
-//                state.selectedTab = .campus
-//                return .none
+            case .profile(.delegate(.selectRozkladTab)):
+                state.selectedTab = .rozklad
+                return .none
+
+            case .profile(.delegate(.selectCampusTab)):
+                state.selectedTab = .campus
+                return .none
                 
             case let .tabSelected(tab):
                 state.selectedTab = tab
@@ -83,7 +83,7 @@ struct Main: ReducerProtocol {
             Campus()
         }
         Scope(state: \State.profile, action: /Action.profile) {
-            FlowCoordinator()
+            Profile()
         }
         core
     }

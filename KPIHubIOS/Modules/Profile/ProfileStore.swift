@@ -12,14 +12,16 @@ import Combine
 // ProfileFlowCoordinator
 struct Profile: Reducer {
     struct State: Equatable {
+        var profileHome: ProfileHome.State
         var path = StackState<ScreenProvider.State>()
         
         init() {
-            path.append(.profileHome(ProfileHome.State()))
+            profileHome = ProfileHome.State()
         }
     }
     
     enum Action: Equatable {
+        case profileHome(ProfileHome.Action)
         case delegate(Delegate)
         case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
         
@@ -31,17 +33,34 @@ struct Profile: Reducer {
         
     @ReducerBuilder<State, Action>
     var core: some Reducer<State, Action> {
+        Scope(state: \.profileHome, action: /Action.profileHome) {
+            ProfileHome()
+        }
         Reduce { state, action in
             switch action {
-            case .path(.element(_, action: .profileHome(.routeAction(.rozklad)))):
+            case .profileHome(.routeAction(.rozklad)):
                 return .send(.delegate(.selectRozkladTab))
-                
-            case .path(.element(_, action: .profileHome(.routeAction(.campus)))):
+
+            case .profileHome(.routeAction(.campus)):
                 return .send(.delegate(.selectCampusTab))
-                
-            case .path(.element(_, action: .profileHome(.routeAction(.forDevelopers)))):
+
+            case .profileHome(.routeAction(.forDevelopers)):
                 let forDevelopersState = ForDevelopers.State()
                 state.path.append(.forDevelopers(forDevelopersState))
+                return .none
+
+//            case .path(.element(_, action: .profileHome(.routeAction(.rozklad)))):
+//                return .send(.delegate(.selectRozkladTab))
+//
+//            case .path(.element(_, action: .profileHome(.routeAction(.campus)))):
+//                return .send(.delegate(.selectCampusTab))
+//
+//            case .path(.element(_, action: .profileHome(.routeAction(.forDevelopers)))):
+//                let forDevelopersState = ForDevelopers.State()
+//                state.path.append(.forDevelopers(forDevelopersState))
+//                return .none
+                
+            case .profileHome:
                 return .none
                 
             case .path:
@@ -54,8 +73,13 @@ struct Profile: Reducer {
     }
     
     var body: some Reducer<State, Action> {
-        core.forEach(\.path, action: /Action.path) {
-            ScreenProvider()
-        }
+        core
+            .forEach(\.path, action: /Action.path) {
+                ScreenProvider()
+            }
+
+//            .forEach(\.path, action: /Action.path) {
+//            ScreenProvider()
+//        }
     }
 }

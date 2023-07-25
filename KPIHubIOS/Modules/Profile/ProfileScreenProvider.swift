@@ -13,19 +13,19 @@ extension Profile {
 
 extension Profile.ScreenProvider: ReducerProtocol {
     enum State: Equatable {
-        case profileHome(ProfileHome.State)
+//        case profileHome(ProfileHome.State)
         case forDevelopers(ForDevelopers.State)
     }
     
     enum Action: Equatable {
-        case profileHome(ProfileHome.Action)
+//        case profileHome(ProfileHome.Action)
         case forDevelopers(ForDevelopers.Action)
     }
     
     var body: some ReducerProtocol<State, Action> {
-        Scope(state: /State.profileHome, action: /Action.profileHome) {
-            ProfileHome()
-        }
+//        Scope(state: /State.profileHome, action: /Action.profileHome) {
+//            ProfileHome()
+//        }
         Scope(state: /State.forDevelopers, action: /Action.forDevelopers) {
             ForDevelopers()
         }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import TCACoordinators
+//import TCACoordinators
 
 struct ProfileFlowCoordinatorView: View {
 
@@ -17,18 +17,15 @@ struct ProfileFlowCoordinatorView: View {
         NavigationStackStore(
             self.store.scope(state: \.path, action: Profile.Action.path),
             root: {
-                // TODO: Do we need Root?
-                Text("Root")
+                ProfileHomeView(
+                    store: store.scope(
+                        state: \.profileHome,
+                        action: Profile.Action.profileHome
+                    )
+                )
             },
             destination: { destination in
                 switch destination {
-                case .profileHome:
-                    CaseLet(
-                        /Profile.ScreenProvider.State.profileHome,
-                        action: Profile.ScreenProvider.Action.profileHome,
-                        then: ProfileHomeView.init(store:)
-                    )
-                    
                 case .forDevelopers:
                     CaseLet(
                         /Profile.ScreenProvider.State.forDevelopers,
