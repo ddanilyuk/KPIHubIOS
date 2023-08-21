@@ -10,16 +10,16 @@ import ComposableArchitecture
 
 struct AppCoordinatorView: View {
 
-    let store: StoreOf<App>
+    let store: StoreOf<AppFeature>
 
     var body: some View {
         Group {
             IfLetStore(
-                store.scope(state: \.login, action: App.Action.login),
+                store.scope(state: \.login, action: AppFeature.Action.login),
                 then: LoginFlowCoordinatorView.init
             )
             IfLetStore(
-                store.scope(state: \.main, action: App.Action.main),
+                store.scope(state: \.main, action: AppFeature.Action.main),
                 then: MainTabCoordinatorView.init
             )
         }

@@ -10,18 +10,17 @@ import ComposableArchitecture
 import Routes
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
-    
-    let store: StoreOf<App> = {
-        Store(initialState: App.State()) {
-            App()
+    let store: StoreOf<AppFeature> = {
+        Store(initialState: AppFeature.State()) {
+            AppFeature()
         }
     }()
 
     // MARK: - Store
 
-    lazy var appDelegateStore = store.scope(
+    private lazy var appDelegateStore = store.scope(
         state: \.appDelegate,
-        action: App.Action.appDelegate
+        action: AppFeature.Action.appDelegate
     )
 
     // MARK: - Methods
@@ -34,5 +33,4 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         appDelegateStore.send(.didFinishLaunching)
         return true
     }
-
 }

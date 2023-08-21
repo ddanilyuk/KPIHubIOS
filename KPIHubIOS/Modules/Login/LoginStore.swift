@@ -55,16 +55,16 @@ struct Login: Reducer {
                 return .none
 
             case .routeAction(_, .onboarding(.routeAction(.campusLogin))):
-                let campusLoginState = CampusLogin.State(mode: .campusAndGroup)
+                let campusLoginState = CampusLoginFeature.State(mode: .campusAndGroup)
                 state.routes.push(.campusLogin(campusLoginState))
                 return .none
 
-            case .routeAction(_, .campusLogin(.routeAction(.groupPicker))):
+            case .routeAction(_, .campusLogin(.route(.groupPicker))):
                 let groupPickerState = GroupPicker.State(mode: .campus)
                 state.routes.push(.groupPicker(groupPickerState))
                 return .none
 
-            case .routeAction(_, .campusLogin(.routeAction(.done))):
+            case .routeAction(_, .campusLogin(.route(.done))):
                 campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()

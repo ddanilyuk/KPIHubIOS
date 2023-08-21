@@ -21,7 +21,7 @@ extension Campus.ScreenProvider: Reducer {
 
         static var module: Any.Type = Campus.self
 
-        case campusLogin(CampusLogin.State)
+        case campusLogin(CampusLoginFeature.State)
         case campusHome(CampusHome.State)
         case studySheet(StudySheet.State)
         case studySheetItemDetail(StudySheetItemDetail.State)
@@ -31,7 +31,7 @@ extension Campus.ScreenProvider: Reducer {
 
     enum Action: Equatable {
 
-        case campusLogin(CampusLogin.Action)
+        case campusLogin(CampusLoginFeature.Action)
         case campusHome(CampusHome.Action)
         case studySheet(StudySheet.Action)
         case studySheetItemDetail(StudySheetItemDetail.Action)
@@ -41,7 +41,7 @@ extension Campus.ScreenProvider: Reducer {
     
     var body: some ReducerOf<Self> {
         Scope(state: /State.campusLogin, action: /Action.campusLogin) {
-            CampusLogin()
+            CampusLoginFeature()
         }
         Scope(state: /State.campusHome, action: /Action.campusHome) {
             CampusHome()

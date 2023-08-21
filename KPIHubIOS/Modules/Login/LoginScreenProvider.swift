@@ -22,7 +22,7 @@ extension Login.ScreenProvider: Reducer {
         static var module: Any.Type = Login.self
 
         case onboarding(Onboarding.State)
-        case campusLogin(CampusLogin.State)
+        case campusLogin(CampusLoginFeature.State)
         case groupPicker(GroupPicker.State)
     }
 
@@ -30,7 +30,7 @@ extension Login.ScreenProvider: Reducer {
 
     enum Action: Equatable {
         case onboarding(Onboarding.Action)
-        case campusLogin(CampusLogin.Action)
+        case campusLogin(CampusLoginFeature.Action)
         case groupPicker(GroupPicker.Action)
     }
 
@@ -41,7 +41,7 @@ extension Login.ScreenProvider: Reducer {
             Onboarding()
         }
         Scope(state: /State.campusLogin, action: /Action.campusLogin) {
-            CampusLogin()
+            CampusLoginFeature()
         }
         Scope(state: /State.groupPicker, action: /Action.groupPicker) {
             GroupPicker()

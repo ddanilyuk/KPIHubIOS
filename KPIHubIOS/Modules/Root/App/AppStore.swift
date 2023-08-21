@@ -11,12 +11,9 @@ import URLRouting
 import Foundation
 import Firebase
 
-struct App: Reducer {
-
-    // MARK: - State
-
+struct AppFeature: Reducer {
     struct State: Equatable {
-        var appDelegate: AppDelegateReducer.State = AppDelegateReducer.State()
+        var appDelegate: AppDelegateFeature.State = AppDelegateFeature.State()
         var login: Login.State?
         var main: Main.State?
 
@@ -38,15 +35,11 @@ struct App: Reducer {
         }
     }
 
-    // MARK: - Action
-
     enum Action: Equatable {
-        case appDelegate(AppDelegateReducer.Action)
+        case appDelegate(AppDelegateFeature.Action)
         case login(Login.Action)
         case main(Main.Action)
     }
-
-    // MARK: - Environment
     
     @Dependency(\.appConfiguration) var appConfiguration
     @Dependency(\.apiClient) var apiClient
@@ -56,10 +49,7 @@ struct App: Reducer {
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
     @Dependency(\.currentDateClient) var currentDateClient
-
-    // MARK: - Reducer
-
-    @ReducerBuilder<State, Action>
+    
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -89,7 +79,7 @@ struct App: Reducer {
     
     var body: some ReducerOf<Self> {
         Scope(state: \State.appDelegate, action: /Action.appDelegate) {
-            AppDelegateReducer()
+            AppDelegateFeature()
         }
         core
             .ifLet(\State.login, action: /Action.login) {

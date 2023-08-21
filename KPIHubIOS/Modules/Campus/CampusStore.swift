@@ -76,7 +76,7 @@ struct Campus: Reducer {
             case .setCampusLogin:
                 state.routes = [
                     .root(
-                        .campusLogin(CampusLogin.State(mode: .onlyCampus)),
+                        .campusLogin(CampusLoginFeature.State(mode: .onlyCampus)),
                         embedInNavigationView: true
                     )
                 ]
@@ -91,7 +91,7 @@ struct Campus: Reducer {
                 ]
                 return .none
 
-            case .routeAction(_, .campusLogin(.routeAction(.done))):
+            case .routeAction(_, .campusLogin(.route(.done))):
                 campusClientState.commit()
                 return campusClientStudySheet.load()
                     .fireAndForget()

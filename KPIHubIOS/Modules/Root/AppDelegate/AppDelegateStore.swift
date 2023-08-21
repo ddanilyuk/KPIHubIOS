@@ -7,19 +7,12 @@
 
 import ComposableArchitecture
 
-struct AppDelegateReducer: Reducer {
-    
-    // MARK: - State
-
+struct AppDelegateFeature: Reducer {
     struct State: Equatable { }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable {
         case didFinishLaunching
     }
-
-    // MARK: - Reducer
     
     @Dependency(\.firebaseClient) var firebaseClient
     
@@ -32,5 +25,4 @@ struct AppDelegateReducer: Reducer {
             }
         }
     }
-
 }

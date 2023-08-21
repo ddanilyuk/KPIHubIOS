@@ -8,16 +8,13 @@
 import Foundation
 
 struct AppConfiguration {
-
     let appName: String
     let apiURL: String
     let apiEnvironment: ApiEnvironment
     let completeAppVersion: String?
-
 }
 
 extension AppConfiguration {
-
     static func live(bundle: Bundle) -> AppConfiguration {
         AppConfiguration(bundle: bundle)
     }
@@ -45,11 +42,9 @@ extension AppConfiguration {
         self.apiURL = apiEnvironment.url
         self.apiEnvironment = apiEnvironment
     }
-    
 }
 
 extension AppConfiguration {
-
     static func mock() -> AppConfiguration {
         AppConfiguration(
             appName: "KPI Hub",
@@ -58,7 +53,6 @@ extension AppConfiguration {
             completeAppVersion: "1.0 (1)"
         )
     }
-    
 }
 
 import Dependencies

@@ -133,7 +133,6 @@ extension Lesson {
                 return calculate(hour: 16, minute: 10)
             case .sixth:
                 return calculate(hour: 18, minute: 05)
-
             }
         }
 
