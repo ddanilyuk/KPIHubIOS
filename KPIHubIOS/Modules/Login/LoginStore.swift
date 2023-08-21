@@ -9,92 +9,79 @@ import ComposableArchitecture
 import TCACoordinators
 
 struct Login: Reducer {
-
-    // MARK: - State
-
-    struct State: Equatable, IdentifiedRouterState {
-        var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
-
-        init() {
-            self.routes = [
-                .root(.onboarding(Onboarding.State()), embedInNavigationView: true)
-            ]
-        }
+    struct State: Equatable {
+        var path = StackState<Path.State>()
+        var onboarding = Onboarding.State()
     }
-
-    // MARK: - Action
-
-    enum Action: Equatable, IdentifiedRouterAction {
-        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
-        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
-        case delegate(Delegate)
-
-        enum Delegate: Equatable {
+    
+    enum Action: Equatable {
+        case onboarding(Onboarding.Action)
+        case path(StackAction<Path.State, Path.Action>)
+        case output(Output)
+        
+        enum Output: Equatable {
             case done
         }
     }
-
-    // MARK: - Environment
-
-    @Dependency(\.apiClient) var apiClient
+    
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.analyticsClient) var analyticsClient
-
-    // MARK: - Reducer
-
-    @ReducerBuilder<State, Action>
+    
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
+            case .onboarding(.routeAction(.groupPicker)):
                 let groupPickerState = GroupPickerFeature.State(mode: .onboarding)
-                state.routes.push(.groupPicker(groupPickerState))
+                state.path.append(.groupPicker(groupPickerState))
                 return .none
-
-            case .routeAction(_, .onboarding(.routeAction(.campusLogin))):
+                
+            case .onboarding(.routeAction(.campusLogin)):
                 let campusLoginState = CampusLoginFeature.State(mode: .campusAndGroup)
-                state.routes.push(.campusLogin(campusLoginState))
+                state.path.append(.campusLogin(campusLoginState))
                 return .none
-
-            case .routeAction(_, .campusLogin(.route(.groupPicker))):
+                
+            case .path(.element(_, .campusLogin(.route(.groupPicker)))):
                 let groupPickerState = GroupPickerFeature.State(mode: .campus)
-                state.routes.push(.groupPicker(groupPickerState))
+                state.path.append(.groupPicker(groupPickerState))
                 return .none
-
-            case .routeAction(_, .campusLogin(.route(.done))):
+                
+            case .path(.element(_, .campusLogin(.route(.done)))):
                 campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
-                return .send(.delegate(.done))
-
-            case .routeAction(_, .groupPicker(.route(.done))):
+                return .send(.output(.done))
+                
+            case .path(.element(_, .groupPicker(.route(.done)))):
                 campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsClient.set(true, for: .onboardingPassed)
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
-                return .send(.delegate(.done))
-
-            case .routeAction:
+                return .send(.output(.done))
+                
+            case .onboarding:
                 return .none
-
-            case .updateRoutes:
+                
+            case .path:
                 return .none
-
-            case .delegate:
+                
+            case .output:
                 return .none
             }
         }
     }
     
     var body: some ReducerOf<Self> {
-        core.forEachRoute {
-            Login.ScreenProvider()
+        Scope(state: \State.onboarding, action: /Action.onboarding) {
+            Onboarding()
+        }
+        core.forEach(\.path, action: /Action.path) {
+            Path()
         }
     }
 }

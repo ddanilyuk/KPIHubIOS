@@ -10,29 +10,39 @@ import ComposableArchitecture
 import TCACoordinators
 
 struct LoginFlowCoordinatorView: View {
-
-    let store: StoreOf<Login>
-
-    var body: some View {
-        TCARouter(store) { screen in
-            SwitchStore(screen) {
-                CaseLet(
-                    /Login.ScreenProvider.State.onboarding,
-                    action: Login.ScreenProvider.Action.onboarding,
-                    then: OnboardingView.init
-                )
-                CaseLet(
-                    /Login.ScreenProvider.State.campusLogin,
-                    action: Login.ScreenProvider.Action.campusLogin,
-                    then: CampusLoginView.init
-                )
-                CaseLet(
-                    /Login.ScreenProvider.State.groupPicker,
-                    action: Login.ScreenProvider.Action.groupPicker,
-                    then: GroupPickerView.init
-                )
-            }
-        }
+    private let store: StoreOf<Login>
+    
+    init(store: StoreOf<Login>) {
+        self.store = store
     }
     
+    var body: some View {
+        NavigationStackStore(
+            store.scope(state: \.path, action: Login.Action.path),
+            root: {
+                OnboardingView(
+                    store: store.scope(
+                        state: \.onboarding,
+                        action: Login.Action.onboarding
+                    )
+                )
+            },
+            destination: { destination in
+                switch destination {
+                case .campusLogin:
+                    CaseLet(
+                        /Login.Path.State.campusLogin,
+                        action: Login.Path.Action.campusLogin,
+                        then: CampusLoginView.init
+                    )
+                case .groupPicker:
+                    CaseLet(
+                        /Login.Path.State.groupPicker,
+                        action: Login.Path.Action.groupPicker,
+                        then: GroupPickerView.init
+                    )
+                }
+            }
+        )
+    }
 }

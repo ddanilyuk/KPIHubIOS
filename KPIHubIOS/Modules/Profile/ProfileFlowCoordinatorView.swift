@@ -10,12 +10,15 @@ import ComposableArchitecture
 //import TCACoordinators
 
 struct ProfileFlowCoordinatorView: View {
-
-    let store: StoreOf<Profile>
+    private let store: StoreOf<Profile>
+    
+    init(store: StoreOf<Profile>) {
+        self.store = store
+    }
 
     var body: some View {
         NavigationStackStore(
-            self.store.scope(state: \.path, action: Profile.Action.path),
+            store.scope(state: \.path, action: Profile.Action.path),
             root: {
                 ProfileHomeView(
                     store: store.scope(
@@ -35,20 +38,5 @@ struct ProfileFlowCoordinatorView: View {
                 }
             }
         )
-//        TCARouter(store) { screen in
-//            SwitchStore(screen) {
-//                CaseLet(
-//                    state: /Profile.ScreenProvider.State.profileHome,
-//                    action: Profile.ScreenProvider.Action.profileHome,
-//                    then: ProfileHomeView.init
-//                )
-//                CaseLet(
-//                    state: /Profile.ScreenProvider.State.forDevelopers,
-//                    action: Profile.ScreenProvider.Action.forDevelopers,
-//                    then: ForDevelopersView.init
-//                )
-//            }
-//        }
     }
-
 }

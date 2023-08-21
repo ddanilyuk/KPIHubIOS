@@ -61,7 +61,7 @@ struct AppFeature: Reducer {
                 }
                 return .none
                 
-            case .login(.delegate(.done)):
+            case .login(.output(.done)):
                 state.set(.main)
                 return .none
                 

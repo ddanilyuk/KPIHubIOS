@@ -8,38 +8,21 @@
 import ComposableArchitecture
 
 extension Login {
-
-    struct ScreenProvider {}
-
+    struct Path {}
 }
 
-extension Login.ScreenProvider: Reducer {
-
-    // MARK: - State handling
-
-    enum State: Equatable, CoordinatorStateIdentifiable {
-
-        static var module: Any.Type = Login.self
-
-        case onboarding(Onboarding.State)
+extension Login.Path: Reducer {
+    enum State: Equatable {
         case campusLogin(CampusLoginFeature.State)
         case groupPicker(GroupPickerFeature.State)
     }
-
-    // MARK: - Action handling
-
+    
     enum Action: Equatable {
-        case onboarding(Onboarding.Action)
         case campusLogin(CampusLoginFeature.Action)
         case groupPicker(GroupPickerFeature.Action)
     }
-
-    // MARK: - Reducer handling
     
     var body: some ReducerOf<Self> {
-        Scope(state: /State.onboarding, action: /Action.onboarding) {
-            Onboarding()
-        }
         Scope(state: /State.campusLogin, action: /Action.campusLogin) {
             CampusLoginFeature()
         }
@@ -47,5 +30,4 @@ extension Login.ScreenProvider: Reducer {
             GroupPickerFeature()
         }
     }
-    
 }
