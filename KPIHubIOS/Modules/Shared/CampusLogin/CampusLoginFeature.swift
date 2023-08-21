@@ -35,7 +35,7 @@ struct CampusLoginFeature: Reducer {
             case done
         }
         
-        enum Alert: Equatable {}
+        enum Alert: Equatable { }
         
         enum View: BindableAction, Equatable {
             case onAppear

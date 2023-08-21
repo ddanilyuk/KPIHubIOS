@@ -13,12 +13,12 @@ import Foundation
 struct RozkladRoot: Reducer {
     enum State: Equatable {
         case groupRozklad(GroupRozklad.State)
-        case groupPicker(GroupPicker.State)
+        case groupPicker(GroupPickerFeature.State)
     }
     
     enum Action: Equatable {
         case groupRozklad(GroupRozklad.Action)
-        case groupPicker(GroupPicker.Action)
+        case groupPicker(GroupPickerFeature.Action)
     }
 
     var body: some ReducerOf<Self> {
@@ -26,7 +26,7 @@ struct RozkladRoot: Reducer {
             GroupRozklad()
         }
         Scope(state: /State.groupPicker, action: /Action.groupPicker) {
-            GroupPicker()
+            GroupPickerFeature()
         }
     }
 }
@@ -64,7 +64,7 @@ struct Rozklad: Reducer {
         var path = StackState<Path.State>()
 
         init() {
-            self.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
+            self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
         }
     }
 
@@ -87,7 +87,7 @@ struct Rozklad: Reducer {
     // MARK: - Reducer
     
     var core: some ReducerOf<Self> {
-        Reduce { state, action in
+        Reduce<State, Action> { state, action in
             switch action {
             case .onSetup:
                 setRootRozkladState(from: rozkladClientState.subject.value, state: &state)
@@ -112,7 +112,7 @@ struct Rozklad: Reducer {
                 state.path.append(.lessonDetails(lessonDetailsState))
                 return .none
                 
-            case .rozkladRoot(.groupPicker(.routeAction(.done))):
+            case .rozkladRoot(.groupPicker(.route(.done))):
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 return .none
@@ -166,7 +166,7 @@ struct Rozklad: Reducer {
             state.rozkladRoot = .groupRozklad(GroupRozklad.State())
 
         case .notSelected:
-            state.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
+            state.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
         }
     }
 }

@@ -50,7 +50,7 @@ struct Login: Reducer {
         Reduce { state, action in
             switch action {
             case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
-                let groupPickerState = GroupPicker.State(mode: .onboarding)
+                let groupPickerState = GroupPickerFeature.State(mode: .onboarding)
                 state.routes.push(.groupPicker(groupPickerState))
                 return .none
 
@@ -60,7 +60,7 @@ struct Login: Reducer {
                 return .none
 
             case .routeAction(_, .campusLogin(.route(.groupPicker))):
-                let groupPickerState = GroupPicker.State(mode: .campus)
+                let groupPickerState = GroupPickerFeature.State(mode: .campus)
                 state.routes.push(.groupPicker(groupPickerState))
                 return .none
 
@@ -72,7 +72,7 @@ struct Login: Reducer {
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
                 return .send(.delegate(.done))
 
-            case .routeAction(_, .groupPicker(.routeAction(.done))):
+            case .routeAction(_, .groupPicker(.route(.done))):
                 campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
