@@ -9,18 +9,8 @@ import ComposableArchitecture
 import TCACoordinators
 
 struct Main: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
-
-        var selectedTab: Tab
-
-        enum Tab: Hashable {
-            case rozklad
-            case campus
-            case profile
-        }
+        @BindingState var selectedTab: Tab
 
         var rozklad: Rozklad.State
         var campus: Campus.State
@@ -37,17 +27,16 @@ struct Main: Reducer {
 
     // MARK: - Action
 
-    enum Action: Equatable {
+    enum Action: Equatable, BindableAction {
         case rozklad(Rozklad.Action)
         case campus(Campus.Action)
         case profile(Profile.Action)
 
-        case tabSelected(State.Tab)
+        case binding(BindingAction<State>)
     }
     
     // MARK: - Reducer
     
-    @ReducerBuilder<State, Action>
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -59,10 +48,9 @@ struct Main: Reducer {
                 state.selectedTab = .campus
                 return .none
                 
-            case let .tabSelected(tab):
-                state.selectedTab = tab
+            case .binding:
                 return .none
-
+                
             case .rozklad:
                 return .none
                 
@@ -87,5 +75,13 @@ struct Main: Reducer {
         }
         core
     }
+}
 
+// MARK: Helper models
+extension Main {
+    enum Tab: Hashable {
+        case rozklad
+        case campus
+        case profile
+    }
 }

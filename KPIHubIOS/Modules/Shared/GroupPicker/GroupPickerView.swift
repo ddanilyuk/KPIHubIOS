@@ -20,6 +20,7 @@ struct GroupPickerView: View {
             searchedGroups = state.searchedGroups
         }
     }
+    
     private let store: StoreOf<GroupPickerFeature>
     @ObservedObject private var viewStore: ViewStore<ViewState, GroupPickerFeature.Action.View>
     
