@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct Onboarding: ReducerProtocol {
+struct Onboarding: Reducer {
     
     // MARK: - State
     
@@ -29,7 +29,7 @@ struct Onboarding: ReducerProtocol {
     
     @Dependency(\.analyticsClient) var analyticsClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .onAppear:

@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import IdentifiedCollections
 
-struct StudySheet: ReducerProtocol {
+struct StudySheet: Reducer {
 
     // MARK: - State
 
@@ -58,7 +58,7 @@ struct StudySheet: ReducerProtocol {
     
     @Dependency(\.analyticsClient) var analyticsClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

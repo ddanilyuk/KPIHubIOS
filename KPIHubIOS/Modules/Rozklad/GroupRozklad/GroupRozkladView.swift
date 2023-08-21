@@ -262,10 +262,9 @@ struct GroupRozkladView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             GroupRozkladView(
-                store: Store(
-                    initialState: GroupRozklad.State(),
-                    reducer: GroupRozklad()
-                )
+                store: Store(initialState: GroupRozklad.State()) {
+                    GroupRozklad()
+                }
             )
             .navigationBarHidden(true)
         }

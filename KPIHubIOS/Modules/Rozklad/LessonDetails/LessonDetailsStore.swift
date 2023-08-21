@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import Foundation
 
-struct LessonDetails: ReducerProtocol {
+struct LessonDetails: Reducer {
 
     // MARK: - State
 
@@ -64,7 +64,7 @@ struct LessonDetails: ReducerProtocol {
     
     enum SubscriberCancelID { }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

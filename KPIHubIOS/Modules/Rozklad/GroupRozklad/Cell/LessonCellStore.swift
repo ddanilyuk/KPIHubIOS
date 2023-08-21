@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import CoreGraphics
 
-struct LessonCell: ReducerProtocol {
+struct LessonCell: Reducer {
 
     // MARK: - State
 
@@ -44,7 +44,7 @@ struct LessonCell: ReducerProtocol {
 
     // MARK: - Reducer
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .onTap:

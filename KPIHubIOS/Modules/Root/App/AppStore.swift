@@ -11,7 +11,7 @@ import URLRouting
 import Foundation
 import Firebase
 
-struct App: ReducerProtocol {
+struct App: Reducer {
 
     // MARK: - State
 
@@ -60,7 +60,7 @@ struct App: ReducerProtocol {
     // MARK: - Reducer
 
     @ReducerBuilder<State, Action>
-    var core: some ReducerProtocol<State, Action> {
+    var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .appDelegate(.didFinishLaunching):
@@ -87,7 +87,7 @@ struct App: ReducerProtocol {
         }
     }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Scope(state: \State.appDelegate, action: /Action.appDelegate) {
             AppDelegateReducer()
         }

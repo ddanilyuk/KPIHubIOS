@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import TCACoordinators
 
-struct Main: ReducerProtocol {
+struct Main: Reducer {
 
     // MARK: - State
 
@@ -29,8 +29,8 @@ struct Main: ReducerProtocol {
         init() {
             rozklad = Rozklad.State()
             campus = Campus.State()
-            profile = Profile.State()// FlowCoordinator.State(feature: SomeFeature.State())
-
+            profile = Profile.State()
+            
             selectedTab = .rozklad
         }
     }
@@ -48,7 +48,7 @@ struct Main: ReducerProtocol {
     // MARK: - Reducer
     
     @ReducerBuilder<State, Action>
-    var core: some ReducerProtocol<State, Action> {
+    var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .profile(.delegate(.selectRozkladTab)):
@@ -75,7 +75,7 @@ struct Main: ReducerProtocol {
         }
     }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Scope(state: \State.rozklad, action: /Action.rozklad) {
             Rozklad()
         }

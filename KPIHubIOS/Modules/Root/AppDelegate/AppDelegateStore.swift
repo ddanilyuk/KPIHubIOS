@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct AppDelegateReducer: ReducerProtocol {
+struct AppDelegateReducer: Reducer {
     
     // MARK: - State
 
@@ -23,7 +23,7 @@ struct AppDelegateReducer: ReducerProtocol {
     
     @Dependency(\.firebaseClient) var firebaseClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .didFinishLaunching:

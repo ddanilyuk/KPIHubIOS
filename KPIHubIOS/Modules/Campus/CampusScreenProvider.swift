@@ -13,7 +13,7 @@ extension Campus {
 
 }
 
-extension Campus.ScreenProvider: ReducerProtocol {
+extension Campus.ScreenProvider: Reducer {
 
     // MARK: - State handling
 
@@ -39,7 +39,7 @@ extension Campus.ScreenProvider: ReducerProtocol {
 
     // MARK: - Reducer
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Scope(state: /State.campusLogin, action: /Action.campusLogin) {
             CampusLogin()
         }

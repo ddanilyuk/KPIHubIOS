@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct EditLessonNames: ReducerProtocol {
+struct EditLessonNames: Reducer {
 
     // MARK: - State
 
@@ -37,15 +37,11 @@ struct EditLessonNames: ReducerProtocol {
             case dismiss
         }
     }
-
-    // MARK: - Environment
     
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.analyticsClient) var analyticsClient
-
-    // MARK: - Reducer
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
@@ -57,10 +53,10 @@ struct EditLessonNames: ReducerProtocol {
                 newLesson.names = state.selected
                 rozkladClientLessons.modify(.init(newLesson, commitChanges: true))
                 analyticsClient.track(Event.LessonDetails.editNamesApply)
-                return Effect(value: .routeAction(.dismiss))
+                return .send(.routeAction(.dismiss))
 
             case .cancel:
-                return Effect(value: .routeAction(.dismiss))
+                return .send(.routeAction(.dismiss))
 
             case let .toggle(element):
                 if let index = state.selected.firstIndex(of: element) {

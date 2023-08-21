@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import TCACoordinators
 
-struct Login: ReducerProtocol {
+struct Login: Reducer {
 
     // MARK: - State
 
@@ -46,7 +46,7 @@ struct Login: ReducerProtocol {
     // MARK: - Reducer
 
     @ReducerBuilder<State, Action>
-    var core: some ReducerProtocol<State, Action> {
+    var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .routeAction(_, .onboarding(.routeAction(.groupPicker))):
@@ -92,7 +92,7 @@ struct Login: ReducerProtocol {
         }
     }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         core.forEachRoute {
             Login.ScreenProvider()
         }

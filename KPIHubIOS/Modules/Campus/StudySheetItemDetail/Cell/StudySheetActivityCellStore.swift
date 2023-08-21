@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct StudySheetActivity: ReducerProtocol {
+struct StudySheetActivity: Reducer {
 
     // MARK: - State
 
@@ -27,7 +27,7 @@ struct StudySheetActivity: ReducerProtocol {
 
     // MARK: - Reducer
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .onTap:

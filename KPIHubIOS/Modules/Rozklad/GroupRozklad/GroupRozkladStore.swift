@@ -9,7 +9,7 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
-struct GroupRozklad: ReducerProtocol {
+struct GroupRozklad: Reducer {
 
     // MARK: - State
 
@@ -90,7 +90,7 @@ struct GroupRozklad: ReducerProtocol {
     enum SubscriberCancelID { }
     enum SetOffsetID { }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

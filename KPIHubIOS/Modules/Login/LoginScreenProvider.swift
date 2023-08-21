@@ -13,7 +13,7 @@ extension Login {
 
 }
 
-extension Login.ScreenProvider: ReducerProtocol {
+extension Login.ScreenProvider: Reducer {
 
     // MARK: - State handling
 
@@ -36,7 +36,7 @@ extension Login.ScreenProvider: ReducerProtocol {
 
     // MARK: - Reducer handling
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Scope(state: /State.onboarding, action: /Action.onboarding) {
             Onboarding()
         }

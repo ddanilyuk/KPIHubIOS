@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 
-struct CampusLogin: ReducerProtocol {
+struct CampusLogin: Reducer {
 
     // MARK: - State
 
@@ -72,7 +72,7 @@ struct CampusLogin: ReducerProtocol {
 
     // MARK: - Reducer
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
 
         Reduce { state, action in

@@ -12,10 +12,9 @@ import Routes
 final class AppDelegate: NSObject, UIApplicationDelegate {
     
     let store: StoreOf<App> = {
-        Store(
-            initialState: App.State(),
-            reducer: App()
-        )
+        Store(initialState: App.State()) {
+            App()
+        }
     }()
 
     // MARK: - Store
@@ -24,7 +23,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         state: \.appDelegate,
         action: App.Action.appDelegate
     )
-    lazy var viewStore: ViewStore<Void, AppDelegateReducer.Action> = ViewStore(appDelegateStore.stateless)
 
     // MARK: - Methods
 
@@ -33,7 +31,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         Thread.sleep(forTimeInterval: 5)
-        viewStore.send(.didFinishLaunching)
+        appDelegateStore.send(.didFinishLaunching)
         return true
     }
 

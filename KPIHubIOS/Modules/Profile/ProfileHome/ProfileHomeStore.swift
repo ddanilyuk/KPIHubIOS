@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 
-struct ProfileHome: ReducerProtocol {
+struct ProfileHome: Reducer {
 
     // MARK: - State
 
@@ -75,7 +75,7 @@ struct ProfileHome: ReducerProtocol {
     
     enum SubscriberCancelID { }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

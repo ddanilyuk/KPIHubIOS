@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct ForDevelopers: ReducerProtocol {
+struct ForDevelopers: Reducer {
 
     // MARK: - State
 
@@ -33,7 +33,7 @@ struct ForDevelopers: ReducerProtocol {
                 case openSettings
             }
         }
-        var body: some ReducerProtocolOf<Self> {
+        var body: some ReducerOf<Self> {
             Scope(state: /State.someFeature, action: /Action.someFeature) {
                 SomeFeature()
             }
@@ -56,7 +56,7 @@ struct ForDevelopers: ReducerProtocol {
     
     @Dependency(\.analyticsClient) var analyticsClient
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:

@@ -9,7 +9,7 @@ import ComposableArchitecture
 import URLRouting
 import Foundation
 
-struct GroupPicker: ReducerProtocol {
+struct GroupPicker: Reducer {
 
     // MARK: - State
     
@@ -58,7 +58,7 @@ struct GroupPicker: ReducerProtocol {
 
     // MARK: - Reducer
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

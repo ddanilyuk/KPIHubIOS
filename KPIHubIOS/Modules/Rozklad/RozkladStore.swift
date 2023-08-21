@@ -61,7 +61,7 @@ struct Rozklad: Reducer {
 
     struct State: Equatable {
         var rozkladRoot: RozkladRoot.State
-        var path = StackState<ScreenProvider.State>()// <Route<ScreenProvider.State>>
+        var path = StackState<Path.State>()
 
         init() {
             self.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
@@ -74,13 +74,8 @@ struct Rozklad: Reducer {
         case onSetup
         
         case updateRozkladState(RozkladClientState.State)
-        case setGroupRozklad
-        case setGroupPicker
         case rozkladRoot(RozkladRoot.Action)
-        case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
-
-//        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
-//        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
+        case path(StackAction<Path.State, Path.Action>)
     }
 
     // MARK: - Environment
@@ -91,71 +86,32 @@ struct Rozklad: Reducer {
 
     // MARK: - Reducer
     
-    @ReducerBuilder<State, Action>
-    var core: some ReducerProtocol<State, Action> {
-        Scope(state: \.rozkladRoot, action: /Action.rozkladRoot) {
-            RozkladRoot()
-        }
+    var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onSetup:
-                return Effect.merge(
-                    Effect(value: .updateRozkladState(rozkladClientState.subject.value)),
-                    Effect.run { subscriber in
-                        rozkladClientState.subject
-                            .dropFirst()
-                            .removeDuplicates()
-                            .receive(on: DispatchQueue.main)
-                            .sink { state in
-                                subscriber.send(.updateRozkladState(state))
-                            }
-                    }
-                )
-                
-            case let .updateRozkladState(state):
-                switch state {
-                case .selected:
-                    return Effect(value: .setGroupRozklad)
-                case .notSelected:
-                    return Effect(value: .setGroupPicker)
+                setRootRozkladState(from: rozkladClientState.subject.value, state: &state)
+                return Effect.run { subscriber in
+                    rozkladClientState.subject
+                        .dropFirst()
+                        .removeDuplicates()
+                        .receive(on: DispatchQueue.main)
+                        .sink { state in
+                            subscriber.send(.updateRozkladState(state))
+                        }
                 }
-
-            case .setGroupRozklad:
-                state.rozkladRoot = .groupRozklad(GroupRozklad.State())
-//                state.routes = [
-//                    .root(
-//                        .groupRozklad(GroupRozklad.State()),
-//                        embedInNavigationView: true
-//                    )
-//                ]
-                return .none
-
-            case .setGroupPicker:
-                state.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
-//                state.routes = [
-//                    .root(
-//                        .groupPicker(GroupPicker.State(mode: .rozkladTab)),
-//                        embedInNavigationView: true
-//                    )
-//                ]
+                
+            case let .updateRozkladState(rozkladState):
+                setRootRozkladState(from: rozkladState, state: &state)
                 return .none
                 
             case let .rozkladRoot(.groupRozklad(.routeAction(.openDetails(lesson)))):
-//            case let .path(.element(_, .groupRozklad(.routeAction(.openDetails(lesson))))):
                 let lessonDetailsState = LessonDetails.State(
                     lesson: lesson
                 )
                 state.path.append(.lessonDetails(lessonDetailsState))
                 return .none
                 
-
-//            case let .routeAction(_, .groupRozklad(.routeAction(.openDetails(lesson)))):
-//                let lessonDetailsState = LessonDetails.State(
-//                    lesson: lesson
-//                )
-//                state.routes.push(.lessonDetails(lessonDetailsState))
-//                return .none
-
             case .rozkladRoot(.groupPicker(.routeAction(.done))):
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
@@ -165,21 +121,12 @@ struct Rozklad: Reducer {
                 // TODO: Use another approach
                 let editLessonNamesState = EditLessonNames.State(lesson: lesson)
                 state.path.append(.editLessonNames(editLessonNamesState))
-//                let editLessonNamesState = EditLessonNames.State(lesson: lesson)
-//                state.routes.presentSheet(
-//                    .editLessonNames(editLessonNamesState),
-//                    embedInNavigationView: true
-//                )
                 return .none
 
             case let .path(.element(_, .lessonDetails(.routeAction(.editTeachers(lesson))))):
                 // TODO: Use another approach
                 let editLessonTeachersState = EditLessonTeachers.State(lesson: lesson)
                 state.path.append(.editLessonTeachers(editLessonTeachersState))
-//                state.routes.presentSheet(
-//                    .editLessonTeachers(editLessonTeachersState),
-//                    embedInNavigationView: true
-//                )
                 return .none
                 
             case .path(.element(_, .lessonDetails(.routeAction(.dismiss)))):
@@ -203,11 +150,23 @@ struct Rozklad: Reducer {
         }
     }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
+        Scope(state: \.rozkladRoot, action: /Action.rozkladRoot) {
+            RozkladRoot()
+        }
         core
             .forEach(\.path, action: /Action.path) {
-                ScreenProvider()
+                Path()
             }
     }
+    
+    private func setRootRozkladState(from rozkladState: RozkladClientState.State, state: inout State) {
+        switch rozkladState {
+        case .selected:
+            state.rozkladRoot = .groupRozklad(GroupRozklad.State())
 
+        case .notSelected:
+            state.rozkladRoot = .groupPicker(GroupPicker.State(mode: .rozkladTab))
+        }
+    }
 }

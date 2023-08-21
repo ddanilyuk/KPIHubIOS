@@ -8,45 +8,23 @@
 import ComposableArchitecture
 
 extension Rozklad {
-
-    struct ScreenProvider {}
-
+    struct Path {}
 }
 
-extension Rozklad.ScreenProvider: ReducerProtocol {
-
-    // MARK: - State handling
-
-    enum State: Equatable, CoordinatorStateIdentifiable {
-
-        static var module: Any.Type = Rozklad.self
-
-//        case groupPicker(GroupPicker.State)
-//        case groupRozklad(GroupRozklad.State)
+extension Rozklad.Path: Reducer {
+    enum State: Equatable {
         case lessonDetails(LessonDetails.State)
         case editLessonNames(EditLessonNames.State)
         case editLessonTeachers(EditLessonTeachers.State)
     }
-
-    // MARK: - Action handling
-
+    
     enum Action: Equatable {
-//        case groupPicker(GroupPicker.Action)
-//        case groupRozklad(GroupRozklad.Action)
         case lessonDetails(LessonDetails.Action)
         case editLessonNames(EditLessonNames.Action)
         case editLessonTeachers(EditLessonTeachers.Action)
     }
-
-    // MARK: - Reducer
     
-    var body: some ReducerProtocol<State, Action> {
-//        Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
-//            GroupRozklad()
-//        }
-//        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
-//            GroupPicker()
-//        }
+    var body: some ReducerOf<Self> {
         Scope(state: /State.lessonDetails, action: /Action.lessonDetails) {
             LessonDetails()
         }
@@ -57,5 +35,4 @@ extension Rozklad.ScreenProvider: ReducerProtocol {
             EditLessonTeachers()
         }
     }
-
 }

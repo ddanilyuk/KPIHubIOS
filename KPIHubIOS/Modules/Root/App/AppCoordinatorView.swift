@@ -19,7 +19,7 @@ struct AppCoordinatorView: View {
                 then: LoginFlowCoordinatorView.init
             )
             IfLetStore(
-                store.scope(state:  \.main, action: App.Action.main),
+                store.scope(state: \.main, action: App.Action.main),
                 then: MainTabCoordinatorView.init
             )
         }

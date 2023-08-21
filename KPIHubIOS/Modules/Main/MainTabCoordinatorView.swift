@@ -13,7 +13,7 @@ struct MainTabCoordinatorView: View {
     let store: StoreOf<Main>
 
     var body: some View {
-        WithViewStore(self.store, observe: \.selectedTab) { viewStore in
+        WithViewStore(store, observe: \.selectedTab) { viewStore in
             TabView(selection: viewStore.binding(send: Main.Action.tabSelected)) {
                 RozkladFlowCoordinatorView(
                     store: store.scope(
@@ -43,12 +43,6 @@ struct MainTabCoordinatorView: View {
                 }
                 .tag(Main.State.Tab.campus)
                 
-//                FlowCoordinatorView(
-//                    store: store.scope(
-//                        state: \.profile,
-//                        action: Main.Action.profile
-//                    )
-//                )
                 ProfileFlowCoordinatorView(
                     store: store.scope(
                         state: \.profile,

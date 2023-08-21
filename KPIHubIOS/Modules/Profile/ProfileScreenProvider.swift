@@ -11,7 +11,7 @@ extension Profile {
     struct ScreenProvider {}
 }
 
-extension Profile.ScreenProvider: ReducerProtocol {
+extension Profile.ScreenProvider: Reducer {
     enum State: Equatable {
 //        case profileHome(ProfileHome.State)
         case forDevelopers(ForDevelopers.State)
@@ -22,7 +22,7 @@ extension Profile.ScreenProvider: ReducerProtocol {
         case forDevelopers(ForDevelopers.Action)
     }
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
 //        Scope(state: /State.profileHome, action: /Action.profileHome) {
 //            ProfileHome()
 //        }

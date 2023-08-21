@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 
-struct EditLessonTeachers: ReducerProtocol {
+struct EditLessonTeachers: Reducer {
 
     // MARK: - State
 
@@ -45,7 +45,7 @@ struct EditLessonTeachers: ReducerProtocol {
 
     // MARK: - Reducer
     
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:

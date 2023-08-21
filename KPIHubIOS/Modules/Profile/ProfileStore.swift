@@ -32,7 +32,7 @@ struct Profile: Reducer {
     }
         
     @ReducerBuilder<State, Action>
-    var core: some Reducer<State, Action> {
+    var core: some ReducerOf<Self> {
         Scope(state: \.profileHome, action: /Action.profileHome) {
             ProfileHome()
         }
@@ -72,7 +72,7 @@ struct Profile: Reducer {
         }
     }
     
-    var body: some Reducer<State, Action> {
+    var body: some ReducerOf<Self> {
         core
             .forEach(\.path, action: /Action.path) {
                 ScreenProvider()

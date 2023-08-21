@@ -50,7 +50,7 @@ struct FlowCoordinator: Reducer {
             case forDevelopers(ForDevelopers.Action)
         }
         
-        var body: some Reducer<State, Action> {
+        var body: some ReducerOf<Self> {
             Scope(state: /State.profileHome, action: /Action.profileHome) {
                 ProfileHome()
             }

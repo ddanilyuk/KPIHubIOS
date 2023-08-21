@@ -10,7 +10,7 @@ import TCACoordinators
 import Combine
 import Foundation
 
-struct Campus: ReducerProtocol {
+struct Campus: Reducer {
 
     // MARK: - State
 
@@ -45,7 +45,7 @@ struct Campus: ReducerProtocol {
     enum SubscriberCancelID { }
     
     @ReducerBuilder<State, Action>
-    var core: some ReducerProtocol<State, Action> {
+    var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onSetup:
@@ -115,7 +115,7 @@ struct Campus: ReducerProtocol {
         }
     }
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some ReducerOf<Self> {
         core.forEachRoute {
             Campus.ScreenProvider()
         }
