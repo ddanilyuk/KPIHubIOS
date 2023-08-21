@@ -13,7 +13,7 @@
 		5F137EC22843A35D00514263 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppFeature.swift */; };
 		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
 		5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC52843A36C00514263 /* AppDelegate.swift */; };
-		5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC72843A37100514263 /* AppDelegateStore.swift */; };
+		5F137EC82843A37100514263 /* AppDelegateFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC72843A37100514263 /* AppDelegateFeature.swift */; };
 		5F137ECD2843A3C500514263 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECC2843A3C500514263 /* OnboardingFlow.swift */; };
 		5F137ECF2843A3CA00514263 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */; };
 		5F137ED12843A3D500514263 /* MainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED02843A3D500514263 /* MainStore.swift */; };
@@ -181,7 +181,7 @@
 		5F137EC12843A35D00514263 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		5F137EC32843A36200514263 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EC52843A36C00514263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5F137EC72843A37100514263 /* AppDelegateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateStore.swift; sourceTree = "<group>"; };
+		5F137EC72843A37100514263 /* AppDelegateFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateFeature.swift; sourceTree = "<group>"; };
 		5F137ECC2843A3C500514263 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
 		5F137ED02843A3D500514263 /* MainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStore.swift; sourceTree = "<group>"; };
@@ -424,7 +424,7 @@
 		5F137EC02843A33C00514263 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				5F137EC72843A37100514263 /* AppDelegateStore.swift */,
+				5F137EC72843A37100514263 /* AppDelegateFeature.swift */,
 				5F137EC52843A36C00514263 /* AppDelegate.swift */,
 			);
 			path = AppDelegate;
@@ -1342,7 +1342,7 @@
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
 				5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */,
 				5F671255286611FC00A57E10 /* BadgeView.swift in Sources */,
-				5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */,
+				5F137EC82843A37100514263 /* AppDelegateFeature.swift in Sources */,
 				DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */,
 				5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,

@@ -7,9 +7,6 @@
 
 import SwiftUI
 import ComposableArchitecture
-import TCACoordinators
-import FirebaseCore
-import FirebaseAnalytics
 
 struct RozkladFlowCoordinatorView: View {
 

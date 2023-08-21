@@ -1,5 +1,5 @@
 //
-//  AppDelegateStore.swift
+//  AppDelegateFeature.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
