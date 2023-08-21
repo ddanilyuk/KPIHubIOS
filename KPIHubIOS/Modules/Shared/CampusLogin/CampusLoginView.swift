@@ -13,7 +13,7 @@ struct CampusLoginView: View {
         @BindingViewState var username: String
         @BindingViewState var password: String
         @BindingViewState var isLoading: Bool
-        @BindingViewState var focusedField: CampusLoginFeature.State.Field?
+        @BindingViewState var focusedField: CampusLoginFeature.Field?
         let loginButtonEnabled: Bool
         
         init(state: BindingViewStore<CampusLoginFeature.State>) {
@@ -27,7 +27,7 @@ struct CampusLoginView: View {
     
     private let store: StoreOf<CampusLoginFeature>
     @ObservedObject private var viewStore: ViewStore<ViewState, CampusLoginFeature.Action.View>
-    @FocusState private var focusedField: CampusLoginFeature.State.Field?
+    @FocusState private var focusedField: CampusLoginFeature.Field?
     
     init(store: StoreOf<CampusLoginFeature>) {
         self.store = store

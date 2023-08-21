@@ -11,16 +11,6 @@ import Foundation
 
 struct CampusLoginFeature: Reducer {
     struct State: Equatable {
-        enum Mode {
-            case onlyCampus
-            case campusAndGroup
-        }
-        
-        enum Field: Int, CaseIterable {
-            case username
-            case password
-        }
-        
         @BindingState var focusedField: Field?
         @BindingState var username: String = ""
         @BindingState var password: String = ""
@@ -221,5 +211,18 @@ extension CampusLoginFeature {
             let lessons = resultTask.map { $0.value.lessons.map(Lesson.init) }
             await send(.lessonsResult(lessons))
         }
+    }
+}
+
+// MARK: Helper models
+extension CampusLoginFeature {
+    enum Mode {
+        case onlyCampus
+        case campusAndGroup
+    }
+    
+    enum Field: Hashable {
+        case username
+        case password
     }
 }
