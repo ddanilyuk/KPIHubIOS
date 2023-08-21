@@ -1,5 +1,5 @@
 //
-//  LoginFlowCoordinatorView.swift
+//  OnboardingFlowView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -9,21 +9,21 @@ import SwiftUI
 import ComposableArchitecture
 import TCACoordinators
 
-struct LoginFlowCoordinatorView: View {
-    private let store: StoreOf<Login>
+struct OnboardingFlowView: View {
+    private let store: StoreOf<OnboardingFlow>
     
-    init(store: StoreOf<Login>) {
+    init(store: StoreOf<OnboardingFlow>) {
         self.store = store
     }
     
     var body: some View {
         NavigationStackStore(
-            store.scope(state: \.path, action: Login.Action.path),
+            store.scope(state: \.path, action: OnboardingFlow.Action.path),
             root: {
                 OnboardingView(
                     store: store.scope(
                         state: \.onboarding,
-                        action: Login.Action.onboarding
+                        action: OnboardingFlow.Action.onboarding
                     )
                 )
             },
@@ -31,14 +31,14 @@ struct LoginFlowCoordinatorView: View {
                 switch destination {
                 case .campusLogin:
                     CaseLet(
-                        /Login.Path.State.campusLogin,
-                        action: Login.Path.Action.campusLogin,
+                        /OnboardingFlow.Path.State.campusLogin,
+                        action: OnboardingFlow.Path.Action.campusLogin,
                         then: CampusLoginView.init
                     )
                 case .groupPicker:
                     CaseLet(
-                        /Login.Path.State.groupPicker,
-                        action: Login.Path.Action.groupPicker,
+                        /OnboardingFlow.Path.State.groupPicker,
+                        action: OnboardingFlow.Path.Action.groupPicker,
                         then: GroupPickerView.init
                     )
                 }

@@ -1,21 +1,20 @@
 //
-//  LoginStore.swift
+//  OnboardingFlow.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
 //
 
 import ComposableArchitecture
-import TCACoordinators
 
-struct Login: Reducer {
+struct OnboardingFlow: Reducer {
     struct State: Equatable {
         var path = StackState<Path.State>()
-        var onboarding = Onboarding.State()
+        var onboarding = OnboardingFeature.State()
     }
     
     enum Action: Equatable {
-        case onboarding(Onboarding.Action)
+        case onboarding(OnboardingFeature.Action)
         case path(StackAction<Path.State, Path.Action>)
         case output(Output)
         
@@ -78,7 +77,7 @@ struct Login: Reducer {
     
     var body: some ReducerOf<Self> {
         Scope(state: \State.onboarding, action: /Action.onboarding) {
-            Onboarding()
+            OnboardingFeature()
         }
         core.forEach(\.path, action: /Action.path) {
             Path()

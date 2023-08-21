@@ -7,13 +7,8 @@
 
 import ComposableArchitecture
 
-struct Onboarding: Reducer {
-    
-    // MARK: - State
-    
+struct OnboardingFeature: Reducer {
     struct State: Equatable { }
-    
-    // MARK: - Action
     
     enum Action: Equatable {
         case onAppear

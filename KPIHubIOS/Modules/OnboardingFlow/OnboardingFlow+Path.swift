@@ -1,5 +1,5 @@
 //
-//  LoginScreenProvider.swift
+//  OnboardingFlow+Path.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -7,11 +7,11 @@
 
 import ComposableArchitecture
 
-extension Login {
+extension OnboardingFlow {
     struct Path {}
 }
 
-extension Login.Path: Reducer {
+extension OnboardingFlow.Path: Reducer {
     enum State: Equatable {
         case campusLogin(CampusLoginFeature.State)
         case groupPicker(GroupPickerFeature.State)

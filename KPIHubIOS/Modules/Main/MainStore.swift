@@ -6,16 +6,15 @@
 //
 
 import ComposableArchitecture
-import TCACoordinators
 
-struct Main: Reducer {
+struct MainFlow: Reducer {
     struct State: Equatable {
         @BindingState var selectedTab: Tab
-
+        
         var rozklad: Rozklad.State
         var campus: Campus.State
         var profile: Profile.State
-
+        
         init() {
             rozklad = Rozklad.State()
             campus = Campus.State()
@@ -24,18 +23,14 @@ struct Main: Reducer {
             selectedTab = .rozklad
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable, BindableAction {
         case rozklad(Rozklad.Action)
         case campus(Campus.Action)
         case profile(Profile.Action)
-
+        
         case binding(BindingAction<State>)
     }
-    
-    // MARK: - Reducer
     
     var core: some ReducerOf<Self> {
         Reduce { state, action in
@@ -43,7 +38,7 @@ struct Main: Reducer {
             case .profile(.delegate(.selectRozkladTab)):
                 state.selectedTab = .rozklad
                 return .none
-
+                
             case .profile(.delegate(.selectCampusTab)):
                 state.selectedTab = .campus
                 return .none
@@ -56,13 +51,13 @@ struct Main: Reducer {
                 
             case .campus:
                 return .none
-
+                
             case .profile:
                 return .none
             }
         }
     }
-
+    
     var body: some ReducerOf<Self> {
         Scope(state: \State.rozklad, action: /Action.rozklad) {
             Rozklad()
@@ -78,7 +73,7 @@ struct Main: Reducer {
 }
 
 // MARK: Helper models
-extension Main {
+extension MainFlow {
     enum Tab: Hashable {
         case rozklad
         case campus

@@ -10,12 +10,12 @@
 		5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */; };
 		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
 		5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* LessonResponse.swift */; };
-		5F137EC22843A35D00514263 /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppStore.swift */; };
+		5F137EC22843A35D00514263 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppFeature.swift */; };
 		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
 		5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC52843A36C00514263 /* AppDelegate.swift */; };
 		5F137EC82843A37100514263 /* AppDelegateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC72843A37100514263 /* AppDelegateStore.swift */; };
-		5F137ECD2843A3C500514263 /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECC2843A3C500514263 /* LoginStore.swift */; };
-		5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */; };
+		5F137ECD2843A3C500514263 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECC2843A3C500514263 /* OnboardingFlow.swift */; };
+		5F137ECF2843A3CA00514263 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */; };
 		5F137ED12843A3D500514263 /* MainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED02843A3D500514263 /* MainStore.swift */; };
 		5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */; };
 		5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED52843A6FF00514263 /* GroupPickerStore.swift */; };
@@ -23,7 +23,7 @@
 		5F137EDB2843A85600514263 /* GroupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDA2843A85600514263 /* GroupsResponse.swift */; };
 		5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDF2843B26500514263 /* OnboardingStore.swift */; };
 		5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE12843B26D00514263 /* OnboardingView.swift */; };
-		5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE32843B3F800514263 /* LoginScreenProvider.swift */; };
+		5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */; };
 		5F137EE62844022800514263 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE52844022800514263 /* Loader.swift */; };
 		5F137EE9284403F200514263 /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE8284403F200514263 /* Loadable.swift */; };
 		5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */; };
@@ -129,6 +129,7 @@
 		DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */; };
 		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
 		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
+		DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -177,12 +178,12 @@
 		5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorSupport.swift; sourceTree = "<group>"; };
 		5F06C23028450BC60031BD5C /* LessonsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsResponse.swift; sourceTree = "<group>"; };
 		5F06C23228450C000031BD5C /* LessonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonResponse.swift; sourceTree = "<group>"; };
-		5F137EC12843A35D00514263 /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
+		5F137EC12843A35D00514263 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		5F137EC32843A36200514263 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EC52843A36C00514263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F137EC72843A37100514263 /* AppDelegateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateStore.swift; sourceTree = "<group>"; };
-		5F137ECC2843A3C500514263 /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
-		5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFlowCoordinatorView.swift; sourceTree = "<group>"; };
+		5F137ECC2843A3C500514263 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
 		5F137ED02843A3D500514263 /* MainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStore.swift; sourceTree = "<group>"; };
 		5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137ED52843A6FF00514263 /* GroupPickerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPickerStore.swift; sourceTree = "<group>"; };
@@ -190,7 +191,7 @@
 		5F137EDA2843A85600514263 /* GroupsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsResponse.swift; sourceTree = "<group>"; };
 		5F137EDF2843B26500514263 /* OnboardingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStore.swift; sourceTree = "<group>"; };
 		5F137EE12843B26D00514263 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		5F137EE32843B3F800514263 /* LoginScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenProvider.swift; sourceTree = "<group>"; };
+		5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingFlow+Path.swift"; sourceTree = "<group>"; };
 		5F137EE52844022800514263 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		5F137EE8284403F200514263 /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
 		5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladScreenProvider.swift; sourceTree = "<group>"; };
@@ -304,6 +305,7 @@
 		DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseClient.swift; sourceTree = "<group>"; };
 		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
 		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
+		DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
@@ -357,7 +359,7 @@
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
 				5F137EBE2843A32800514263 /* Root */,
 				5FDFBE2F284D4F89007E9F3A /* Shared */,
-				5F137EC92843A3A500514263 /* Login */,
+				5F137EC92843A3A500514263 /* OnboardingFlow */,
 				5F137ECA2843A3AC00514263 /* Main */,
 				5F137EEC284409CC00514263 /* Rozklad */,
 				5F137EED284409D200514263 /* Campus */,
@@ -411,7 +413,8 @@
 		5F137EBF2843A33900514263 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				5F137EC12843A35D00514263 /* AppStore.swift */,
+				5F137EC12843A35D00514263 /* AppFeature.swift */,
+				DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */,
 				5F137EC32843A36200514263 /* AppCoordinatorView.swift */,
 				5F1B200B287072BB00E1D2A6 /* AppConfiguration.swift */,
 			);
@@ -427,15 +430,15 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
-		5F137EC92843A3A500514263 /* Login */ = {
+		5F137EC92843A3A500514263 /* OnboardingFlow */ = {
 			isa = PBXGroup;
 			children = (
-				5F137ECC2843A3C500514263 /* LoginStore.swift */,
-				5F137EE32843B3F800514263 /* LoginScreenProvider.swift */,
-				5F137ECE2843A3CA00514263 /* LoginFlowCoordinatorView.swift */,
+				5F137ECC2843A3C500514263 /* OnboardingFlow.swift */,
+				5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */,
+				5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */,
 				5F137EDE2843B25600514263 /* Onboarding */,
 			);
-			path = Login;
+			path = OnboardingFlow;
 			sourceTree = "<group>";
 		};
 		5F137ECA2843A3AC00514263 /* Main */ = {
@@ -1302,7 +1305,7 @@
 				5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */,
 				5F5F46432848EDF700202DA5 /* OffsetModifier.swift in Sources */,
 				5F69BBF4284CEC1600FED83D /* StudySheetCellView.swift in Sources */,
-				5F137ECD2843A3C500514263 /* LoginStore.swift in Sources */,
+				5F137ECD2843A3C500514263 /* OnboardingFlow.swift in Sources */,
 				5F97F11B284D5A5800DB0576 /* EditLessonNamesStore.swift in Sources */,
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
@@ -1310,6 +1313,7 @@
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
 				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
+				DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */,
 				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
 				5F667CFC284E3ED0006D3AB7 /* LessonDetailsTitleView.swift in Sources */,
 				5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */,
@@ -1344,7 +1348,7 @@
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
 				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
-				5F137EC22843A35D00514263 /* AppStore.swift in Sources */,
+				5F137EC22843A35D00514263 /* AppFeature.swift in Sources */,
 				5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */,
 				5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */,
 				5F97F118284D552900DB0576 /* LessonDetailsDateAndTimeSection.swift in Sources */,
@@ -1387,7 +1391,7 @@
 				5F1B20212870A23B00E1D2A6 /* RectModifier.swift in Sources */,
 				5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */,
 				5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */,
-				5F137EE42843B3F800514263 /* LoginScreenProvider.swift in Sources */,
+				5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */,
 				5FEE6332286DE483002F7E9D /* GroupRozkladScrollToView.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,
 				5F137EFF28440DFD00514263 /* GroupRozkladView.swift in Sources */,
@@ -1408,7 +1412,7 @@
 				5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */,
 				5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */,
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
-				5F137ECF2843A3CA00514263 /* LoginFlowCoordinatorView.swift in Sources */,
+				5F137ECF2843A3CA00514263 /* OnboardingFlowView.swift in Sources */,
 				5F198F59286E44AA00D13782 /* AlertState+Error.swift in Sources */,
 				DB0D6F2C28D77E34007DAA97 /* FirebaseClient.swift in Sources */,
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,

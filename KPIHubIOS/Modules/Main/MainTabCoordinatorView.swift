@@ -10,17 +10,17 @@ import ComposableArchitecture
 
 struct MainTabCoordinatorView: View {
     struct ViewState: Equatable {
-        @BindingViewState var selectedTab: Main.Tab
+        @BindingViewState var selectedTab: MainFlow.Tab
         
-        init(state: BindingViewStore<Main.State>) {
+        init(state: BindingViewStore<MainFlow.State>) {
             _selectedTab = state.$selectedTab
         }
     }
     
-    private let store: StoreOf<Main>
-    @ObservedObject private var viewStore: ViewStore<ViewState, Main.Action>
+    private let store: StoreOf<MainFlow>
+    @ObservedObject private var viewStore: ViewStore<ViewState, MainFlow.Action>
     
-    init(store: StoreOf<Main>) {
+    init(store: StoreOf<MainFlow>) {
         self.store = store
         self.viewStore = ViewStore(store, observe: ViewState.init)
     }
@@ -30,7 +30,7 @@ struct MainTabCoordinatorView: View {
             RozkladFlowCoordinatorView(
                 store: store.scope(
                     state: \.rozklad,
-                    action: Main.Action.rozklad
+                    action: MainFlow.Action.rozklad
                 )
             )
             .tabItem {
@@ -39,12 +39,12 @@ struct MainTabCoordinatorView: View {
                     Text("Розклад")
                 }
             }
-            .tag(Main.Tab.rozklad)
+            .tag(MainFlow.Tab.rozklad)
             
             CampusFlowCoordinatorView(
                 store: store.scope(
                     state: \.campus,
-                    action: Main.Action.campus
+                    action: MainFlow.Action.campus
                 )
             )
             .tabItem {
@@ -53,12 +53,12 @@ struct MainTabCoordinatorView: View {
                     Text("Кампус")
                 }
             }
-            .tag(Main.Tab.campus)
+            .tag(MainFlow.Tab.campus)
             
             ProfileFlowCoordinatorView(
                 store: store.scope(
                     state: \.profile,
-                    action: Main.Action.profile
+                    action: MainFlow.Action.profile
                 )
             )
             .tabItem {
@@ -67,7 +67,7 @@ struct MainTabCoordinatorView: View {
                     Text("Профіль")
                 }
             }
-            .tag(Main.Tab.profile)
+            .tag(MainFlow.Tab.profile)
         }
         .onAppear {
             viewStore.send(.rozklad(.onSetup))

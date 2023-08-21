@@ -12,9 +12,9 @@ struct OnboardingView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    let store: StoreOf<Onboarding>
+    let store: StoreOf<OnboardingFeature>
 
-    init(store: StoreOf<Onboarding>) {
+    init(store: StoreOf<OnboardingFeature>) {
         self.store = store
     }
 
@@ -88,8 +88,8 @@ struct OnboardingView_Previews: PreviewProvider {
         NavigationView {
             OnboardingView(
                 store: Store(
-                    initialState: Onboarding.State(),
-                    reducer: Onboarding()
+                    initialState: OnboardingFeature.State(),
+                    reducer: OnboardingFeature()
                 )
             )
         }
