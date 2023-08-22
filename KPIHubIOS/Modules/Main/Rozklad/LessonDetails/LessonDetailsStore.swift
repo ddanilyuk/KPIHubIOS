@@ -58,7 +58,7 @@ struct LessonDetails: Reducer {
     
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.currentDateClient) var currentDateClient
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
 
     // MARK: - Reducer
     
@@ -71,7 +71,7 @@ struct LessonDetails: Reducer {
             switch action {
             case .onAppear:
                 let lessonID = state.lesson.id
-                analyticsClient.track(Event.LessonDetails.appeared(
+                analyticsService.track(Event.LessonDetails.appeared(
                     id: "\(lessonID)",
                     name: String(state.lesson.names.joined(separator: ", ").prefix(39))
                 ))
@@ -98,7 +98,7 @@ struct LessonDetails: Reducer {
                 
             case .binding(\.$isEditing):
                 if state.isEditing {
-                    analyticsClient.track(Event.LessonDetails.editTapped)
+                    analyticsService.track(Event.LessonDetails.editTapped)
                 }
                 return .none
 
@@ -139,7 +139,7 @@ struct LessonDetails: Reducer {
                 var lessons = rozkladClientLessons.subject.value
                 lessons.remove(id: state.lesson.id)
                 rozkladClientLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
-                analyticsClient.track(Event.LessonDetails.removeLessonApply)
+                analyticsService.track(Event.LessonDetails.removeLessonApply)
                 return Effect(value: .routeAction(.dismiss))
             
             case .dismissAlert:

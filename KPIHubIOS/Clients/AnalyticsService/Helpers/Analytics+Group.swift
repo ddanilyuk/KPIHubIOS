@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension AnalyticsClient {
+extension AnalyticsService {
     func setGroup(_ group: GroupResponse?) {
         setUserProperty(UserProperty.groupID(group?.id.uuidString))
         setUserProperty(UserProperty.groupName(group?.name))

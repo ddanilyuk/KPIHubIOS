@@ -27,7 +27,7 @@ struct OnboardingFlow: Reducer {
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.campusClientState) var campusClientState
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var core: some ReducerOf<Self> {
         Reduce { state, action in
@@ -52,7 +52,7 @@ struct OnboardingFlow: Reducer {
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsService.set(true, for: .onboardingPassed)
-                analyticsClient.track(Event.Onboarding.onboardingPassed)
+                analyticsService.track(Event.Onboarding.onboardingPassed)
                 return .send(.output(.done))
                 
             case .path(.element(_, .groupPicker(.route(.done)))):
@@ -60,7 +60,7 @@ struct OnboardingFlow: Reducer {
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
                 userDefaultsService.set(true, for: .onboardingPassed)
-                analyticsClient.track(Event.Onboarding.onboardingPassed)
+                analyticsService.track(Event.Onboarding.onboardingPassed)
                 return .send(.output(.done))
                 
             case .onboarding:

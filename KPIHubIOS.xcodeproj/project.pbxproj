@@ -141,6 +141,9 @@
 		DB1B4E912A95053500C5F2D8 /* FirebaseService+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E902A95053500C5F2D8 /* FirebaseService+Live.swift */; };
 		DB1B4E932A95053C00C5F2D8 /* FirebaseService+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E922A95053C00C5F2D8 /* FirebaseService+Test.swift */; };
 		DB1B4E952A95054700C5F2D8 /* FirebaseService+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E942A95054700C5F2D8 /* FirebaseService+Dependency.swift */; };
+		DB1B4E972A95062900C5F2D8 /* AnalyticsService+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E962A95062900C5F2D8 /* AnalyticsService+Live.swift */; };
+		DB1B4E992A95063000C5F2D8 /* AnalyticsService+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E982A95063000C5F2D8 /* AnalyticsService+Test.swift */; };
+		DB1B4E9B2A95063900C5F2D8 /* AnalyticsService+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E9A2A95063900C5F2D8 /* AnalyticsService+Dependency.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -148,7 +151,7 @@
 		DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277728EB9604006EBA99 /* ComposableArchitecture */; };
 		DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277928EB9604006EBA99 /* Dependencies */; };
 		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
-		DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */; };
+		DBD22F4E28D67E2C004C5CAC /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */; };
 		DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */; };
 		DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5128D70F75004C5CAC /* UserProperty.swift */; };
 		DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD22F5328D70F8A004C5CAC /* Event.swift */; };
@@ -327,9 +330,12 @@
 		DB1B4E902A95053500C5F2D8 /* FirebaseService+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseService+Live.swift"; sourceTree = "<group>"; };
 		DB1B4E922A95053C00C5F2D8 /* FirebaseService+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseService+Test.swift"; sourceTree = "<group>"; };
 		DB1B4E942A95054700C5F2D8 /* FirebaseService+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirebaseService+Dependency.swift"; sourceTree = "<group>"; };
+		DB1B4E962A95062900C5F2D8 /* AnalyticsService+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsService+Live.swift"; sourceTree = "<group>"; };
+		DB1B4E982A95063000C5F2D8 /* AnalyticsService+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsService+Test.swift"; sourceTree = "<group>"; };
+		DB1B4E9A2A95063900C5F2D8 /* AnalyticsService+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsService+Dependency.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
-		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
+		DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Group.swift"; sourceTree = "<group>"; };
 		DBD22F5128D70F75004C5CAC /* UserProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProperty.swift; sourceTree = "<group>"; };
 		DBD22F5328D70F8A004C5CAC /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -684,7 +690,7 @@
 				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
 				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
 				5F856A3F2864725500AB63AC /* CurrentDateClient */,
-				DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */,
+				DBD22F4C28D67E1C004C5CAC /* AnalyticsService */,
 				DB16750928D77D9300F6596D /* FirebaseService */,
 				5FEE632A286D9B1C002F7E9D /* Helpers */,
 			);
@@ -1073,6 +1079,17 @@
 			path = OnboardingFlow;
 			sourceTree = "<group>";
 		};
+		DB1B4E9C2A95063F00C5F2D8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */,
+				DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */,
+				DBD22F5128D70F75004C5CAC /* UserProperty.swift */,
+				DBD22F5328D70F8A004C5CAC /* Event.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		DB27C6D328D674FF00F4FA1B /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -1081,16 +1098,16 @@
 			path = Firebase;
 			sourceTree = "<group>";
 		};
-		DBD22F4C28D67E1C004C5CAC /* AnalyticsClient */ = {
+		DBD22F4C28D67E1C004C5CAC /* AnalyticsService */ = {
 			isa = PBXGroup;
 			children = (
-				DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */,
-				DBD22F4F28D68AAA004C5CAC /* Analytics+Group.swift */,
-				DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */,
-				DBD22F5128D70F75004C5CAC /* UserProperty.swift */,
-				DBD22F5328D70F8A004C5CAC /* Event.swift */,
+				DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */,
+				DB1B4E962A95062900C5F2D8 /* AnalyticsService+Live.swift */,
+				DB1B4E982A95063000C5F2D8 /* AnalyticsService+Test.swift */,
+				DB1B4E9A2A95063900C5F2D8 /* AnalyticsService+Dependency.swift */,
+				DB1B4E9C2A95063F00C5F2D8 /* Helpers */,
 			);
-			path = AnalyticsClient;
+			path = AnalyticsService;
 			sourceTree = "<group>";
 		};
 		FF0C919360EE4E6E309E3087 /* Pods */ = {
@@ -1365,6 +1382,7 @@
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
 				5F198F612870513300D13782 /* View+cornerRadius.swift in Sources */,
+				DB1B4E972A95062900C5F2D8 /* AnalyticsService+Live.swift in Sources */,
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
 				5F137EC42843A36200514263 /* AppView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladFlow+Path.swift in Sources */,
@@ -1399,7 +1417,7 @@
 				5F79DEB4284EB8A40040C14A /* RozkladSectionView.swift in Sources */,
 				5F671255286611FC00A57E10 /* BadgeView.swift in Sources */,
 				5F137EC82843A37100514263 /* AppDelegateFeature.swift in Sources */,
-				DBD22F4E28D67E2C004C5CAC /* AnalyticsClient.swift in Sources */,
+				DBD22F4E28D67E2C004C5CAC /* AnalyticsService.swift in Sources */,
 				5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
@@ -1448,6 +1466,7 @@
 				5F1B201C2870A1C600E1D2A6 /* StudySheetItemResponse.swift in Sources */,
 				5F1B20212870A23B00E1D2A6 /* RectModifier.swift in Sources */,
 				DB1B4E7A2A94DE5F00C5F2D8 /* RozkladFlow+Root.swift in Sources */,
+				DB1B4E992A95063000C5F2D8 /* AnalyticsService+Test.swift in Sources */,
 				5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */,
 				5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */,
 				5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */,
@@ -1472,6 +1491,7 @@
 				DB1B4E812A95015800C5F2D8 /* APIService+Dependency.swift in Sources */,
 				5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */,
 				5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */,
+				DB1B4E9B2A95063900C5F2D8 /* AnalyticsService+Dependency.swift in Sources */,
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				DB1B4E932A95053C00C5F2D8 /* FirebaseService+Test.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* OnboardingFlowView.swift in Sources */,

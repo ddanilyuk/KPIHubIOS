@@ -56,7 +56,7 @@ struct StudySheet: Reducer {
 
     // MARK: - Reducer
     
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -64,7 +64,7 @@ struct StudySheet: Reducer {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                analyticsClient.track(Event.Campus.studySheetAppeared)
+                analyticsService.track(Event.Campus.studySheetAppeared)
                 return Effect(value: .sortCells)
                     .animation(nil)
 

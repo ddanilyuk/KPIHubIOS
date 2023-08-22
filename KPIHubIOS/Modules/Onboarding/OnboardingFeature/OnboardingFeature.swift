@@ -26,13 +26,13 @@ struct OnboardingFeature: Reducer {
         }
     }
         
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .view(.onAppear):
-                analyticsClient.track(Event.Onboarding.onboardingAppeared)
+                analyticsService.track(Event.Onboarding.onboardingAppeared)
                 return .none
                 
             case .view(.loginButtonTapped):

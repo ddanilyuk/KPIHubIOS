@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension AnalyticsClient {
+extension AnalyticsService {
     func setCampusUser(_ campusUserInfo: CampusUserInfo?) {
         setUserProperty(UserProperty.cathedra(campusUserInfo?.subdivision.first?.name))
         setUserProperty(UserProperty.userFullName(campusUserInfo?.fullName))

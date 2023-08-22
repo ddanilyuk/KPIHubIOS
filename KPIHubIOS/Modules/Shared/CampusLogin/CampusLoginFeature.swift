@@ -49,7 +49,7 @@ struct CampusLoginFeature: Reducer {
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
         BindingReducer(action: /Action.view)
@@ -74,8 +74,8 @@ struct CampusLoginFeature: Reducer {
                         commitChanges: false
                     )
                 )
-                analyticsClient.setCampusUser(campusUserInfo)
-                analyticsClient.track(Event.Onboarding.campusUserLoadSuccess)
+                analyticsService.setCampusUser(campusUserInfo)
+                analyticsService.track(Event.Onboarding.campusUserLoadSuccess)
 
                 switch state.mode {
                 case .onlyCampus:
@@ -86,24 +86,24 @@ struct CampusLoginFeature: Reducer {
                 }
 
             case let .groupSearchResult(.success(group)):
-                analyticsClient.setGroup(group)
-                analyticsClient.track(Event.Onboarding.campusUserGroupFound)
+                analyticsService.setGroup(group)
+                analyticsService.track(Event.Onboarding.campusUserGroupFound)
                 return getLesson(for: group)
                 
             case let .lessonsResult(.success(lessons)):
                 rozkladClientLessons.set(.init(lessons, commitChanges: true))
-                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: .campus))
+                analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: .campus))
                 return .send(.route(.done))
 
             case let .groupSearchResult(.failure(error)):
                 state.isLoading = false
                 switch error as? APIError {
                 case .serviceError(404, _):
-                    analyticsClient.track(Event.Onboarding.campusUserGroupNotFound)
+                    analyticsService.track(Event.Onboarding.campusUserGroupNotFound)
                     return .send(.route(.groupPicker))
 
                 case .serviceError, .unknown, .none:
-                    analyticsClient.track(Event.Onboarding.campusUserGroupFailed)
+                    analyticsService.track(Event.Onboarding.campusUserGroupFailed)
                     return .none
                 }
 
@@ -112,19 +112,19 @@ struct CampusLoginFeature: Reducer {
                 switch error as? APIError {
                 case .serviceError(404, _):
                     state.alert = AlertState(title: TextState("Схоже, логін або пароль невірний."))
-                    analyticsClient.track(Event.Onboarding.campusUserLoadInvalidCredentials)
+                    analyticsService.track(Event.Onboarding.campusUserLoadInvalidCredentials)
                     return .none
 
                 case .serviceError, .unknown, .none:
                     state.alert = AlertState.error(error)
-                    analyticsClient.track(Event.Onboarding.campusUserLoadFailed)
+                    analyticsService.track(Event.Onboarding.campusUserLoadFailed)
                     return .none
                 }
 
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
-                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: .campus))
+                analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: .campus))
                 return .none
                 
             case .route:
@@ -145,11 +145,11 @@ extension CampusLoginFeature {
         case .loginButtonTapped:
             state.focusedField = nil
             state.isLoading = true
-            analyticsClient.track(Event.Onboarding.campusLogin)
+            analyticsService.track(Event.Onboarding.campusLogin)
             return genCampusUserInfo(state: state)
             
         case .onAppear:
-            analyticsClient.track(Event.Onboarding.campusLoginAppeared)
+            analyticsService.track(Event.Onboarding.campusLoginAppeared)
             return .none
             
         case .binding(\.$username):

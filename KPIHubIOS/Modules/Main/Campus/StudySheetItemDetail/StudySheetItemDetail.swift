@@ -38,13 +38,13 @@ struct StudySheetItemDetail: Reducer {
 
     // MARK: - Reducer
     
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .onAppear:
-                analyticsClient.track(Event.Campus.studySheetItemDetailAppeared)
+                analyticsService.track(Event.Campus.studySheetItemDetailAppeared)
                 return .none
             case .cells:
                 return .none

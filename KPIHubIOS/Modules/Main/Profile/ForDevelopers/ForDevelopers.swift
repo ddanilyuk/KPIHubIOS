@@ -54,13 +54,13 @@ struct ForDevelopers: Reducer {
 
     // MARK: - Reducer
     
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                analyticsClient.track(Event.Profile.forDevelopersAppeared)
+                analyticsService.track(Event.Profile.forDevelopersAppeared)
                 return .none
                 
             case .presentSome:

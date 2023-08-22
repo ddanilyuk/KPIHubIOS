@@ -39,7 +39,7 @@ struct CampusHome: Reducer {
     // MARK: - Environment
     
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
 
     // MARK: - Reducer
     
@@ -51,7 +51,7 @@ struct CampusHome: Reducer {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                analyticsClient.track(Event.Campus.campusHomeAppeared)
+                analyticsService.track(Event.Campus.campusHomeAppeared)
                 return Effect.run { subscriber in
                     campusClientStudySheet.subject
                         .receive(on: DispatchQueue.main)
@@ -78,7 +78,7 @@ struct CampusHome: Reducer {
                 switch studySheetState {
                 case .notLoading:
                     state.isLoading = false
-                    analyticsClient.track(Event.Campus.studySheetLoadFail)
+                    analyticsService.track(Event.Campus.studySheetLoadFail)
                     return .none
 
                 case .loading:
@@ -86,7 +86,7 @@ struct CampusHome: Reducer {
 
                 case let .loaded(items):
                     state.isLoading = false
-                    analyticsClient.track(
+                    analyticsService.track(
                         Event.Campus.studySheetLoadSuccess(itemsCount: items.count)
                     )
                     if state.openStudySheetOnLoad {

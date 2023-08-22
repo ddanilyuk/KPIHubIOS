@@ -46,7 +46,7 @@ struct GroupPickerFeature: Reducer {
     @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.rozkladClientState) var rozkladClientState
-    @Dependency(\.analyticsClient) var analyticsClient
+    @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
         BindingReducer(action: /Action.view)
@@ -60,31 +60,31 @@ struct GroupPickerFeature: Reducer {
                 state.isLoading = false
                 state.groups = groups
                 state.searchedGroups = groups
-                analyticsClient.track(Event.Onboarding.groupsLoadSuccess)
+                analyticsService.track(Event.Onboarding.groupsLoadSuccess)
                 return .none
 
             case let .lessonsResult(.success(lessons)):
                 if let selectedGroup = state.selectedGroup {
                     rozkladClientState.setState(ClientValue(.selected(selectedGroup), commitChanges: false))
-                    analyticsClient.setGroup(selectedGroup)
+                    analyticsService.setGroup(selectedGroup)
                 }
                 state.isLoading = false
                 rozkladClientLessons.set(.init(lessons, commitChanges: false))
                 let place = analyticsLessonsLoadPlace(from: state.mode)
-                analyticsClient.track(Event.Rozklad.lessonsLoadSuccess(place: place))
+                analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: place))
                 return .send(.route(.done))
 
             case let .allGroupsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
-                analyticsClient.track(Event.Onboarding.groupsLoadFailed)
+                analyticsService.track(Event.Onboarding.groupsLoadFailed)
                 return .none
                 
             case let .lessonsResult(.failure(error)):
                 state.isLoading = false
                 state.alert = AlertState.error(error)
                 let place = analyticsLessonsLoadPlace(from: state.mode)
-                analyticsClient.track(Event.Rozklad.lessonsLoadFailed(place: place))
+                analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: place))
                 return .none
 
             case .route:
@@ -149,7 +149,7 @@ private extension GroupPickerFeature {
     func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
         switch action {
         case .onAppear:
-            analyticsClient.track(Event.Onboarding.groupPickerAppeared)
+            analyticsService.track(Event.Onboarding.groupPickerAppeared)
             return loadGroups()
             
         case .refresh:
@@ -158,7 +158,7 @@ private extension GroupPickerFeature {
         case let .groupSelected(group):
             state.isLoading = true
             state.selectedGroup = group
-            analyticsClient.track(Event.Onboarding.groupPickerSelect)
+            analyticsService.track(Event.Onboarding.groupPickerSelect)
             return getLessons(for: group)
             
         case .binding(\.$searchedText):
