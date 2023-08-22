@@ -59,6 +59,7 @@ struct MainFlow: Reducer {
     }
     
     var body: some ReducerOf<Self> {
+        BindingReducer()
         Scope(state: \State.rozklad, action: /Action.rozklad) {
             Rozklad()
         }
