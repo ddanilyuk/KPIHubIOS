@@ -42,7 +42,7 @@ struct GroupPickerFeature: Reducer {
         }
     }
 
-    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.rozkladClientState) var rozkladClientState

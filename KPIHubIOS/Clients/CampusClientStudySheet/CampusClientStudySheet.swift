@@ -16,7 +16,6 @@ private enum CampusClientStudySheetKey: TestDependencyKey {
 
 extension CampusClientStudySheetKey: DependencyKey {
     static let liveValue = CampusClientStudySheet.live(
-        apiClient: DependencyValues._current.apiClient,
         userDefaultsClient: DependencyValues._current.userDefaultsClient,
         keychainClient: DependencyValues._current.keychainClient
     )
@@ -43,11 +42,11 @@ struct CampusClientStudySheet {
     let clean: () -> Void
 
     static func live(
-        apiClient: APIClient,
         userDefaultsClient: UserDefaultsClientable,
         keychainClient: KeychainClientable
     ) -> CampusClientStudySheet {
-
+        @Dependency(\.apiService) var apiService
+        
         let subject = CurrentValueSubject<State, Never>(.notLoading)
 
         return CampusClientStudySheet(
@@ -67,7 +66,7 @@ struct CampusClientStudySheet {
                 subject.send(.loading)
                 
                 let task: EffectPublisher<[StudySheetItem], Error> = EffectPublisher.task {
-                    let result = try await apiClient.decodedResponse(
+                    let result = try await apiService.decodedResponse(
                         for: .api(.campus(.studySheet(campusLoginQuery))),
                         as: StudySheetResponse.self
                     )
@@ -95,5 +94,4 @@ struct CampusClientStudySheet {
             clean: { }
         )
     }
-
 }

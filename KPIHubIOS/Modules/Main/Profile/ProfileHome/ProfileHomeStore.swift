@@ -61,7 +61,7 @@ struct ProfileHome: Reducer {
 
     // MARK: - Environment
     
-    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons

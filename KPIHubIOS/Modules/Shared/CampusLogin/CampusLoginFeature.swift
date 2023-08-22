@@ -44,7 +44,7 @@ struct CampusLoginFeature: Reducer {
         }
     }
     
-    @Dependency(\.apiClient) var apiClient
+    @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsClient) var userDefaultsClient
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.rozkladClientState) var rozkladClientState
