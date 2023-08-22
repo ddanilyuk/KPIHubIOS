@@ -29,7 +29,6 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        Thread.sleep(forTimeInterval: 5)
         appDelegateStore.send(.didFinishLaunching)
         return true
     }

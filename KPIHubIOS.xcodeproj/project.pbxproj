@@ -11,17 +11,17 @@
 		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
 		5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* LessonResponse.swift */; };
 		5F137EC22843A35D00514263 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppFeature.swift */; };
-		5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppCoordinatorView.swift */; };
+		5F137EC42843A36200514263 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC32843A36200514263 /* AppView.swift */; };
 		5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC52843A36C00514263 /* AppDelegate.swift */; };
 		5F137EC82843A37100514263 /* AppDelegateFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC72843A37100514263 /* AppDelegateFeature.swift */; };
 		5F137ECD2843A3C500514263 /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECC2843A3C500514263 /* OnboardingFlow.swift */; };
 		5F137ECF2843A3CA00514263 /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */; };
-		5F137ED12843A3D500514263 /* MainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED02843A3D500514263 /* MainStore.swift */; };
-		5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */; };
+		5F137ED12843A3D500514263 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED02843A3D500514263 /* MainFlow.swift */; };
+		5F137ED32843A3E200514263 /* MainFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED22843A3E200514263 /* MainFlowView.swift */; };
 		5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED52843A6FF00514263 /* GroupPickerStore.swift */; };
 		5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137ED72843A70600514263 /* GroupPickerView.swift */; };
 		5F137EDB2843A85600514263 /* GroupsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDA2843A85600514263 /* GroupsResponse.swift */; };
-		5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDF2843B26500514263 /* OnboardingStore.swift */; };
+		5F137EE02843B26500514263 /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EDF2843B26500514263 /* OnboardingFeature.swift */; };
 		5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE12843B26D00514263 /* OnboardingView.swift */; };
 		5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */; };
 		5F137EE62844022800514263 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE52844022800514263 /* Loader.swift */; };
@@ -179,17 +179,17 @@
 		5F06C23028450BC60031BD5C /* LessonsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsResponse.swift; sourceTree = "<group>"; };
 		5F06C23228450C000031BD5C /* LessonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonResponse.swift; sourceTree = "<group>"; };
 		5F137EC12843A35D00514263 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
-		5F137EC32843A36200514263 /* AppCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorView.swift; sourceTree = "<group>"; };
+		5F137EC32843A36200514263 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		5F137EC52843A36C00514263 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F137EC72843A37100514263 /* AppDelegateFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateFeature.swift; sourceTree = "<group>"; };
 		5F137ECC2843A3C500514263 /* OnboardingFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
 		5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
-		5F137ED02843A3D500514263 /* MainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStore.swift; sourceTree = "<group>"; };
-		5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabCoordinatorView.swift; sourceTree = "<group>"; };
+		5F137ED02843A3D500514263 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
+		5F137ED22843A3E200514263 /* MainFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowView.swift; sourceTree = "<group>"; };
 		5F137ED52843A6FF00514263 /* GroupPickerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPickerStore.swift; sourceTree = "<group>"; };
 		5F137ED72843A70600514263 /* GroupPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPickerView.swift; sourceTree = "<group>"; };
 		5F137EDA2843A85600514263 /* GroupsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsResponse.swift; sourceTree = "<group>"; };
-		5F137EDF2843B26500514263 /* OnboardingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingStore.swift; sourceTree = "<group>"; };
+		5F137EDF2843B26500514263 /* OnboardingFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
 		5F137EE12843B26D00514263 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingFlow+Path.swift"; sourceTree = "<group>"; };
 		5F137EE52844022800514263 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
@@ -415,7 +415,7 @@
 			children = (
 				5F137EC12843A35D00514263 /* AppFeature.swift */,
 				DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */,
-				5F137EC32843A36200514263 /* AppCoordinatorView.swift */,
+				5F137EC32843A36200514263 /* AppView.swift */,
 				5F1B200B287072BB00E1D2A6 /* AppConfiguration.swift */,
 			);
 			path = App;
@@ -444,8 +444,8 @@
 		5F137ECA2843A3AC00514263 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				5F137ED02843A3D500514263 /* MainStore.swift */,
-				5F137ED22843A3E200514263 /* MainTabCoordinatorView.swift */,
+				5F137ED02843A3D500514263 /* MainFlow.swift */,
+				5F137ED22843A3E200514263 /* MainFlowView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -462,7 +462,7 @@
 		5F137EDE2843B25600514263 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				5F137EDF2843B26500514263 /* OnboardingStore.swift */,
+				5F137EDF2843B26500514263 /* OnboardingFeature.swift */,
 				5F137EE12843B26D00514263 /* OnboardingView.swift */,
 			);
 			path = Onboarding;
@@ -1311,7 +1311,7 @@
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
 				5F198F612870513300D13782 /* View+cornerRadius.swift in Sources */,
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
-				5F137EC42843A36200514263 /* AppCoordinatorView.swift in Sources */,
+				5F137EC42843A36200514263 /* AppView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
 				DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */,
 				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
@@ -1347,7 +1347,7 @@
 				5F6712572866129900A57E10 /* LinearGradientAnimatableView.swift in Sources */,
 				5F5F462C284569E700202DA5 /* LessonCellView.swift in Sources */,
 				5F667D05284E4D5C006D3AB7 /* ProfileHomeView.swift in Sources */,
-				5F137ED32843A3E200514263 /* MainTabCoordinatorView.swift in Sources */,
+				5F137ED32843A3E200514263 /* MainFlowView.swift in Sources */,
 				5F137EC22843A35D00514263 /* AppFeature.swift in Sources */,
 				5F67124C2865C13A00A57E10 /* ProfileSectionView.swift in Sources */,
 				5F69BBD6284AAC4B00FED83D /* CampusLoginView.swift in Sources */,
@@ -1368,7 +1368,7 @@
 				5F5F463728480B2900202DA5 /* UserDefaultsClient.swift in Sources */,
 				5F67125B2866144000A57E10 /* LessonMode.swift in Sources */,
 				5F79DEB6284EB8BD0040C14A /* CampusSectionView.swift in Sources */,
-				5F137EE02843B26500514263 /* OnboardingStore.swift in Sources */,
+				5F137EE02843B26500514263 /* OnboardingFeature.swift in Sources */,
 				5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */,
 				5F198F5F2870511200D13782 /* SafeAreaInsetsKey.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
@@ -1382,7 +1382,7 @@
 				5F69BBF9284D164600FED83D /* StudySheetActivityCellView.swift in Sources */,
 				DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */,
 				5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */,
-				5F137ED12843A3D500514263 /* MainStore.swift in Sources */,
+				5F137ED12843A3D500514263 /* MainFlow.swift in Sources */,
 				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
 				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
 				5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  OnboardingStore.swift
+//  OnboardingFeature.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -11,30 +11,39 @@ struct OnboardingFeature: Reducer {
     struct State: Equatable { }
     
     enum Action: Equatable {
-        case onAppear
-        case routeAction(RouteAction)
+        case view(View)
+        case output(Output)
         
-        enum RouteAction: Equatable {
+        enum Output: Equatable {
             case groupPicker
             case campusLogin
         }
+        
+        enum View: Equatable {
+            case onAppear
+            case loginButtonTapped
+            case selectGroupButtonTapped
+        }
     }
-    
-    // MARK: - Reducer
-    
+        
     @Dependency(\.analyticsClient) var analyticsClient
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 analyticsClient.track(Event.Onboarding.onboardingAppeared)
                 return .none
                 
-            case .routeAction:
+            case .view(.loginButtonTapped):
+                return .send(.output(.campusLogin))
+                
+            case .view(.selectGroupButtonTapped):
+                return .send(.output(.campusLogin))
+                
+            case .output:
                 return .none
             }
         }
     }
-
 }

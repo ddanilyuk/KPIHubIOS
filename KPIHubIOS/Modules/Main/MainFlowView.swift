@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct MainTabCoordinatorView: View {
+struct MainFlowView: View {
     struct ViewState: Equatable {
         @BindingViewState var selectedTab: MainFlow.Tab
         

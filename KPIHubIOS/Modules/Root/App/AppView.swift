@@ -1,5 +1,5 @@
 //
-//  AppCoordinatorView.swift
+//  AppView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct AppCoordinatorView: View {
+struct AppView: View {
     private let store: StoreOf<AppFeature>
     
     init(store: StoreOf<AppFeature>) {
@@ -22,7 +22,7 @@ struct AppCoordinatorView: View {
                 CaseLet(
                     /AppFeature.Path.State.main,
                     action: AppFeature.Path.Action.main,
-                    then: MainTabCoordinatorView.init
+                    then: MainFlowView.init
                 )
                 
             case .onboarding:

@@ -32,12 +32,12 @@ struct OnboardingFlow: Reducer {
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .onboarding(.routeAction(.groupPicker)):
+            case .onboarding(.output(.groupPicker)):
                 let groupPickerState = GroupPickerFeature.State(mode: .onboarding)
                 state.path.append(.groupPicker(groupPickerState))
                 return .none
                 
-            case .onboarding(.routeAction(.campusLogin)):
+            case .onboarding(.output(.campusLogin)):
                 let campusLoginState = CampusLoginFeature.State(mode: .campusAndGroup)
                 state.path.append(.campusLogin(campusLoginState))
                 return .none
