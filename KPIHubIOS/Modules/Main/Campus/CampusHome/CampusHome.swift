@@ -15,7 +15,7 @@ struct CampusHome: Reducer {
 
     struct State: Equatable {
         var openStudySheetOnLoad: Bool = false
-        var studySheetState: CampusClientStudySheet.State = .notLoading
+        var studySheetState: CampusServiceStudySheet.State = .notLoading
 
         @BindingState var isLoading: Bool = false
     }
@@ -26,7 +26,7 @@ struct CampusHome: Reducer {
         case onAppear
         case refresh
         case studySheetTap
-        case setStudySheetState(CampusClientStudySheet.State)
+        case setStudySheetState(CampusServiceStudySheet.State)
 
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
@@ -38,7 +38,7 @@ struct CampusHome: Reducer {
 
     // MARK: - Environment
     
-    @Dependency(\.campusClientStudySheet) var campusClientStudySheet
+    @Dependency(\.campusServiceStudySheet) var campusServiceStudySheet
     @Dependency(\.analyticsService) var analyticsService
 
     // MARK: - Reducer
@@ -53,7 +53,7 @@ struct CampusHome: Reducer {
             case .onAppear:
                 analyticsService.track(Event.Campus.campusHomeAppeared)
                 return Effect.run { subscriber in
-                    campusClientStudySheet.subject
+                    campusServiceStudySheet.subject
                         .receive(on: DispatchQueue.main)
                         .sink { state in
                             subscriber.send(.setStudySheetState(state))
@@ -65,7 +65,7 @@ struct CampusHome: Reducer {
                 switch state.studySheetState {
                 case .notLoading,
                      .loaded:
-                    return campusClientStudySheet.load()
+                    return campusServiceStudySheet.load()
                         .fireAndForget()
 
                 case .loading:

@@ -67,7 +67,7 @@ struct CampusLoginFeature: Reducer {
                 )
                 campusClientState.login(
                     ClientValue(
-                        CampusClientState.LoginRequest(
+                        CampusServiceState.LoginRequest(
                             credentials: campusCredentials,
                             userInfo: campusUserInfo
                         ),

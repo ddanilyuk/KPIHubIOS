@@ -81,7 +81,7 @@ struct CampusHomeView: View {
     }
 
     @ViewBuilder
-    func studySheetDescription(for state: CampusClientStudySheet.State) -> some View {
+    func studySheetDescription(for state: CampusServiceStudySheet.State) -> some View {
         switch state {
         case .loading:
             HStack(spacing: 10) {

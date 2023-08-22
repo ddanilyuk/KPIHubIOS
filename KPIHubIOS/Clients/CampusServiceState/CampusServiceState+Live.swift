@@ -1,49 +1,16 @@
 //
-//  CampusClient.swift
+//  CampusServiceState+Live.swift
 //  KPIHubIOS
 //
-//  Created by Denys Danyliuk on 05.06.2022.
+//  Created by Denys Danyliuk on 22.08.2023.
 //
 
+import Foundation
+import Dependencies
 import Combine
-import Routes
-import ComposableArchitecture
-import KeychainAccess
 
-private enum CampusClientStateKey: TestDependencyKey {
-    static let testValue = CampusClientState.mock()
-}
-
-extension CampusClientStateKey: DependencyKey {
-    static let liveValue = CampusClientState.live()
-}
-
-extension DependencyValues {
-    var campusClientState: CampusClientState {
-        get { self[CampusClientStateKey.self] }
-        set { self[CampusClientStateKey.self] = newValue }
-    }
-}
-
-struct CampusClientState {
-
-    enum State: Equatable {
-        case loggedIn(CampusUserInfo)
-        case loggedOut
-    }
-
-    struct LoginRequest {
-        let credentials: CampusCredentials
-        let userInfo: CampusUserInfo
-    }
-
-    let subject: CurrentValueSubject<State, Never>
-
-    let login: (ClientValue<LoginRequest>) -> Void
-    let logout: (ClientValue<Void>) -> Void
-    let commit: () -> Void
-
-    static func live() -> CampusClientState {
+extension CampusServiceState {
+    static func live() -> CampusServiceState {
         @Dependency(\.keychainService) var keychainService
         @Dependency(\.userDefaultsService) var userDefaultsService
         
@@ -56,7 +23,7 @@ struct CampusClientState {
             }
         }
         commit()
-        return CampusClientState(
+        return CampusServiceState(
             subject: subject,
             login: { clientValue in
                 let userInfo = clientValue.value.userInfo
@@ -79,16 +46,4 @@ struct CampusClientState {
             commit: commit
         )
     }
-
-    static func mock() -> CampusClientState {
-        return CampusClientState(
-            subject: CurrentValueSubject<State, Never>(
-                .loggedIn(CampusUserInfo.mock)
-            ),
-            login: { _ in },
-            logout: { _ in },
-            commit: { }
-        )
-    }
-
 }

@@ -16,7 +16,7 @@ struct ProfileHome: Reducer {
     struct State: Equatable {
 
         var rozkladState: RozkladServiceState.State = .notSelected
-        var campusState: CampusClientState.State = .loggedOut
+        var campusState: CampusServiceState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
         @BindingState var toggleWeek: Bool = false
         var completeAppVersion: String = ""
@@ -32,7 +32,7 @@ struct ProfileHome: Reducer {
         case onAppear
 
         case setRozkladState(RozkladServiceState.State)
-        case setCampusState(CampusClientState.State)
+        case setCampusState(CampusServiceState.State)
         case setLessonsUpdatedAtDate(Date?)
 
         case updateRozkladButtonTapped
@@ -66,7 +66,7 @@ struct ProfileHome: Reducer {
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.campusClientState) var campusClientState
-    @Dependency(\.campusClientStudySheet) var campusClientStudySheet
+    @Dependency(\.campusServiceStudySheet) var campusServiceStudySheet
     @Dependency(\.currentDateClient) var currentDateClient
     @Dependency(\.appConfiguration) var appConfiguration
     @Dependency(\.analyticsService) var analyticsService
@@ -188,7 +188,7 @@ struct ProfileHome: Reducer {
 
             case .logoutCampus:
                 campusClientState.logout(ClientValue(commitChanges: true))
-                campusClientStudySheet.clean()
+                campusServiceStudySheet.clean()
                 analyticsService.track(Event.Profile.campusLogout)
                 analyticsService.setCampusUser(nil)
                 return Effect(value: .routeAction(.campus))

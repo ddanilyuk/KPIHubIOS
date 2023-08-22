@@ -16,14 +16,14 @@ struct Campus: Reducer {
     
     enum Action: Equatable {
         case onSetup
-        case updateCampusState(CampusClientState.State)
+        case updateCampusState(CampusServiceState.State)
         
         case campusRoot(CampusRoot.Action)
         case path(StackAction<Path.State, Path.Action>)
     }
     
     @Dependency(\.campusClientState) var campusClientState
-    @Dependency(\.campusClientStudySheet) var campusClientStudySheet
+    @Dependency(\.campusServiceStudySheet) var campusServiceStudySheet
     
     var core: some ReducerOf<Self> {
         Reduce { state, action in
@@ -40,7 +40,7 @@ struct Campus: Reducer {
                                 subscriber.send(.updateCampusState(state))
                             }
                     },
-                    campusClientStudySheet.load()
+                    campusServiceStudySheet.load()
                         .fireAndForget()
                 )
                 .cancellable(id: CancelID.campusClient, cancelInFlight: true)
@@ -51,7 +51,7 @@ struct Campus: Reducer {
                 
             case .campusRoot(.campusLogin(.route(.done))):
                 campusClientState.commit()
-                return campusClientStudySheet.load()
+                return campusServiceStudySheet.load()
                     .fireAndForget()
 
             case let .campusRoot(.campusHome(.routeAction(.studySheet(items)))):
@@ -83,7 +83,7 @@ struct Campus: Reducer {
             }
     }
     
-    private func updateCampusState(with campusState: CampusClientState.State, state: inout State) {
+    private func updateCampusState(with campusState: CampusServiceState.State, state: inout State) {
         switch campusState {
         case .loggedOut:
             state.campusRoot = .campusLogin(CampusLoginFeature.State(mode: .onlyCampus))

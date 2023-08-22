@@ -110,7 +110,7 @@
 		5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F120284E200800DB0576 /* EditLessonTeachersStore.swift */; };
 		5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */; };
 		5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC03284E30B50041FE74 /* Color+Extension.swift */; };
-		5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */; };
+		5FDFBE27284D46FD007E9F3A /* CampusServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusServiceState.swift */; };
 		5FDFBE2A284D48A2007E9F3A /* RozkladServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladServiceState.swift */; };
 		5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */; };
 		5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */; };
@@ -126,7 +126,7 @@
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
 		DB0D6F2C28D77E34007DAA97 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D6F2B28D77E34007DAA97 /* FirebaseService.swift */; };
 		DB16750428D75DBF00F6596D /* RozkladServiceLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladServiceLessons.swift */; };
-		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
+		DB16750728D75E3D00F6596D /* CampusServiceStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusServiceStudySheet.swift */; };
 		DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */; };
 		DB1B4E7A2A94DE5F00C5F2D8 /* RozkladFlow+Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */; };
 		DB1B4E7F2A95013300C5F2D8 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E7E2A95013300C5F2D8 /* APIError.swift */; };
@@ -150,6 +150,12 @@
 		DB1B4EA42A95085400C5F2D8 /* RozkladServiceState+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA32A95085400C5F2D8 /* RozkladServiceState+Live.swift */; };
 		DB1B4EA62A95085A00C5F2D8 /* RozkladServiceState+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA52A95085A00C5F2D8 /* RozkladServiceState+Mock.swift */; };
 		DB1B4EA82A95086100C5F2D8 /* RozkladServiceState+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA72A95086100C5F2D8 /* RozkladServiceState+Dependency.swift */; };
+		DB1B4EAA2A95098800C5F2D8 /* CampusServiceState+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA92A95098800C5F2D8 /* CampusServiceState+Live.swift */; };
+		DB1B4EAC2A95098D00C5F2D8 /* CampusServiceState+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EAB2A95098D00C5F2D8 /* CampusServiceState+Mock.swift */; };
+		DB1B4EAE2A95099300C5F2D8 /* CampusServiceState+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EAD2A95099300C5F2D8 /* CampusServiceState+Dependency.swift */; };
+		DB1B4EB02A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EAF2A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift */; };
+		DB1B4EB22A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB12A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift */; };
+		DB1B4EB42A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB32A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -302,7 +308,7 @@
 		5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLessonTeachersView.swift; sourceTree = "<group>"; };
 		5FA2AC03284E30B50041FE74 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientState.swift; sourceTree = "<group>"; };
+		5FDFBE26284D46FD007E9F3A /* CampusServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusServiceState.swift; sourceTree = "<group>"; };
 		5FDFBE29284D48A2007E9F3A /* RozkladServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladServiceState.swift; sourceTree = "<group>"; };
 		5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusCredentials.swift; sourceTree = "<group>"; };
 		5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusUserInfo.swift; sourceTree = "<group>"; };
@@ -321,7 +327,7 @@
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0D6F2B28D77E34007DAA97 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		DB16750328D75DBF00F6596D /* RozkladServiceLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladServiceLessons.swift; sourceTree = "<group>"; };
-		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
+		DB16750628D75E3D00F6596D /* CampusServiceStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusServiceStudySheet.swift; sourceTree = "<group>"; };
 		DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
 		DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladFlow+Root.swift"; sourceTree = "<group>"; };
 		DB1B4E7E2A95013300C5F2D8 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -345,6 +351,12 @@
 		DB1B4EA32A95085400C5F2D8 /* RozkladServiceState+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceState+Live.swift"; sourceTree = "<group>"; };
 		DB1B4EA52A95085A00C5F2D8 /* RozkladServiceState+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceState+Mock.swift"; sourceTree = "<group>"; };
 		DB1B4EA72A95086100C5F2D8 /* RozkladServiceState+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceState+Dependency.swift"; sourceTree = "<group>"; };
+		DB1B4EA92A95098800C5F2D8 /* CampusServiceState+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceState+Live.swift"; sourceTree = "<group>"; };
+		DB1B4EAB2A95098D00C5F2D8 /* CampusServiceState+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceState+Mock.swift"; sourceTree = "<group>"; };
+		DB1B4EAD2A95099300C5F2D8 /* CampusServiceState+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceState+Dependency.swift"; sourceTree = "<group>"; };
+		DB1B4EAF2A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceStudySheet+Live.swift"; sourceTree = "<group>"; };
+		DB1B4EB12A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceStudySheet+Mock.swift"; sourceTree = "<group>"; };
+		DB1B4EB32A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceStudySheet+Dependency.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
@@ -699,8 +711,8 @@
 				5F28FB8E2858D64100579A75 /* KeychainService */,
 				5FDFBE28284D4894007E9F3A /* RozkladServiceState */,
 				DB16750228D75DAE00F6596D /* RozkladServiceLessons */,
-				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
-				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
+				5FDFBE25284D46EC007E9F3A /* CampusServiceState */,
+				DB16750528D75E3500F6596D /* CampusServiceStudySheet */,
 				5F856A3F2864725500AB63AC /* CurrentDateClient */,
 				DBD22F4C28D67E1C004C5CAC /* AnalyticsService */,
 				DB16750928D77D9300F6596D /* FirebaseService */,
@@ -982,12 +994,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5FDFBE25284D46EC007E9F3A /* CampusClientState */ = {
+		5FDFBE25284D46EC007E9F3A /* CampusServiceState */ = {
 			isa = PBXGroup;
 			children = (
-				5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */,
+				5FDFBE26284D46FD007E9F3A /* CampusServiceState.swift */,
+				DB1B4EA92A95098800C5F2D8 /* CampusServiceState+Live.swift */,
+				DB1B4EAB2A95098D00C5F2D8 /* CampusServiceState+Mock.swift */,
+				DB1B4EAD2A95099300C5F2D8 /* CampusServiceState+Dependency.swift */,
 			);
-			path = CampusClientState;
+			path = CampusServiceState;
 			sourceTree = "<group>";
 		};
 		5FDFBE28284D4894007E9F3A /* RozkladServiceState */ = {
@@ -1048,12 +1063,15 @@
 			path = RozkladServiceLessons;
 			sourceTree = "<group>";
 		};
-		DB16750528D75E3500F6596D /* CampusClientStudySheet */ = {
+		DB16750528D75E3500F6596D /* CampusServiceStudySheet */ = {
 			isa = PBXGroup;
 			children = (
-				DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */,
+				DB16750628D75E3D00F6596D /* CampusServiceStudySheet.swift */,
+				DB1B4EAF2A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift */,
+				DB1B4EB12A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift */,
+				DB1B4EB32A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift */,
 			);
-			path = CampusClientStudySheet;
+			path = CampusServiceStudySheet;
 			sourceTree = "<group>";
 		};
 		DB16750928D77D9300F6596D /* FirebaseService */ = {
@@ -1412,6 +1430,7 @@
 				5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */,
 				5F198F5B286F83AA00D13782 /* View+sync.swift in Sources */,
 				DB1B4EA62A95085A00C5F2D8 /* RozkladServiceState+Mock.swift in Sources */,
+				DB1B4EB22A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift in Sources */,
 				5F5F4648284900A000202DA5 /* GroupRozkladWeekPicker.swift in Sources */,
 				5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */,
 				5F69BBDB284ACC4100FED83D /* APIService.swift in Sources */,
@@ -1423,7 +1442,7 @@
 				5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */,
 				5F137EDB2843A85600514263 /* GroupsResponse.swift in Sources */,
 				DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */,
-				5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */,
+				5FDFBE27284D46FD007E9F3A /* CampusServiceState.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F1B200C287072BB00E1D2A6 /* AppConfiguration.swift in Sources */,
 				DB1B4EA22A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift in Sources */,
@@ -1433,6 +1452,7 @@
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
 				5F69BBDF284CC0C900FED83D /* CampusScreenProvider.swift in Sources */,
 				5F137EF0284409F900514263 /* RozkladFlow.swift in Sources */,
+				DB1B4EAE2A95099300C5F2D8 /* CampusServiceState+Dependency.swift in Sources */,
 				5FF18EA12871D9B8001474F6 /* UIApplication+endEditing.swift in Sources */,
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
@@ -1458,7 +1478,7 @@
 				DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */,
 				5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */,
 				5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */,
-				DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */,
+				DB16750728D75E3D00F6596D /* CampusServiceStudySheet.swift in Sources */,
 				DB1B4E852A95022700C5F2D8 /* UserDefaultsServiceProtocol.swift in Sources */,
 				5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
@@ -1485,6 +1505,7 @@
 				5F137EF228440A0900514263 /* RozkladFlowView.swift in Sources */,
 				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
 				DB1B4E952A95054700C5F2D8 /* FirebaseService+Dependency.swift in Sources */,
+				DB1B4EAC2A95098D00C5F2D8 /* CampusServiceState+Mock.swift in Sources */,
 				5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */,
 				5F69BBD4284AAC4500FED83D /* CampusLoginFeature.swift in Sources */,
 				5F1B201C2870A1C600E1D2A6 /* StudySheetItemResponse.swift in Sources */,
@@ -1493,9 +1514,11 @@
 				DB1B4E992A95063000C5F2D8 /* AnalyticsService+Test.swift in Sources */,
 				5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */,
 				5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */,
+				DB1B4EB02A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift in Sources */,
 				5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */,
 				5FEE6332286DE483002F7E9D /* GroupRozkladScrollToView.swift in Sources */,
 				5F137EC62843A36C00514263 /* AppDelegate.swift in Sources */,
+				DB1B4EAA2A95098800C5F2D8 /* CampusServiceState+Live.swift in Sources */,
 				5F137EFF28440DFD00514263 /* GroupRozkladView.swift in Sources */,
 				5F5F464A284900C200202DA5 /* GroupRozkladDayPicker.swift in Sources */,
 				5F6712512865FB8600A57E10 /* LessonDetailsSectionView.swift in Sources */,
@@ -1516,6 +1539,7 @@
 				5FEE632E286DA06A002F7E9D /* Publisher+Ext.swift in Sources */,
 				5F79DEB8284EB99C0040C14A /* GroupResponse.swift in Sources */,
 				DB1B4E9B2A95063900C5F2D8 /* AnalyticsService+Dependency.swift in Sources */,
+				DB1B4EB42A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift in Sources */,
 				5F198F5D28704DE300D13782 /* GroupRozkladSection.swift in Sources */,
 				DB1B4E932A95053C00C5F2D8 /* FirebaseService+Test.swift in Sources */,
 				5F137ECF2843A3CA00514263 /* OnboardingFlowView.swift in Sources */,
