@@ -647,7 +647,7 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		5F28FB8E2858D64100579A75 /* Keychain */ = {
+		5F28FB8E2858D64100579A75 /* KeychainService */ = {
 			isa = PBXGroup;
 			children = (
 				5F28FB8F2858D65500579A75 /* KeychainServiceProtocol.swift */,
@@ -655,7 +655,7 @@
 				DB1B4E8C2A95037D00C5F2D8 /* KeychainService+Dependency.swift */,
 				DB1B4E8E2A9503A600C5F2D8 /* KeychainKey.swift */,
 			);
-			path = Keychain;
+			path = KeychainService;
 			sourceTree = "<group>";
 		};
 		5F5F4628284569CC00202DA5 /* Cell */ = {
@@ -683,8 +683,8 @@
 			isa = PBXGroup;
 			children = (
 				5F69BBD9284ACC3600FED83D /* APIService */,
-				5F5F463828480B2D00202DA5 /* UserDefaults */,
-				5F28FB8E2858D64100579A75 /* Keychain */,
+				5F5F463828480B2D00202DA5 /* UserDefaultsService */,
+				5F28FB8E2858D64100579A75 /* KeychainService */,
 				5FDFBE28284D4894007E9F3A /* RozkladClientState */,
 				DB16750228D75DAE00F6596D /* RozkladClientLessons */,
 				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
@@ -697,7 +697,7 @@
 			path = Clients;
 			sourceTree = "<group>";
 		};
-		5F5F463828480B2D00202DA5 /* UserDefaults */ = {
+		5F5F463828480B2D00202DA5 /* UserDefaultsService */ = {
 			isa = PBXGroup;
 			children = (
 				DB1B4E842A95022700C5F2D8 /* UserDefaultsServiceProtocol.swift */,
@@ -705,7 +705,7 @@
 				DB1B4E882A95029600C5F2D8 /* UserDefaultsService+Dependency.swift */,
 				DB1B4E822A9501FF00C5F2D8 /* UserDefaultKey.swift */,
 			);
-			path = UserDefaults;
+			path = UserDefaultsService;
 			sourceTree = "<group>";
 		};
 		5F5F463B284814D700202DA5 /* Rozklad */ = {
