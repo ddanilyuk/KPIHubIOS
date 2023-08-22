@@ -23,13 +23,13 @@ struct AppFeature: Reducer {
         case path(Path.Action)
     }
     
-    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.userDefaultsService) var userDefaultsService
     
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .appDelegate(.didFinishLaunching):
-                if userDefaultsClient.get(for: .onboardingPassed) {
+                if userDefaultsService.get(for: .onboardingPassed) {
                     state.path = .main(MainFlow.State())
                 } else {
                     state.path = .onboarding(OnboardingFlow.State())

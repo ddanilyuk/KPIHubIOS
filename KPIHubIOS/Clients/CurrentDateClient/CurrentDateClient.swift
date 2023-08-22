@@ -17,7 +17,6 @@ private enum CurrentDateClientKey: TestDependencyKey {
 
 extension CurrentDateClientKey: DependencyKey {
     static let liveValue = CurrentDateClient.live(
-        userDefaultsClient: DependencyValues._current.userDefaultsClient,
         rozkladClientLessons: DependencyValues._current.rozkladClientLessons
     )
 }
@@ -48,9 +47,9 @@ extension CurrentDateClient {
 
     // swiftlint:disable function_body_length
     static func live(
-        userDefaultsClient: UserDefaultsClientable,
         rozkladClientLessons: RozkladClientLessons
     ) -> Self {
+        @Dependency(\.userDefaultsService) var userDefaultsService
 
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: "Europe/Kiev")!
@@ -90,7 +89,7 @@ extension CurrentDateClient {
             let (dayNumber, weekNumber) = currentDayWeek(
                 calendar: calendar,
                 from: date,
-                toggleWeek: userDefaultsClient.get(for: .toggleWeek)
+                toggleWeek: userDefaultsService.get(for: .toggleWeek)
             )
             let currentDay = Lesson.Day(rawValue: dayNumber)
             let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first

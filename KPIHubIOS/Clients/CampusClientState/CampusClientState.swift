@@ -15,10 +15,7 @@ private enum CampusClientStateKey: TestDependencyKey {
 }
 
 extension CampusClientStateKey: DependencyKey {
-    static let liveValue = CampusClientState.live(
-        userDefaultsClient: DependencyValues._current.userDefaultsClient,
-        keychainClient: DependencyValues._current.keychainClient
-    )
+    static let liveValue = CampusClientState.live()
 }
 
 extension DependencyValues {
@@ -46,13 +43,13 @@ struct CampusClientState {
     let logout: (ClientValue<Void>) -> Void
     let commit: () -> Void
 
-    static func live(
-        userDefaultsClient: UserDefaultsClientable,
-        keychainClient: KeychainClientable
-    ) -> CampusClientState {
+    static func live() -> CampusClientState {
+        @Dependency(\.keychainService) var keychainService
+        @Dependency(\.userDefaultsService) var userDefaultsService
+        
         let subject = CurrentValueSubject<State, Never>(.loggedOut)
         let commit: () -> Void = {
-            if let campusUserInfo = userDefaultsClient.get(for: .campusUserInfo) {
+            if let campusUserInfo = userDefaultsService.get(for: .campusUserInfo) {
                 subject.value = .loggedIn(campusUserInfo)
             } else {
                 subject.value = .loggedOut
@@ -64,17 +61,17 @@ struct CampusClientState {
             login: { clientValue in
                 let userInfo = clientValue.value.userInfo
                 let credentials = clientValue.value.credentials
-                userDefaultsClient.set(userInfo, for: .campusUserInfo)
-                keychainClient.set(credentials.username, for: .campusUsername)
-                keychainClient.set(credentials.password, for: .campusPassword)
+                userDefaultsService.set(userInfo, for: .campusUserInfo)
+                keychainService.set(credentials.username, for: .campusUsername)
+                keychainService.set(credentials.password, for: .campusPassword)
                 if clientValue.commitChanges {
                     commit()
                 }
             },
             logout: { clientValue in
-                userDefaultsClient.remove(for: .campusUserInfo)
-                try? keychainClient.remove(for: .campusUsername)
-                try? keychainClient.remove(for: .campusPassword)
+                userDefaultsService.remove(for: .campusUserInfo)
+                try? keychainService.remove(for: .campusUsername)
+                try? keychainService.remove(for: .campusPassword)
                 if clientValue.commitChanges {
                     commit()
                 }

@@ -16,9 +16,7 @@ private enum RozkladClientStateKey: TestDependencyKey {
 }
 
 extension RozkladClientStateKey: DependencyKey {
-    static let liveValue = RozkladClientState.live(
-        userDefaultsClient: DependencyValues._current.userDefaultsClient
-    )
+    static let liveValue = RozkladClientState.live()
 }
 
 extension DependencyValues {
@@ -40,11 +38,12 @@ struct RozkladClientState {
     let setState: (ClientValue<State>) -> Void
     let commit: () -> Void
 
-    static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientState {
-
+    static func live() -> RozkladClientState {
+        @Dependency(\.userDefaultsService) var userDefaultsService
+        
         let subject = CurrentValueSubject<State, Never>(.notSelected)
         let commit: () -> Void = {
-            if let group = userDefaultsClient.get(for: .groupResponse) {
+            if let group = userDefaultsService.get(for: .groupResponse) {
                 subject.send(.selected(group))
             } else {
                 subject.send(.notSelected)
@@ -61,9 +60,9 @@ struct RozkladClientState {
             setState: { clientValue in
                 switch clientValue.value {
                 case let .selected(group):
-                    userDefaultsClient.set(group, for: .groupResponse)
+                    userDefaultsService.set(group, for: .groupResponse)
                 case .notSelected:
-                    userDefaultsClient.remove(for: .groupResponse)
+                    userDefaultsService.remove(for: .groupResponse)
                 }
                 if clientValue.commitChanges {
                     commit()

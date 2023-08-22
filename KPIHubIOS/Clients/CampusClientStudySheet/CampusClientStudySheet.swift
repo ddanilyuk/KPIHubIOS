@@ -15,10 +15,7 @@ private enum CampusClientStudySheetKey: TestDependencyKey {
 }
 
 extension CampusClientStudySheetKey: DependencyKey {
-    static let liveValue = CampusClientStudySheet.live(
-        userDefaultsClient: DependencyValues._current.userDefaultsClient,
-        keychainClient: DependencyValues._current.keychainClient
-    )
+    static let liveValue = CampusClientStudySheet.live()
 }
 
 extension DependencyValues {
@@ -41,11 +38,10 @@ struct CampusClientStudySheet {
     let load: () -> Effect<Void>
     let clean: () -> Void
 
-    static func live(
-        userDefaultsClient: UserDefaultsClientable,
-        keychainClient: KeychainClientable
-    ) -> CampusClientStudySheet {
+    static func live() -> CampusClientStudySheet {
         @Dependency(\.apiService) var apiService
+        @Dependency(\.keychainService) var keychainService
+        @Dependency(\.userDefaultsService) var userDefaultsService
         
         let subject = CurrentValueSubject<State, Never>(.notLoading)
 
@@ -53,8 +49,8 @@ struct CampusClientStudySheet {
             subject: subject,
             load: {
                 guard
-                    let username = keychainClient.get(key: .campusUsername),
-                    let password = keychainClient.get(key: .campusPassword)
+                    let username = keychainService.get(key: .campusUsername),
+                    let password = keychainService.get(key: .campusPassword)
                 else {
                     subject.send(.notLoading)
                     return .none

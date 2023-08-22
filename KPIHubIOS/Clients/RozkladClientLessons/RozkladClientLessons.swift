@@ -15,9 +15,7 @@ private enum RozkladClientLessonsKey: TestDependencyKey {
 }
 
 extension RozkladClientLessonsKey: DependencyKey {
-    static let liveValue = RozkladClientLessons.live(
-        userDefaultsClient: DependencyValues._current.userDefaultsClient
-    )
+    static let liveValue = RozkladClientLessons.live()
 }
 
 extension DependencyValues {
@@ -36,14 +34,14 @@ struct RozkladClientLessons {
     let modify: (ClientValue<Lesson>) -> Void
     let commit: () -> Void
 
-    static func live(userDefaultsClient: UserDefaultsClientable) -> RozkladClientLessons {
-
+    static func live() -> RozkladClientLessons {
+        @Dependency(\.userDefaultsService) var userDefaultsService
         let subject = CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>([])
         let updatedAtSubject = CurrentValueSubject<Date?, Never>(nil)
 
         let commit: () -> Void = {
-            subject.value = userDefaultsClient.get(for: .lessons) ?? []
-            updatedAtSubject.value = userDefaultsClient.get(for: .lessonsUpdatedAt)
+            subject.value = userDefaultsService.get(for: .lessons) ?? []
+            updatedAtSubject.value = userDefaultsService.get(for: .lessonsUpdatedAt)
         }
         commit()
 
@@ -51,17 +49,17 @@ struct RozkladClientLessons {
             subject: subject,
             updatedAtSubject: updatedAtSubject,
             set: { clientValue in
-                userDefaultsClient.set(IdentifiedArray(uniqueElements: clientValue.value), for: .lessons)
-                userDefaultsClient.set(Date(), for: .lessonsUpdatedAt)
+                userDefaultsService.set(IdentifiedArray(uniqueElements: clientValue.value), for: .lessons)
+                userDefaultsService.set(Date(), for: .lessonsUpdatedAt)
                 if clientValue.commitChanges {
                     commit()
                 }
             },
             modify: { clientValue in
-                var lessons = IdentifiedArray(uniqueElements: userDefaultsClient.get(for: .lessons) ?? [])
+                var lessons = IdentifiedArray(uniqueElements: userDefaultsService.get(for: .lessons) ?? [])
                 let modifiedLesson = clientValue.value
                 lessons[id: modifiedLesson.id] = modifiedLesson
-                userDefaultsClient.set(lessons, for: .lessons)
+                userDefaultsService.set(lessons, for: .lessons)
                 if clientValue.commitChanges {
                     commit()
                 }

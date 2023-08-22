@@ -23,7 +23,7 @@ struct OnboardingFlow: Reducer {
         }
     }
     
-    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.campusClientState) var campusClientState
@@ -51,7 +51,7 @@ struct OnboardingFlow: Reducer {
                 campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
-                userDefaultsClient.set(true, for: .onboardingPassed)
+                userDefaultsService.set(true, for: .onboardingPassed)
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
                 return .send(.output(.done))
                 
@@ -59,7 +59,7 @@ struct OnboardingFlow: Reducer {
                 campusClientState.commit()
                 rozkladClientState.commit()
                 rozkladClientLessons.commit()
-                userDefaultsClient.set(true, for: .onboardingPassed)
+                userDefaultsService.set(true, for: .onboardingPassed)
                 analyticsClient.track(Event.Onboarding.onboardingPassed)
                 return .send(.output(.done))
                 

@@ -62,7 +62,7 @@ struct ProfileHome: Reducer {
     // MARK: - Environment
     
     @Dependency(\.apiService) var apiClient
-    @Dependency(\.userDefaultsClient) var userDefaultsClient
+    @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.campusClientState) var campusClientState
@@ -82,7 +82,7 @@ struct ProfileHome: Reducer {
             switch action {
             case .onAppear:
                 state.completeAppVersion = appConfiguration.completeAppVersion ?? ""
-                state.toggleWeek = userDefaultsClient.get(for: .toggleWeek)
+                state.toggleWeek = userDefaultsService.get(for: .toggleWeek)
                 analyticsClient.track(Event.Profile.profileHomeAppeared)
                 return onAppear()
 
@@ -198,7 +198,7 @@ struct ProfileHome: Reducer {
                 return Effect(value: .routeAction(.campus))
 
             case .binding(\.rozkladSectionView.$toggleWeek):
-                userDefaultsClient.set(state.toggleWeek, for: .toggleWeek)
+                userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
                 currentDateClient.forceUpdate()
                 analyticsClient.track(Event.Profile.changeWeek(state.toggleWeek))
                 return .none
