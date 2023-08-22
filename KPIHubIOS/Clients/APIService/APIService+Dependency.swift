@@ -10,7 +10,7 @@ import URLRouting
 import Routes
 
 extension DependencyValues {
-    private enum APIServiceKey: TestDependencyKey {
+    private enum APIServiceKey: DependencyKey {
         static let testValue = APIService.failing
         
         static let liveValue: APIService = {

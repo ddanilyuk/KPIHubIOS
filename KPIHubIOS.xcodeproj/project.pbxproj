@@ -111,7 +111,7 @@
 		5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F122284E201300DB0576 /* EditLessonTeachersView.swift */; };
 		5FA2AC04284E30B50041FE74 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA2AC03284E30B50041FE74 /* Color+Extension.swift */; };
 		5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */; };
-		5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */; };
+		5FDFBE2A284D48A2007E9F3A /* RozkladServiceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE29284D48A2007E9F3A /* RozkladServiceState.swift */; };
 		5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */; };
 		5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */; };
 		5FDFBE33284D5207007E9F3A /* StudySheetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */; };
@@ -147,6 +147,9 @@
 		DB1B4E9E2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E9D2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift */; };
 		DB1B4EA02A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E9F2A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift */; };
 		DB1B4EA22A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA12A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift */; };
+		DB1B4EA42A95085400C5F2D8 /* RozkladServiceState+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA32A95085400C5F2D8 /* RozkladServiceState+Live.swift */; };
+		DB1B4EA62A95085A00C5F2D8 /* RozkladServiceState+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA52A95085A00C5F2D8 /* RozkladServiceState+Mock.swift */; };
+		DB1B4EA82A95086100C5F2D8 /* RozkladServiceState+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA72A95086100C5F2D8 /* RozkladServiceState+Dependency.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -300,7 +303,7 @@
 		5FA2AC03284E30B50041FE74 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5FDFBE26284D46FD007E9F3A /* CampusClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientState.swift; sourceTree = "<group>"; };
-		5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientState.swift; sourceTree = "<group>"; };
+		5FDFBE29284D48A2007E9F3A /* RozkladServiceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladServiceState.swift; sourceTree = "<group>"; };
 		5FDFBE2B284D4DC4007E9F3A /* CampusCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusCredentials.swift; sourceTree = "<group>"; };
 		5FDFBE2D284D4DD3007E9F3A /* CampusUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusUserInfo.swift; sourceTree = "<group>"; };
 		5FDFBE32284D5207007E9F3A /* StudySheetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudySheetResponse.swift; sourceTree = "<group>"; };
@@ -339,6 +342,9 @@
 		DB1B4E9D2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceLessons+Live.swift"; sourceTree = "<group>"; };
 		DB1B4E9F2A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceLessons+Mock.swift"; sourceTree = "<group>"; };
 		DB1B4EA12A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceLessons+Dependency.swift"; sourceTree = "<group>"; };
+		DB1B4EA32A95085400C5F2D8 /* RozkladServiceState+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceState+Live.swift"; sourceTree = "<group>"; };
+		DB1B4EA52A95085A00C5F2D8 /* RozkladServiceState+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceState+Mock.swift"; sourceTree = "<group>"; };
+		DB1B4EA72A95086100C5F2D8 /* RozkladServiceState+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceState+Dependency.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
@@ -691,7 +697,7 @@
 				5F69BBD9284ACC3600FED83D /* APIService */,
 				5F5F463828480B2D00202DA5 /* UserDefaultsService */,
 				5F28FB8E2858D64100579A75 /* KeychainService */,
-				5FDFBE28284D4894007E9F3A /* RozkladClientState */,
+				5FDFBE28284D4894007E9F3A /* RozkladServiceState */,
 				DB16750228D75DAE00F6596D /* RozkladServiceLessons */,
 				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
 				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
@@ -984,12 +990,15 @@
 			path = CampusClientState;
 			sourceTree = "<group>";
 		};
-		5FDFBE28284D4894007E9F3A /* RozkladClientState */ = {
+		5FDFBE28284D4894007E9F3A /* RozkladServiceState */ = {
 			isa = PBXGroup;
 			children = (
-				5FDFBE29284D48A2007E9F3A /* RozkladClientState.swift */,
+				5FDFBE29284D48A2007E9F3A /* RozkladServiceState.swift */,
+				DB1B4EA32A95085400C5F2D8 /* RozkladServiceState+Live.swift */,
+				DB1B4EA52A95085A00C5F2D8 /* RozkladServiceState+Mock.swift */,
+				DB1B4EA72A95086100C5F2D8 /* RozkladServiceState+Dependency.swift */,
 			);
-			path = RozkladClientState;
+			path = RozkladServiceState;
 			sourceTree = "<group>";
 		};
 		5FDFBE2F284D4F89007E9F3A /* Shared */ = {
@@ -1382,7 +1391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB1B4E8B2A95037500C5F2D8 /* KeychainService.swift in Sources */,
-				5FDFBE2A284D48A2007E9F3A /* RozkladClientState.swift in Sources */,
+				5FDFBE2A284D48A2007E9F3A /* RozkladServiceState.swift in Sources */,
 				5F5F46432848EDF700202DA5 /* OffsetModifier.swift in Sources */,
 				5F69BBF4284CEC1600FED83D /* StudySheetCellView.swift in Sources */,
 				5F137ECD2843A3C500514263 /* OnboardingFlow.swift in Sources */,
@@ -1397,10 +1406,12 @@
 				5F137EC42843A36200514263 /* AppView.swift in Sources */,
 				5F137EEB284407CE00514263 /* RozkladFlow+Path.swift in Sources */,
 				DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */,
+				DB1B4EA42A95085400C5F2D8 /* RozkladServiceState+Live.swift in Sources */,
 				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
 				5F667CFC284E3ED0006D3AB7 /* LessonDetailsTitleView.swift in Sources */,
 				5F67124E2865CA1600A57E10 /* View+Preview.swift in Sources */,
 				5F198F5B286F83AA00D13782 /* View+sync.swift in Sources */,
+				DB1B4EA62A95085A00C5F2D8 /* RozkladServiceState+Mock.swift in Sources */,
 				5F5F4648284900A000202DA5 /* GroupRozkladWeekPicker.swift in Sources */,
 				5F69BBEF284CD7F500FED83D /* StudySheetItemDetailView.swift in Sources */,
 				5F69BBDB284ACC4100FED83D /* APIService.swift in Sources */,
@@ -1458,6 +1469,7 @@
 				5F137EE02843B26500514263 /* OnboardingFeature.swift in Sources */,
 				5FDFBE2E284D4DD3007E9F3A /* CampusUserInfo.swift in Sources */,
 				5F198F5F2870511200D13782 /* SafeAreaInsetsKey.swift in Sources */,
+				DB1B4EA82A95086100C5F2D8 /* RozkladServiceState+Dependency.swift in Sources */,
 				5F137ED82843A70600514263 /* GroupPickerView.swift in Sources */,
 				5F137EE9284403F200514263 /* Loadable.swift in Sources */,
 				5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */,

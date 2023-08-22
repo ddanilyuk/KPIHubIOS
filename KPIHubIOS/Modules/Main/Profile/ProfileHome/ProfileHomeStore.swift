@@ -15,7 +15,7 @@ struct ProfileHome: Reducer {
 
     struct State: Equatable {
 
-        var rozkladState: RozkladClientState.State = .notSelected
+        var rozkladState: RozkladServiceState.State = .notSelected
         var campusState: CampusClientState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
         @BindingState var toggleWeek: Bool = false
@@ -31,7 +31,7 @@ struct ProfileHome: Reducer {
     enum Action: Equatable, BindableAction {
         case onAppear
 
-        case setRozkladState(RozkladClientState.State)
+        case setRozkladState(RozkladServiceState.State)
         case setCampusState(CampusClientState.State)
         case setLessonsUpdatedAtDate(Date?)
 
@@ -63,7 +63,7 @@ struct ProfileHome: Reducer {
     
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
-    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
@@ -127,7 +127,7 @@ struct ProfileHome: Reducer {
                             for: .api(.group(newGroup.value.id, .lessons)),
                             as: LessonsResponse.self
                         )
-                        rozkladClientState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
+                        rozkladServiceState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
                         return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
                     }
                     return task
@@ -165,7 +165,7 @@ struct ProfileHome: Reducer {
                 return .none
 
             case .changeGroup:
-                rozkladClientState.setState(ClientValue(.notSelected, commitChanges: true))
+                rozkladServiceState.setState(ClientValue(.notSelected, commitChanges: true))
                 analyticsService.track(Event.Profile.changeGroup)
                 analyticsService.setGroup(nil)
                 return Effect(value: .routeAction(.rozklad))
@@ -222,11 +222,11 @@ struct ProfileHome: Reducer {
     
     private func onAppear() -> Effect<Action> {
         return .merge(
-            Effect(value: .setRozkladState(rozkladClientState.subject.value)),
+            Effect(value: .setRozkladState(rozkladServiceState.subject.value)),
             Effect(value: .setCampusState(campusClientState.subject.value)),
             Effect(value: .setLessonsUpdatedAtDate(rozkladServiceLessons.updatedAtSubject.value)),
             Effect.run { subscriber in
-                rozkladClientState.subject
+                rozkladServiceState.subject
                     .dropFirst()
                     .receive(on: DispatchQueue.main)
                     .sink { rozkladState in

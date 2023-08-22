@@ -22,12 +22,12 @@ struct RozkladFlow: Reducer {
     enum Action: Equatable {
         case onSetup
         
-        case updateRozkladState(RozkladClientState.State)
+        case updateRozkladState(RozkladServiceState.State)
         case rozkladRoot(RozkladRoot.Action)
         case path(StackAction<Path.State, Path.Action>)
     }
     
-    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
     
@@ -35,9 +35,9 @@ struct RozkladFlow: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .onSetup:
-                setRootRozkladState(from: rozkladClientState.subject.value, state: &state)
+                setRootRozkladState(from: rozkladServiceState.subject.value, state: &state)
                 return Effect.run { subscriber in
-                    rozkladClientState.subject
+                    rozkladServiceState.subject
                         .dropFirst()
                         .removeDuplicates()
                         .receive(on: DispatchQueue.main)
@@ -58,7 +58,7 @@ struct RozkladFlow: Reducer {
                 return .none
                 
             case .rozkladRoot(.groupPicker(.route(.done))):
-                rozkladClientState.commit()
+                rozkladServiceState.commit()
                 rozkladServiceLessons.commit()
                 return .none
 
@@ -104,7 +104,7 @@ struct RozkladFlow: Reducer {
         }
     }
     
-    private func setRootRozkladState(from rozkladState: RozkladClientState.State, state: inout State) {
+    private func setRootRozkladState(from rozkladState: RozkladServiceState.State, state: inout State) {
         switch rozkladState {
         case .selected:
             state.rozkladRoot = .groupRozklad(GroupRozklad.State())

@@ -12,7 +12,7 @@ struct RozkladSectionView: View {
 
     struct ViewState: Equatable {
         let updatedAt: Date?
-        let rozkladState: RozkladClientState.State
+        let rozkladState: RozkladServiceState.State
         @BindingState var toggleWeek: Bool
     }
 

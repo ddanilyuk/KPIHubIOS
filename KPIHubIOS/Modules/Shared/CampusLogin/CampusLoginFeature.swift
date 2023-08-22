@@ -47,7 +47,7 @@ struct CampusLoginFeature: Reducer {
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.campusClientState) var campusClientState
-    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
     
@@ -207,7 +207,7 @@ extension CampusLoginFeature {
                     as: LessonsResponse.self
                 )
             }
-            rozkladClientState.setState(ClientValue(.selected(group), commitChanges: false))
+            rozkladServiceState.setState(ClientValue(.selected(group), commitChanges: false))
             let lessons = resultTask.map { $0.value.lessons.map(Lesson.init) }
             await send(.lessonsResult(lessons))
         }

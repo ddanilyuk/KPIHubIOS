@@ -80,7 +80,7 @@ struct GroupRozklad: Reducer {
 
     // MARK: - Environment
     
-    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.currentDateClient) var currentDateClient
     @Dependency(\.analyticsService) var analyticsService
@@ -156,7 +156,7 @@ struct GroupRozklad: Reducer {
                 }
 
             case let .updateLessons(lessons):
-                state.groupName = rozkladClientState.group()?.name ?? "-"
+                state.groupName = rozkladServiceState.group()?.name ?? "-"
                 state.lessons = lessons
                 state.sections = [State.Section](
                     lessons: state.lessons,

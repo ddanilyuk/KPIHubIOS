@@ -8,7 +8,7 @@
 import Dependencies
 
 extension DependencyValues {
-    private enum RozkladServiceLessonsKey: TestDependencyKey {
+    private enum RozkladServiceLessonsKey: DependencyKey {
         static let testValue = RozkladServiceLessons.mock()
         static let liveValue = RozkladServiceLessons.live()
     }

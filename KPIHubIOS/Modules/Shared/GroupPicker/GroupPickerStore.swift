@@ -45,7 +45,7 @@ struct GroupPickerFeature: Reducer {
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
-    @Dependency(\.rozkladClientState) var rozkladClientState
+    @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
@@ -65,7 +65,7 @@ struct GroupPickerFeature: Reducer {
 
             case let .lessonsResult(.success(lessons)):
                 if let selectedGroup = state.selectedGroup {
-                    rozkladClientState.setState(ClientValue(.selected(selectedGroup), commitChanges: false))
+                    rozkladServiceState.setState(ClientValue(.selected(selectedGroup), commitChanges: false))
                     analyticsService.setGroup(selectedGroup)
                 }
                 state.isLoading = false
