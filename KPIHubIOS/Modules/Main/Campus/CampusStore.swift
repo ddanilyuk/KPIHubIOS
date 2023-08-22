@@ -31,17 +31,14 @@ struct Campus: Reducer {
             case .onSetup:
                 updateCampusState(with: campusClientState.subject.value, state: &state)
                 return .merge(
-                    Effect.run { subscriber in
-                        campusClientState.subject
-                            .dropFirst()
-                            .removeDuplicates()
-                            .receive(on: DispatchQueue.main)
-                            .sink { state in
-                                subscriber.send(.updateCampusState(state))
-                            }
+                    .run { send in
+                        for await state in campusClientState.subject.values.eraseToStream().dropFirst() {
+                            await send(.updateCampusState(state))
+                        }
                     },
-                    campusServiceStudySheet.load()
-                        .fireAndForget()
+                    .run { _ in
+                        await campusServiceStudySheet.load()
+                    }
                 )
                 .cancellable(id: CancelID.campusClient, cancelInFlight: true)
                 
@@ -51,9 +48,10 @@ struct Campus: Reducer {
                 
             case .campusRoot(.campusLogin(.route(.done))):
                 campusClientState.commit()
-                return campusServiceStudySheet.load()
-                    .fireAndForget()
-
+                return .run { send in
+                    await campusServiceStudySheet.load()
+                }
+                
             case let .campusRoot(.campusHome(.routeAction(.studySheet(items)))):
                 let studySheetState = StudySheet.State(items: items)
                 state.path.append(.studySheet(studySheetState))

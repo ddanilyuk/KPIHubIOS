@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Routes
 import Foundation
+import ConcurrencyExtras
 
 struct CampusHome: Reducer {
 
@@ -43,7 +44,9 @@ struct CampusHome: Reducer {
 
     // MARK: - Reducer
     
-    enum SubscriberCancelIDTest { }
+    enum CancelID {
+        case campusService
+    }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -52,22 +55,20 @@ struct CampusHome: Reducer {
             switch action {
             case .onAppear:
                 analyticsService.track(Event.Campus.campusHomeAppeared)
-                return Effect.run { subscriber in
-                    campusServiceStudySheet.subject
-                        .receive(on: DispatchQueue.main)
-                        .sink { state in
-                            subscriber.send(.setStudySheetState(state))
-                        }
+                return .run { send in
+                    for await state in campusServiceStudySheet.subject.values.eraseToStream() {
+                        await send(.setStudySheetState(state))
+                    }
                 }
-                .cancellable(id: SubscriberCancelIDTest.self, cancelInFlight: true)
+                .cancellable(id: CancelID.campusService, cancelInFlight: true)
 
             case .refresh:
                 switch state.studySheetState {
                 case .notLoading,
                      .loaded:
-                    return campusServiceStudySheet.load()
-                        .fireAndForget()
-
+                    return .run { send in
+                        await campusServiceStudySheet.load()
+                    }
                 case .loading:
                     return .none
                 }
@@ -90,9 +91,7 @@ struct CampusHome: Reducer {
                         Event.Campus.studySheetLoadSuccess(itemsCount: items.count)
                     )
                     if state.openStudySheetOnLoad {
-                        return Effect(value: .routeAction(
-                            .studySheet(items)
-                        ))
+                        return .send(.routeAction(.studySheet(items)))
                     } else {
                         return .none
                     }
@@ -109,9 +108,7 @@ struct CampusHome: Reducer {
                     return .none
 
                 case let .loaded(items):
-                    return Effect(value: .routeAction(
-                        .studySheet(items)
-                    ))
+                    return .send(.routeAction(.studySheet(items)))
                 }
 
             case .binding:

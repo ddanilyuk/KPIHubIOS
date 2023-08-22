@@ -18,6 +18,6 @@ struct CampusServiceStudySheet {
 
     let subject: CurrentValueSubject<State, Never>
 
-    let load: () -> Effect<Void>
+    let load: () async -> Void
     let clean: () -> Void
 }

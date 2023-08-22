@@ -12,7 +12,7 @@ extension CampusServiceStudySheet {
     static func mock() -> CampusServiceStudySheet {
         CampusServiceStudySheet(
             subject: CurrentValueSubject<State, Never>(.notLoading),
-            load: { .none },
+            load: { },
             clean: { }
         )
     }

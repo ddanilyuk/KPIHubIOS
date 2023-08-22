@@ -27,7 +27,7 @@ extension CampusServiceStudySheet {
                     let password = keychainService.get(key: .campusPassword)
                 else {
                     subject.send(.notLoading)
-                    return .none
+                    return
                 }
                 let campusLoginQuery = CampusLoginQuery(
                     username: username,
@@ -35,21 +35,16 @@ extension CampusServiceStudySheet {
                 )
                 subject.send(.loading)
                 
-                let task: EffectPublisher<[StudySheetItem], Error> = EffectPublisher.task {
-                    let result = try await apiService.decodedResponse(
+                do {
+                    let response = try await apiService.decodedResponse(
                         for: .api(.campus(.studySheet(campusLoginQuery))),
                         as: StudySheetResponse.self
                     )
-                    return result.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
+                    let studySheet = response.value.studySheet.map { StudySheetItem(studySheetItemResponse: $0) }
+                    subject.send(.loaded(studySheet))
+                } catch {
+                    subject.send(.notLoading)
                 }
-                return task
-                    .on(
-                        value: { subject.send(.loaded($0)) },
-                        error: { _ in subject.send(.notLoading) }
-                    )
-                    .ignoreOutput(setOutputType: Void.self)
-                    .ignoreFailure()
-                    .eraseToEffect()
             },
             clean: {
                 subject.send(.notLoading)
