@@ -358,12 +358,13 @@
 			children = (
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
 				5F137EBE2843A32800514263 /* Root */,
-				5FDFBE2F284D4F89007E9F3A /* Shared */,
 				5F137EC92843A3A500514263 /* OnboardingFlow */,
-				5F137ECA2843A3AC00514263 /* Main */,
+				5F137ECA2843A3AC00514263 /* MainFlow */,
+				5F137EDE2843B25600514263 /* Onboarding */,
 				5F137EEC284409CC00514263 /* Rozklad */,
 				5F137EED284409D200514263 /* Campus */,
 				5F137EEE284409DD00514263 /* Profile */,
+				5FDFBE2F284D4F89007E9F3A /* Shared */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -436,18 +437,17 @@
 				5F137ECC2843A3C500514263 /* OnboardingFlow.swift */,
 				5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */,
 				5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */,
-				5F137EDE2843B25600514263 /* Onboarding */,
 			);
 			path = OnboardingFlow;
 			sourceTree = "<group>";
 		};
-		5F137ECA2843A3AC00514263 /* Main */ = {
+		5F137ECA2843A3AC00514263 /* MainFlow */ = {
 			isa = PBXGroup;
 			children = (
 				5F137ED02843A3D500514263 /* MainFlow.swift */,
 				5F137ED22843A3E200514263 /* MainFlowView.swift */,
 			);
-			path = Main;
+			path = MainFlow;
 			sourceTree = "<group>";
 		};
 		5F137ED42843A6EA00514263 /* GroupPicker */ = {
