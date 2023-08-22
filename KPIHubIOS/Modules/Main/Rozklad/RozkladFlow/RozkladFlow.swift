@@ -28,7 +28,7 @@ struct RozkladFlow: Reducer {
     }
     
     @Dependency(\.rozkladClientState) var rozkladClientState
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
     
     var core: some ReducerOf<Self> {
@@ -59,7 +59,7 @@ struct RozkladFlow: Reducer {
                 
             case .rozkladRoot(.groupPicker(.route(.done))):
                 rozkladClientState.commit()
-                rozkladClientLessons.commit()
+                rozkladServiceLessons.commit()
                 return .none
 
             case let .path(.element(_, .lessonDetails(.routeAction(.editNames(lesson))))):

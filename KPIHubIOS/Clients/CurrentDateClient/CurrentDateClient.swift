@@ -12,23 +12,23 @@ import UIKit
 import ComposableArchitecture
 
 private enum CurrentDateClientKey: TestDependencyKey {
-    static let testValue = CurrentDateClient.mock()
+    static let testValue = CurrentDateService.mock()
 }
 
 extension CurrentDateClientKey: DependencyKey {
-    static let liveValue = CurrentDateClient.live(
-        rozkladClientLessons: DependencyValues._current.rozkladClientLessons
+    static let liveValue = CurrentDateService.live(
+        rozkladServiceLessons: DependencyValues._current.rozkladServiceLessons
     )
 }
 
 extension DependencyValues {
-    var currentDateClient: CurrentDateClient {
+    var currentDateClient: CurrentDateService {
         get { self[CurrentDateClientKey.self] }
         set { self[CurrentDateClientKey.self] = newValue }
     }
 }
 
-struct CurrentDateClient {
+struct CurrentDateService {
 
     let currentLesson: CurrentValueSubject<CurrentLesson?, Never>
     let nextLessonID: CurrentValueSubject<Lesson.ID?, Never>
@@ -43,11 +43,11 @@ struct CurrentDateClient {
 
 // MARK: - Live
 
-extension CurrentDateClient {
+extension CurrentDateService {
 
     // swiftlint:disable function_body_length
     static func live(
-        rozkladClientLessons: RozkladClientLessons
+        rozkladServiceLessons: RozkladServiceLessons
     ) -> Self {
         @Dependency(\.userDefaultsService) var userDefaultsService
 
@@ -66,7 +66,7 @@ extension CurrentDateClient {
         setTimer()
 
         // Setup lesson changes update
-        rozkladClientLessons.subject.eraseToAnyPublisher()
+        rozkladServiceLessons.subject.eraseToAnyPublisher()
             .dropFirst()
             .sink { _ in
                 updateSubjects(with: Date())
@@ -96,9 +96,9 @@ extension CurrentDateClient {
             currentDaySubject.value = currentDay
             currentWeekSubject.value = currentWeek
 
-            if !rozkladClientLessons.subject.value.isEmpty {
+            if !rozkladServiceLessons.subject.value.isEmpty {
                 let (currentLesson, nextLesson) = currentAndNextLesson(
-                    lessons: rozkladClientLessons.subject.value,
+                    lessons: rozkladServiceLessons.subject.value,
                     currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
                     currentWeek: currentWeek,
                     currentDay: currentDay
@@ -221,9 +221,9 @@ extension CurrentDateClient {
 
 // MARK: - Mock
 
-extension CurrentDateClient {
+extension CurrentDateService {
 
-    static func mock() -> CurrentDateClient {
+    static func mock() -> CurrentDateService {
         let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(.monday)
         let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
         let currentLessonIDSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)

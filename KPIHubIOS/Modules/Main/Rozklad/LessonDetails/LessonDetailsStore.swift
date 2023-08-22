@@ -56,7 +56,7 @@ struct LessonDetails: Reducer {
 
     // MARK: - Environment
     
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.currentDateClient) var currentDateClient
     @Dependency(\.analyticsService) var analyticsService
 
@@ -78,7 +78,7 @@ struct LessonDetails: Reducer {
                 return Effect.merge(
                     Effect(value: .updateCurrentDate),
                     Effect.run { subscriber in
-                        rozkladClientLessons.subject
+                        rozkladServiceLessons.subject
                             .compactMap { $0[id: lessonID] }
                             .receive(on: DispatchQueue.main)
                             .sink { lesson in
@@ -136,9 +136,9 @@ struct LessonDetails: Reducer {
                 return .none
                 
             case .deleteLessonConfirm:
-                var lessons = rozkladClientLessons.subject.value
+                var lessons = rozkladServiceLessons.subject.value
                 lessons.remove(id: state.lesson.id)
-                rozkladClientLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
+                rozkladServiceLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.removeLessonApply)
                 return Effect(value: .routeAction(.dismiss))
             

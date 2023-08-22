@@ -44,7 +44,7 @@ struct GroupPickerFeature: Reducer {
 
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.analyticsService) var analyticsService
     
@@ -69,7 +69,7 @@ struct GroupPickerFeature: Reducer {
                     analyticsService.setGroup(selectedGroup)
                 }
                 state.isLoading = false
-                rozkladClientLessons.set(.init(lessons, commitChanges: false))
+                rozkladServiceLessons.set(.init(lessons, commitChanges: false))
                 let place = analyticsLessonsLoadPlace(from: state.mode)
                 analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: place))
                 return .send(.route(.done))

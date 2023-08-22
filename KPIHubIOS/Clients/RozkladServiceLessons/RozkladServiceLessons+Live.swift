@@ -1,40 +1,17 @@
 //
-//  RozkladClientLessons.swift
+//  RozkladServiceLessons+Live.swift
 //  KPIHubIOS
 //
-//  Created by Denys Danyliuk on 18.09.2022.
+//  Created by Denys Danyliuk on 22.08.2023.
 //
 
 import Foundation
-import IdentifiedCollections
 import Combine
 import Dependencies
+import IdentifiedCollections
 
-private enum RozkladClientLessonsKey: TestDependencyKey {
-    static let testValue = RozkladClientLessons.mock()
-}
-
-extension RozkladClientLessonsKey: DependencyKey {
-    static let liveValue = RozkladClientLessons.live()
-}
-
-extension DependencyValues {
-    var rozkladClientLessons: RozkladClientLessons {
-        get { self[RozkladClientLessonsKey.self] }
-        set { self[RozkladClientLessonsKey.self] = newValue }
-    }
-}
-
-struct RozkladClientLessons {
-
-    let subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>
-    let updatedAtSubject: CurrentValueSubject<Date?, Never>
-
-    let set: (ClientValue<[Lesson]>) -> Void
-    let modify: (ClientValue<Lesson>) -> Void
-    let commit: () -> Void
-
-    static func live() -> RozkladClientLessons {
+extension RozkladServiceLessons {
+    static func live() -> RozkladServiceLessons {
         @Dependency(\.userDefaultsService) var userDefaultsService
         let subject = CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>([])
         let updatedAtSubject = CurrentValueSubject<Date?, Never>(nil)
@@ -44,8 +21,8 @@ struct RozkladClientLessons {
             updatedAtSubject.value = userDefaultsService.get(for: .lessonsUpdatedAt)
         }
         commit()
-
-        return RozkladClientLessons(
+        
+        return RozkladServiceLessons(
             subject: subject,
             updatedAtSubject: updatedAtSubject,
             set: { clientValue in
@@ -67,19 +44,4 @@ struct RozkladClientLessons {
             commit: commit
         )
     }
-
-    static func mock() -> RozkladClientLessons {
-        RozkladClientLessons(
-            subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>(
-                .init(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
-            ),
-            updatedAtSubject: CurrentValueSubject<Date?, Never>(
-                Date()
-            ),
-            set: { _ in },
-            modify: { _ in },
-            commit: { }
-        )
-    }
-
 }

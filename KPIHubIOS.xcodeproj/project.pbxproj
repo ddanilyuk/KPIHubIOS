@@ -125,7 +125,7 @@
 		8F92B9F3082A99426CBEAD2F /* Pods_KPIHubIOS_KPIHubIOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 165F4FA83B049FD069079B59 /* Pods_KPIHubIOS_KPIHubIOSUITests.framework */; };
 		B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */; };
 		DB0D6F2C28D77E34007DAA97 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB0D6F2B28D77E34007DAA97 /* FirebaseService.swift */; };
-		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
+		DB16750428D75DBF00F6596D /* RozkladServiceLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladServiceLessons.swift */; };
 		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
 		DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */; };
 		DB1B4E7A2A94DE5F00C5F2D8 /* RozkladFlow+Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */; };
@@ -144,6 +144,9 @@
 		DB1B4E972A95062900C5F2D8 /* AnalyticsService+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E962A95062900C5F2D8 /* AnalyticsService+Live.swift */; };
 		DB1B4E992A95063000C5F2D8 /* AnalyticsService+Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E982A95063000C5F2D8 /* AnalyticsService+Test.swift */; };
 		DB1B4E9B2A95063900C5F2D8 /* AnalyticsService+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E9A2A95063900C5F2D8 /* AnalyticsService+Dependency.swift */; };
+		DB1B4E9E2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E9D2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift */; };
+		DB1B4EA02A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E9F2A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift */; };
+		DB1B4EA22A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EA12A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -314,7 +317,7 @@
 		AC884E8709013BB4ECE15DB6 /* Pods-KPIHubIOS.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS.release-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS/Pods-KPIHubIOS.release-production.xcconfig"; sourceTree = "<group>"; };
 		BFBD36B19DDEBE916FF2B355 /* Pods_KPIHubIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0D6F2B28D77E34007DAA97 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
-		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
+		DB16750328D75DBF00F6596D /* RozkladServiceLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladServiceLessons.swift; sourceTree = "<group>"; };
 		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
 		DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
 		DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladFlow+Root.swift"; sourceTree = "<group>"; };
@@ -333,6 +336,9 @@
 		DB1B4E962A95062900C5F2D8 /* AnalyticsService+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsService+Live.swift"; sourceTree = "<group>"; };
 		DB1B4E982A95063000C5F2D8 /* AnalyticsService+Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsService+Test.swift"; sourceTree = "<group>"; };
 		DB1B4E9A2A95063900C5F2D8 /* AnalyticsService+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnalyticsService+Dependency.swift"; sourceTree = "<group>"; };
+		DB1B4E9D2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceLessons+Live.swift"; sourceTree = "<group>"; };
+		DB1B4E9F2A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceLessons+Mock.swift"; sourceTree = "<group>"; };
+		DB1B4EA12A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladServiceLessons+Dependency.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
@@ -686,7 +692,7 @@
 				5F5F463828480B2D00202DA5 /* UserDefaultsService */,
 				5F28FB8E2858D64100579A75 /* KeychainService */,
 				5FDFBE28284D4894007E9F3A /* RozkladClientState */,
-				DB16750228D75DAE00F6596D /* RozkladClientLessons */,
+				DB16750228D75DAE00F6596D /* RozkladServiceLessons */,
 				5FDFBE25284D46EC007E9F3A /* CampusClientState */,
 				DB16750528D75E3500F6596D /* CampusClientStudySheet */,
 				5F856A3F2864725500AB63AC /* CurrentDateClient */,
@@ -1022,12 +1028,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		DB16750228D75DAE00F6596D /* RozkladClientLessons */ = {
+		DB16750228D75DAE00F6596D /* RozkladServiceLessons */ = {
 			isa = PBXGroup;
 			children = (
-				DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */,
+				DB16750328D75DBF00F6596D /* RozkladServiceLessons.swift */,
+				DB1B4E9D2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift */,
+				DB1B4E9F2A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift */,
+				DB1B4EA12A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift */,
 			);
-			path = RozkladClientLessons;
+			path = RozkladServiceLessons;
 			sourceTree = "<group>";
 		};
 		DB16750528D75E3500F6596D /* CampusClientStudySheet */ = {
@@ -1379,6 +1388,7 @@
 				5F137ECD2843A3C500514263 /* OnboardingFlow.swift in Sources */,
 				DB1B4E872A95022D00C5F2D8 /* UserDefaultsService.swift in Sources */,
 				5F97F11B284D5A5800DB0576 /* EditLessonNamesStore.swift in Sources */,
+				DB1B4EA02A95075D00C5F2D8 /* RozkladServiceLessons+Mock.swift in Sources */,
 				5F137F0428440E7400514263 /* LessonDetailsView.swift in Sources */,
 				5F137F0228440E6D00514263 /* LessonDetailsStore.swift in Sources */,
 				5F198F612870513300D13782 /* View+cornerRadius.swift in Sources */,
@@ -1405,6 +1415,7 @@
 				5FDFBE27284D46FD007E9F3A /* CampusClientState.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F1B200C287072BB00E1D2A6 /* AppConfiguration.swift in Sources */,
+				DB1B4EA22A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift in Sources */,
 				5F69BBF7284D163C00FED83D /* StudySheetActivityCellStore.swift in Sources */,
 				5F667CFE284E3EE3006D3AB7 /* EditingView.swift in Sources */,
 				DB1B4E912A95053500C5F2D8 /* FirebaseService+Live.swift in Sources */,
@@ -1430,6 +1441,7 @@
 				5F667CF8284E3E6B006D3AB7 /* LessonDetailsTeacherSection.swift in Sources */,
 				5FEE632C286D9B2D002F7E9D /* ClientValue.swift in Sources */,
 				DB1B4E7F2A95013300C5F2D8 /* APIError.swift in Sources */,
+				DB1B4E9E2A95075800C5F2D8 /* RozkladServiceLessons+Live.swift in Sources */,
 				5F5F464C2849015500202DA5 /* Collection+Safe.swift in Sources */,
 				5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */,
 				DBD22F5428D70F8A004C5CAC /* Event.swift in Sources */,
@@ -1485,7 +1497,7 @@
 				5F667CF6284E3E62006D3AB7 /* LessonDetailsTypeSection.swift in Sources */,
 				5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */,
 				5F6712442865055800A57E10 /* OtherSectionView.swift in Sources */,
-				DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */,
+				DB16750428D75DBF00F6596D /* RozkladServiceLessons.swift in Sources */,
 				5F97F11D284D5A6200DB0576 /* EditLessonNamesView.swift in Sources */,
 				5F137EE22843B26D00514263 /* OnboardingView.swift in Sources */,
 				DB1B4E812A95015800C5F2D8 /* APIService+Dependency.swift in Sources */,

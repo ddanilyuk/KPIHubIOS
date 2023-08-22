@@ -81,7 +81,7 @@ struct GroupRozklad: Reducer {
     // MARK: - Environment
     
     @Dependency(\.rozkladClientState) var rozkladClientState
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.currentDateClient) var currentDateClient
     @Dependency(\.analyticsService) var analyticsService
 
@@ -102,12 +102,12 @@ struct GroupRozklad: Reducer {
                 return Effect.merge(
                     Effect(value: .updateCurrentDate),
                     Effect.concatenate(
-                        Effect(value: .updateLessons(rozkladClientLessons.subject.value)),
+                        Effect(value: .updateLessons(rozkladServiceLessons.subject.value)),
                         Effect(value: .scrollToNearest(state.needToScrollOnAppear)),
                         Effect(value: .binding(.set(\.$needToScrollOnAppear, false)))
                     ),
                     Effect.run { subscriber in
-                        rozkladClientLessons.subject
+                        rozkladServiceLessons.subject
                             .dropFirst()
                             .receive(on: DispatchQueue.main)
                             .sink { lessons in

@@ -64,7 +64,7 @@ struct ProfileHome: Reducer {
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladClientState) var rozkladClientState
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
     @Dependency(\.currentDateClient) var currentDateClient
@@ -141,7 +141,7 @@ struct ProfileHome: Reducer {
 
             case let .lessonsResult(.success(lessons)):
                 state.isLoading = false
-                rozkladClientLessons.set(.init(lessons, commitChanges: true))
+                rozkladServiceLessons.set(.init(lessons, commitChanges: true))
                 analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: .profileReload))
                 return .none
 
@@ -224,7 +224,7 @@ struct ProfileHome: Reducer {
         return .merge(
             Effect(value: .setRozkladState(rozkladClientState.subject.value)),
             Effect(value: .setCampusState(campusClientState.subject.value)),
-            Effect(value: .setLessonsUpdatedAtDate(rozkladClientLessons.updatedAtSubject.value)),
+            Effect(value: .setLessonsUpdatedAtDate(rozkladServiceLessons.updatedAtSubject.value)),
             Effect.run { subscriber in
                 rozkladClientState.subject
                     .dropFirst()
@@ -242,7 +242,7 @@ struct ProfileHome: Reducer {
                     }
             },
             Effect.run { subscriber in
-                rozkladClientLessons.updatedAtSubject
+                rozkladServiceLessons.updatedAtSubject
                     .dropFirst()
                     .receive(on: DispatchQueue.main)
                     .sink { date in

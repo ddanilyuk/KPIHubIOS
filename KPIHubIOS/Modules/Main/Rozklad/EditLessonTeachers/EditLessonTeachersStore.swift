@@ -40,7 +40,7 @@ struct EditLessonTeachers: Reducer {
 
     // MARK: - Environment
     
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
 
     // MARK: - Reducer
@@ -55,7 +55,7 @@ struct EditLessonTeachers: Reducer {
             case .save:
                 var newLesson = state.lesson
                 newLesson.teachers = state.selected
-                rozkladClientLessons.modify(.init(newLesson, commitChanges: true))
+                rozkladServiceLessons.modify(.init(newLesson, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.editTeachersApply)
                 return Effect(value: .routeAction(.dismiss))
 

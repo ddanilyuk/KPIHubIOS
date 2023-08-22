@@ -48,7 +48,7 @@ struct CampusLoginFeature: Reducer {
     @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.rozkladClientState) var rozkladClientState
-    @Dependency(\.rozkladClientLessons) var rozkladClientLessons
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
@@ -91,7 +91,7 @@ struct CampusLoginFeature: Reducer {
                 return getLesson(for: group)
                 
             case let .lessonsResult(.success(lessons)):
-                rozkladClientLessons.set(.init(lessons, commitChanges: true))
+                rozkladServiceLessons.set(.init(lessons, commitChanges: true))
                 analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: .campus))
                 return .send(.route(.done))
 
