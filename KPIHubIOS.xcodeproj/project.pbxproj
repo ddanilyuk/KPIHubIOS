@@ -355,13 +355,9 @@
 			isa = PBXGroup;
 			children = (
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
-				5F137EBE2843A32800514263 /* Root */,
-				5F137EC92843A3A500514263 /* OnboardingFlow */,
-				5F137ECA2843A3AC00514263 /* MainFlow */,
-				5F137EDE2843B25600514263 /* Onboarding */,
-				5F137EEC284409CC00514263 /* Rozklad */,
-				5F137EED284409D200514263 /* Campus */,
-				5F137EEE284409DD00514263 /* Profile */,
+				5F137EBE2843A32800514263 /* App */,
+				5F137EC92843A3A500514263 /* Onboarding */,
+				5F137ECA2843A3AC00514263 /* Main */,
 				5FDFBE2F284D4F89007E9F3A /* Shared */,
 			);
 			path = Modules;
@@ -400,13 +396,13 @@
 			path = SharedViews;
 			sourceTree = "<group>";
 		};
-		5F137EBE2843A32800514263 /* Root */ = {
+		5F137EBE2843A32800514263 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				5F137EBF2843A33900514263 /* App */,
 				5F137EC02843A33C00514263 /* AppDelegate */,
 			);
-			path = Root;
+			path = App;
 			sourceTree = "<group>";
 		};
 		5F137EBF2843A33900514263 /* App */ = {
@@ -429,23 +425,24 @@
 			path = AppDelegate;
 			sourceTree = "<group>";
 		};
-		5F137EC92843A3A500514263 /* OnboardingFlow */ = {
+		5F137EC92843A3A500514263 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				5F137ECC2843A3C500514263 /* OnboardingFlow.swift */,
-				5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */,
-				5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */,
+				DB1B4E7D2A94FF6200C5F2D8 /* OnboardingFlow */,
+				5F137EDE2843B25600514263 /* OnboardingFeature */,
 			);
-			path = OnboardingFlow;
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		5F137ECA2843A3AC00514263 /* MainFlow */ = {
+		5F137ECA2843A3AC00514263 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				5F137ED02843A3D500514263 /* MainFlow.swift */,
-				5F137ED22843A3E200514263 /* MainFlowView.swift */,
+				DB1B4E7C2A94E22500C5F2D8 /* MainFlow */,
+				5F137EEC284409CC00514263 /* Rozklad */,
+				5F137EED284409D200514263 /* Campus */,
+				5F137EEE284409DD00514263 /* Profile */,
 			);
-			path = MainFlow;
+			path = Main;
 			sourceTree = "<group>";
 		};
 		5F137ED42843A6EA00514263 /* GroupPicker */ = {
@@ -457,13 +454,13 @@
 			path = GroupPicker;
 			sourceTree = "<group>";
 		};
-		5F137EDE2843B25600514263 /* Onboarding */ = {
+		5F137EDE2843B25600514263 /* OnboardingFeature */ = {
 			isa = PBXGroup;
 			children = (
 				5F137EDF2843B26500514263 /* OnboardingFeature.swift */,
 				5F137EE12843B26D00514263 /* OnboardingView.swift */,
 			);
-			path = Onboarding;
+			path = OnboardingFeature;
 			sourceTree = "<group>";
 		};
 		5F137EE7284403ED00514263 /* Loader */ = {
@@ -478,10 +475,7 @@
 		5F137EEC284409CC00514263 /* Rozklad */ = {
 			isa = PBXGroup;
 			children = (
-				5F137EEF284409F900514263 /* RozkladFlow.swift */,
-				5F137EEA284407CE00514263 /* RozkladFlow+Path.swift */,
-				5F137EF128440A0900514263 /* RozkladFlowView.swift */,
-				DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */,
+				DB1B4E7B2A94E1B400C5F2D8 /* RozkladFlow */,
 				5F137EFB28440DD200514263 /* GroupRozklad */,
 				5F137F0028440E5900514263 /* LessonDetails */,
 				5F97F119284D5A3E00DB0576 /* EditLessonNames */,
@@ -1014,6 +1008,36 @@
 				DB0D6F2B28D77E34007DAA97 /* FirebaseClient.swift */,
 			);
 			path = FirebaseClient;
+			sourceTree = "<group>";
+		};
+		DB1B4E7B2A94E1B400C5F2D8 /* RozkladFlow */ = {
+			isa = PBXGroup;
+			children = (
+				5F137EEF284409F900514263 /* RozkladFlow.swift */,
+				5F137EEA284407CE00514263 /* RozkladFlow+Path.swift */,
+				5F137EF128440A0900514263 /* RozkladFlowView.swift */,
+				DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */,
+			);
+			path = RozkladFlow;
+			sourceTree = "<group>";
+		};
+		DB1B4E7C2A94E22500C5F2D8 /* MainFlow */ = {
+			isa = PBXGroup;
+			children = (
+				5F137ED02843A3D500514263 /* MainFlow.swift */,
+				5F137ED22843A3E200514263 /* MainFlowView.swift */,
+			);
+			path = MainFlow;
+			sourceTree = "<group>";
+		};
+		DB1B4E7D2A94FF6200C5F2D8 /* OnboardingFlow */ = {
+			isa = PBXGroup;
+			children = (
+				5F137ECC2843A3C500514263 /* OnboardingFlow.swift */,
+				5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */,
+				5F137ECE2843A3CA00514263 /* OnboardingFlowView.swift */,
+			);
+			path = OnboardingFlow;
 			sourceTree = "<group>";
 		};
 		DB27C6D328D674FF00F4FA1B /* Firebase */ = {
