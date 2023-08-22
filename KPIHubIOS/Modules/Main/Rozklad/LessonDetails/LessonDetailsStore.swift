@@ -57,7 +57,7 @@ struct LessonDetails: Reducer {
     // MARK: - Environment
     
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
-    @Dependency(\.currentDateClient) var currentDateClient
+    @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.analyticsService) var analyticsService
 
     // MARK: - Reducer
@@ -86,7 +86,7 @@ struct LessonDetails: Reducer {
                             }
                     },
                     Effect.run { subscriber in
-                        currentDateClient.updated
+                        currentDateService.updated
                             .dropFirst()
                             .receive(on: DispatchQueue.main)
                             .sink { _ in
@@ -104,8 +104,8 @@ struct LessonDetails: Reducer {
 
             case .updateCurrentDate:
                 let lessonID = state.lesson.id
-                let currentLesson = currentDateClient.currentLesson.value
-                let nextLessonID = currentDateClient.nextLessonID.value
+                let currentLesson = currentDateService.currentLesson.value
+                let nextLessonID = currentDateService.nextLessonID.value
 
                 if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
                     state.mode = .current(currentLesson.percent)

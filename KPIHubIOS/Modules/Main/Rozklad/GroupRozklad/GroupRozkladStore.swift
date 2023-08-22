@@ -82,7 +82,7 @@ struct GroupRozklad: Reducer {
     
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
-    @Dependency(\.currentDateClient) var currentDateClient
+    @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.analyticsService) var analyticsService
 
     // MARK: - Reducer
@@ -115,7 +115,7 @@ struct GroupRozklad: Reducer {
                             }
                     },
                     Effect.run { subscriber in
-                        currentDateClient.updated
+                        currentDateService.updated
                             .dropFirst()
                             .receive(on: DispatchQueue.main)
                             .sink { _ in
@@ -132,10 +132,10 @@ struct GroupRozklad: Reducer {
             case .updateCurrentDate:
                 let oldCurrentLesson = state.currentLesson
                 let oldNextLessonID = state.nextLessonID
-                state.currentDay = currentDateClient.currentDay.value
-                state.currentWeek = currentDateClient.currentWeek.value
-                state.currentLesson = currentDateClient.currentLesson.value
-                state.nextLessonID = currentDateClient.nextLessonID.value
+                state.currentDay = currentDateService.currentDay.value
+                state.currentWeek = currentDateService.currentWeek.value
+                state.currentLesson = currentDateService.currentLesson.value
+                state.nextLessonID = currentDateService.nextLessonID.value
                 state.sections = [State.Section](
                     lessons: state.lessons,
                     currentLesson: state.currentLesson,

@@ -97,7 +97,7 @@
 		5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7B0BE3285B717800F8FB4C /* GroupRozkladHeaderView.swift */; };
 		5F7C5904285B6D5A00900A90 /* View+If.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F7C5903285B6D5A00900A90 /* View+If.swift */; };
 		5F856A3E286471AE00AB63AC /* Shape+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A3D286471AE00AB63AC /* Shape+Ext.swift */; };
-		5F856A412864727000AB63AC /* CurrentDateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A402864727000AB63AC /* CurrentDateClient.swift */; };
+		5F856A412864727000AB63AC /* CurrentDateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F856A402864727000AB63AC /* CurrentDateService.swift */; };
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
@@ -156,6 +156,9 @@
 		DB1B4EB02A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EAF2A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift */; };
 		DB1B4EB22A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB12A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift */; };
 		DB1B4EB42A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB32A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift */; };
+		DB1B4EB62A950B1700C5F2D8 /* CurrentDateService+Live.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB52A950B1700C5F2D8 /* CurrentDateService+Live.swift */; };
+		DB1B4EB82A950B2000C5F2D8 /* CurrentDateService+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB72A950B2000C5F2D8 /* CurrentDateService+Mock.swift */; };
+		DB1B4EBA2A950B2700C5F2D8 /* CurrentDateService+Dependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4EB92A950B2700C5F2D8 /* CurrentDateService+Dependency.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
@@ -291,7 +294,7 @@
 		5F7B0BE3285B717800F8FB4C /* GroupRozkladHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupRozkladHeaderView.swift; sourceTree = "<group>"; };
 		5F7C5903285B6D5A00900A90 /* View+If.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+If.swift"; sourceTree = "<group>"; };
 		5F856A3D286471AE00AB63AC /* Shape+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Shape+Ext.swift"; sourceTree = "<group>"; };
-		5F856A402864727000AB63AC /* CurrentDateClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateClient.swift; sourceTree = "<group>"; };
+		5F856A402864727000AB63AC /* CurrentDateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentDateService.swift; sourceTree = "<group>"; };
 		5F97B3BB283677C200350368 /* KPIHubIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPIHubIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -357,6 +360,9 @@
 		DB1B4EAF2A950A2900C5F2D8 /* CampusServiceStudySheet+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceStudySheet+Live.swift"; sourceTree = "<group>"; };
 		DB1B4EB12A950A2E00C5F2D8 /* CampusServiceStudySheet+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceStudySheet+Mock.swift"; sourceTree = "<group>"; };
 		DB1B4EB32A950A3300C5F2D8 /* CampusServiceStudySheet+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CampusServiceStudySheet+Dependency.swift"; sourceTree = "<group>"; };
+		DB1B4EB52A950B1700C5F2D8 /* CurrentDateService+Live.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentDateService+Live.swift"; sourceTree = "<group>"; };
+		DB1B4EB72A950B2000C5F2D8 /* CurrentDateService+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentDateService+Mock.swift"; sourceTree = "<group>"; };
+		DB1B4EB92A950B2700C5F2D8 /* CurrentDateService+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentDateService+Dependency.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
@@ -703,22 +709,22 @@
 			path = Sections;
 			sourceTree = "<group>";
 		};
-		5F5F463528480B0C00202DA5 /* Clients */ = {
+		5F5F463528480B0C00202DA5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				DBD22F4C28D67E1C004C5CAC /* AnalyticsService */,
 				5F69BBD9284ACC3600FED83D /* APIService */,
-				5F5F463828480B2D00202DA5 /* UserDefaultsService */,
-				5F28FB8E2858D64100579A75 /* KeychainService */,
-				5FDFBE28284D4894007E9F3A /* RozkladServiceState */,
-				DB16750228D75DAE00F6596D /* RozkladServiceLessons */,
 				5FDFBE25284D46EC007E9F3A /* CampusServiceState */,
 				DB16750528D75E3500F6596D /* CampusServiceStudySheet */,
-				5F856A3F2864725500AB63AC /* CurrentDateClient */,
-				DBD22F4C28D67E1C004C5CAC /* AnalyticsService */,
+				5F856A3F2864725500AB63AC /* CurrentDateService */,
 				DB16750928D77D9300F6596D /* FirebaseService */,
 				5FEE632A286D9B1C002F7E9D /* Helpers */,
+				5F28FB8E2858D64100579A75 /* KeychainService */,
+				DB16750228D75DAE00F6596D /* RozkladServiceLessons */,
+				5FDFBE28284D4894007E9F3A /* RozkladServiceState */,
+				5F5F463828480B2D00202DA5 /* UserDefaultsService */,
 			);
-			path = Clients;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		5F5F463828480B2D00202DA5 /* UserDefaultsService */ = {
@@ -895,12 +901,15 @@
 			path = Tags;
 			sourceTree = "<group>";
 		};
-		5F856A3F2864725500AB63AC /* CurrentDateClient */ = {
+		5F856A3F2864725500AB63AC /* CurrentDateService */ = {
 			isa = PBXGroup;
 			children = (
-				5F856A402864727000AB63AC /* CurrentDateClient.swift */,
+				5F856A402864727000AB63AC /* CurrentDateService.swift */,
+				DB1B4EB52A950B1700C5F2D8 /* CurrentDateService+Live.swift */,
+				DB1B4EB72A950B2000C5F2D8 /* CurrentDateService+Mock.swift */,
+				DB1B4EB92A950B2700C5F2D8 /* CurrentDateService+Dependency.swift */,
 			);
-			path = CurrentDateClient;
+			path = CurrentDateService;
 			sourceTree = "<group>";
 		};
 		5F97B3B2283677C200350368 = {
@@ -929,7 +938,7 @@
 			isa = PBXGroup;
 			children = (
 				5F137EBA2843A2FC00514263 /* Modules */,
-				5F5F463528480B0C00202DA5 /* Clients */,
+				5F5F463528480B0C00202DA5 /* Services */,
 				5F137EBB2843A30000514263 /* Models */,
 				5F97B3C4283677C500350368 /* Preview Content */,
 				5F137EBD2843A30600514263 /* SharedViews */,
@@ -1479,6 +1488,7 @@
 				5F67124928650F0200A57E10 /* ForDevelopersView.swift in Sources */,
 				5F6712592866130900A57E10 /* BorderGradientBackgroundView.swift in Sources */,
 				DB16750728D75E3D00F6596D /* CampusServiceStudySheet.swift in Sources */,
+				DB1B4EB62A950B1700C5F2D8 /* CurrentDateService+Live.swift in Sources */,
 				DB1B4E852A95022700C5F2D8 /* UserDefaultsServiceProtocol.swift in Sources */,
 				5F69BBF2284CEBF100FED83D /* StudySheetCellStore.swift in Sources */,
 				5F137EE62844022800514263 /* Loader.swift in Sources */,
@@ -1521,6 +1531,7 @@
 				DB1B4EAA2A95098800C5F2D8 /* CampusServiceState+Live.swift in Sources */,
 				5F137EFF28440DFD00514263 /* GroupRozkladView.swift in Sources */,
 				5F5F464A284900C200202DA5 /* GroupRozkladDayPicker.swift in Sources */,
+				DB1B4EB82A950B2000C5F2D8 /* CurrentDateService+Mock.swift in Sources */,
 				5F6712512865FB8600A57E10 /* LessonDetailsSectionView.swift in Sources */,
 				5F667CFA284E3E78006D3AB7 /* LessonDetailsLocationsSection.swift in Sources */,
 				5F5F463D284814E800202DA5 /* Lesson.swift in Sources */,
@@ -1528,6 +1539,7 @@
 				DB1B4E832A9501FF00C5F2D8 /* UserDefaultKey.swift in Sources */,
 				DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */,
 				5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */,
+				DB1B4EBA2A950B2700C5F2D8 /* CurrentDateService+Dependency.swift in Sources */,
 				DB1B4E892A95029600C5F2D8 /* UserDefaultsService+Dependency.swift in Sources */,
 				5F667CF6284E3E62006D3AB7 /* LessonDetailsTypeSection.swift in Sources */,
 				5F69BBED284CD7E100FED83D /* StudySheetItemDetail.swift in Sources */,
@@ -1550,7 +1562,7 @@
 				5F69BBE2284CC12300FED83D /* CampusHome.swift in Sources */,
 				5F69BBD8284AAF3200FED83D /* BigButtonStyle.swift in Sources */,
 				5FEE6330286DD9AC002F7E9D /* CurrentLesson.swift in Sources */,
-				5F856A412864727000AB63AC /* CurrentDateClient.swift in Sources */,
+				5F856A412864727000AB63AC /* CurrentDateService.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 				5FDFBE35284D5232007E9F3A /* StudySheetItem.swift in Sources */,
 			);

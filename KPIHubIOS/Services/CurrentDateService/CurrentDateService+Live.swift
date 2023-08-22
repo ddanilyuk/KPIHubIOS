@@ -1,56 +1,23 @@
 //
-//  DateTimeClient.swift
+//  CurrentDateService+Live.swift
 //  KPIHubIOS
 //
-//  Created by Denys Danyliuk on 23.06.2022.
+//  Created by Denys Danyliuk on 22.08.2023.
 //
 
 import Foundation
+import Dependencies
 import Combine
-import IdentifiedCollections
 import UIKit
-import ComposableArchitecture
-
-private enum CurrentDateClientKey: TestDependencyKey {
-    static let testValue = CurrentDateService.mock()
-}
-
-extension CurrentDateClientKey: DependencyKey {
-    static let liveValue = CurrentDateService.live(
-        rozkladServiceLessons: DependencyValues._current.rozkladServiceLessons
-    )
-}
-
-extension DependencyValues {
-    var currentDateClient: CurrentDateService {
-        get { self[CurrentDateClientKey.self] }
-        set { self[CurrentDateClientKey.self] = newValue }
-    }
-}
-
-struct CurrentDateService {
-
-    let currentLesson: CurrentValueSubject<CurrentLesson?, Never>
-    let nextLessonID: CurrentValueSubject<Lesson.ID?, Never>
-    let currentDay: CurrentValueSubject<Lesson.Day?, Never>
-    let currentWeek: CurrentValueSubject<Lesson.Week, Never>
-
-    let forceUpdate: () -> Void
-    var updated: AnyPublisher<Date, Never> { updatedSubject.eraseToAnyPublisher() }
-    private let updatedSubject: CurrentValueSubject<Date, Never>
-
-}
-
-// MARK: - Live
+import IdentifiedCollections
 
 extension CurrentDateService {
 
     // swiftlint:disable function_body_length
-    static func live(
-        rozkladServiceLessons: RozkladServiceLessons
-    ) -> Self {
+    static func live() -> CurrentDateService {
         @Dependency(\.userDefaultsService) var userDefaultsService
-
+        @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
+        
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone(identifier: "Europe/Kiev")!
 
@@ -128,7 +95,7 @@ extension CurrentDateService {
             RunLoop.main.add(timer!, forMode: .default)
         }
 
-        return .init(
+        return CurrentDateService(
             currentLesson: currentLessonSubject,
             nextLessonID: nextLessonIDSubject,
             currentDay: currentDaySubject,
@@ -215,29 +182,6 @@ extension CurrentDateService {
         let hour = components.hour ?? 0
         let minute = components.minute ?? 0
         return hour * 60 + minute
-    }
-
-}
-
-// MARK: - Mock
-
-extension CurrentDateService {
-
-    static func mock() -> CurrentDateService {
-        let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(.monday)
-        let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
-        let currentLessonIDSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
-        let nextLessonIDSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
-        let updatedSubject = CurrentValueSubject<Date, Never>(Date())
-
-        return .init(
-            currentLesson: currentLessonIDSubject,
-            nextLessonID: nextLessonIDSubject,
-            currentDay: currentDaySubject,
-            currentWeek: currentWeekSubject,
-            forceUpdate: { },
-            updatedSubject: updatedSubject
-        )
     }
 
 }

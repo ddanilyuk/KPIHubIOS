@@ -67,7 +67,7 @@ struct ProfileHome: Reducer {
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusServiceStudySheet) var campusServiceStudySheet
-    @Dependency(\.currentDateClient) var currentDateClient
+    @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.appConfiguration) var appConfiguration
     @Dependency(\.analyticsService) var analyticsService
 
@@ -199,7 +199,7 @@ struct ProfileHome: Reducer {
 
             case .binding(\.rozkladSectionView.$toggleWeek):
                 userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
-                currentDateClient.forceUpdate()
+                currentDateService.forceUpdate()
                 analyticsService.track(Event.Profile.changeWeek(state.toggleWeek))
                 return .none
 
