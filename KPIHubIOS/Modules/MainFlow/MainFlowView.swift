@@ -27,7 +27,7 @@ struct MainFlowView: View {
 
     var body: some View {
         TabView(selection: viewStore.$selectedTab) {
-            RozkladFlowCoordinatorView(
+            RozkladFlowView(
                 store: store.scope(
                     state: \.rozklad,
                     action: MainFlow.Action.rozklad

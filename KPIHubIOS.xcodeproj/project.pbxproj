@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */; };
 		5F06C23128450BC60031BD5C /* LessonsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23028450BC60031BD5C /* LessonsResponse.swift */; };
 		5F06C23328450C000031BD5C /* LessonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F06C23228450C000031BD5C /* LessonResponse.swift */; };
 		5F137EC22843A35D00514263 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EC12843A35D00514263 /* AppFeature.swift */; };
@@ -26,9 +25,9 @@
 		5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */; };
 		5F137EE62844022800514263 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE52844022800514263 /* Loader.swift */; };
 		5F137EE9284403F200514263 /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EE8284403F200514263 /* Loadable.swift */; };
-		5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */; };
-		5F137EF0284409F900514263 /* RozkladStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEF284409F900514263 /* RozkladStore.swift */; };
-		5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF128440A0900514263 /* RozkladFlowCoordinatorView.swift */; };
+		5F137EEB284407CE00514263 /* RozkladFlow+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEA284407CE00514263 /* RozkladFlow+Path.swift */; };
+		5F137EF0284409F900514263 /* RozkladFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EEF284409F900514263 /* RozkladFlow.swift */; };
+		5F137EF228440A0900514263 /* RozkladFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF128440A0900514263 /* RozkladFlowView.swift */; };
 		5F137EF428440A1100514263 /* CampusStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF328440A1100514263 /* CampusStore.swift */; };
 		5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */; };
 		5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F137EF728440A1E00514263 /* ProfileStore.swift */; };
@@ -130,11 +129,11 @@
 		DB16750428D75DBF00F6596D /* RozkladClientLessons.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */; };
 		DB16750728D75E3D00F6596D /* CampusClientStudySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */; };
 		DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */; };
+		DB1B4E7A2A94DE5F00C5F2D8 /* RozkladFlow+Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */; };
 		DB27C6D228D674FB00F4FA1B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */; };
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
-		DB5D89E929BC8D070061ACDE /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = DB5D89E829BC8D070061ACDE /* TCACoordinators */; };
 		DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277728EB9604006EBA99 /* ComposableArchitecture */; };
 		DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277928EB9604006EBA99 /* Dependencies */; };
 		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
@@ -175,7 +174,6 @@
 		45F6E46C67178BD59E5CA025 /* Pods_KPIHubIOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KPIHubIOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5453B8D6C8CCDCB29121A6C0 /* Pods-KPIHubIOSTests.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOSTests.release-production.xcconfig"; path = "Target Support Files/Pods-KPIHubIOSTests/Pods-KPIHubIOSTests.release-production.xcconfig"; sourceTree = "<group>"; };
 		59000BB251097CFC2D11EF01 /* Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig"; path = "Target Support Files/Pods-KPIHubIOS-KPIHubIOSUITests/Pods-KPIHubIOS-KPIHubIOSUITests.release.xcconfig"; sourceTree = "<group>"; };
-		5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorSupport.swift; sourceTree = "<group>"; };
 		5F06C23028450BC60031BD5C /* LessonsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsResponse.swift; sourceTree = "<group>"; };
 		5F06C23228450C000031BD5C /* LessonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonResponse.swift; sourceTree = "<group>"; };
 		5F137EC12843A35D00514263 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
@@ -194,9 +192,9 @@
 		5F137EE32843B3F800514263 /* OnboardingFlow+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OnboardingFlow+Path.swift"; sourceTree = "<group>"; };
 		5F137EE52844022800514263 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		5F137EE8284403F200514263 /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
-		5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladScreenProvider.swift; sourceTree = "<group>"; };
-		5F137EEF284409F900514263 /* RozkladStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladStore.swift; sourceTree = "<group>"; };
-		5F137EF128440A0900514263 /* RozkladFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlowCoordinatorView.swift; sourceTree = "<group>"; };
+		5F137EEA284407CE00514263 /* RozkladFlow+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladFlow+Path.swift"; sourceTree = "<group>"; };
+		5F137EEF284409F900514263 /* RozkladFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlow.swift; sourceTree = "<group>"; };
+		5F137EF128440A0900514263 /* RozkladFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlowView.swift; sourceTree = "<group>"; };
 		5F137EF328440A1100514263 /* CampusStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusStore.swift; sourceTree = "<group>"; };
 		5F137EF528440A1700514263 /* CampusFlowCoordinatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusFlowCoordinatorView.swift; sourceTree = "<group>"; };
 		5F137EF728440A1E00514263 /* ProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileStore.swift; sourceTree = "<group>"; };
@@ -306,6 +304,7 @@
 		DB16750328D75DBF00F6596D /* RozkladClientLessons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladClientLessons.swift; sourceTree = "<group>"; };
 		DB16750628D75E3D00F6596D /* CampusClientStudySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusClientStudySheet.swift; sourceTree = "<group>"; };
 		DB1B4E772A93C23700C5F2D8 /* AppFeature+Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
+		DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RozkladFlow+Root.swift"; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
@@ -329,7 +328,6 @@
 				DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */,
 				DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */,
 				DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */,
-				DB5D89E929BC8D070061ACDE /* TCACoordinators in Frameworks */,
 				B9921FEC72B198F4A63E3767 /* Pods_KPIHubIOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,9 +478,10 @@
 		5F137EEC284409CC00514263 /* Rozklad */ = {
 			isa = PBXGroup;
 			children = (
-				5F137EEF284409F900514263 /* RozkladStore.swift */,
-				5F137EEA284407CE00514263 /* RozkladScreenProvider.swift */,
-				5F137EF128440A0900514263 /* RozkladFlowCoordinatorView.swift */,
+				5F137EEF284409F900514263 /* RozkladFlow.swift */,
+				5F137EEA284407CE00514263 /* RozkladFlow+Path.swift */,
+				5F137EF128440A0900514263 /* RozkladFlowView.swift */,
+				DB1B4E792A94DE5F00C5F2D8 /* RozkladFlow+Root.swift */,
 				5F137EFB28440DD200514263 /* GroupRozklad */,
 				5F137F0028440E5900514263 /* LessonDetails */,
 				5F97F119284D5A3E00DB0576 /* EditLessonNames */,
@@ -586,7 +585,6 @@
 			isa = PBXGroup;
 			children = (
 				5F198F58286E44AA00D13782 /* AlertState+Error.swift */,
-				5F06C22E2845010B0031BD5C /* CoordinatorSupport.swift */,
 			);
 			path = TCA;
 			sourceTree = "<group>";
@@ -1088,7 +1086,6 @@
 				DB27C6E528D67B1500F4FA1B /* FirebasePerformance */,
 				DB66277728EB9604006EBA99 /* ComposableArchitecture */,
 				DB66277928EB9604006EBA99 /* Dependencies */,
-				DB5D89E829BC8D070061ACDE /* TCACoordinators */,
 				DBD6B1102A3F58E900AE5AE8 /* Routes */,
 			);
 			productName = KPIHubIOS;
@@ -1169,7 +1166,6 @@
 				5F28FB8B2858D55A00579A75 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
-				DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				DBD6B10F2A3F58E900AE5AE8 /* XCRemoteSwiftPackageReference "KPIHubServer" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
@@ -1312,7 +1308,7 @@
 				5F198F612870513300D13782 /* View+cornerRadius.swift in Sources */,
 				5F137ED62843A6FF00514263 /* GroupPickerStore.swift in Sources */,
 				5F137EC42843A36200514263 /* AppView.swift in Sources */,
-				5F137EEB284407CE00514263 /* RozkladScreenProvider.swift in Sources */,
+				5F137EEB284407CE00514263 /* RozkladFlow+Path.swift in Sources */,
 				DB1B4E782A93C23700C5F2D8 /* AppFeature+Path.swift in Sources */,
 				5FDFBE2C284D4DC4007E9F3A /* CampusCredentials.swift in Sources */,
 				5F667CFC284E3ED0006D3AB7 /* LessonDetailsTitleView.swift in Sources */,
@@ -1336,7 +1332,7 @@
 				5F667CFE284E3EE3006D3AB7 /* EditingView.swift in Sources */,
 				5F137EF828440A1E00514263 /* ProfileStore.swift in Sources */,
 				5F69BBDF284CC0C900FED83D /* CampusScreenProvider.swift in Sources */,
-				5F137EF0284409F900514263 /* RozkladStore.swift in Sources */,
+				5F137EF0284409F900514263 /* RozkladFlow.swift in Sources */,
 				5FF18EA12871D9B8001474F6 /* UIApplication+endEditing.swift in Sources */,
 				5F137EF628440A1700514263 /* CampusFlowCoordinatorView.swift in Sources */,
 				5F5F46342847FFAC00202DA5 /* LargeTagView.swift in Sources */,
@@ -1383,12 +1379,13 @@
 				DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */,
 				5F97F123284E201300DB0576 /* EditLessonTeachersView.swift in Sources */,
 				5F137ED12843A3D500514263 /* MainFlow.swift in Sources */,
-				5F137EF228440A0900514263 /* RozkladFlowCoordinatorView.swift in Sources */,
+				5F137EF228440A0900514263 /* RozkladFlowView.swift in Sources */,
 				5F69BBE9284CCA7600FED83D /* StudySheetView.swift in Sources */,
 				5F97F121284E200900DB0576 /* EditLessonTeachersStore.swift in Sources */,
 				5F69BBD4284AAC4500FED83D /* CampusLoginFeature.swift in Sources */,
 				5F1B201C2870A1C600E1D2A6 /* StudySheetItemResponse.swift in Sources */,
 				5F1B20212870A23B00E1D2A6 /* RectModifier.swift in Sources */,
+				DB1B4E7A2A94DE5F00C5F2D8 /* RozkladFlow+Root.swift in Sources */,
 				5F667D0A284E5BF1006D3AB7 /* ProfileCellView.swift in Sources */,
 				5F7B0BE4285B717800F8FB4C /* GroupRozkladHeaderView.swift in Sources */,
 				5F137EE42843B3F800514263 /* OnboardingFlow+Path.swift in Sources */,
@@ -1400,7 +1397,6 @@
 				5F667CFA284E3E78006D3AB7 /* LessonDetailsLocationsSection.swift in Sources */,
 				5F5F463D284814E800202DA5 /* Lesson.swift in Sources */,
 				5F28FB902858D65500579A75 /* KeychainClient.swift in Sources */,
-				5F06C22F2845010B0031BD5C /* CoordinatorSupport.swift in Sources */,
 				DBD22F5028D68AAA004C5CAC /* Analytics+Group.swift in Sources */,
 				5F667D03284E4D55006D3AB7 /* ProfileHomeStore.swift in Sources */,
 				5F667CF6284E3E62006D3AB7 /* LessonDetailsTypeSection.swift in Sources */,
@@ -2063,14 +2059,6 @@
 				minimumVersion = 9.0.0;
 			};
 		};
-		DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ddanilyuk/TCACoordinators";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -2109,11 +2097,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
-		};
-		DB5D89E829BC8D070061ACDE /* TCACoordinators */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = DB5D89E729BC8D070061ACDE /* XCRemoteSwiftPackageReference "TCACoordinators" */;
-			productName = TCACoordinators;
 		};
 		DB66277728EB9604006EBA99 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;

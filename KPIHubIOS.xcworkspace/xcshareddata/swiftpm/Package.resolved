@@ -37,15 +37,6 @@
       }
     },
     {
-      "identity" : "flowstacks",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/johnpatrickmorgan/FlowStacks",
-      "state" : {
-        "revision" : "0c5414b018fac906ffce9c4aee7da2a599615c95",
-        "version" : "0.3.4"
-      }
-    },
-    {
       "identity" : "googleappmeasurement",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
@@ -241,15 +232,6 @@
       "state" : {
         "revision" : "2aa885e719087ee19df251c08a5980ad3e787f12",
         "version" : "0.8.0"
-      }
-    },
-    {
-      "identity" : "tcacoordinators",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ddanilyuk/TCACoordinators",
-      "state" : {
-        "branch" : "main",
-        "revision" : "b38ead43aaacd6b340bf0b36a47d708c1cb1b558"
       }
     },
     {

@@ -1,5 +1,5 @@
 //
-//  RozkladStore.swift
+//  RozkladFlow.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -9,55 +9,7 @@ import ComposableArchitecture
 import IdentifiedCollections
 import Foundation
 
-struct RozkladRoot: Reducer {
-    enum State: Equatable {
-        case groupRozklad(GroupRozklad.State)
-        case groupPicker(GroupPickerFeature.State)
-    }
-    
-    enum Action: Equatable {
-        case groupRozklad(GroupRozklad.Action)
-        case groupPicker(GroupPickerFeature.Action)
-    }
-
-    var body: some ReducerOf<Self> {
-        Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
-            GroupRozklad()
-        }
-        Scope(state: /State.groupPicker, action: /Action.groupPicker) {
-            GroupPickerFeature()
-        }
-    }
-}
-
-import SwiftUI
-struct RozkladRootView: View {
-    let store: StoreOf<RozkladRoot>
-    
-    var body: some View {
-        SwitchStore(store) { state in
-            switch state {
-            case .groupRozklad:
-                CaseLet(
-                    /RozkladRoot.State.groupRozklad,
-                    action: RozkladRoot.Action.groupRozklad,
-                    then: GroupRozkladView.init(store:)
-                )
-            case .groupPicker:
-                CaseLet(
-                    /RozkladRoot.State.groupPicker,
-                    action: RozkladRoot.Action.groupPicker,
-                    then: GroupPickerView.init(store:)
-                )
-            }
-        }
-    }
-}
-
-struct Rozklad: Reducer {
-
-    // MARK: - State
-
+struct RozkladFlow: Reducer {
     struct State: Equatable {
         var rozkladRoot: RozkladRoot.State
         var path = StackState<Path.State>()
@@ -66,9 +18,7 @@ struct Rozklad: Reducer {
             self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable {
         case onSetup
         
@@ -76,14 +26,10 @@ struct Rozklad: Reducer {
         case rozkladRoot(RozkladRoot.Action)
         case path(StackAction<Path.State, Path.Action>)
     }
-
-    // MARK: - Environment
     
     @Dependency(\.rozkladClientState) var rozkladClientState
     @Dependency(\.rozkladClientLessons) var rozkladClientLessons
     @Dependency(\.analyticsClient) var analyticsClient
-
-    // MARK: - Reducer
     
     var core: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in
@@ -153,10 +99,9 @@ struct Rozklad: Reducer {
         Scope(state: \.rozkladRoot, action: /Action.rozkladRoot) {
             RozkladRoot()
         }
-        core
-            .forEach(\.path, action: /Action.path) {
-                Path()
-            }
+        core.forEach(\.path, action: /Action.path) {
+            Path()
+        }
     }
     
     private func setRootRozkladState(from rozkladState: RozkladClientState.State, state: inout State) {

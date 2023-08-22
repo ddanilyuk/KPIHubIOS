@@ -39,7 +39,7 @@ struct OnboardingFeature: Reducer {
                 return .send(.output(.campusLogin))
                 
             case .view(.selectGroupButtonTapped):
-                return .send(.output(.campusLogin))
+                return .send(.output(.groupPicker))
                 
             case .output:
                 return .none

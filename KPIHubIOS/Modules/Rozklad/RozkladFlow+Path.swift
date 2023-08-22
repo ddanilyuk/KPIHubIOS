@@ -7,11 +7,11 @@
 
 import ComposableArchitecture
 
-extension Rozklad {
+extension RozkladFlow {
     struct Path {}
 }
 
-extension Rozklad.Path: Reducer {
+extension RozkladFlow.Path: Reducer {
     enum State: Equatable {
         case lessonDetails(LessonDetails.State)
         case editLessonNames(EditLessonNames.State)

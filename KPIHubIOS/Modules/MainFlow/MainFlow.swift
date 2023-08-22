@@ -11,12 +11,12 @@ struct MainFlow: Reducer {
     struct State: Equatable {
         @BindingState var selectedTab: Tab
         
-        var rozklad: Rozklad.State
+        var rozklad: RozkladFlow.State
         var campus: Campus.State
         var profile: Profile.State
         
         init() {
-            rozklad = Rozklad.State()
+            rozklad = RozkladFlow.State()
             campus = Campus.State()
             profile = Profile.State()
             
@@ -25,7 +25,7 @@ struct MainFlow: Reducer {
     }
     
     enum Action: Equatable, BindableAction {
-        case rozklad(Rozklad.Action)
+        case rozklad(RozkladFlow.Action)
         case campus(Campus.Action)
         case profile(Profile.Action)
         
@@ -61,7 +61,7 @@ struct MainFlow: Reducer {
     var body: some ReducerOf<Self> {
         BindingReducer()
         Scope(state: \State.rozklad, action: /Action.rozklad) {
-            Rozklad()
+            RozkladFlow()
         }
         Scope(state: \State.campus, action: /Action.campus) {
             Campus()

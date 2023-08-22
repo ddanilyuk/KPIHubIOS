@@ -6,51 +6,31 @@
 //
 
 import ComposableArchitecture
-import TCACoordinators
 import Combine
-import Foundation
 
 struct Campus: Reducer {
-
-    // MARK: - State
-
-    struct State: Equatable, IdentifiedRouterState {
-        var routes: IdentifiedArrayOf<Route<ScreenProvider.State>>
-
-        init() {
-            self.routes = []
-        }
+    struct State: Equatable {
+        var campusRoot: CampusRoot.State?
+        var path = StackState<Path.State>()
     }
-
-    // MARK: - Action
-
-    enum Action: Equatable, IdentifiedRouterAction {
+    
+    enum Action: Equatable {
         case onSetup
-
         case updateCampusState(CampusClientState.State)
-        case setCampusLogin
-        case setCampusHome
-
-        case routeAction(ScreenProvider.State.ID, action: ScreenProvider.Action)
-        case updateRoutes(IdentifiedArrayOf<Route<ScreenProvider.State>>)
+        
+        case campusRoot(CampusRoot.Action)
+        case path(StackAction<Path.State, Path.Action>)
     }
-
-    // MARK: - Environment
     
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusClientStudySheet) var campusClientStudySheet
-
-    // MARK: - Reducer
     
-    enum SubscriberCancelID { }
-    
-    @ReducerBuilder<State, Action>
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .onSetup:
+                updateCampusState(with: campusClientState.subject.value, state: &state)
                 return .merge(
-                    Effect(value: .updateCampusState(campusClientState.subject.value)),
                     Effect.run { subscriber in
                         campusClientState.subject
                             .dropFirst()
@@ -63,62 +43,104 @@ struct Campus: Reducer {
                     campusClientStudySheet.load()
                         .fireAndForget()
                 )
-                .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
-
-            case let .updateCampusState(state):
-                switch state {
-                case .loggedOut:
-                    return Effect(value: .setCampusLogin)
-                case .loggedIn:
-                    return Effect(value: .setCampusHome)
-                }
-
-            case .setCampusLogin:
-                state.routes = [
-                    .root(
-                        .campusLogin(CampusLoginFeature.State(mode: .onlyCampus)),
-                        embedInNavigationView: true
-                    )
-                ]
+                .cancellable(id: CancelID.campusClient, cancelInFlight: true)
+                
+            case let .updateCampusState(campusState):
+                updateCampusState(with: campusState, state: &state)
                 return .none
-
-            case .setCampusHome:
-                state.routes = [
-                    .root(
-                        .campusHome(CampusHome.State()),
-                        embedInNavigationView: true
-                    )
-                ]
-                return .none
-
-            case .routeAction(_, .campusLogin(.route(.done))):
+                
+            case .campusRoot(.campusLogin(.route(.done))):
                 campusClientState.commit()
                 return campusClientStudySheet.load()
                     .fireAndForget()
 
-            case let .routeAction(_, action: .campusHome(.routeAction(.studySheet(items)))):
+            case let .campusRoot(.campusHome(.routeAction(.studySheet(items)))):
                 let studySheetState = StudySheet.State(items: items)
-                state.routes.push(.studySheet(studySheetState))
+                state.path.append(.studySheet(studySheetState))
                 return .none
-
-            case let .routeAction(_, .studySheet(.routeAction(.openDetail(item)))):
+                
+            case let .path(.element(_, .studySheet(.routeAction(.openDetail(item))))):
                 let studySheetItemDetailState = StudySheetItemDetail.State(item: item)
-                state.routes.push(.studySheetItemDetail(studySheetItemDetailState))
+                state.path.append(.studySheetItemDetail(studySheetItemDetailState))
+                return .none
+                
+            case .campusRoot:
                 return .none
 
-            case .routeAction:
-                return .none
-
-            case .updateRoutes:
+            case .path:
                 return .none
             }
         }
     }
 
     var body: some ReducerOf<Self> {
-        core.forEachRoute {
-            Campus.ScreenProvider()
-        }
+        core
+            .ifLet(\.campusRoot, action: /Action.campusRoot) {
+                CampusRoot()
+            }
+            .forEach(\.path, action: /Action.path) {
+                Path()
+            }
     }
     
+    private func updateCampusState(with campusState: CampusClientState.State, state: inout State) {
+        switch campusState {
+        case .loggedOut:
+            state.campusRoot = .campusLogin(CampusLoginFeature.State(mode: .onlyCampus))
+        case .loggedIn:
+            state.campusRoot = .campusHome(CampusHome.State())
+        }
+    }
+}
+
+extension Campus {
+    enum CancelID {
+        case campusClient
+    }
+}
+
+struct CampusRoot: Reducer {
+    enum State: Equatable {
+        case campusLogin(CampusLoginFeature.State)
+        case campusHome(CampusHome.State)
+    }
+    
+    enum Action: Equatable {
+        case campusLogin(CampusLoginFeature.Action)
+        case campusHome(CampusHome.Action)
+    }
+
+    var body: some ReducerOf<Self> {
+        Scope(state: /State.campusLogin, action: /Action.campusLogin) {
+            CampusLoginFeature()
+        }
+        Scope(state: /State.campusHome, action: /Action.campusHome) {
+            CampusHome()
+        }
+    }
+}
+
+import SwiftUI
+struct CampusRootView: View {
+    let store: StoreOf<CampusRoot>
+    
+    var body: some View {
+        SwitchStore(store) { state in
+            switch state {
+            case .campusLogin:
+                CaseLet(
+                    /CampusRoot.State.campusLogin,
+                    action: CampusRoot.Action.campusLogin,
+                    then: CampusLoginView.init(store:)
+                )
+                
+            case .campusHome:
+                CaseLet(
+                    /CampusRoot.State.campusHome,
+                    action: CampusRoot.Action.campusHome,
+                    then: CampusHomeView.init(store:)
+                )
+            }
+        }
+    }
 }

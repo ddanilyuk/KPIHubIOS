@@ -1,5 +1,5 @@
 //
-//  RozkladFlowCoordinatorView.swift
+//  RozkladFlowView.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 29.05.2022.
@@ -8,18 +8,21 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct RozkladFlowCoordinatorView: View {
-
-    let store: StoreOf<Rozklad>
-
+struct RozkladFlowView: View {
+    private let store: StoreOf<RozkladFlow>
+    
+    init(store: StoreOf<RozkladFlow>) {
+        self.store = store
+    }
+    
     var body: some View {
         NavigationStackStore(
-            store.scope(state: \.path, action: Rozklad.Action.path),
+            store.scope(state: \.path, action: RozkladFlow.Action.path),
             root: {
-                RozkladRootView(
+                RozkladFlow.RozkladRootView(
                     store: store.scope(
                         state: \.rozkladRoot,
-                        action: Rozklad.Action.rozkladRoot
+                        action: RozkladFlow.Action.rozkladRoot
                     )
                 )
             },
@@ -27,25 +30,24 @@ struct RozkladFlowCoordinatorView: View {
                 switch destination {
                 case .lessonDetails:
                     CaseLet(
-                        /Rozklad.Path.State.lessonDetails,
-                        action: Rozklad.Path.Action.lessonDetails,
+                        /RozkladFlow.Path.State.lessonDetails,
+                        action: RozkladFlow.Path.Action.lessonDetails,
                         then: LessonDetailsView.init
                     )
                 case .editLessonNames:
                     CaseLet(
-                        /Rozklad.Path.State.editLessonNames,
-                        action: Rozklad.Path.Action.editLessonNames,
+                        /RozkladFlow.Path.State.editLessonNames,
+                        action: RozkladFlow.Path.Action.editLessonNames,
                         then: EditLessonNamesView.init
                     )
                 case .editLessonTeachers:
                     CaseLet(
-                        /Rozklad.Path.State.editLessonTeachers,
-                        action: Rozklad.Path.Action.editLessonTeachers,
+                        /RozkladFlow.Path.State.editLessonTeachers,
+                        action: RozkladFlow.Path.Action.editLessonTeachers,
                         then: EditLessonTeachersView.init
                     )
                 }
             }
         )
     }
-
 }

@@ -30,11 +30,7 @@ struct Profile: Reducer {
         }
     }
         
-    @ReducerBuilder<State, Action>
     var core: some ReducerOf<Self> {
-        Scope(state: \.profileHome, action: /Action.profileHome) {
-            ProfileHome()
-        }
         Reduce { state, action in
             switch action {
             case .profileHome(.routeAction(.rozklad)):
@@ -47,17 +43,6 @@ struct Profile: Reducer {
                 let forDevelopersState = ForDevelopers.State()
                 state.path.append(.forDevelopers(forDevelopersState))
                 return .none
-
-//            case .path(.element(_, action: .profileHome(.routeAction(.rozklad)))):
-//                return .send(.delegate(.selectRozkladTab))
-//
-//            case .path(.element(_, action: .profileHome(.routeAction(.campus)))):
-//                return .send(.delegate(.selectCampusTab))
-//
-//            case .path(.element(_, action: .profileHome(.routeAction(.forDevelopers)))):
-//                let forDevelopersState = ForDevelopers.State()
-//                state.path.append(.forDevelopers(forDevelopersState))
-//                return .none
                 
             case .profileHome:
                 return .none
@@ -72,13 +57,11 @@ struct Profile: Reducer {
     }
     
     var body: some ReducerOf<Self> {
-        core
-            .forEach(\.path, action: /Action.path) {
-                ScreenProvider()
-            }
-
-//            .forEach(\.path, action: /Action.path) {
-//            ScreenProvider()
-//        }
+        Scope(state: \.profileHome, action: /Action.profileHome) {
+            ProfileHome()
+        }
+        core.forEach(\.path, action: /Action.path) {
+            ScreenProvider()
+        }
     }
 }

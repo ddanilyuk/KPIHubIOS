@@ -8,44 +8,21 @@
 import ComposableArchitecture
 
 extension Campus {
-
-    struct ScreenProvider {}
-
+    struct Path {}
 }
 
-extension Campus.ScreenProvider: Reducer {
-
-    // MARK: - State handling
-
-    enum State: Equatable, CoordinatorStateIdentifiable {
-
-        static var module: Any.Type = Campus.self
-
-        case campusLogin(CampusLoginFeature.State)
-        case campusHome(CampusHome.State)
+extension Campus.Path: Reducer {
+    enum State: Equatable {
         case studySheet(StudySheet.State)
         case studySheetItemDetail(StudySheetItemDetail.State)
     }
-
-    // MARK: - Action handling
-
+    
     enum Action: Equatable {
-
-        case campusLogin(CampusLoginFeature.Action)
-        case campusHome(CampusHome.Action)
         case studySheet(StudySheet.Action)
         case studySheetItemDetail(StudySheetItemDetail.Action)
     }
-
-    // MARK: - Reducer
     
     var body: some ReducerOf<Self> {
-        Scope(state: /State.campusLogin, action: /Action.campusLogin) {
-            CampusLoginFeature()
-        }
-        Scope(state: /State.campusHome, action: /Action.campusHome) {
-            CampusHome()
-        }
         Scope(state: /State.studySheet, action: /Action.studySheet) {
             StudySheet()
         }
@@ -53,5 +30,4 @@ extension Campus.ScreenProvider: Reducer {
             StudySheetItemDetail()
         }
     }
-
 }

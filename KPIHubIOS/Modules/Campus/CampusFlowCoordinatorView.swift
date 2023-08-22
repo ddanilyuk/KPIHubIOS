@@ -7,50 +7,41 @@
 
 import SwiftUI
 import ComposableArchitecture
-import TCACoordinators
 
 struct CampusFlowCoordinatorView: View {
-
-    let store: StoreOf<Campus>
+    private let store: StoreOf<Campus>
 
     init(store: StoreOf<Campus>) {
         self.store = store
     }
 
     var body: some View {
-        TCARouter(store) { screen in
-            SwitchStore(screen) { state in
-                switch state {
+        NavigationStackStore(
+            store.scope(state: \.path, action: Campus.Action.path),
+            root: {
+                IfLetStore(
+                    store.scope(state: \.campusRoot, action: Campus.Action.campusRoot)
+                ) { store in
+                    CampusRootView(store: store)
+                }
+            },
+            destination: { destination in
+                switch destination {
                 case .studySheet:
                     CaseLet(
-                        /Campus.ScreenProvider.State.studySheet,
-                        action: Campus.ScreenProvider.Action.studySheet,
+                        /Campus.Path.State.studySheet,
+                        action: Campus.Path.Action.studySheet,
                         then: StudySheetView.init
                     )
-
-                case .campusHome:
-                    CaseLet(
-                        /Campus.ScreenProvider.State.campusHome,
-                        action: Campus.ScreenProvider.Action.campusHome,
-                        then: CampusHomeView.init
-                    )
                     
-                case .campusLogin:
-                    CaseLet(
-                        /Campus.ScreenProvider.State.campusLogin,
-                        action: Campus.ScreenProvider.Action.campusLogin,
-                        then: CampusLoginView.init
-                    )
-                
                 case .studySheetItemDetail:
                     CaseLet(
-                        /Campus.ScreenProvider.State.studySheetItemDetail,
-                        action: Campus.ScreenProvider.Action.studySheetItemDetail,
+                        /Campus.Path.State.studySheetItemDetail,
+                        action: Campus.Path.Action.studySheetItemDetail,
                         then: StudySheetItemDetailView.init
                     )
                 }
             }
-        }
+        )
     }
-
 }
