@@ -9,13 +9,13 @@ import Foundation
 import ComposableArchitecture
 
 extension DependencyValues {
-    private enum UserDefaultsClientKey: TestDependencyKey {
+    private enum UserDefaultsServiceKey: TestDependencyKey {
         static let testValue: any UserDefaultsServiceProtocol = UserDefaultsService(UserDefaults(suiteName: "mock")!)
         static let liveValue: any UserDefaultsServiceProtocol = UserDefaultsService(UserDefaults.standard)
     }
     
     var userDefaultsService: UserDefaultsServiceProtocol {
-        get { self[UserDefaultsClientKey.self] }
-        set { self[UserDefaultsClientKey.self] = newValue }
+        get { self[UserDefaultsServiceKey.self] }
+        set { self[UserDefaultsServiceKey.self] = newValue }
     }
 }

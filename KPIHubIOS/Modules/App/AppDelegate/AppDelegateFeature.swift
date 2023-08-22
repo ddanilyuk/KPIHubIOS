@@ -14,13 +14,13 @@ struct AppDelegateFeature: Reducer {
         case didFinishLaunching
     }
     
-    @Dependency(\.firebaseClient) var firebaseClient
+    @Dependency(\.firebaseService) var firebaseService
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .didFinishLaunching:
-                firebaseClient.setup()
+                firebaseService.setup()
                 return .none
             }
         }

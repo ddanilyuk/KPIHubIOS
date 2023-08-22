@@ -9,13 +9,13 @@ import Dependencies
 import KeychainAccess
 
 extension DependencyValues {
-    private enum KeychainClientKey: DependencyKey {
+    private enum KeychainServiceKey: DependencyKey {
         static let liveValue: any KeychainServiceProtocol = KeychainService()
         static let testValue: any KeychainServiceProtocol = KeychainService(keychain: Keychain(service: "mock"))
     }
     
     var keychainService: KeychainServiceProtocol {
-        get { self[KeychainClientKey.self] }
-        set { self[KeychainClientKey.self] = newValue }
+        get { self[KeychainServiceKey.self] }
+        set { self[KeychainServiceKey.self] = newValue }
     }
 }
