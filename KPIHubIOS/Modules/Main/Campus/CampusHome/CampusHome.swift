@@ -66,7 +66,7 @@ struct CampusHome: Reducer {
                 switch state.studySheetState {
                 case .notLoading,
                      .loaded:
-                    return .run { send in
+                    return .run { _ in
                         await campusServiceStudySheet.load()
                     }
                 case .loading:

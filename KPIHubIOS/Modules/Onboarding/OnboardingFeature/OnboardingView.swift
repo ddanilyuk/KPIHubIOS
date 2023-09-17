@@ -22,6 +22,7 @@ struct OnboardingView: View {
             observe: { _ in ViewState() },
             send: OnboardingFeature.Action.view
         )
+        viewStore.send(.onAppear)
     }
     
     var body: some View {
@@ -52,9 +53,6 @@ struct OnboardingView: View {
         }
         .navigationBarHidden(true)
         .background(Color.screenBackground)
-        .onAppear {
-            viewStore.send(.onAppear)
-        }
     }
     
     private var bottomView: some View {
@@ -84,15 +82,8 @@ struct OnboardingView: View {
 }
 
 // MARK: - Preview
-
-struct OnboardingView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            OnboardingView(
-                store: Store(initialState: OnboardingFeature.State()) {
-                    OnboardingFeature()
-                }
-            )
-        }
-    }
+#Preview {
+    OnboardingView(store: Store(initialState: OnboardingFeature.State()) {
+        OnboardingFeature()
+    })
 }

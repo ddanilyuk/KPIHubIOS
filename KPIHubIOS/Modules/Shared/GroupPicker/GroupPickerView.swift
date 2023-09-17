@@ -11,11 +11,13 @@ import ComposableArchitecture
 struct GroupPickerView: View {
     struct ViewState: Equatable {
         @BindingViewState var isLoading: Bool
+        @BindingViewState var searchPresented: Bool
         @BindingViewState var searchedText: String
         let searchedGroups: [GroupResponse]
         
         init(state: BindingViewStore<GroupPickerFeature.State>) {
             _isLoading = state.$isLoading
+            _searchPresented = state.$searchPresented
             _searchedText = state.$searchedText
             searchedGroups = state.searchedGroups
         }
@@ -46,7 +48,6 @@ struct GroupPickerView: View {
                 .frame(maxWidth: .infinity)
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    UIApplication.shared.endEditing()
                     viewStore.send(.groupSelected(group))
                 }
             }
@@ -60,10 +61,36 @@ struct GroupPickerView: View {
         .navigationTitle("Оберіть групу")
         .loadable(viewStore.$isLoading)
         .alert(store: store.scope(state: \.$alert, action: GroupPickerFeature.Action.alert))
-        .searchable(
+        .customSearchable(
             text: viewStore.$searchedText,
+            isPresented: viewStore.$searchPresented,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("Пошук")
         )
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func customSearchable(
+        text: Binding<String>,
+        isPresented: Binding<Bool>,
+        placement: SearchFieldPlacement = .automatic,
+        prompt: Text? = nil
+    ) -> some View {
+        if #available(iOS 17, *) {
+            searchable(
+                text: text,
+                isPresented: isPresented,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Пошук")
+            )
+        } else {
+            searchable(
+                text: text,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Пошук")
+            )
+        }
     }
 }

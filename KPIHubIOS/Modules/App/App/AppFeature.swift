@@ -14,8 +14,7 @@ import Firebase
 struct AppFeature: Reducer {
     struct State: Equatable {
         var appDelegate = AppDelegateFeature.State()
-        // TODO: Is this valid?
-        var path: Path.State = .onboarding(OnboardingFlow.State())
+        var path: Path.State?
     }
     
     enum Action: Equatable {
@@ -53,9 +52,8 @@ struct AppFeature: Reducer {
         Scope(state: \State.appDelegate, action: /Action.appDelegate) {
             AppDelegateFeature()
         }
-        Scope(state: \State.path, action: /Action.path) {
+        core.ifLet(\.path, action: /Action.path) {
             Path()
         }
-        core
     }
 }

@@ -57,10 +57,10 @@ struct EditLessonTeachers: Reducer {
                 newLesson.teachers = state.selected
                 rozkladServiceLessons.modify(.init(newLesson, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.editTeachersApply)
-                return Effect(value: .routeAction(.dismiss))
+                return .send(.routeAction(.dismiss))
 
             case .cancel:
-                return Effect(value: .routeAction(.dismiss))
+                return .send(.routeAction(.dismiss))
 
             case let .toggle(element):
                 if let index = state.selected.firstIndex(of: element) {

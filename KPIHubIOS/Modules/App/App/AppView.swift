@@ -16,21 +16,23 @@ struct AppView: View {
     }
     
     var body: some View {
-        SwitchStore(store.scope(state: \.path, action: { .path($0) })) { state in
-            switch state {
-            case .main:
-                CaseLet(
-                    /AppFeature.Path.State.main,
-                    action: AppFeature.Path.Action.main,
-                    then: MainFlowView.init
-                )
-                
-            case .onboarding:
-                CaseLet(
-                    /AppFeature.Path.State.onboarding,
-                    action: AppFeature.Path.Action.onboarding,
-                    then: OnboardingFlowView.init
-                )
+        IfLetStore(store.scope(state: \.path, action: { .path($0) })) { store in
+            SwitchStore(store) { state in
+                switch state {
+                case .main:
+                    CaseLet(
+                        /AppFeature.Path.State.main,
+                        action: AppFeature.Path.Action.main,
+                        then: MainFlowView.init
+                    )
+
+                case .onboarding:
+                    CaseLet(
+                        /AppFeature.Path.State.onboarding,
+                        action: AppFeature.Path.Action.onboarding,
+                        then: OnboardingFlowView.init
+                    )
+                }
             }
         }
     }

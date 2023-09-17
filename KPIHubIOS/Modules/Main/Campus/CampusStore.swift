@@ -48,7 +48,7 @@ struct Campus: Reducer {
                 
             case .campusRoot(.campusLogin(.route(.done))):
                 campusClientState.commit()
-                return .run { send in
+                return .run { _ in
                     await campusServiceStudySheet.load()
                 }
                 

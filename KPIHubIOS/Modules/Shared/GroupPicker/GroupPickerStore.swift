@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import URLRouting
 import Foundation
+import UIKit
 
 struct GroupPickerFeature: Reducer {
     struct State: Equatable {
@@ -15,18 +16,19 @@ struct GroupPickerFeature: Reducer {
         var groups: [GroupResponse] = []
         var searchedGroups: [GroupResponse] = []
         var selectedGroup: GroupResponse?
+        @BindingState var searchPresented: Bool = false
         @BindingState var searchedText: String = ""
         @BindingState var isLoading: Bool = true
         @PresentationState var alert: AlertState<Action.Alert>?
     }
     
     enum Action: Equatable {
-        case allGroupsResult(TaskResult<[GroupResponse]>)
-        case lessonsResult(TaskResult<[Lesson]>)
-        
         case route(Route)
         case alert(PresentationAction<Alert>)
         case view(View)
+        
+        case allGroupsResult(TaskResult<[GroupResponse]>)
+        case lessonsResult(TaskResult<[Lesson]>)
         
         enum Route: Equatable {
             case done
@@ -98,6 +100,51 @@ struct GroupPickerFeature: Reducer {
     }
 }
 
+// MARK: - View
+private extension GroupPickerFeature {
+    func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
+        switch action {
+        case .onAppear:
+            analyticsService.track(Event.Onboarding.groupPickerAppeared)
+            return loadGroups()
+            
+        case .refresh:
+            return loadGroups()
+            
+        case let .groupSelected(group):
+            state.isLoading = true
+            hideSearch(state: &state)
+            state.selectedGroup = group
+            analyticsService.track(Event.Onboarding.groupPickerSelect)
+            return getLessons(for: group)
+            
+        case .binding(\.$searchedText):
+            if state.searchedText.isEmpty {
+                state.searchedGroups = state.groups
+            } else {
+                let filtered = state.groups.filter { group in
+                    let groupName = group.name.lowercased()
+                    let searchedText = state.searchedText.lowercased()
+                    return groupName.contains(searchedText)
+                }
+                state.searchedGroups = filtered
+            }
+            return .none
+            
+        case .binding:
+            return .none
+        }
+    }
+    
+    private func hideSearch(state: inout State) {
+        if #available(iOS 17, *) {
+            state.searchPresented = false
+        } else {
+            UIApplication.shared.endEditing()
+        }
+    }
+}
+
 // MARK: Analytics
 private extension GroupPickerFeature {
     func analyticsLessonsLoadPlace(from mode: Mode) -> Event.Rozklad.Place {
@@ -112,7 +159,7 @@ private extension GroupPickerFeature {
     }
 }
 
-// MARK: API
+// MARK: - API
 private extension GroupPickerFeature {
     func loadGroups() -> Effect<Action> {
         .run { send in
@@ -144,43 +191,7 @@ private extension GroupPickerFeature {
     }
 }
 
-// MARK: View
-private extension GroupPickerFeature {
-    func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
-        switch action {
-        case .onAppear:
-            analyticsService.track(Event.Onboarding.groupPickerAppeared)
-            return loadGroups()
-            
-        case .refresh:
-            return loadGroups()
-            
-        case let .groupSelected(group):
-            state.isLoading = true
-            state.selectedGroup = group
-            analyticsService.track(Event.Onboarding.groupPickerSelect)
-            return getLessons(for: group)
-            
-        case .binding(\.$searchedText):
-            if state.searchedText.isEmpty {
-                state.searchedGroups = state.groups
-            } else {
-                let filtered = state.groups.filter { group in
-                    let groupName = group.name.lowercased()
-                    let searchedText = state.searchedText.lowercased()
-                    return groupName.contains(searchedText)
-                }
-                state.searchedGroups = filtered
-            }
-            return .none
-            
-        case .binding:
-            return .none
-        }
-    }
-}
-
-// MARK: Helper models
+// MARK: - Helper models
 extension GroupPickerFeature {
     enum Mode {
         case onboarding

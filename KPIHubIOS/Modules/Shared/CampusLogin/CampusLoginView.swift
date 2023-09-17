@@ -31,7 +31,11 @@ struct CampusLoginView: View {
     
     init(store: StoreOf<CampusLoginFeature>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: ViewState.init, send: CampusLoginFeature.Action.view)
+        self.viewStore = ViewStore(
+            store,
+            observe: ViewState.init,
+            send: CampusLoginFeature.Action.view
+        )
     }
     
     var body: some View {
@@ -60,7 +64,6 @@ struct CampusLoginView: View {
                     .multilineTextAlignment(.center)
                     .textFieldStyle(PlainTextFieldStyle())
                     .font(.system(size: 24, weight: .bold, design: .monospaced))
-                    .disableAutocorrection(true)
                     .toolbar {
                         ToolbarItem(placement: .keyboard) {
                             HStack {
@@ -84,7 +87,6 @@ struct CampusLoginView: View {
                     .padding(20)
                 }
                 .frame(minHeight: proxy.size.height)
-                
             }
         }
         .navigationBarTitle("Кампус")
@@ -99,15 +101,12 @@ struct CampusLoginView: View {
 }
 
 // MARK: - Preview
-
-struct CampusLoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            CampusLoginView(
-                store: Store(initialState: CampusLoginFeature.State(mode: .onlyCampus)) {
-                    CampusLoginFeature()
-                }
-            )
-        }
+#Preview {
+    NavigationStack {
+        CampusLoginView(
+            store: Store(initialState: CampusLoginFeature.State(mode: .onlyCampus)) {
+                CampusLoginFeature()
+            }
+        )
     }
 }

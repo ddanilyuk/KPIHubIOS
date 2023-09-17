@@ -25,7 +25,7 @@ struct OnboardingFeature: Reducer {
             case selectGroupButtonTapped
         }
     }
-        
+    
     @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
