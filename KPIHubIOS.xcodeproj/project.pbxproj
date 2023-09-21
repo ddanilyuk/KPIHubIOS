@@ -164,6 +164,7 @@
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
+		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
 		DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277728EB9604006EBA99 /* ComposableArchitecture */; };
 		DB66277A28EB9604006EBA99 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277928EB9604006EBA99 /* Dependencies */; };
 		DB7FAD5228E24AF400963C84 /* Analytics+Campus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */; };
@@ -397,6 +398,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6277E20EF494FBBE5BEA10DF /* Pods_KPIHubIOSTests.framework in Frameworks */,
+				DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,6 +1231,9 @@
 				5F97B3CD283677C600350368 /* PBXTargetDependency */,
 			);
 			name = KPIHubIOSTests;
+			packageProductDependencies = (
+				DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */,
+			);
 			productName = KPIHubIOSTests;
 			productReference = 5F97B3CB283677C600350368 /* KPIHubIOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -1289,6 +1294,7 @@
 				DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				DBD6B10F2A3F58E900AE5AE8 /* XCRemoteSwiftPackageReference "KPIHubServer" */,
+				DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 5F97B3BC283677C200350368 /* Products */;
 			projectDirPath = "";
@@ -2211,6 +2217,14 @@
 				version = 10.15.0;
 			};
 		};
+		DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = exactVersion;
+				version = 1.13.0;
+			};
+		};
 		DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
@@ -2249,6 +2263,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
+		};
+		DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 		DB66277728EB9604006EBA99 /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
