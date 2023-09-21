@@ -8,15 +8,16 @@
 import Foundation
 import IdentifiedCollections
 import Combine
+import Dependencies
 
 extension RozkladServiceLessons {
     static func mock() -> RozkladServiceLessons {
-        RozkladServiceLessons(
+        return RozkladServiceLessons(
             subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>(
                 .init(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
             ),
             updatedAtSubject: CurrentValueSubject<Date?, Never>(
-                Date()
+                Date(timeIntervalSince1970: 1695329230)
             ),
             set: { _ in },
             modify: { _ in },
