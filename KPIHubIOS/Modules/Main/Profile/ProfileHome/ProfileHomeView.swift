@@ -32,7 +32,7 @@ struct ProfileHomeView: View {
 
                 CampusSectionView(store: store)
                 
-                OtherSectionView(store: store)                
+                OtherSectionView(store: store)
             }
             .padding(16)
         }
@@ -44,12 +44,14 @@ struct ProfileHomeView: View {
         .background(Color.screenBackground)
         .loadable(viewStore.$isLoading)
         .alert(
-            store.scope(state: \.alert),
-            dismiss: .dismissAlert
+            store: store.scope(state: \.$destination, action: { .destination($0) }),
+            state: /ProfileHome.Destination.State.alert,
+            action: ProfileHome.Destination.Action.alert
         )
         .confirmationDialog(
-            store.scope(state: \.confirmationDialog),
-            dismiss: .dismissConfirmationDialog
+            store: store.scope(state: \.$destination, action: { .destination($0) }),
+            state: /ProfileHome.Destination.State.confirmationDialog,
+            action: ProfileHome.Destination.Action.confirmationDialog
         )
     }
 }

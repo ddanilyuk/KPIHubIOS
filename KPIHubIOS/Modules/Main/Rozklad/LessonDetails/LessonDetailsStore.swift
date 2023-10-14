@@ -10,38 +10,34 @@ import Foundation
 
 struct LessonDetails: Reducer {
     struct State: Equatable {
-
         var lesson: Lesson
         var mode: LessonMode = .default
-        var showTeachers: Bool {
-            !lesson.isTeachersEmpty
-        }
-        var showLocations: Bool {
-            !lesson.isLocationsEmpty
-        }
-        var showType: Bool {
-            !lesson.isTypeEmpty
-        }
         @BindingState var isEditing: Bool = false
-        
-        var alert: AlertState<Action>?
+        @PresentationState var alert: AlertState<Action.Alert>?
     }
     
     enum Action: Equatable, BindableAction {
-        case onAppear
-
         case updateCurrentDate
         case updateLesson(Lesson)
 
-        case editNames
-        case editTeachers
-        case deleteLessonTapped
-        case deleteLessonConfirm
-
-        case dismissAlert
+        case alert(PresentationAction<Alert>)
+        case view(View)
         case binding(BindingAction<State>)
         case routeAction(RouteAction)
 
+        enum View: Equatable {
+            case onAppear
+            case startEditingButtonTapped
+            case endEditingButtonTapped
+            case deleteLessonButtonTapped
+            case editTeachersButtonTapped
+            case editNamesButtonTapped
+        }
+        
+        enum Alert: Equatable { 
+            case deleteLessonConfirm
+        }
+        
         enum RouteAction: Equatable {
             case dismiss
             case editNames(_ lesson: Lesson)
@@ -58,7 +54,7 @@ struct LessonDetails: Reducer {
         
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 let lessonID = state.lesson.id
                 analyticsService.track(Event.LessonDetails.appeared(
                     id: "\(lessonID)",
@@ -92,7 +88,7 @@ struct LessonDetails: Reducer {
                 updateCurrentDate(state: &state)
                 return .none
                 
-            case .deleteLessonTapped:
+            case .view(.deleteLessonButtonTapped):
                 state.alert = AlertState(
                     title: {
                         TextState("Ви впевнені?")
@@ -101,7 +97,7 @@ struct LessonDetails: Reducer {
                         ButtonState(role: .destructive, action: .send(.deleteLessonConfirm)) {
                             TextState("Видалити")
                         }
-                        ButtonState(role: .cancel, action: .send(.dismissAlert)) {
+                        ButtonState(role: .cancel) {
                             TextState("Назад")
                         }
                     },
@@ -111,32 +107,39 @@ struct LessonDetails: Reducer {
                 )
                 return .none
                 
-            case .deleteLessonConfirm:
+            case .alert(.presented(.deleteLessonConfirm)):
                 var lessons = rozkladServiceLessons.currentLessons()
                 lessons.remove(id: state.lesson.id)
                 rozkladServiceLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.removeLessonApply)
                 return .send(.routeAction(.dismiss))
-            
-            case .dismissAlert:
-                state.alert = nil
-                return .none
 
             case let .updateLesson(lesson):
                 state.lesson = lesson
                 return .none
 
-            case .editNames:
+            case .view(.editNamesButtonTapped):
                 guard state.isEditing else {
                     return .none
                 }
                 return .send(.routeAction(.editNames(state.lesson)))
 
-            case .editTeachers:
+            case .view(.editTeachersButtonTapped):
                 guard state.isEditing else {
                     return .none
                 }
                 return .send(.routeAction(.editTeachers(state.lesson)))
+                
+            case .view(.startEditingButtonTapped):
+                state.isEditing = true
+                return .none
+                
+            case .view(.endEditingButtonTapped):
+                state.isEditing = false
+                return .none
+                
+            case .alert(.dismiss):
+                return .none
 
             case .binding:
                 return .none
@@ -145,6 +148,7 @@ struct LessonDetails: Reducer {
                 return .none
             }
         }
+        .ifLet(\.$alert, action: /Action.alert)
     }
     
     private func updateCurrentDate(state: inout State) {

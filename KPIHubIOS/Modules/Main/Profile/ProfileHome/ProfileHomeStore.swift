@@ -15,10 +15,8 @@ struct ProfileHome: Reducer {
         var campusState: CampusServiceState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
         var completeAppVersion: String = ""
-
-        var confirmationDialog: ConfirmationDialogState<Action>?
-        var alert: AlertState<Action>?
         
+        @PresentationState var destination: Destination.State?
         @BindingState var toggleWeek: Bool = false
         @BindingState var isLoading: Bool = false
     }
@@ -28,15 +26,16 @@ struct ProfileHome: Reducer {
         case setCampusState(CampusServiceState.State)
         case setLessonsUpdatedAtDate(Date?)
 
-        case updateRozklad
+//        case updateRozklad
         case lessonsResult(TaskResult<[Lesson]>)
 
-        case changeGroup
-        case logoutCampus
+//        case changeGroup
+//        case logoutCampus
 
-        case dismissConfirmationDialog
-        case dismissAlert
+//        case dismissConfirmationDialog
+//        case dismissAlert
         
+        case destination(PresentationAction<Destination.Action>)
         case view(View)
         case routeAction(RouteAction)
 
@@ -59,6 +58,30 @@ struct ProfileHome: Reducer {
             case forDevelopersButtonTapped
             
             case onAppear
+        }
+    }
+    
+    struct Destination: Reducer {
+        enum State: Equatable {
+            case alert(AlertState<Action.Alert>)
+            case confirmationDialog(ConfirmationDialogState<Action.ConfirmationDialogAction>)
+        }
+        
+        enum Action: Equatable, Sendable {
+            case alert(Alert)
+            case confirmationDialog(ConfirmationDialogAction)
+            
+            enum Alert: Equatable { }
+            
+            enum ConfirmationDialogAction {
+                case confirmUpdateRozklad
+                case confirmLogoutCampus
+                case confirmChangeGroup
+            }
+        }
+        
+        var body: some ReducerOf<Self> {
+            EmptyReducer()
         }
     }
     
@@ -97,18 +120,93 @@ struct ProfileHome: Reducer {
 
             case .view(.updateRozkladButtonTapped):
                 analyticsService.track(Event.Profile.reloadRozkladTapped)
-                state.confirmationDialog = ConfirmationDialogState(
-                    title: TextState("Ви впевнені?"),
-                    titleVisibility: .visible,
-                    message: TextState("Оновлення розкладу видалить всі редагування!"),
-                    buttons: [
-                        .destructive(TextState("Оновити розклад"), action: .send(.updateRozklad)),
-                        .cancel(TextState("Назад"))
-                    ]
+                state.destination = .confirmationDialog(
+                    ConfirmationDialogState(
+                        title: TextState("Ви впевнені?"),
+                        titleVisibility: .visible,
+                        message: TextState("Оновлення розкладу видалить всі редагування!"),
+                        buttons: [
+                            .destructive(TextState("Оновити розклад"), action: .send(.confirmUpdateRozklad)),
+                            .cancel(TextState("Назад"))
+                        ]
+                    )
                 )
                 return .none
 
-            case .updateRozklad:
+            case let .lessonsResult(.success(lessons)):
+                state.isLoading = false
+                rozkladServiceLessons.set(.init(lessons, commitChanges: true))
+                analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: .profileReload))
+                return .none
+
+            case let .lessonsResult(.failure(error)):
+                state.isLoading = false
+                state.destination = .alert(AlertState.error(error))
+                analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: .profileReload))
+                return .none
+
+            case .view(.changeGroupButtonTapped):
+                analyticsService.track(Event.Profile.changeGroupTapped)
+                state.destination = .confirmationDialog(
+                    ConfirmationDialogState(
+                        title: TextState("Ви впевнені?"),
+                        titleVisibility: .visible,
+                        message: TextState("Зміна групи видалить всі редагування!"),
+                        buttons: [
+                            .destructive(TextState("Змінити"), action: .send(.confirmChangeGroup)),
+                            .cancel(TextState("Назад"))
+                        ]
+                    )
+                )
+                return .none
+
+//            case .changeGroup:
+
+            case .view(.selectGroupButtonTapped):
+                analyticsService.track(Event.Profile.selectGroup)
+                return .send(.routeAction(.rozklad))
+
+            case .view(.logoutCampusButtonTapped):
+                analyticsService.track(Event.Profile.campusLogoutTapped)
+                state.destination = .confirmationDialog(
+                    ConfirmationDialogState(
+                        title: TextState("Ви впевнені?"),
+                        titleVisibility: .visible,
+                        buttons: [
+                            .destructive(TextState("Вийти"), action: .send(.confirmLogoutCampus)),
+                            .cancel(TextState("Назад"))
+                        ]
+                    )
+                )
+                return .none
+
+            case .view(.loginCampusButtonTapped):
+                analyticsService.track(Event.Profile.campusLogin)
+                return .send(.routeAction(.campus))
+
+            case .view(.binding(\.$toggleWeek)):
+                userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
+                currentDateService.forceUpdate()
+                analyticsService.track(Event.Profile.changeWeek(state.toggleWeek))
+                return .none
+                
+            case .view(.forDevelopersButtonTapped):
+                return .send(.routeAction(.forDevelopers))
+                
+            case .destination(.presented(.confirmationDialog(.confirmChangeGroup))):
+                rozkladServiceState.setState(ClientValue(.notSelected, commitChanges: true))
+                analyticsService.track(Event.Profile.changeGroup)
+                analyticsService.setGroup(nil)
+                return .send(.routeAction(.rozklad))
+                
+            case .destination(.presented(.confirmationDialog(.confirmLogoutCampus))):
+                campusClientState.logout(ClientValue(commitChanges: true))
+                campusServiceStudySheet.clean()
+                analyticsService.track(Event.Profile.campusLogout)
+                analyticsService.setCampusUser(nil)
+                return .send(.routeAction(.campus))
+                
+            case .destination(.presented(.confirmationDialog(.confirmUpdateRozklad))):
                 switch state.rozkladState {
                 case let .selected(group):
                     state.isLoading = true
@@ -133,81 +231,10 @@ struct ProfileHome: Reducer {
                 case .notSelected:
                     return .none
                 }
-
-            case let .lessonsResult(.success(lessons)):
-                state.isLoading = false
-                rozkladServiceLessons.set(.init(lessons, commitChanges: true))
-                analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: .profileReload))
-                return .none
-
-            case let .lessonsResult(.failure(error)):
-                state.isLoading = false
-                state.alert = AlertState.error(error)
-                analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: .profileReload))
-                return .none
-
-            case .view(.changeGroupButtonTapped):
-                analyticsService.track(Event.Profile.changeGroupTapped)
-                state.confirmationDialog = ConfirmationDialogState(
-                    title: TextState("Ви впевнені?"),
-                    titleVisibility: .visible,
-                    message: TextState("Зміна групи видалить всі редагування!"),
-                    buttons: [
-                        .destructive(TextState("Змінити"), action: .send(.changeGroup)),
-                        .cancel(TextState("Назад"))
-                    ]
-                )
-                return .none
-
-            case .changeGroup:
-                rozkladServiceState.setState(ClientValue(.notSelected, commitChanges: true))
-                analyticsService.track(Event.Profile.changeGroup)
-                analyticsService.setGroup(nil)
-                return .send(.routeAction(.rozklad))
-
-            case .view(.selectGroupButtonTapped):
-                analyticsService.track(Event.Profile.selectGroup)
-                return .send(.routeAction(.rozklad))
-
-            case .view(.logoutCampusButtonTapped):
-                analyticsService.track(Event.Profile.campusLogoutTapped)
-                state.confirmationDialog = ConfirmationDialogState(
-                    title: TextState("Ви впевнені?"),
-                    titleVisibility: .visible,
-                    buttons: [
-                        .destructive(TextState("Вийти"), action: .send(.logoutCampus)),
-                        .cancel(TextState("Назад"))
-                    ]
-                )
-                return .none
-
-            case .logoutCampus:
-                campusClientState.logout(ClientValue(commitChanges: true))
-                campusServiceStudySheet.clean()
-                analyticsService.track(Event.Profile.campusLogout)
-                analyticsService.setCampusUser(nil)
-                return .send(.routeAction(.campus))
-
-            case .view(.loginCampusButtonTapped):
-                analyticsService.track(Event.Profile.campusLogin)
-                return .send(.routeAction(.campus))
-
-            case .view(.binding(\.$toggleWeek)):
-                userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
-                currentDateService.forceUpdate()
-                analyticsService.track(Event.Profile.changeWeek(state.toggleWeek))
-                return .none
-
-            case .dismissConfirmationDialog:
-                state.confirmationDialog = nil
-                return .none
-
-            case .dismissAlert:
-                state.alert = nil
-                return .none
                 
-            case .view(.forDevelopersButtonTapped):
-                return .send(.routeAction(.forDevelopers))
+                
+            case .destination(.dismiss):
+                return .none
 
             case .view(.binding):
                 return .none
@@ -215,6 +242,9 @@ struct ProfileHome: Reducer {
             case .routeAction:
                 return .none
             }
+        }
+        .ifLet(\.$destination, action: /Action.destination) {
+            Destination()
         }
     }
     
