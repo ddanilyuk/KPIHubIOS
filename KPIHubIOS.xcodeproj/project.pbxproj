@@ -2225,8 +2225,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.2.0;
+				kind = exactVersion;
+				version = 4.2.2;
 			};
 		};
 		DB27C6E028D67B1500F4FA1B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
@@ -2234,7 +2234,7 @@
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				kind = exactVersion;
-				version = 10.15.0;
+				version = 10.16.0;
 			};
 		};
 		DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
@@ -2242,7 +2242,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
 			requirement = {
 				kind = exactVersion;
-				version = 1.13.0;
+				version = 1.14.2;
 			};
 		};
 		DB66277628EB9604006EBA99 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
@@ -2250,7 +2250,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
 				kind = exactVersion;
-				version = 0.58.2;
+				version = 1.2.0;
 			};
 		};
 		DBD6B10F2A3F58E900AE5AE8 /* XCRemoteSwiftPackageReference "KPIHubServer" */ = {
