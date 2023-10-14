@@ -29,10 +29,10 @@ struct Campus: Reducer {
         Reduce { state, action in
             switch action {
             case .onSetup:
-                updateCampusState(with: campusClientState.subject.value, state: &state)
+                updateCampusState(with: campusClientState.currentState(), state: &state)
                 return .merge(
                     .run { send in
-                        for await state in campusClientState.subject.values.eraseToStream().dropFirst() {
+                        for await state in campusClientState.stateStream().dropFirst() {
                             await send(.updateCampusState(state))
                         }
                     },

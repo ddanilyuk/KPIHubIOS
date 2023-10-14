@@ -24,7 +24,8 @@ extension CampusServiceState {
         }
         commit()
         return CampusServiceState(
-            subject: subject,
+            stateStream: { AsyncStream(subject.values) },
+            currentState: { subject.value },
             login: { clientValue in
                 let userInfo = clientValue.value.userInfo
                 let credentials = clientValue.value.credentials

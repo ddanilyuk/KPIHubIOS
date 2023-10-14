@@ -32,7 +32,7 @@ struct ProfileHome: Reducer {
 
         case updateRozkladButtonTapped
         case updateRozklad
-        case lessonsResult(Result<[Lesson], NSError>)
+        case lessonsResult(TaskResult<[Lesson]>)
 
         case changeGroupButtonTapped
         case changeGroup
@@ -105,24 +105,22 @@ struct ProfileHome: Reducer {
                 case let .selected(group):
                     state.isLoading = true
                     analyticsService.track(Event.Profile.reloadRozklad)
-                    let task: EffectPublisher<[Lesson], Error> = EffectPublisher.task {
-                        // Update group id using name
-                        let newGroup = try await apiClient.decodedResponse(
-                            for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
-                            as: GroupResponse.self
-                        )
-                        // Update lessons
-                        let lessons = try await apiClient.decodedResponse(
-                            for: .api(.group(newGroup.value.id, .lessons)),
-                            as: LessonsResponse.self
-                        )
-                        rozkladServiceState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
-                        return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
+                    return .run { send in
+                        let taskResult = await TaskResult {
+                            let newGroup = try await apiClient.decodedResponse(
+                                for: .api(.groups(.search(GroupSearchQuery(groupName: group.name)))),
+                                as: GroupResponse.self
+                            )
+                            // Update lessons
+                            let lessons = try await apiClient.decodedResponse(
+                                for: .api(.group(newGroup.value.id, .lessons)),
+                                as: LessonsResponse.self
+                            )
+                            rozkladServiceState.setState(ClientValue(.selected(newGroup.value), commitChanges: false))
+                            return lessons.value.lessons.map { Lesson(lessonResponse: $0) }
+                        }
+                        await send(.lessonsResult(taskResult))
                     }
-                    return task
-                        .mapError { $0 as NSError }
-                        .receive(on: DispatchQueue.main)
-                        .catchToEffect(Action.lessonsResult)
 
                 case .notSelected:
                     return .none
@@ -157,11 +155,11 @@ struct ProfileHome: Reducer {
                 rozkladServiceState.setState(ClientValue(.notSelected, commitChanges: true))
                 analyticsService.track(Event.Profile.changeGroup)
                 analyticsService.setGroup(nil)
-                return Effect(value: .routeAction(.rozklad))
+                return .send(.routeAction(.rozklad))
 
             case .selectGroup:
                 analyticsService.track(Event.Profile.selectGroup)
-                return Effect(value: .routeAction(.rozklad))
+                return .send(.routeAction(.rozklad))
 
             case .logoutCampusButtonTapped:
                 analyticsService.track(Event.Profile.campusLogoutTapped)
@@ -180,11 +178,11 @@ struct ProfileHome: Reducer {
                 campusServiceStudySheet.clean()
                 analyticsService.track(Event.Profile.campusLogout)
                 analyticsService.setCampusUser(nil)
-                return Effect(value: .routeAction(.campus))
+                return .send(.routeAction(.campus))
 
             case .loginCampus:
                 analyticsService.track(Event.Profile.campusLogin)
-                return Effect(value: .routeAction(.campus))
+                return .send(.routeAction(.campus))
 
             case .binding(\.rozkladSectionView.$toggleWeek):
                 userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
@@ -212,20 +210,17 @@ struct ProfileHome: Reducer {
     private func onAppear(state: inout State) -> Effect<Action> {
         state.rozkladState = rozkladServiceState.currentState()
         state.lessonsUpdatedAtDate = rozkladServiceLessons.currentUpdatedAt()
+        state.campusState = campusClientState.currentState()
         return .merge(
-            Effect(value: .setCampusState(campusClientState.subject.value)),
             .run { send in
                 for await state in rozkladServiceState.stateStream().dropFirst() {
                     await send(.setRozkladState(state))
                 }
             },
-            Effect.run { subscriber in
-                campusClientState.subject
-                    .dropFirst()
-                    .receive(on: DispatchQueue.main)
-                    .sink { campusState in
-                        subscriber.send(.setCampusState(campusState))
-                    }
+            .run { send in
+                for await state in campusClientState.stateStream().dropFirst() {
+                    await send(.setCampusState(state))
+                }
             },
             .run { send in
                 for await updatedAt in rozkladServiceLessons.updatedAtStream().dropFirst() {

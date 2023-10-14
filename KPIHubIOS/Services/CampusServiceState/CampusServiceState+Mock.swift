@@ -10,10 +10,9 @@ import Combine
 
 extension CampusServiceState {
     static func mock() -> CampusServiceState {
-        return CampusServiceState(
-            subject: CurrentValueSubject<State, Never>(
-                .loggedIn(CampusUserInfo.mock)
-            ),
+        CampusServiceState(
+            stateStream: { .never },
+            currentState: { .loggedIn(CampusUserInfo.mock) },
             login: { _ in },
             logout: { _ in },
             commit: { }

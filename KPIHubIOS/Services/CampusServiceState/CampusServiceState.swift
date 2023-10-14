@@ -21,9 +21,9 @@ struct CampusServiceState {
         let userInfo: CampusUserInfo
     }
 
-    let subject: CurrentValueSubject<State, Never>
-
-    let login: (ClientValue<LoginRequest>) -> Void
-    let logout: (ClientValue<Void>) -> Void
-    let commit: () -> Void
+    var stateStream: () -> AsyncStream<State>
+    var currentState: () -> State
+    var login: (ClientValue<LoginRequest>) -> Void
+    var logout: (ClientValue<Void>) -> Void
+    var commit: () -> Void
 }
