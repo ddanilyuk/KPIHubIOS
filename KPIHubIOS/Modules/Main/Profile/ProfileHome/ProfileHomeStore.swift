@@ -60,31 +60,7 @@ struct ProfileHome: Reducer {
             case onAppear
         }
     }
-    
-    struct Destination: Reducer {
-        enum State: Equatable {
-            case alert(AlertState<Action.Alert>)
-            case confirmationDialog(ConfirmationDialogState<Action.ConfirmationDialogAction>)
-        }
         
-        enum Action: Equatable, Sendable {
-            case alert(Alert)
-            case confirmationDialog(ConfirmationDialogAction)
-            
-            enum Alert: Equatable { }
-            
-            enum ConfirmationDialogAction {
-                case confirmUpdateRozklad
-                case confirmLogoutCampus
-                case confirmChangeGroup
-            }
-        }
-        
-        var body: some ReducerOf<Self> {
-            EmptyReducer()
-        }
-    }
-    
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladServiceState) var rozkladServiceState
@@ -275,4 +251,31 @@ struct ProfileHome: Reducer {
     enum CancelID {
         case onAppear
     }
+}
+
+extension ProfileHome {
+    struct Destination: Reducer {
+        enum State: Equatable {
+            case alert(AlertState<Action.Alert>)
+            case confirmationDialog(ConfirmationDialogState<Action.ConfirmationDialogAction>)
+        }
+        
+        enum Action: Equatable, Sendable {
+            case alert(Alert)
+            case confirmationDialog(ConfirmationDialogAction)
+            
+            enum Alert: Equatable { }
+            
+            enum ConfirmationDialogAction {
+                case confirmUpdateRozklad
+                case confirmLogoutCampus
+                case confirmChangeGroup
+            }
+        }
+        
+        var body: some ReducerOf<Self> {
+            EmptyReducer()
+        }
+    }
+
 }

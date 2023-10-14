@@ -58,29 +58,29 @@ struct RozkladFlow: Reducer {
                 rozkladServiceLessons.commit()
                 return .none
 
-            case let .path(.element(_, .lessonDetails(.routeAction(.editNames(lesson))))):
-                // TODO: Use another approach
-                let editLessonNamesState = EditLessonNames.State(lesson: lesson)
-                state.path.append(.editLessonNames(editLessonNamesState))
-                return .none
-
-            case let .path(.element(_, .lessonDetails(.routeAction(.editTeachers(lesson))))):
-                // TODO: Use another approach
-                let editLessonTeachersState = EditLessonTeachers.State(lesson: lesson)
-                state.path.append(.editLessonTeachers(editLessonTeachersState))
-                return .none
+//            case let .path(.element(_, .lessonDetails(.routeAction(.editNames(lesson))))):
+//                // TODO: Use another approach
+//                let editLessonNamesState = EditLessonNames.State(lesson: lesson)
+//                state.path.append(.editLessonNames(editLessonNamesState))
+//                return .none
+//
+//            case let .path(.element(_, .lessonDetails(.routeAction(.editTeachers(lesson))))):
+//                // TODO: Use another approach
+//                let editLessonTeachersState = EditLessonTeachers.State(lesson: lesson)
+//                state.path.append(.editLessonTeachers(editLessonTeachersState))
+//                return .none
                 
-            case .path(.element(_, .lessonDetails(.routeAction(.dismiss)))):
-                state.path.removeLast()
-                return .none
+//            case .path(.element(_, .lessonDetails(.routeAction(.dismiss)))):
+//                state.path.removeLast()
+//                return .none
 
-            case .path(.element(_, .editLessonNames(.routeAction(.dismiss)))):
-                state.path.removeLast()
-                return .none
-
-            case .path(.element(_, .editLessonTeachers(.routeAction(.dismiss)))):
-                state.path.removeLast()
-                return .none
+//            case .path(.element(_, .editLessonNames(.routeAction(.dismiss)))):
+//                state.path.removeLast()
+//                return .none
+//
+//            case .path(.element(_, .editLessonTeachers(.routeAction(.dismiss)))):
+//                state.path.removeLast()
+//                return .none
 
             case .path:
                 return .none

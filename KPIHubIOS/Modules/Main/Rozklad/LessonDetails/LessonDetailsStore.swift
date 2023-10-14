@@ -13,18 +13,17 @@ struct LessonDetails: Reducer {
         var lesson: Lesson
         var mode: LessonMode = .default
         @BindingState var isEditing: Bool = false
-        @PresentationState var alert: AlertState<Action.Alert>?
+        @PresentationState var destination: Destination.State?
     }
     
     enum Action: Equatable, BindableAction {
         case updateCurrentDate
         case updateLesson(Lesson)
 
-        case alert(PresentationAction<Alert>)
+        case destination(PresentationAction<Destination.Action>)
         case view(View)
         case binding(BindingAction<State>)
-        case routeAction(RouteAction)
-
+        
         enum View: Equatable {
             case onAppear
             case startEditingButtonTapped
@@ -33,22 +32,13 @@ struct LessonDetails: Reducer {
             case editTeachersButtonTapped
             case editNamesButtonTapped
         }
-        
-        enum Alert: Equatable { 
-            case deleteLessonConfirm
-        }
-        
-        enum RouteAction: Equatable {
-            case dismiss
-            case editNames(_ lesson: Lesson)
-            case editTeachers(_ lesson: Lesson)
-        }
     }
     
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.analyticsService) var analyticsService
-        
+    @Dependency(\.dismiss) var dismiss
+
     var body: some ReducerOf<Self> {
         BindingReducer()
         
@@ -89,31 +79,26 @@ struct LessonDetails: Reducer {
                 return .none
                 
             case .view(.deleteLessonButtonTapped):
-                state.alert = AlertState(
-                    title: {
-                        TextState("Ви впевнені?")
-                    },
-                    actions: {
-                        ButtonState(role: .destructive, action: .send(.deleteLessonConfirm)) {
-                            TextState("Видалити")
+                state.destination = .alert(
+                    AlertState(
+                        title: {
+                            TextState("Ви впевнені?")
+                        },
+                        actions: {
+                            ButtonState(role: .destructive, action: .send(.deleteLessonConfirm)) {
+                                TextState("Видалити")
+                            }
+                            ButtonState(role: .cancel) {
+                                TextState("Назад")
+                            }
+                        },
+                        message: {
+                            TextState("Після видалення цей урок стане недоступний.")
                         }
-                        ButtonState(role: .cancel) {
-                            TextState("Назад")
-                        }
-                    },
-                    message: {
-                        TextState("Після видалення цей урок стане недоступний.")
-                    }
+                    )
                 )
                 return .none
                 
-            case .alert(.presented(.deleteLessonConfirm)):
-                var lessons = rozkladServiceLessons.currentLessons()
-                lessons.remove(id: state.lesson.id)
-                rozkladServiceLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
-                analyticsService.track(Event.LessonDetails.removeLessonApply)
-                return .send(.routeAction(.dismiss))
-
             case let .updateLesson(lesson):
                 state.lesson = lesson
                 return .none
@@ -122,13 +107,19 @@ struct LessonDetails: Reducer {
                 guard state.isEditing else {
                     return .none
                 }
-                return .send(.routeAction(.editNames(state.lesson)))
+                state.destination = .editLessonNames(
+                    EditLessonNames.State(lesson: state.lesson)
+                )
+                return .none
 
             case .view(.editTeachersButtonTapped):
                 guard state.isEditing else {
                     return .none
                 }
-                return .send(.routeAction(.editTeachers(state.lesson)))
+                state.destination = .editLessonTeachers(
+                    EditLessonTeachers.State(lesson: state.lesson)
+                )
+                return .none
                 
             case .view(.startEditingButtonTapped):
                 state.isEditing = true
@@ -138,17 +129,31 @@ struct LessonDetails: Reducer {
                 state.isEditing = false
                 return .none
                 
-            case .alert(.dismiss):
-                return .none
-
             case .binding:
                 return .none
-
-            case .routeAction:
+                
+            case .destination(.presented(.alert(.deleteLessonConfirm))):
+                var lessons = rozkladServiceLessons.currentLessons()
+                lessons.remove(id: state.lesson.id)
+                rozkladServiceLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
+                analyticsService.track(Event.LessonDetails.removeLessonApply)
+                return .run { _ in
+                    await dismiss()
+                }
+                
+            case .destination(.presented(.editLessonNames)):
+                return .none
+            
+            case .destination(.presented(.editLessonTeachers)):
+                return .none
+                
+            case .destination(.dismiss):
                 return .none
             }
         }
-        .ifLet(\.$alert, action: /Action.alert)
+        .ifLet(\.$destination, action: /Action.destination) {
+            Destination()
+        }
     }
     
     private func updateCurrentDate(state: inout State) {
@@ -167,5 +172,34 @@ struct LessonDetails: Reducer {
     
     enum CancelID {
         case onAppear
+    }
+}
+
+extension LessonDetails {
+    struct Destination: Reducer {
+        enum State: Equatable {
+            case alert(AlertState<Action.Alert>)
+            case editLessonNames(EditLessonNames.State)
+            case editLessonTeachers(EditLessonTeachers.State)
+        }
+        
+        enum Action: Equatable, Sendable {
+            case alert(Alert)
+            case editLessonNames(EditLessonNames.Action)
+            case editLessonTeachers(EditLessonTeachers.Action)
+            
+            enum Alert: Equatable {
+                case deleteLessonConfirm
+            }
+        }
+        
+        var body: some ReducerOf<Self> {
+            Scope(state: /State.editLessonNames, action: /Action.editLessonNames) {
+                EditLessonNames()
+            }
+            Scope(state: /State.editLessonTeachers, action: /Action.editLessonTeachers) {
+                EditLessonTeachers()
+            }
+        }
     }
 }

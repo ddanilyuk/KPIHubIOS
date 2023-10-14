@@ -98,7 +98,29 @@ struct LessonDetailsView: View {
             viewStore.send(.onAppear)
         }
         .background(Color.screenBackground)
-        .alert(store: store.scope(state: \.$alert, action: { .alert($0) }))
+        .alert(
+            store: store.scope(state: \.$destination, action: { .destination($0) }),
+            state: /LessonDetails.Destination.State.alert,
+            action: LessonDetails.Destination.Action.alert
+        )
+        .sheet(
+            store: store.scope(state: \.$destination, action: { .destination($0) }),
+            state: /LessonDetails.Destination.State.editLessonNames,
+            action: LessonDetails.Destination.Action.editLessonNames
+        ) { store in
+            NavigationStack {
+                EditLessonNamesView(store: store)
+            }
+        }
+        .sheet(
+            store: store.scope(state: \.$destination, action: { .destination($0) }),
+            state: /LessonDetails.Destination.State.editLessonTeachers,
+            action: LessonDetails.Destination.Action.editLessonTeachers
+        ) { store in
+            NavigationStack {
+                EditLessonTeachersView(store: store)
+            }
+        }
         .navigationTitle("Деталі")
         .navigationBarTitleDisplayMode(.inline)
     }

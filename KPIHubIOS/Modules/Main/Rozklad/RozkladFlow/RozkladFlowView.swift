@@ -34,18 +34,18 @@ struct RozkladFlowView: View {
                         action: RozkladFlow.Path.Action.lessonDetails,
                         then: LessonDetailsView.init
                     )
-                case .editLessonNames:
-                    CaseLet(
-                        /RozkladFlow.Path.State.editLessonNames,
-                        action: RozkladFlow.Path.Action.editLessonNames,
-                        then: EditLessonNamesView.init
-                    )
-                case .editLessonTeachers:
-                    CaseLet(
-                        /RozkladFlow.Path.State.editLessonTeachers,
-                        action: RozkladFlow.Path.Action.editLessonTeachers,
-                        then: EditLessonTeachersView.init
-                    )
+//                case .editLessonNames:
+//                    CaseLet(
+//                        /RozkladFlow.Path.State.editLessonNames,
+//                        action: RozkladFlow.Path.Action.editLessonNames,
+//                        then: EditLessonNamesView.init
+//                    )
+//                case .editLessonTeachers:
+//                    CaseLet(
+//                        /RozkladFlow.Path.State.editLessonTeachers,
+//                        action: RozkladFlow.Path.Action.editLessonTeachers,
+//                        then: EditLessonTeachersView.init
+//                    )
                 }
             }
         )

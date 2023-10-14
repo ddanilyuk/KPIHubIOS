@@ -22,11 +22,6 @@ struct EditLessonNames: Reducer {
 
     enum Action: Equatable {
         case view(View)
-        case routeAction(RouteAction)
-
-        enum RouteAction: Equatable {
-            case dismiss
-        }
         
         enum View: Equatable {
             case onAppear
@@ -38,7 +33,8 @@ struct EditLessonNames: Reducer {
     
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
-    
+    @Dependency(\.dismiss) var dismiss
+
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
@@ -51,10 +47,14 @@ struct EditLessonNames: Reducer {
                 newLesson.names = state.selected
                 rozkladServiceLessons.modify(.init(newLesson, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.editNamesApply)
-                return .send(.routeAction(.dismiss))
+                return .run { _ in
+                    await dismiss()
+                }
 
             case .view(.cancelButtonTapped):
-                return .send(.routeAction(.dismiss))
+                return .run { _ in
+                    await dismiss()
+                }
 
             case let .view(.toggleLessonNameTapped(name)):
                 if let index = state.selected.firstIndex(of: name) {
@@ -65,11 +65,7 @@ struct EditLessonNames: Reducer {
                     state.selected.append(name)
                 }
                 return .none
-
-            case .routeAction:
-                return .none
             }
         }
     }
-
 }
