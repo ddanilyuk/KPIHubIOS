@@ -17,7 +17,7 @@ struct RozkladFlowView: View {
     
     var body: some View {
         NavigationStackStore(
-            store.scope(state: \.path, action: RozkladFlow.Action.path),
+            store.scope(state: \.path, action: { .path($0) }),
             root: {
                 RozkladFlow.RozkladRootView(
                     store: store.scope(
