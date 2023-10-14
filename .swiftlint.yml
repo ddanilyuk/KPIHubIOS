@@ -1,6 +1,7 @@
 disabled_rules:
   - trailing_whitespace
   # - force_try
+  - todo
   - for_where
   - large_tuple
 
