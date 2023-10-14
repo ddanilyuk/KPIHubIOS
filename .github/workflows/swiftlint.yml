@@ -1,0 +1,21 @@
+name: SwiftLint
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/swiftlint.yml'
+      - '.swiftlint.yml'
+      - '**/*.swift'
+
+jobs:
+  SwiftLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: sinoru/actions-setup-swift@v2
+        with:
+          swift-version: '5.9'
+      - name: SwiftLint
+        uses: sinoru/actions-swiftlint@v6
+        with:
+          swiftlint-args: --strict
