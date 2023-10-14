@@ -25,15 +25,8 @@ struct ProfileHome: Reducer {
         case setRozkladState(RozkladServiceState.State)
         case setCampusState(CampusServiceState.State)
         case setLessonsUpdatedAtDate(Date?)
-
-//        case updateRozklad
+        
         case lessonsResult(TaskResult<[Lesson]>)
-
-//        case changeGroup
-//        case logoutCampus
-
-//        case dismissConfirmationDialog
-//        case dismissAlert
         
         case destination(PresentationAction<Destination.Action>)
         case view(View)
@@ -135,9 +128,7 @@ struct ProfileHome: Reducer {
                     )
                 )
                 return .none
-
-//            case .changeGroup:
-
+                
             case .view(.selectGroupButtonTapped):
                 analyticsService.track(Event.Profile.selectGroup)
                 return .send(.routeAction(.rozklad))
