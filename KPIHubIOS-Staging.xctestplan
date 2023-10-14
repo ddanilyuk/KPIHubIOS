@@ -1,0 +1,58 @@
+{
+  "configurations" : [
+    {
+      "id" : "36E7B8C7-177C-4612-B14C-282F8D4F8F0E",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "-FIRAnalyticsDebugDisabled"
+      },
+      {
+        "argument" : "-FIRAnalyticsDebugEnabled",
+        "enabled" : false
+      },
+      {
+        "argument" : "-FIRDebugDisabled"
+      },
+      {
+        "argument" : "-FIRDebugEnabled",
+        "enabled" : false
+      }
+    ],
+    "environmentVariableEntries" : [
+      {
+        "key" : "CI",
+        "value" : "$(CI)"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:KPIHubIOS.xcodeproj",
+      "identifier" : "5F97B3BA283677C200350368",
+      "name" : "KPIHubIOS"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:KPIHubIOS.xcodeproj",
+        "identifier" : "5F97B3CA283677C600350368",
+        "name" : "KPIHubIOSTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:KPIHubIOS.xcodeproj",
+        "identifier" : "5F97B3D4283677C600350368",
+        "name" : "KPIHubIOSUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

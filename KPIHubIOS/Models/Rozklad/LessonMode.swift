@@ -16,8 +16,7 @@ enum LessonMode: Equatable {
         switch self {
         case .current:
             return true
-        case .next,
-                .default:
+        case .next, .default:
             return false
         }
     }
@@ -37,10 +36,8 @@ enum LessonMode: Equatable {
         switch self {
         case .current:
             return "Зараз"
-
         case .next:
             return "Далі"
-
         case .default:
             return ""
         }

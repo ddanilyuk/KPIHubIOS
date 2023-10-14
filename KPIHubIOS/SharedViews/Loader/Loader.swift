@@ -15,7 +15,6 @@ struct Loader: View {
 
     var body: some View {
         ZStack {
-
             colorScheme == .light ? Color.secondary.opacity(0.3) : Color.primary.opacity(0.3)
 
             ProgressView("Завантаження...")
