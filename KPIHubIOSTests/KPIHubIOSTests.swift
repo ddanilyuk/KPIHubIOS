@@ -34,6 +34,7 @@ class KPIHubIOSTests: XCTestCase {
 //            let fileUrl = URL(fileURLWithPath: "\(file)", isDirectory: false)
 //            let fileName = fileUrl.deletingPathExtension().lastPathComponent
 //            let test: StaticString = "KPIHubIOSTests.swift"
+            
             filePath = XCTest.xcodeCloudFilePath
         } else {
             filePath = #file
