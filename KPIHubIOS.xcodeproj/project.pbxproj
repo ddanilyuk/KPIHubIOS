@@ -101,7 +101,7 @@
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
-		5F97B3D0283677C600350368 /* KPIHubIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3CF283677C600350368 /* KPIHubIOSTests.swift */; };
+		5F97B3D0283677C600350368 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3CF283677C600350368 /* ProfileTests.swift */; };
 		5F97B3DA283677C600350368 /* KPIHubIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */; };
 		5F97B3DC283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */; };
 		5F97F118284D552900DB0576 /* LessonDetailsDateAndTimeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97F117284D552900DB0576 /* LessonDetailsDateAndTimeSection.swift */; };
@@ -290,7 +290,7 @@
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F97B3C5283677C500350368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5F97B3CB283677C600350368 /* KPIHubIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5F97B3CF283677C600350368 /* KPIHubIOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSTests.swift; sourceTree = "<group>"; };
+		5F97B3CF283677C600350368 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
 		5F97B3D5283677C600350368 /* KPIHubIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITests.swift; sourceTree = "<group>"; };
 		5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -949,7 +949,7 @@
 		5F97B3CE283677C600350368 /* KPIHubIOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				5F97B3CF283677C600350368 /* KPIHubIOSTests.swift */,
+				5F97B3CF283677C600350368 /* ProfileTests.swift */,
 				DB3284CC2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift */,
 			);
 			path = KPIHubIOSTests;
@@ -1475,7 +1475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB3284CD2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift in Sources */,
-				5F97B3D0283677C600350368 /* KPIHubIOSTests.swift in Sources */,
+				5F97B3D0283677C600350368 /* ProfileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
