@@ -162,6 +162,7 @@
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
 		DB3284CD2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284CC2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift */; };
+		DB3284E02ADB27B900A8AE26 /* ForDevelopersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */; };
 		DB4CB3AB2ADAC68700CF316D /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */; };
 		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
 		DB5BBD082ABCE8EB003DFCE4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DB5BBD072ABCE8EB003DFCE4 /* Localizable.xcstrings */; };
@@ -352,6 +353,7 @@
 		DB3284CC2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTest+xcodeCloud.swift"; sourceTree = "<group>"; };
 		DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		DB3284D02ADAFBC400A8AE26 /* KPIHubIOS-Staging.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPIHubIOS-Staging.xctestplan"; sourceTree = "<group>"; };
+		DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersTests.swift; sourceTree = "<group>"; };
 		DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		DB5BBD072ABCE8EB003DFCE4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = KPIHubIOSTests/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
@@ -950,6 +952,7 @@
 			isa = PBXGroup;
 			children = (
 				5F97B3CF283677C600350368 /* ProfileTests.swift */,
+				DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */,
 				DB3284CC2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift */,
 			);
 			path = KPIHubIOSTests;
@@ -1476,6 +1479,7 @@
 			files = (
 				DB3284CD2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift in Sources */,
 				5F97B3D0283677C600350368 /* ProfileTests.swift in Sources */,
+				DB3284E02ADB27B900A8AE26 /* ForDevelopersTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

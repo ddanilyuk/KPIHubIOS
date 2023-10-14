@@ -42,12 +42,10 @@ class ProfileTests: XCTestCase {
                 ProfileHomeView(store: store)
             }
             .environment(\.locale, locale)
-            customAssertSnapshot(
+            assertSnapshot(
                 of: profileView,
                 as: .image(perceptualPrecision: 0.99, layout: .device(config: config)),
                 named: "\(config.description)-\(locale.identifier)"
-                
-//                file: filePath
             )
         }
     }
@@ -96,6 +94,11 @@ public func customAssertSnapshot<Value, Format>(
     let fileUrl = URL(fileURLWithPath: "\(file)", isDirectory: false)
     let fileName = fileUrl.deletingPathExtension().lastPathComponent
     print("!!! File name: \(fileName)")
+    
+    
+    let test1 = cutsomSnapshotDirectory(for: file)
+    print("!!! test1: \(test1)")
+
     if ProcessInfo.processInfo.environment["CI"] == "TRUE" {
         snapshotDirectory = "/Volumes/workspace/repository/ci_scripts/\(fileName)"
     } else {
@@ -125,4 +128,29 @@ public func customAssertSnapshot<Value, Format>(
     )
     guard let message = failure else { return }
     XCTFail(message, file: file, line: line)
+}
+
+func cutsomSnapshotDirectory(
+    for file: StaticString,
+    testsPathComponent: String = "Tests",
+    packagesPathComponent: String = "Packages",
+    ciScriptsPathComponent: String = "ci_scripts",
+    snapshotsPathComponent: String = "__Snapshots__"
+) -> String {
+    let fileURL = URL(fileURLWithPath: "\(file)", isDirectory: false)
+
+    let packageRootPath = fileURL
+        .pathComponents
+        .prefix(while: { $0 != testsPathComponent && $0 != packagesPathComponent })
+
+    let testsPath = packageRootPath + [testsPathComponent]
+
+    let relativePath = fileURL
+        .deletingPathExtension()
+        .pathComponents
+        .dropFirst(testsPath.count)
+
+    let snapshotDirectoryPath = packageRootPath + [ciScriptsPathComponent, snapshotsPathComponent] +
+        relativePath
+    return snapshotDirectoryPath.joined(separator: "/")
 }
