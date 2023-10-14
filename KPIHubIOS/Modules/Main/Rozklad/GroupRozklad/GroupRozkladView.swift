@@ -17,12 +17,12 @@ struct GroupRozkladView: View {
         var currentWeek: Lesson.Week = .first
         var currentLesson: CurrentLesson?
         
-        init(_ groupRozkladState: GroupRozklad.State) {
-            sections = groupRozkladState.sections
-            scrollTo = groupRozkladState.scrollTo
-            currentDay = groupRozkladState.currentDay
-            currentWeek = groupRozkladState.currentWeek
-            currentLesson = groupRozkladState.currentLesson
+        init(_ state: GroupRozklad.State) {
+            sections = state.sections
+            scrollTo = state.scrollTo
+            currentDay = state.currentDay
+            currentWeek = state.currentWeek
+            currentLesson = state.currentLesson
         }
     }
 
@@ -42,8 +42,7 @@ struct GroupRozkladView: View {
     init(store: StoreOf<GroupRozklad>) {
         self.store = store
         self.viewStore = ViewStore(
-            store.scope(state: ViewState.init),
-            removeDuplicates: ==
+            store, observe: ViewState.init
         )
         UITableView.appearance().sectionHeaderTopPadding = 0
     }
@@ -153,7 +152,7 @@ struct GroupRozkladView: View {
                             .if(section.index == 11) { view in
                                 view.modifier(RectModifier {
                                     lastSectionOffsetModifiers(
-                                        index: ViewStore(store).state.lesson.position.rawValue,
+                                        index: store.withState { $0.lesson.position.rawValue },
                                         height: $0.height
                                     )
                                 })

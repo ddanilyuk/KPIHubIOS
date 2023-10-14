@@ -12,7 +12,7 @@ struct StudySheetActivity: Reducer {
     // MARK: - State
 
     struct State: Equatable, Identifiable {
-        var activity: StudySheetItem.Activity
+        let activity: StudySheetItem.Activity
 
         var id: StudySheetItem.Activity.ID {
             activity.id

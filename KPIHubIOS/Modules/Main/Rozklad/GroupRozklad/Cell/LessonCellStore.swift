@@ -9,40 +9,20 @@ import ComposableArchitecture
 import CoreGraphics
 
 struct LessonCell: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable, Identifiable {
         let lesson: Lesson
         var mode: LessonMode = .default
         
-        var showTeachers: Bool {
-            !lesson.isTeachersEmpty
-        }
-        var showLocationsAndType: Bool {
-            !lesson.isTypeEmpty || !lesson.isLocationsEmpty
-        }
-        var showLocations: Bool {
-            !lesson.isLocationsEmpty
-        }
-        var showType: Bool {
-            !lesson.isTypeEmpty
-        }
-
         var id: Lesson.ID {
-            return lesson.id
+            lesson.id
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable {
         case onTap
         case onAppear
         case onDisappear
     }
-
-    // MARK: - Reducer
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in

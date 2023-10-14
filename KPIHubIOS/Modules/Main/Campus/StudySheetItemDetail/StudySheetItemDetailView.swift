@@ -9,50 +9,49 @@ import SwiftUI
 import ComposableArchitecture
 
 struct StudySheetItemDetailView: View {
-
-    let store: StoreOf<StudySheetItemDetail>
-
-    var body: some View {
-        WithViewStore(store) { viewStore in
-            ScrollView {
-                LazyVStack {
-                    ForEachStore(
-                        store.scope(state: \.cells, action: { .cells(id: $0, action: $1) }),
-                        content: StudySheetActivityCellView.init(store:)
-                    )
-//                    ForEachStore(
-//                        self.store.scope(
-//                            state: \StudySheetItemDetail.State.cells,
-//                            action: StudySheetItemDetail.Action.cells(id:action:)
-//                        ),
-//                        content: StudySheetActivityCellView.init(store:)
-//                    )
-                }
-            }
-            .navigationBarTitle("\(viewStore.item.name)")
-            .navigationBarTitleDisplayMode(.inline)
-            .background(Color.screenBackground)
-            .onAppear {
-                viewStore.send(.onAppear)
-            }
+    struct ViewState: Equatable {
+        let itemName: String
+        
+        init(state: StudySheetItemDetail.State) {
+            itemName = state.item.name
         }
     }
+    
+    private let store: StoreOf<StudySheetItemDetail>
+    @ObservedObject private var viewStore: ViewStore<ViewState, StudySheetItemDetail.Action>
+    
+    init(store: StoreOf<StudySheetItemDetail>) {
+        self.store = store
+        self.viewStore = ViewStore(store, observe: ViewState.init, send: { $0 })
+    }
 
+    var body: some View {
+        ScrollView {
+            LazyVStack {
+                ForEachStore(
+                    store.scope(state: \.cells, action: { .cells(id: $0, action: $1) }),
+                    content: StudySheetActivityCellView.init(store:)
+                )
+            }
+        }
+        .navigationBarTitle(viewStore.itemName)
+        .navigationBarTitleDisplayMode(.inline)
+        .background(Color.screenBackground)
+        .onAppear {
+            viewStore.send(.onAppear)
+        }
+    }
 }
 
 // MARK: - Preview
-
-struct StudySheetItemDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            StudySheetItemDetailView(
-                store: Store(
-                    initialState: StudySheetItemDetail.State(
-                        item: StudySheetItem.mock1
-                    ),
-                    reducer: StudySheetItemDetail()
-                )
+#Preview {
+    StudySheetItemDetailView(
+        store: Store(
+            initialState: StudySheetItemDetail.State(
+                item: StudySheetItem.mock1
             )
+        ) {
+            StudySheetItemDetail()
         }
-    }
+    )
 }
