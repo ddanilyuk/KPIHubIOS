@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Common
 
 /// Not ideal approach of ViewAction
 struct CampusSectionView: View {

@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import Common
 
 struct RozkladServiceState {
     enum State: Equatable {

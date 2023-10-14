@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import Common
 
 extension CampusServiceState {
     static func mock() -> CampusServiceState {

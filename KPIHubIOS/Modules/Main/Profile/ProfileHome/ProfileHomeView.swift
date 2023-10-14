@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Common
 
 struct ProfileHomeView: View {
     struct ViewState: Equatable {

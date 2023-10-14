@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import ComposableArchitecture
+import Common
 
 struct CampusServiceStudySheet {
     enum State: Equatable {

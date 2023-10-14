@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Common
 
 struct RozkladSectionView: View {
     struct ViewState: Equatable {

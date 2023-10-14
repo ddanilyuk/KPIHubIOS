@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Common
 
 extension AnalyticsService {
     func setCampusUser(_ campusUserInfo: CampusUserInfo?) {

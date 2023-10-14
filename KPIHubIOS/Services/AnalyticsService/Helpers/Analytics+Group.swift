@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Common
 
 extension AnalyticsService {
     func setGroup(_ group: GroupResponse?) {

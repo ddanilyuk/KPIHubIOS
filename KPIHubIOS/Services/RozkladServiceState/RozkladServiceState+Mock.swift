@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Combine
+import Common
 
 extension RozkladServiceState {
     static func mock() -> RozkladServiceState {

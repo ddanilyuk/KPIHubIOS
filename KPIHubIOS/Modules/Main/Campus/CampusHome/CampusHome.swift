@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 import ConcurrencyExtras
+import Common
 
 struct CampusHome: Reducer {
     struct State: Equatable {

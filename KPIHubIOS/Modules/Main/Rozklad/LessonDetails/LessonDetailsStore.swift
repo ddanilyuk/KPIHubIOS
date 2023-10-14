@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Common
 
 struct LessonDetails: Reducer {
     struct State: Equatable {

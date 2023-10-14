@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import Common
 
 struct StudySheetActivityCellView: View {
     @Environment(\.colorScheme) private var colorScheme
