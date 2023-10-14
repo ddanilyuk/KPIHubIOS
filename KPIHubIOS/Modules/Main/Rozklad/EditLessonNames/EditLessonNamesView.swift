@@ -9,70 +9,32 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EditLessonNamesView: View {
-
-    @Environment(\.colorScheme) var colorScheme
-
-    let store: StoreOf<EditLessonNames>
+    struct ViewState: Equatable {
+        let names: [String]
+        let selected: [String]
+        
+        init(state: EditLessonNames.State) {
+            self.names = state.names
+            self.selected = state.selected
+        }
+    }
+    
+    @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject private var viewStore: ViewStore<ViewState, EditLessonNames.Action.View>
 
     init(store: StoreOf<EditLessonNames>) {
-        self.store = store
+        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
 
     var body: some View {
-        WithViewStore(store) { viewStore in
-            ScrollView {
-                VStack {
-                    ForEach(viewStore.names, id: \.self) { name in
-                        let isSelected = viewStore.selected.contains(name)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
-                                .shadow(
-                                    color: isSelected ? .orange.opacity(0.1) : .clear,
-                                    radius: 6,
-                                    x: 0,
-                                    y: 6
-                                )
-
-                            HStack {
-                                Image(
-                                    systemName: isSelected ? "circle.circle.fill" : "circle"
-                                )
-                                .foregroundColor(isSelected ? .orange : .gray)
-
-                                Text("\(name)")
-
-                                Spacer()
-                            }
-                            .padding(16)
-                        }
-                        .font(.system(.body))
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 4)
-                        .onTapGesture {
-                            viewStore.send(.toggle(name))
-                        }
-                    }
-                }
-            }
+        content
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(
-                        action: { viewStore.send(.cancel) },
-                        label: {
-                            Text("Скасувати")
-                                .foregroundColor(.orange)
-                        }
-                    )
+                    cancelButton
                 }
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(
-                        action: { viewStore.send(.save) },
-                        label: {
-                            Text("Зберегти")
-                                .foregroundColor(.orange)
-                        }
-                    )
+                    saveButton
                 }
             }
             .navigationTitle("Редагувати назву")
@@ -81,24 +43,74 @@ struct EditLessonNamesView: View {
             .onAppear {
                 viewStore.send(.onAppear)
             }
+    }
+    
+    private var content: some View {
+        ScrollView {
+            VStack {
+                ForEach(viewStore.names, id: \.self) { name in
+                    let isSelected = viewStore.selected.contains(name)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                            .shadow(
+                                color: isSelected ? .orange.opacity(0.1) : .clear,
+                                radius: 6,
+                                x: 0,
+                                y: 6
+                            )
+
+                        HStack {
+                            Image(
+                                systemName: isSelected ? "circle.circle.fill" : "circle"
+                            )
+                            .foregroundColor(isSelected ? .orange : .gray)
+
+                            Text("\(name)")
+
+                            Spacer()
+                        }
+                        .padding(16)
+                    }
+                    .font(.system(.body))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                    .onTapGesture {
+                        viewStore.send(.toggleLessonNameTapped(name: name))
+                    }
+                }
+            }
         }
     }
     
+    private var cancelButton: some View {
+        Button(
+            action: { viewStore.send(.cancelButtonTapped) },
+            label: {
+                Text("Скасувати")
+                    .foregroundColor(.orange)
+            }
+        )
+    }
+    
+    private var saveButton: some View {
+        Button(
+            action: { viewStore.send(.saveButtonTapped) },
+            label: {
+                Text("Зберегти")
+                    .foregroundColor(.orange)
+            }
+        )
+    }
 }
 
 // MARK: - Preview
-
-struct EditLessonNamesView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            EditLessonNamesView(
-                store: Store(
-                    initialState: EditLessonNames.State(
-                        lesson: .init(lessonResponse: LessonResponse.mocked[0])
-                    ),
-                    reducer: EditLessonNames()
-                )
-            )
+#Preview {
+    EditLessonNamesView(
+        store: Store(initialState: EditLessonNames.State(
+            lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+        )) {
+            EditLessonNames()
         }
-    }
+    )
 }

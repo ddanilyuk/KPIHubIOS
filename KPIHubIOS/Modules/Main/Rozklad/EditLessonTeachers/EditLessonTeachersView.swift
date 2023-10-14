@@ -9,74 +9,31 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EditLessonTeachersView: View {
-
-    @Environment(\.colorScheme) var colorScheme
-
-    let store: StoreOf<EditLessonTeachers>
-
+    struct ViewState: Equatable {
+        let teachers: [String]
+        var selected: [String]
+        
+        init(state: EditLessonTeachers.State) {
+            teachers = state.teachers
+            selected = state.selected
+        }
+    }
+    
+    @Environment(\.colorScheme) private var colorScheme
+    @ObservedObject private var viewStore: ViewStore<ViewState, EditLessonTeachers.Action.View>
+    
     init(store: StoreOf<EditLessonTeachers>) {
-        self.store = store
+        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
 
     var body: some View {
-        WithViewStore(store) { viewStore in
-            ScrollView {
-                VStack {
-                    ForEach(viewStore.teachers, id: \.self) { teacher in
-                        let isSelected = viewStore.selected.contains(teacher)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 8)
-                                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
-                                .shadow(
-                                    color: isSelected ? .orange.opacity(0.1) : .clear,
-                                    radius: 6,
-                                    x: 0,
-                                    y: 6
-                                )
-
-                            HStack {
-                                Image(
-                                    systemName: isSelected ? "circle.circle.fill" : "circle"
-                                )
-                                .foregroundColor(isSelected ? .orange : .gray)
-
-                                LargeTagView(
-                                    icon: Image(systemName: "person"),
-                                    text: teacher,
-                                    color: .indigo
-                                )
-                                
-                                Spacer()
-                            }
-                            .padding(16)
-                        }
-                        .font(.system(.body))
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 4)
-                        .onTapGesture {
-                            viewStore.send(.toggle(teacher))
-                        }
-                    }
-                }
-            }
+        content
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(
-                        action: { viewStore.send(.cancel) },
-                        label: {
-                            Text("Скасувати")
-                                .foregroundColor(.orange)
-                        }
-                    )
+                    cancelButton
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(
-                        action: { viewStore.send(.save) },
-                        label: {
-                            Text("Зберегти")
-                                .foregroundColor(.orange)
-                        }
-                    )
+                    saveButton
                 }
             }
             .navigationTitle("Редагувати вчителів")
@@ -85,24 +42,79 @@ struct EditLessonTeachersView: View {
             .onAppear {
                 viewStore.send(.onAppear)
             }
+    }
+    
+    private var content: some View {
+        ScrollView {
+            VStack {
+                ForEach(viewStore.teachers, id: \.self) { teacher in
+                    let isSelected = viewStore.selected.contains(teacher)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                            .shadow(
+                                color: isSelected ? .orange.opacity(0.1) : .clear,
+                                radius: 6,
+                                x: 0,
+                                y: 6
+                            )
+
+                        HStack {
+                            Image(
+                                systemName: isSelected ? "circle.circle.fill" : "circle"
+                            )
+                            .foregroundColor(isSelected ? .orange : .gray)
+
+                            LargeTagView(
+                                icon: Image(systemName: "person"),
+                                text: teacher,
+                                color: .indigo
+                            )
+                            
+                            Spacer()
+                        }
+                        .padding(16)
+                    }
+                    .font(.system(.body))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                    .onTapGesture {
+                        viewStore.send(.toggleLessonTeacherTapped(name: teacher))
+                    }
+                }
+            }
         }
     }
-
+    
+    private var cancelButton: some View {
+        Button(
+            action: { viewStore.send(.cancelButtonTapped) },
+            label: {
+                Text("Скасувати")
+                    .foregroundColor(.orange)
+            }
+        )
+        
+    }
+    
+    private var saveButton: some View {
+        Button(
+            action: { viewStore.send(.saveButtonTapped) },
+            label: {
+                Text("Зберегти")
+                    .foregroundColor(.orange)
+            }
+        )
+    }
 }
 
 // MARK: - Preview
-
-struct EditLessonTeachersView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            EditLessonTeachersView(
-                store: Store(
-                    initialState: EditLessonTeachers.State(
-                        lesson: .init(lessonResponse: LessonResponse.mocked[0])
-                    ),
-                    reducer: EditLessonTeachers()
-                )
-            )
+#Preview {
+    EditLessonTeachersView(
+        store: Store(initialState: EditLessonTeachers.State(
+            lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+        )) {
+            EditLessonTeachers()
         }
-    }
+    )
 }

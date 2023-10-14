@@ -8,9 +8,6 @@
 import ComposableArchitecture
 
 struct EditLessonTeachers: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
         let lesson: Lesson
         let teachers: [String]
@@ -22,47 +19,44 @@ struct EditLessonTeachers: Reducer {
             self.selected = lesson.teachers ?? []
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable {
-        case onAppear
-        case save
-        case cancel
-
-        case toggle(String)
+        case view(View)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
             case dismiss
         }
+        
+        enum View: Equatable {
+            case onAppear
+            case saveButtonTapped
+            case cancelButtonTapped
+            case toggleLessonTeacherTapped(name: String)
+        }
     }
-
-    // MARK: - Environment
     
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
 
-    // MARK: - Reducer
-    
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 analyticsService.track(Event.LessonDetails.editTeachersAppeared)
                 return .none
 
-            case .save:
+            case .view(.saveButtonTapped):
                 var newLesson = state.lesson
                 newLesson.teachers = state.selected
                 rozkladServiceLessons.modify(.init(newLesson, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.editTeachersApply)
                 return .send(.routeAction(.dismiss))
 
-            case .cancel:
+            case .view(.cancelButtonTapped):
                 return .send(.routeAction(.dismiss))
 
-            case let .toggle(element):
+            case let .view(.toggleLessonTeacherTapped(element)):
                 if let index = state.selected.firstIndex(of: element) {
                     if state.selected.count > 1 {
                         state.selected.remove(at: index)

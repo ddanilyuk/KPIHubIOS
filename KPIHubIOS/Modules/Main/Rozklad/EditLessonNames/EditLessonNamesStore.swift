@@ -8,9 +8,6 @@
 import ComposableArchitecture
 
 struct EditLessonNames: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
         let lesson: Lesson
         let names: [String]
@@ -23,18 +20,19 @@ struct EditLessonNames: Reducer {
         }
     }
 
-    // MARK: - Action
-
     enum Action: Equatable {
-        case onAppear
-        case save
-        case cancel
-
-        case toggle(String)
+        case view(View)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
             case dismiss
+        }
+        
+        enum View: Equatable {
+            case onAppear
+            case saveButtonTapped
+            case cancelButtonTapped
+            case toggleLessonNameTapped(name: String)
         }
     }
     
@@ -44,27 +42,27 @@ struct EditLessonNames: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 analyticsService.track(Event.LessonDetails.editNamesAppeared)
                 return .none
                 
-            case .save:
+            case .view(.saveButtonTapped):
                 var newLesson = state.lesson
                 newLesson.names = state.selected
                 rozkladServiceLessons.modify(.init(newLesson, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.editNamesApply)
                 return .send(.routeAction(.dismiss))
 
-            case .cancel:
+            case .view(.cancelButtonTapped):
                 return .send(.routeAction(.dismiss))
 
-            case let .toggle(element):
-                if let index = state.selected.firstIndex(of: element) {
+            case let .view(.toggleLessonNameTapped(name)):
+                if let index = state.selected.firstIndex(of: name) {
                     if state.selected.count > 1 {
                         state.selected.remove(at: index)
                     }
                 } else {
-                    state.selected.append(element)
+                    state.selected.append(name)
                 }
                 return .none
 

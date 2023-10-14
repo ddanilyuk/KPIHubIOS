@@ -65,9 +65,9 @@ struct ForDevelopers: Reducer {
                 
             case .presentSome:
                 state.destination = .someFeature(SomeFeature.State())
-                return .task {
+                return .run { send in
                     try await Task.sleep(for: .seconds(5))
-                    return .pushSome
+                    await send(.pushSome)
                 }
                 
             case .pushSome:

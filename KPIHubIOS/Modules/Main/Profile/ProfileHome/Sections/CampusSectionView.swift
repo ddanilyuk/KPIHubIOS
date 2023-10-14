@@ -106,8 +106,8 @@ struct CampusSectionView: View {
 #Preview {
     CampusSectionView(
         store: Store(
-            initialState: ProfileHome.State(campusState: .loggedIn(CampusUserInfo.mock)))
-        {
+            initialState: ProfileHome.State(campusState: .loggedIn(CampusUserInfo.mock))
+        ) {
             ProfileHome()
         }
     )
@@ -119,8 +119,8 @@ struct CampusSectionView: View {
 #Preview {
     CampusSectionView(
         store: Store(
-            initialState: ProfileHome.State(campusState: .loggedOut))
-        {
+            initialState: ProfileHome.State(campusState: .loggedOut)
+        ) {
             ProfileHome()
         }
     )
