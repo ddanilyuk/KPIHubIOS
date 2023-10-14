@@ -66,7 +66,7 @@ struct GroupRozklad: Reducer {
         case binding(BindingAction<State>)
         
         case setOffset(index: Int, value: CGFloat?, headerHeight: CGFloat)
-
+        
         enum RouteAction: Equatable {
             case openDetails(Lesson)
         }
