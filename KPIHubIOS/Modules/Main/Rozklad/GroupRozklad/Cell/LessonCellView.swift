@@ -99,9 +99,6 @@ struct LessonCellView: View {
                     BadgeView(mode: .next)
                 }
                 .shadow(color: Color.blue.opacity(colorScheme == .light ? 0.2 : 0.5), radius: 8, x: 0, y: 4)
-                .onAppear {
-                    print("Next on appear")
-                }
 
         case .default:
             RoundedRectangle(cornerRadius: 8)
