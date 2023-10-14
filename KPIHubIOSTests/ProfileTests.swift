@@ -42,10 +42,11 @@ class ProfileTests: XCTestCase {
                 ProfileHomeView(store: store)
             }
             .environment(\.locale, locale)
-            assertSnapshot(
+            myAssertSnapshot(
                 of: profileView,
                 as: .image(perceptualPrecision: 0.99, layout: .device(config: config)),
-                named: "\(config.description)-\(locale.identifier)"
+                named: "\(config.description)-\(locale.identifier)",
+                bundleURL: Bundle(for: type(of: self)).resourceURL!
             )
         }
     }
@@ -78,6 +79,7 @@ func createPairs<T, U>(_ array1: [T], _ array2: [U]) -> [(T, U)] {
     
     return pairs
 }
+
 
 public func customAssertSnapshot<Value, Format>(
     of value: @autoclosure () throws -> Value,

@@ -163,6 +163,18 @@
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
 		DB3284CD2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284CC2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift */; };
 		DB3284E02ADB27B900A8AE26 /* ForDevelopersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */; };
+		DB3284F02ADB28DD00A8AE26 /* testProfile.iPhone13-uk-UA.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284E32ADB28DD00A8AE26 /* testProfile.iPhone13-uk-UA.png */; };
+		DB3284F12ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-en-US.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284E42ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-en-US.png */; };
+		DB3284F22ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-uk-UA.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284E52ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-uk-UA.png */; };
+		DB3284F32ADB28DD00A8AE26 /* testProfile.iPhone13-en-US.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284E62ADB28DD00A8AE26 /* testProfile.iPhone13-en-US.png */; };
+		DB3284F42ADB28DD00A8AE26 /* testProfile.iPhone8-en-US.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284E72ADB28DD00A8AE26 /* testProfile.iPhone8-en-US.png */; };
+		DB3284F52ADB28DD00A8AE26 /* testProfile.iPhone8-uk-UA.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284E82ADB28DD00A8AE26 /* testProfile.iPhone8-uk-UA.png */; };
+		DB3284F62ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-en-US.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284EA2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-en-US.png */; };
+		DB3284F72ADB28DD00A8AE26 /* testScreen.iPhone13-uk-UA.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284EB2ADB28DD00A8AE26 /* testScreen.iPhone13-uk-UA.png */; };
+		DB3284F82ADB28DD00A8AE26 /* testScreen.iPhone8-en-US.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284EC2ADB28DD00A8AE26 /* testScreen.iPhone8-en-US.png */; };
+		DB3284F92ADB28DD00A8AE26 /* testScreen.iPhone8-uk-UA.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284ED2ADB28DD00A8AE26 /* testScreen.iPhone8-uk-UA.png */; };
+		DB3284FA2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-uk-UA.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284EE2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-uk-UA.png */; };
+		DB3284FB2ADB28DD00A8AE26 /* testScreen.iPhone13-en-US.png in Resources */ = {isa = PBXBuildFile; fileRef = DB3284EF2ADB28DD00A8AE26 /* testScreen.iPhone13-en-US.png */; };
 		DB4CB3AB2ADAC68700CF316D /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */; };
 		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
 		DB5BBD082ABCE8EB003DFCE4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DB5BBD072ABCE8EB003DFCE4 /* Localizable.xcstrings */; };
@@ -354,6 +366,18 @@
 		DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		DB3284D02ADAFBC400A8AE26 /* KPIHubIOS-Staging.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPIHubIOS-Staging.xctestplan"; sourceTree = "<group>"; };
 		DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersTests.swift; sourceTree = "<group>"; };
+		DB3284E32ADB28DD00A8AE26 /* testProfile.iPhone13-uk-UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testProfile.iPhone13-uk-UA.png"; sourceTree = "<group>"; };
+		DB3284E42ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-en-US.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testProfile.iPhone13ProMax-en-US.png"; sourceTree = "<group>"; };
+		DB3284E52ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-uk-UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testProfile.iPhone13ProMax-uk-UA.png"; sourceTree = "<group>"; };
+		DB3284E62ADB28DD00A8AE26 /* testProfile.iPhone13-en-US.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testProfile.iPhone13-en-US.png"; sourceTree = "<group>"; };
+		DB3284E72ADB28DD00A8AE26 /* testProfile.iPhone8-en-US.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testProfile.iPhone8-en-US.png"; sourceTree = "<group>"; };
+		DB3284E82ADB28DD00A8AE26 /* testProfile.iPhone8-uk-UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testProfile.iPhone8-uk-UA.png"; sourceTree = "<group>"; };
+		DB3284EA2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-en-US.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScreen.iPhone13ProMax-en-US.png"; sourceTree = "<group>"; };
+		DB3284EB2ADB28DD00A8AE26 /* testScreen.iPhone13-uk-UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScreen.iPhone13-uk-UA.png"; sourceTree = "<group>"; };
+		DB3284EC2ADB28DD00A8AE26 /* testScreen.iPhone8-en-US.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScreen.iPhone8-en-US.png"; sourceTree = "<group>"; };
+		DB3284ED2ADB28DD00A8AE26 /* testScreen.iPhone8-uk-UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScreen.iPhone8-uk-UA.png"; sourceTree = "<group>"; };
+		DB3284EE2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-uk-UA.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScreen.iPhone13ProMax-uk-UA.png"; sourceTree = "<group>"; };
+		DB3284EF2ADB28DD00A8AE26 /* testScreen.iPhone13-en-US.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "testScreen.iPhone13-en-US.png"; sourceTree = "<group>"; };
 		DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		DB5BBD072ABCE8EB003DFCE4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = KPIHubIOSTests/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
@@ -954,6 +978,7 @@
 				5F97B3CF283677C600350368 /* ProfileTests.swift */,
 				DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */,
 				DB3284CC2ADAF78B00A8AE26 /* XCTest+xcodeCloud.swift */,
+				DB3284E12ADB28DD00A8AE26 /* __Snapshots__ */,
 			);
 			path = KPIHubIOSTests;
 			sourceTree = "<group>";
@@ -1133,6 +1158,41 @@
 			path = ci_scripts;
 			sourceTree = "<group>";
 		};
+		DB3284E12ADB28DD00A8AE26 /* __Snapshots__ */ = {
+			isa = PBXGroup;
+			children = (
+				DB3284E22ADB28DD00A8AE26 /* ProfileTests */,
+				DB3284E92ADB28DD00A8AE26 /* ForDevelopersTests */,
+			);
+			path = __Snapshots__;
+			sourceTree = "<group>";
+		};
+		DB3284E22ADB28DD00A8AE26 /* ProfileTests */ = {
+			isa = PBXGroup;
+			children = (
+				DB3284E32ADB28DD00A8AE26 /* testProfile.iPhone13-uk-UA.png */,
+				DB3284E42ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-en-US.png */,
+				DB3284E52ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-uk-UA.png */,
+				DB3284E62ADB28DD00A8AE26 /* testProfile.iPhone13-en-US.png */,
+				DB3284E72ADB28DD00A8AE26 /* testProfile.iPhone8-en-US.png */,
+				DB3284E82ADB28DD00A8AE26 /* testProfile.iPhone8-uk-UA.png */,
+			);
+			path = ProfileTests;
+			sourceTree = "<group>";
+		};
+		DB3284E92ADB28DD00A8AE26 /* ForDevelopersTests */ = {
+			isa = PBXGroup;
+			children = (
+				DB3284EA2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-en-US.png */,
+				DB3284EB2ADB28DD00A8AE26 /* testScreen.iPhone13-uk-UA.png */,
+				DB3284EC2ADB28DD00A8AE26 /* testScreen.iPhone8-en-US.png */,
+				DB3284ED2ADB28DD00A8AE26 /* testScreen.iPhone8-uk-UA.png */,
+				DB3284EE2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-uk-UA.png */,
+				DB3284EF2ADB28DD00A8AE26 /* testScreen.iPhone13-en-US.png */,
+			);
+			path = ForDevelopersTests;
+			sourceTree = "<group>";
+		};
 		DBD22F4C28D67E1C004C5CAC /* AnalyticsService */ = {
 			isa = PBXGroup;
 			children = (
@@ -1281,6 +1341,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB3284F32ADB28DD00A8AE26 /* testProfile.iPhone13-en-US.png in Resources */,
+				DB3284F02ADB28DD00A8AE26 /* testProfile.iPhone13-uk-UA.png in Resources */,
+				DB3284FB2ADB28DD00A8AE26 /* testScreen.iPhone13-en-US.png in Resources */,
+				DB3284F92ADB28DD00A8AE26 /* testScreen.iPhone8-uk-UA.png in Resources */,
+				DB3284F62ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-en-US.png in Resources */,
+				DB3284F52ADB28DD00A8AE26 /* testProfile.iPhone8-uk-UA.png in Resources */,
+				DB3284F42ADB28DD00A8AE26 /* testProfile.iPhone8-en-US.png in Resources */,
+				DB3284F72ADB28DD00A8AE26 /* testScreen.iPhone13-uk-UA.png in Resources */,
+				DB3284F22ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-uk-UA.png in Resources */,
+				DB3284F12ADB28DD00A8AE26 /* testProfile.iPhone13ProMax-en-US.png in Resources */,
+				DB3284FA2ADB28DD00A8AE26 /* testScreen.iPhone13ProMax-uk-UA.png in Resources */,
+				DB3284F82ADB28DD00A8AE26 /* testScreen.iPhone8-en-US.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
