@@ -27,6 +27,14 @@ class KPIHubIOSTests: XCTestCase {
         let locales = [Locale(identifier: "en-US"), Locale(identifier: "uk-UA")]
         let configs = [ViewImageConfig.iPhone8, ViewImageConfig.iPhone13, ViewImageConfig.iPhone13ProMax]
         
+        let filePath: StaticString
+            
+        if Self.isCIEnvironment {
+            filePath = XCTest.xcodeCloudFilePath
+        } else {
+            filePath = #file
+        }
+        
         createPairs(configs, locales).forEach { config, locale in
             let profileView = NavigationStack {
                 ProfileHomeView(store: store)
@@ -35,7 +43,8 @@ class KPIHubIOSTests: XCTestCase {
             assertSnapshot(
                 of: profileView,
                 as: .image(perceptualPrecision: 0.99, layout: .device(config: config)),
-                named: "\(config.description)-\(locale.identifier)"
+                named: "\(config.description)-\(locale.identifier)",
+                file: filePath
             )
         }
     }
