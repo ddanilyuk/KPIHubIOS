@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-extension Color {
-
-    static var screenBackground: Color {
-        Color("ScreenBackgroundColor")
-    }
-
-}
+//extension Color {
+//
+//    static var screenBackground: Color {
+//        Color("ScreenBackgroundColor")
+//    }
+//
+//}
 
 extension Color {
 

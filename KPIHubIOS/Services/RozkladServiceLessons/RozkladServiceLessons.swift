@@ -10,10 +10,13 @@ import IdentifiedCollections
 import Combine
 
 struct RozkladServiceLessons {
-    let subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>
-    let updatedAtSubject: CurrentValueSubject<Date?, Never>
+    var lessonsStream: () -> AsyncStream<IdentifiedArrayOf<Lesson>>
+    var currentLessons: () -> IdentifiedArrayOf<Lesson>
+    
+    var updatedAtStream: () -> AsyncStream<Date?>
+    var currentUpdatedAt: () -> Date?
 
-    let set: (ClientValue<[Lesson]>) -> Void
-    let modify: (ClientValue<Lesson>) -> Void
-    let commit: () -> Void
+    var set: (ClientValue<[Lesson]>) -> Void
+    var modify: (ClientValue<Lesson>) -> Void
+    var commit: () -> Void
 }

@@ -14,8 +14,9 @@ struct RozkladServiceState {
         case notSelected
     }
 
-    let subject: CurrentValueSubject<State, Never>
-    let group: () -> GroupResponse?
-    let setState: (ClientValue<State>) -> Void
-    let commit: () -> Void
+    var stateStream: () -> AsyncStream<State>
+    var currentState: () -> State
+    var group: () -> GroupResponse?
+    var setState: (ClientValue<State>) -> Void
+    var commit: () -> Void
 }

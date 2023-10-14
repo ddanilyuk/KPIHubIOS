@@ -11,16 +11,14 @@ import ComposableArchitecture
 struct OnboardingView: View {
     struct ViewState: Equatable { }
     
-    private let store: StoreOf<OnboardingFeature>
     @ObservedObject private var viewStore: ViewStore<ViewState, OnboardingFeature.Action.View>
     @Environment(\.colorScheme) var colorScheme
     
     init(store: StoreOf<OnboardingFeature>) {
-        self.store = store
-        self.viewStore = ViewStore(
+        viewStore = ViewStore(
             store,
             observe: { _ in ViewState() },
-            send: OnboardingFeature.Action.view
+            send: { .view($0) }
         )
         viewStore.send(.onAppear)
     }

@@ -10,9 +10,6 @@ import ComposableArchitecture
 import Foundation
 
 struct GroupRozklad: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
         var currentDay: Lesson.Day?
         var currentWeek: Lesson.Week = .first
@@ -52,11 +49,8 @@ struct GroupRozklad: Reducer {
             self.lessons = []
             self.sections = [Section](lessons: [])
         }
-
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable, BindableAction {
         case onAppear
         case onDisappear
@@ -64,7 +58,7 @@ struct GroupRozklad: Reducer {
         case updateLessons(IdentifiedArrayOf<Lesson>)
         case updateCurrentDate
 
-        case scrollToNearest(_ condition: Bool = true)
+        case scrollToNearest
         case resetScrollTo
 
         case lessonCells(id: LessonResponse.ID, action: LessonCell.Action)
@@ -77,19 +71,12 @@ struct GroupRozklad: Reducer {
             case openDetails(Lesson)
         }
     }
-
-    // MARK: - Environment
     
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.analyticsService) var analyticsService
-
-    // MARK: - Reducer
     
-    enum SubscriberCancelID { }
-    enum SetOffsetID { }
-
     var body: some ReducerOf<Self> {
         BindingReducer()
         
@@ -98,78 +85,39 @@ struct GroupRozklad: Reducer {
             case .onAppear:
                 state.isAppeared = true
                 analyticsService.track(Event.Rozklad.groupRozkladAppeared)
-
-                return Effect.merge(
-                    Effect(value: .updateCurrentDate),
-                    Effect.concatenate(
-                        Effect(value: .updateLessons(rozkladServiceLessons.subject.value)),
-                        Effect(value: .scrollToNearest(state.needToScrollOnAppear)),
-                        Effect(value: .binding(.set(\.$needToScrollOnAppear, false)))
-                    ),
-                    Effect.run { subscriber in
-                        rozkladServiceLessons.subject
-                            .dropFirst()
-                            .receive(on: DispatchQueue.main)
-                            .sink { lessons in
-                                subscriber.send(.updateLessons(lessons))
-                            }
+                updateLessons(to: rozkladServiceLessons.currentLessons(), state: &state)
+                if state.needToScrollOnAppear {
+                    scrollToNearest(state: &state)
+                    state.needToScrollOnAppear = false
+                }
+                return .merge(
+                    updateCurrentDate(state: &state),
+                    .run { send in
+                        for await lessons in rozkladServiceLessons.lessonsStream().dropFirst() {
+                            await send(.updateLessons(lessons))
+                        }
                     },
-                    Effect.run { subscriber in
-                        currentDateService.updated
-                            .dropFirst()
-                            .receive(on: DispatchQueue.main)
-                            .sink { _ in
-                                subscriber.send(.updateCurrentDate)
-                            }
+                    .run { send in
+                        for await _ in currentDateService.updatedStream().dropFirst() {
+                            await send(.updateCurrentDate)
+                        }
                     }
                 )
-                .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+                .cancellable(id: CancelID.onAppear, cancelInFlight: true)
 
             case .onDisappear:
                 state.isAppeared = false
                 return .none
 
             case .updateCurrentDate:
-                let oldCurrentLesson = state.currentLesson
-                let oldNextLessonID = state.nextLessonID
-                state.currentDay = currentDateService.currentDay.value
-                state.currentWeek = currentDateService.currentWeek.value
-                state.currentLesson = currentDateService.currentLesson.value
-                state.nextLessonID = currentDateService.nextLessonID.value
-                state.sections = [State.Section](
-                    lessons: state.lessons,
-                    currentLesson: state.currentLesson,
-                    nextLesson: state.nextLessonID
-                )
-                if oldCurrentLesson?.lessonID != state.currentLesson?.lessonID || oldNextLessonID != state.nextLessonID {
-                    if state.isAppeared {
-                        return Effect(value: .scrollToNearest())
-                            .delay(for: 0.3, scheduler: DispatchQueue.main)
-                            .eraseToEffect()
-                    } else {
-                        state.needToScrollOnAppear = true
-                        return .none
-                    }
-
-                } else {
-                    return .none
-                }
+                return updateCurrentDate(state: &state)
 
             case let .updateLessons(lessons):
-                state.groupName = rozkladServiceState.group()?.name ?? "-"
-                state.lessons = lessons
-                state.sections = [State.Section](
-                    lessons: state.lessons,
-                    currentLesson: state.currentLesson,
-                    nextLesson: state.nextLessonID
-                )
+                updateLessons(to: lessons, state: &state)
                 return .none
 
-            case let .scrollToNearest(needToScroll):
-                if needToScroll {
-                    let scrollTo = state.currentLesson?.lessonID ?? state.nextLessonID
-                    state.scrollTo = scrollTo
-                }
+            case .scrollToNearest:
+                scrollToNearest(state: &state)
                 return .none
 
             case .resetScrollTo:
@@ -182,7 +130,7 @@ struct GroupRozklad: Reducer {
                 else {
                     return .none
                 }
-                return Effect(value: .routeAction(.openDetails(selectedLesson)))
+                return .send(.routeAction(.openDetails(selectedLesson)))
                 
             case let .setOffset(index, value, headerHeight):
                 guard
@@ -207,7 +155,7 @@ struct GroupRozklad: Reducer {
                     )
                     await send(.binding(.set(\.$position, newPosition)))
                 }
-                .cancellable(id: SetOffsetID.self, cancelInFlight: true)
+                .cancellable(id: CancelID.setOffset, cancelInFlight: true)
 
             case .routeAction:
                 return .none
@@ -223,7 +171,54 @@ struct GroupRozklad: Reducer {
             LessonCell()
         }
     }
+    
+    private func updateCurrentDate(state: inout State) -> Effect<Action> {
+        let oldCurrentLesson = state.currentLesson
+        let oldNextLessonID = state.nextLessonID
+        state.currentDay = currentDateService.currentDay()
+        state.currentWeek = currentDateService.currentWeek()
+        state.currentLesson = currentDateService.currentLesson()
+        state.nextLessonID = currentDateService.nextLessonID()
+        state.sections = [State.Section](
+            lessons: state.lessons,
+            currentLesson: state.currentLesson,
+            nextLesson: state.nextLessonID
+        )
+        if oldCurrentLesson?.lessonID != state.currentLesson?.lessonID || oldNextLessonID != state.nextLessonID {
+            if state.isAppeared {
+                return .run { send in
+                    try await Task.sleep(for: .seconds(0.3))
+                    await send(.scrollToNearest)
+                }
+            } else {
+                state.needToScrollOnAppear = true
+                return .none
+            }
 
+        } else {
+            return .none
+        }
+    }
+    
+    private func scrollToNearest(state: inout State) {
+        let scrollTo = state.currentLesson?.lessonID ?? state.nextLessonID
+        state.scrollTo = scrollTo
+    }
+    
+    private func updateLessons(to lessons: IdentifiedArrayOf<Lesson>, state: inout State) {
+        state.groupName = rozkladServiceState.group()?.name ?? "-"
+        state.lessons = lessons
+        state.sections = [State.Section](
+            lessons: state.lessons,
+            currentLesson: state.currentLesson,
+            nextLesson: state.nextLessonID
+        )
+    }
+    
+    enum CancelID {
+        case onAppear
+        case setOffset
+    }
 }
 
 func calculateIndex(
@@ -239,16 +234,6 @@ func calculateIndex(
     func compareWithTarget(element: CGFloat, index: Int) -> Int {
         element < target ? index : index - 1
     }
-    
-//    let debug = offsets.map { optionalFloat in
-//        if let float = optionalFloat {
-//            return "\(float.rounded())"
-//        } else {
-//            return "nil"
-//        }
-//    }
-//    .joined(separator: " | ")
-//    print(debug)
     
     switch numberOfElements {
     case 1:

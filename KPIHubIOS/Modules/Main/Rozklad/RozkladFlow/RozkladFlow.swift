@@ -35,15 +35,11 @@ struct RozkladFlow: Reducer {
         Reduce<State, Action> { state, action in
             switch action {
             case .onSetup:
-                setRootRozkladState(from: rozkladServiceState.subject.value, state: &state)
-                return Effect.run { subscriber in
-                    rozkladServiceState.subject
-                        .dropFirst()
-                        .removeDuplicates()
-                        .receive(on: DispatchQueue.main)
-                        .sink { state in
-                            subscriber.send(.updateRozkladState(state))
-                        }
+                setRootRozkladState(from: rozkladServiceState.currentState(), state: &state)
+                return .run { send in
+                    for await state in rozkladServiceState.stateStream().dropFirst() {
+                        await send(.updateRozkladState(state))
+                    }
                 }
                 
             case let .updateRozkladState(rozkladState):

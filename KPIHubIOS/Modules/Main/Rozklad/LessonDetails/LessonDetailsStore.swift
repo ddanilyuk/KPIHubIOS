@@ -9,9 +9,6 @@ import ComposableArchitecture
 import Foundation
 
 struct LessonDetails: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
 
         var lesson: Lesson
@@ -29,9 +26,7 @@ struct LessonDetails: Reducer {
         
         var alert: AlertState<Action>?
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable, BindableAction {
         case onAppear
 
@@ -53,17 +48,11 @@ struct LessonDetails: Reducer {
             case editTeachers(_ lesson: Lesson)
         }
     }
-
-    // MARK: - Environment
     
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.analyticsService) var analyticsService
-
-    // MARK: - Reducer
-    
-    enum SubscriberCancelID { }
-    
+        
     var body: some ReducerOf<Self> {
         BindingReducer()
         
@@ -75,26 +64,23 @@ struct LessonDetails: Reducer {
                     id: "\(lessonID)",
                     name: String(state.lesson.names.joined(separator: ", ").prefix(39))
                 ))
-                return Effect.merge(
-                    Effect(value: .updateCurrentDate),
-                    Effect.run { subscriber in
-                        rozkladServiceLessons.subject
-                            .compactMap { $0[id: lessonID] }
-                            .receive(on: DispatchQueue.main)
-                            .sink { lesson in
-                                subscriber.send(.updateLesson(lesson))
+                updateCurrentDate(state: &state)
+                return .merge(
+                    .run { send in
+                        for await lessons in rozkladServiceLessons.lessonsStream() {
+                            guard let lesson = lessons[id: lessonID] else {
+                                continue
                             }
+                            await send(.updateLesson(lesson))
+                        }
                     },
-                    Effect.run { subscriber in
-                        currentDateService.updated
-                            .dropFirst()
-                            .receive(on: DispatchQueue.main)
-                            .sink { _ in
-                                subscriber.send(.updateCurrentDate)
-                            }
+                    .run { send in
+                        for await _ in currentDateService.updatedStream().dropFirst() {
+                            await send(.updateCurrentDate)
+                        }
                     }
                 )
-                .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+                .cancellable(id: CancelID.onAppear, cancelInFlight: true)
                 
             case .binding(\.$isEditing):
                 if state.isEditing {
@@ -103,17 +89,7 @@ struct LessonDetails: Reducer {
                 return .none
 
             case .updateCurrentDate:
-                let lessonID = state.lesson.id
-                let currentLesson = currentDateService.currentLesson.value
-                let nextLessonID = currentDateService.nextLessonID.value
-
-                if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
-                    state.mode = .current(currentLesson.percent)
-                } else if lessonID == nextLessonID {
-                    state.mode = .next
-                } else {
-                    state.mode = .default
-                }
+                updateCurrentDate(state: &state)
                 return .none
                 
             case .deleteLessonTapped:
@@ -136,11 +112,11 @@ struct LessonDetails: Reducer {
                 return .none
                 
             case .deleteLessonConfirm:
-                var lessons = rozkladServiceLessons.subject.value
+                var lessons = rozkladServiceLessons.currentLessons()
                 lessons.remove(id: state.lesson.id)
                 rozkladServiceLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
                 analyticsService.track(Event.LessonDetails.removeLessonApply)
-                return Effect(value: .routeAction(.dismiss))
+                return .send(.routeAction(.dismiss))
             
             case .dismissAlert:
                 state.alert = nil
@@ -154,13 +130,13 @@ struct LessonDetails: Reducer {
                 guard state.isEditing else {
                     return .none
                 }
-                return Effect(value: .routeAction(.editNames(state.lesson)))
+                return .send(.routeAction(.editNames(state.lesson)))
 
             case .editTeachers:
                 guard state.isEditing else {
                     return .none
                 }
-                return Effect(value: .routeAction(.editTeachers(state.lesson)))
+                return .send(.routeAction(.editTeachers(state.lesson)))
 
             case .binding:
                 return .none
@@ -170,5 +146,22 @@ struct LessonDetails: Reducer {
             }
         }
     }
+    
+    private func updateCurrentDate(state: inout State) {
+        let lessonID = state.lesson.id
+        let currentLesson = currentDateService.currentLesson()
+        let nextLessonID = currentDateService.nextLessonID()
 
+        if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
+            state.mode = .current(currentLesson.percent)
+        } else if lessonID == nextLessonID {
+            state.mode = .next
+        } else {
+            state.mode = .default
+        }
+    }
+    
+    enum CancelID {
+        case onAppear
+    }
 }

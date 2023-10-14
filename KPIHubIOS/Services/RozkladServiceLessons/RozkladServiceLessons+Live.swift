@@ -23,8 +23,10 @@ extension RozkladServiceLessons {
         commit()
         
         return RozkladServiceLessons(
-            subject: subject,
-            updatedAtSubject: updatedAtSubject,
+            lessonsStream: { AsyncStream(subject.values) },
+            currentLessons: { subject.value },
+            updatedAtStream: { AsyncStream(updatedAtSubject.values) },
+            currentUpdatedAt: { updatedAtSubject.value },
             set: { clientValue in
                 userDefaultsService.set(IdentifiedArray(uniqueElements: clientValue.value), for: .lessons)
                 userDefaultsService.set(Date(), for: .lessonsUpdatedAt)

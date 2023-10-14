@@ -25,7 +25,8 @@ extension RozkladServiceState {
         commit()
 
         return RozkladServiceState(
-            subject: subject,
+            stateStream: { AsyncStream(subject.values) },
+            currentState: { subject.value },
             group: {
                 let groupResponsePath = /RozkladServiceState.State.selected
                 return groupResponsePath.extract(from: subject.value)

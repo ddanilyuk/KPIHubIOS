@@ -12,9 +12,8 @@ extension RozkladServiceState {
     static func mock() -> RozkladServiceState {
         let group = GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")
         return RozkladServiceState(
-            subject: CurrentValueSubject<State, Never>(
-                .selected(group)
-            ),
+            stateStream: { .never },
+            currentState: { .selected(group) },
             group: { group },
             setState: { _ in },
             commit: { }

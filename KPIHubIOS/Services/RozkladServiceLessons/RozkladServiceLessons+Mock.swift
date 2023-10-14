@@ -12,13 +12,11 @@ import Dependencies
 
 extension RozkladServiceLessons {
     static func mock() -> RozkladServiceLessons {
-        return RozkladServiceLessons(
-            subject: CurrentValueSubject<IdentifiedArrayOf<Lesson>, Never>(
-                .init(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) })
-            ),
-            updatedAtSubject: CurrentValueSubject<Date?, Never>(
-                Date(timeIntervalSince1970: 1695329230)
-            ),
+        RozkladServiceLessons(
+            lessonsStream: { .never },
+            currentLessons: { .init(uniqueElements: LessonResponse.mocked.map { Lesson(lessonResponse: $0) }) },
+            updatedAtStream: { .never },
+            currentUpdatedAt: { Date(timeIntervalSince1970: 1695329230) },
             set: { _ in },
             modify: { _ in },
             commit: { }

@@ -9,9 +9,6 @@ import ComposableArchitecture
 import IdentifiedCollections
 
 struct StudySheet: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
 
         var items: IdentifiedArrayOf<StudySheetItem>
@@ -37,9 +34,7 @@ struct StudySheet: Reducer {
             cells = []
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable, BindableAction {
         case onAppear
 
@@ -53,8 +48,6 @@ struct StudySheet: Reducer {
             case openDetail(StudySheetItem)
         }
     }
-
-    // MARK: - Reducer
     
     @Dependency(\.analyticsService) var analyticsService
     
@@ -65,16 +58,13 @@ struct StudySheet: Reducer {
             switch action {
             case .onAppear:
                 analyticsService.track(Event.Campus.studySheetAppeared)
-                return Effect(value: .sortCells)
-                    .animation(nil)
+                return .send(.sortCells, animation: nil)
 
             case .binding(\.$selectedYear):
-                return Effect(value: .sortCells)
-                    .animation()
+                return .send(.sortCells, animation: .default)
 
             case .binding(\.$selectedSemester):
-                return Effect(value: .sortCells)
-                    .animation()
+                return .send(.sortCells, animation: .default)
 
             case .sortCells:
                 state.sortedItems = state.items.filter({ item in
@@ -98,7 +88,7 @@ struct StudySheet: Reducer {
                 guard let selectedItem = state.items[id: id] else {
                     return .none
                 }
-                return Effect(value: .routeAction(.openDetail(selectedItem)))
+                return .send(.routeAction(.openDetail(selectedItem)))
 
             case .binding:
                 return .none

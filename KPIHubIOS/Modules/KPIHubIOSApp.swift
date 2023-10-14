@@ -10,7 +10,6 @@ import ComposableArchitecture
 
 @main
 struct KPIHubIOSApp: SwiftUI.App {
-
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
@@ -19,5 +18,4 @@ struct KPIHubIOSApp: SwiftUI.App {
                 .accentColor(.orange)
         }
     }
-
 }

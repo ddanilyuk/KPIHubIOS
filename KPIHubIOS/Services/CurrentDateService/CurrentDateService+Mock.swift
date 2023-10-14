@@ -10,19 +10,13 @@ import Combine
 
 extension CurrentDateService {
     static func mock() -> CurrentDateService {
-        let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(.monday)
-        let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
-        let currentLessonIDSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
-        let nextLessonIDSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
-        let updatedSubject = CurrentValueSubject<Date, Never>(Date())
-
-        return CurrentDateService(
-            currentLesson: currentLessonIDSubject,
-            nextLessonID: nextLessonIDSubject,
-            currentDay: currentDaySubject,
-            currentWeek: currentWeekSubject,
-            forceUpdate: { },
-            updatedSubject: updatedSubject
+        CurrentDateService(
+            updatedStream: { .never },
+            currentLesson: { nil },
+            nextLessonID: { nil },
+            currentDay: { .monday },
+            currentWeek: { .first },
+            forceUpdate: { }
         )
     }
 }

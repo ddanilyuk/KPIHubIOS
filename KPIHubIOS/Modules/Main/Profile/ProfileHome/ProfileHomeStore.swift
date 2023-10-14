@@ -10,9 +10,6 @@ import Routes
 import Foundation
 
 struct ProfileHome: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable {
 
         var rozkladState: RozkladServiceState.State = .notSelected
@@ -25,9 +22,7 @@ struct ProfileHome: Reducer {
         var alert: AlertState<Action>?
         @BindingState var isLoading: Bool = false
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable, BindableAction {
         case onAppear
 
@@ -58,8 +53,6 @@ struct ProfileHome: Reducer {
             case forDevelopers
         }
     }
-
-    // MARK: - Environment
     
     @Dependency(\.apiService) var apiClient
     @Dependency(\.userDefaultsService) var userDefaultsService
@@ -70,10 +63,6 @@ struct ProfileHome: Reducer {
     @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.appConfiguration) var appConfiguration
     @Dependency(\.analyticsService) var analyticsService
-
-    // MARK: - Reducer
-    
-    enum SubscriberCancelID { }
     
     var body: some ReducerOf<Self> {
         BindingReducer()
@@ -84,7 +73,7 @@ struct ProfileHome: Reducer {
                 state.completeAppVersion = appConfiguration.completeAppVersion ?? ""
                 state.toggleWeek = userDefaultsService.get(for: .toggleWeek)
                 analyticsService.track(Event.Profile.profileHomeAppeared)
-                return onAppear()
+                return onAppear(state: &state)
 
             case let .setRozkladState(rozkladState):
                 state.rozkladState = rozkladState
@@ -220,18 +209,15 @@ struct ProfileHome: Reducer {
         }
     }
     
-    private func onAppear() -> Effect<Action> {
+    private func onAppear(state: inout State) -> Effect<Action> {
+        state.rozkladState = rozkladServiceState.currentState()
+        state.lessonsUpdatedAtDate = rozkladServiceLessons.currentUpdatedAt()
         return .merge(
-            Effect(value: .setRozkladState(rozkladServiceState.subject.value)),
             Effect(value: .setCampusState(campusClientState.subject.value)),
-            Effect(value: .setLessonsUpdatedAtDate(rozkladServiceLessons.updatedAtSubject.value)),
-            Effect.run { subscriber in
-                rozkladServiceState.subject
-                    .dropFirst()
-                    .receive(on: DispatchQueue.main)
-                    .sink { rozkladState in
-                        subscriber.send(.setRozkladState(rozkladState))
-                    }
+            .run { send in
+                for await state in rozkladServiceState.stateStream().dropFirst() {
+                    await send(.setRozkladState(state))
+                }
             },
             Effect.run { subscriber in
                 campusClientState.subject
@@ -241,16 +227,16 @@ struct ProfileHome: Reducer {
                         subscriber.send(.setCampusState(campusState))
                     }
             },
-            Effect.run { subscriber in
-                rozkladServiceLessons.updatedAtSubject
-                    .dropFirst()
-                    .receive(on: DispatchQueue.main)
-                    .sink { date in
-                        subscriber.send(.setLessonsUpdatedAtDate(date))
-                    }
+            .run { send in
+                for await updatedAt in rozkladServiceLessons.updatedAtStream().dropFirst() {
+                    await send(.setLessonsUpdatedAtDate(updatedAt))
+                }
             }
         )
-        .cancellable(id: SubscriberCancelID.self, cancelInFlight: true)
+        .cancellable(id: CancelID.onAppear, cancelInFlight: true)
     }
     
+    enum CancelID {
+        case onAppear
+    }
 }

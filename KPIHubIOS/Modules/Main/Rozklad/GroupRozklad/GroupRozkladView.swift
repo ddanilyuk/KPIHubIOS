@@ -86,51 +86,57 @@ struct GroupRozkladView: View {
     private var scrollView: some View {
         GeometryReader { geometryProxy in
             ScrollViewReader { proxy in
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVStack(alignment: .leading, spacing: 0) {
-                        ForEach(viewStore.sections, id: \.id) { section in
-                            sectionView(for: section)
-                        }
+                _scrollView(geometryProxy: geometryProxy)
+                    .safeAreaInset(edge: .top, spacing: 0) {
                         Rectangle()
-                            .fill(Color.screenBackground)
-                            .frame(
-                                height: max(
-                                    0,
-                                    geometryProxy.frame(in: .local).height - headerHeight - 44 - lastSectionCellHeights.reduce(0.0, +)
-                                )
-                            )
+                            .fill(Color.clear)
+                            .frame(height: headerHeight)
                     }
-                }
-                .safeAreaInset(edge: .top, spacing: 0) {
-                    Rectangle()
-                        .fill(Color.clear)
-                        .frame(height: headerHeight)
-                }
-                .overlay(alignment: .topTrailing) {
-                    GroupRozkladScrollToView(
-                        mode: .init(currentLesson: viewStore.currentLesson)
-                    )
-                    .onTapGesture {
-                        viewStore.send(.scrollToNearest())
+                    .overlay(alignment: .topTrailing) {
+                        GroupRozkladScrollToView(
+                            mode: .init(currentLesson: viewStore.currentLesson)
+                        )
+                        .onTapGesture {
+                            viewStore.send(.scrollToNearest)
+                        }
+                        .offset(x: 0, y: headerHeight)
+                        .padding(.top, 8)
+                        .padding(.horizontal, 16)
                     }
-                    .offset(x: 0, y: headerHeight)
-                    .padding(.top, 8)
-                    .padding(.horizontal, 16)
-                }
-                .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
-                .onChange(of: selectedWeek) { changeSelectedWeek($0, proxy: proxy) }
-                .onChange(of: viewStore.scrollTo) { newValue in
-                    guard let scrollPosition = newValue else {
-                        return
+                    .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
+                    .onChange(of: selectedWeek) { changeSelectedWeek($0, proxy: proxy) }
+                    .onChange(of: viewStore.scrollTo) { newValue in
+                        guard let scrollPosition = newValue else {
+                            return
+                        }
+                        withAnimation {
+                            proxy.scrollTo(scrollPosition, anchor: .top)
+                        }
+                        viewStore.send(.resetScrollTo)
                     }
-                    withAnimation {
-                        proxy.scrollTo(scrollPosition, anchor: .top)
-                    }
-                    viewStore.send(.resetScrollTo)
-                }
             }
             .listStyle(.grouped)
             .background(Color.screenBackground)
+        }
+    }
+    
+    // TODO: Fix
+    @ViewBuilder
+    private func _scrollView(geometryProxy: GeometryProxy) -> some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            LazyVStack(alignment: .leading, spacing: 0) {
+                ForEach(viewStore.sections, id: \.id) { section in
+                    sectionView(for: section)
+                }
+                Rectangle()
+                    .fill(Color.screenBackground)
+                    .frame(
+                        height: max(
+                            0,
+                            geometryProxy.frame(in: .local).height - headerHeight - 44 - lastSectionCellHeights.reduce(0.0, +)
+                        )
+                    )
+            }
         }
     }
 
