@@ -19,7 +19,7 @@ extension CurrentDateService {
             currentLesson: { helper.currentLessonSubject.value },
             nextLessonID: { helper.nextLessonIDSubject.value },
             currentDay: { helper.currentDaySubject.value },
-            currentWeek: { helper.currentWeekSubject.value } ,
+            currentWeek: { helper.currentWeekSubject.value },
             forceUpdate: { helper.updateSubjects(with: Date()) }
         )
     }
