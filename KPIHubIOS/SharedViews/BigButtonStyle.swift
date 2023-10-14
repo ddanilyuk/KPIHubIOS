@@ -24,7 +24,7 @@ private extension BigButtonStyle {
         let configuration: BigButtonStyle.Configuration
 
         var body: some View {
-            return configuration.label
+            configuration.label
                 .opacity(configuration.isPressed ? 0.8 : 1.0)
                 .font(.headline)
                 .frame(maxWidth: .infinity, minHeight: 50)

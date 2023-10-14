@@ -1,8 +1,11 @@
 disabled_rules:
   - trailing_whitespace
   # - force_try
+  - todo
   - for_where
   - large_tuple
+  - attributes
+  - void_function_in_ternary
 
 included: # paths to include during linting. `--path` is ignored if present.
   - KPIHubIOS
@@ -63,10 +66,7 @@ vertical_whitespace:
   - preferredInterfaceOrientationForPresentation
 
 closure_end_indentation: error
-conditional_returns_on_newline: error
-explicit_init: error
 fatal_error_message: error
-operator_usage_whitespace: warning
 vertical_parameter_alignment_on_call: warning
 switch_case_on_newline: warning
 

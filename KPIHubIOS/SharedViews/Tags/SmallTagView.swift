@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct SmallTagView: View {
-
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
 
     let icon: Image
     let text: String
@@ -37,19 +36,14 @@ struct SmallTagView: View {
         .background(color.lighter(by: colorScheme == .light ? 0.9 : 0.7))
         .cornerRadius(12)
     }
-
 }
 
-
 // MARK: - Preview
-
-struct SmallTagView_Previews: PreviewProvider {
-    static var previews: some View {
-        SmallTagView(
-            icon: Image(systemName: "graduationcap"),
-            text: "Практика",
-            color: .cyan
-        )
-        .previewLayout(.fixed(width: 200, height: 100))
-    }
+#Preview {
+    SmallTagView(
+        icon: Image(systemName: "graduationcap"),
+        text: "Практика",
+        color: .cyan
+    )
+    .previewLayout(.fixed(width: 200, height: 100))
 }
