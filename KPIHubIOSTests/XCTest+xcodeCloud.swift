@@ -13,7 +13,7 @@ import XCTest
 extension XCTest {
     // https://github.com/pointfreeco/swift-snapshot-testing/discussions/553#discussioncomment-3807207
     static var xcodeCloudFilePath: StaticString {
-        "/Volumes/workspace/repository/ci_scripts/SnapshotTests.swift"
+        "/Volumes/workspace/repository/ci_scripts/KPIHubIOSTests.swift"
     }
     static var isCIEnvironment: Bool {
         ProcessInfo.processInfo.environment["CI"] == "TRUE"
