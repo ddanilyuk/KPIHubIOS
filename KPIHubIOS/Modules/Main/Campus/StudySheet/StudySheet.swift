@@ -10,7 +10,6 @@ import IdentifiedCollections
 
 struct StudySheet: Reducer {
     struct State: Equatable {
-
         var items: IdentifiedArrayOf<StudySheetItem>
         var sortedItems: IdentifiedArrayOf<StudySheetItem>
         var cells: IdentifiedArrayOf<StudySheetCell.State>
@@ -35,35 +34,38 @@ struct StudySheet: Reducer {
         }
     }
     
-    enum Action: Equatable, BindableAction {
-        case onAppear
-
+    enum Action: Equatable {
         case sortCells
         case cells(id: StudySheetCell.State.ID, action: StudySheetCell.Action)
-        
-        case binding(BindingAction<State>)
+
+        case view(View)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
             case openDetail(StudySheetItem)
+        }
+        
+        enum View: Equatable, BindableAction {
+            case onAppear
+            case binding(BindingAction<State>)
         }
     }
     
     @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
-        BindingReducer()
+        BindingReducer(action: /Action.view)
         
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 analyticsService.track(Event.Campus.studySheetAppeared)
                 return .send(.sortCells, animation: nil)
 
-            case .binding(\.$selectedYear):
+            case .view(.binding(\.$selectedYear)):
                 return .send(.sortCells, animation: .default)
 
-            case .binding(\.$selectedSemester):
+            case .view(.binding(\.$selectedSemester)):
                 return .send(.sortCells, animation: .default)
 
             case .sortCells:
@@ -90,7 +92,7 @@ struct StudySheet: Reducer {
                 }
                 return .send(.routeAction(.openDetail(selectedItem)))
 
-            case .binding:
+            case .view:
                 return .none
 
             case .routeAction:
@@ -98,5 +100,4 @@ struct StudySheet: Reducer {
             }
         }
     }
-
 }

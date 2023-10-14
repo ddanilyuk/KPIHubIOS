@@ -9,16 +9,19 @@ import SwiftUI
 import ComposableArchitecture
 
 struct OtherSectionView: View {
-
     struct ViewState: Equatable {
         let completeAppVersion: String
+        
+        init(state: ProfileHome.State) {
+            completeAppVersion = state.completeAppVersion
+        }
     }
-
-    enum ViewAction {
-        case forDevelopers
+    
+    @ObservedObject private var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    
+    init(store: StoreOf<ProfileHome>) {
+        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
-
-    @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
 
     var body: some View {
         ProfileSectionView(
@@ -34,7 +37,7 @@ struct OtherSectionView: View {
                         },
                         imageBackgroundColor: .red
                     )
-                    .onTapGesture { viewStore.send(.forDevelopers) }
+                    .onTapGesture { viewStore.send(.forDevelopersButtonTapped) }
 
                     ProfileCellView(
                         title: "Версія:",
@@ -45,59 +48,21 @@ struct OtherSectionView: View {
                         },
                         imageBackgroundColor: .blue
                     )
-
                 }
-
             }
         )
     }
-
 }
 
-// MARK: - ViewState
-
-extension ProfileHome.State {
-
-    var otherSectionView: OtherSectionView.ViewState {
-        OtherSectionView.ViewState(
-            completeAppVersion: completeAppVersion
-        )
-    }
-
-}
-
-// MARK: - ViewAction
-
-extension ProfileHome.Action {
-
-    static func otherSectionView(_ viewAction: OtherSectionView.ViewAction) -> Self {
-        switch viewAction {
-        case .forDevelopers:
-            return .routeAction(.forDevelopers)
-        }
-    }
-    
-}
 
 // MARK: - Preview
-
-struct OtherSectionView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        Group {
-            OtherSectionView(
-                viewStore: ViewStore(
-                    Store(
-                        initialState: OtherSectionView.ViewState(
-                            completeAppVersion: "1.0 (1)"
-                        ),
-                        reducer: EmptyReducer()
-                    )
-                )
-            )
-            .smallPreview
-            .padding(16)
-            .background(Color.screenBackground)
+#Preview {
+    OtherSectionView(
+        store: Store(initialState: ProfileHome.State(completeAppVersion: "1.0 (1)")) {
+            ProfileHome()
         }
-    }
+    )
+    .smallPreview
+    .padding(16)
+    .background(Color.screenBackground)
 }

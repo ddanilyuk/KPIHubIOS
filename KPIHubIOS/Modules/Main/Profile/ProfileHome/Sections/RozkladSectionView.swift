@@ -9,21 +9,23 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RozkladSectionView: View {
-
     struct ViewState: Equatable {
         let updatedAt: Date?
         let rozkladState: RozkladServiceState.State
-        @BindingState var toggleWeek: Bool
+        @BindingViewState var toggleWeek: Bool
+        
+        init(state: BindingViewStore<ProfileHome.State>) {
+            updatedAt = state.lessonsUpdatedAtDate
+            rozkladState = state.rozkladState
+            _toggleWeek = state.$toggleWeek
+        }
     }
 
-    enum ViewAction: BindableAction {
-        case updateRozklad
-        case changeGroup
-        case selectGroup
-        case binding(BindingAction<ViewState>)
+    @ObservedObject var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    
+    init(store: StoreOf<ProfileHome>) {
+        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
-
-    @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
 
     var body: some View {
         ProfileSectionView(
@@ -41,7 +43,6 @@ struct RozkladSectionView: View {
 
     func selectedView(with group: GroupResponse) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-
             groupView(name: group.name)
 
             lastUpdatedAtView
@@ -51,7 +52,7 @@ struct RozkladSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.changeGroup) },
+                action: { viewStore.send(.changeGroupButtonTapped) },
                 label: {
                     Text("Змінити групу")
                         .font(.system(.body).bold())
@@ -86,7 +87,7 @@ struct RozkladSectionView: View {
             imageBackgroundColor: .yellow,
             rightView: {
                 Button(
-                    action: { viewStore.send(.updateRozklad) },
+                    action: { viewStore.send(.updateRozkladButtonTapped) },
                     label: {
                         Image(systemName: "arrow.triangle.2.circlepath")
                             .foregroundColor(.red)
@@ -121,7 +122,7 @@ struct RozkladSectionView: View {
             }
 
             Toggle(
-                isOn: viewStore.binding(\.$toggleWeek),
+                isOn: viewStore.$toggleWeek,
                 label: { Text("") }
             )
             .labelsHidden()
@@ -134,7 +135,7 @@ struct RozkladSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.selectGroup) },
+                action: { viewStore.send(.selectGroupButtonTapped) },
                 label: {
                     Text("Обрати групу")
                         .font(.system(.body).bold())
@@ -145,93 +146,41 @@ struct RozkladSectionView: View {
             )
         }
     }
-
-}
-
-// MARK: - ViewState
-
-extension ProfileHome.State {
-
-    var rozkladSectionView: RozkladSectionView.ViewState {
-        get {
-            RozkladSectionView.ViewState(
-                updatedAt: self.lessonsUpdatedAtDate,
-                rozkladState: self.rozkladState,
-                toggleWeek: self.toggleWeek
-            )
-        }
-        set {
-            toggleWeek = newValue.toggleWeek
-        }
-    }
-
-}
-
-// MARK: - ViewAction
-
-extension ProfileHome.Action {
-
-    static func rozkladSectionView(_ viewAction: RozkladSectionView.ViewAction) -> Self {
-        switch viewAction {
-        case .changeGroup:
-            return .changeGroupButtonTapped
-
-        case .updateRozklad:
-            return .updateRozkladButtonTapped
-
-        case .selectGroup:
-            return .selectGroup
-
-        case let .binding(action):
-            return .binding(action.pullback(\.rozkladSectionView))
-        }
-    }
-    
 }
 
 // MARK: - Preview
-
-struct RozkladSectionView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        Group {
-            RozkladSectionView(
-                viewStore: ViewStore(
-                    Store(
-                        initialState: RozkladSectionView.ViewState(
-                            updatedAt: Date(),
-                            rozkladState: .notSelected,
-                            toggleWeek: true
-                        ),
-                        reducer: EmptyReducer()
-                    )
-                )
-            )
-            .smallPreview
-            .padding(16)
-            .background(Color.screenBackground)
-
-            RozkladSectionView(
-                viewStore: ViewStore(
-                    Store(
-                        initialState: RozkladSectionView.ViewState(
-                            updatedAt: Date(),
-                            rozkladState: .selected(
-                                GroupResponse(
-                                    id: UUID(),
-                                    name: "ІВ-82",
-                                    faculty: "ФІОТ"
-                                )
-                            ),
-                            toggleWeek: false
-                        ),
-                        reducer: EmptyReducer()
-                    )
-                )
-            )
-            .smallPreview
-            .padding(16)
-            .background(Color.screenBackground)
+#Preview {
+    RozkladSectionView(
+        store: Store(initialState: ProfileHome.State(
+            rozkladState: .notSelected,
+            lessonsUpdatedAtDate: Date(),
+            toggleWeek: true
+        )) {
+            ProfileHome()
         }
-    }
+    )
+    .smallPreview
+    .padding(16)
+    .background(Color.screenBackground)
+}
+
+#Preview {
+    RozkladSectionView(
+        store: Store(initialState: ProfileHome.State(
+            rozkladState: .selected(
+                GroupResponse(
+                    id: UUID(),
+                    name: "ІВ-82",
+                    faculty: "ФІОТ"
+                )
+            ),
+            lessonsUpdatedAtDate: Date(),
+            toggleWeek: false
+        )) {
+            ProfileHome()
+        }
+    )
+    .smallPreview
+    .padding(16)
+    .background(Color.screenBackground)
 }

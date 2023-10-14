@@ -164,6 +164,7 @@
 		DB27C6E228D67B1500F4FA1B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E128D67B1500F4FA1B /* FirebaseAnalytics */; };
 		DB27C6E428D67B1500F4FA1B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E328D67B1500F4FA1B /* FirebaseCrashlytics */; };
 		DB27C6E628D67B1500F4FA1B /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = DB27C6E528D67B1500F4FA1B /* FirebasePerformance */; };
+		DB4CB3AB2ADAC68700CF316D /* Int+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */; };
 		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
 		DB5BBD082ABCE8EB003DFCE4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DB5BBD072ABCE8EB003DFCE4 /* Localizable.xcstrings */; };
 		DB66277828EB9604006EBA99 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = DB66277728EB9604006EBA99 /* ComposableArchitecture */; };
@@ -368,6 +369,7 @@
 		DB1B4EB92A950B2700C5F2D8 /* CurrentDateService+Dependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentDateService+Dependency.swift"; sourceTree = "<group>"; };
 		DB1B4EBB2A950F0C00C5F2D8 /* CombineAsyncStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineAsyncStream.swift; sourceTree = "<group>"; };
 		DB27C6D128D674FA00F4FA1B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Ext.swift"; sourceTree = "<group>"; };
 		DB5BBD072ABCE8EB003DFCE4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = Localizable.xcstrings; path = KPIHubIOSTests/Localizable.xcstrings; sourceTree = SOURCE_ROOT; };
 		DB7FAD5128E24AF400963C84 /* Analytics+Campus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Analytics+Campus.swift"; sourceTree = "<group>"; };
 		DBD22F4D28D67E2C004C5CAC /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
@@ -653,6 +655,7 @@
 			isa = PBXGroup;
 			children = (
 				5F5F464B2849015500202DA5 /* Collection+Safe.swift */,
+				DB4CB3AA2ADAC68700CF316D /* Int+Ext.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -1465,6 +1468,7 @@
 				5F137EDB2843A85600514263 /* GroupsResponse.swift in Sources */,
 				DBD22F5228D70F75004C5CAC /* UserProperty.swift in Sources */,
 				5FDFBE27284D46FD007E9F3A /* CampusServiceState.swift in Sources */,
+				DB4CB3AB2ADAC68700CF316D /* Int+Ext.swift in Sources */,
 				5F5F462A284569DD00202DA5 /* LessonCellStore.swift in Sources */,
 				5F1B200C287072BB00E1D2A6 /* AppConfiguration.swift in Sources */,
 				DB1B4EA22A95076500C5F2D8 /* RozkladServiceLessons+Dependency.swift in Sources */,

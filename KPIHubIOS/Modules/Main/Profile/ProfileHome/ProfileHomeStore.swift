@@ -11,46 +11,54 @@ import Foundation
 
 struct ProfileHome: Reducer {
     struct State: Equatable {
-
         var rozkladState: RozkladServiceState.State = .notSelected
         var campusState: CampusServiceState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
-        @BindingState var toggleWeek: Bool = false
         var completeAppVersion: String = ""
 
         var confirmationDialog: ConfirmationDialogState<Action>?
         var alert: AlertState<Action>?
+        
+        @BindingState var toggleWeek: Bool = false
         @BindingState var isLoading: Bool = false
     }
     
-    enum Action: Equatable, BindableAction {
-        case onAppear
-
+    enum Action: Equatable {
         case setRozkladState(RozkladServiceState.State)
         case setCampusState(CampusServiceState.State)
         case setLessonsUpdatedAtDate(Date?)
 
-        case updateRozkladButtonTapped
         case updateRozklad
         case lessonsResult(TaskResult<[Lesson]>)
 
-        case changeGroupButtonTapped
         case changeGroup
-        case selectGroup
-
-        case logoutCampusButtonTapped
         case logoutCampus
-        case loginCampus
 
         case dismissConfirmationDialog
         case dismissAlert
-        case binding(BindingAction<State>)
+        
+        case view(View)
         case routeAction(RouteAction)
 
         enum RouteAction: Equatable {
             case rozklad
             case campus
             case forDevelopers
+        }
+        
+        enum View: Equatable, BindableAction {
+            case binding(BindingAction<State>)
+            
+            case updateRozkladButtonTapped
+            case changeGroupButtonTapped
+            case selectGroupButtonTapped
+            
+            case logoutCampusButtonTapped
+            case loginCampusButtonTapped
+            
+            case forDevelopersButtonTapped
+            
+            case onAppear
         }
     }
     
@@ -65,11 +73,11 @@ struct ProfileHome: Reducer {
     @Dependency(\.analyticsService) var analyticsService
     
     var body: some ReducerOf<Self> {
-        BindingReducer()
+        BindingReducer(action: /Action.view)
         
         Reduce { state, action in
             switch action {
-            case .onAppear:
+            case .view(.onAppear):
                 state.completeAppVersion = appConfiguration.completeAppVersion ?? ""
                 state.toggleWeek = userDefaultsService.get(for: .toggleWeek)
                 analyticsService.track(Event.Profile.profileHomeAppeared)
@@ -87,7 +95,7 @@ struct ProfileHome: Reducer {
                 state.lessonsUpdatedAtDate = date
                 return .none
 
-            case .updateRozkladButtonTapped:
+            case .view(.updateRozkladButtonTapped):
                 analyticsService.track(Event.Profile.reloadRozkladTapped)
                 state.confirmationDialog = ConfirmationDialogState(
                     title: TextState("Ви впевнені?"),
@@ -138,7 +146,7 @@ struct ProfileHome: Reducer {
                 analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: .profileReload))
                 return .none
 
-            case .changeGroupButtonTapped:
+            case .view(.changeGroupButtonTapped):
                 analyticsService.track(Event.Profile.changeGroupTapped)
                 state.confirmationDialog = ConfirmationDialogState(
                     title: TextState("Ви впевнені?"),
@@ -157,11 +165,11 @@ struct ProfileHome: Reducer {
                 analyticsService.setGroup(nil)
                 return .send(.routeAction(.rozklad))
 
-            case .selectGroup:
+            case .view(.selectGroupButtonTapped):
                 analyticsService.track(Event.Profile.selectGroup)
                 return .send(.routeAction(.rozklad))
 
-            case .logoutCampusButtonTapped:
+            case .view(.logoutCampusButtonTapped):
                 analyticsService.track(Event.Profile.campusLogoutTapped)
                 state.confirmationDialog = ConfirmationDialogState(
                     title: TextState("Ви впевнені?"),
@@ -180,11 +188,11 @@ struct ProfileHome: Reducer {
                 analyticsService.setCampusUser(nil)
                 return .send(.routeAction(.campus))
 
-            case .loginCampus:
+            case .view(.loginCampusButtonTapped):
                 analyticsService.track(Event.Profile.campusLogin)
                 return .send(.routeAction(.campus))
 
-            case .binding(\.rozkladSectionView.$toggleWeek):
+            case .view(.binding(\.$toggleWeek)):
                 userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
                 currentDateService.forceUpdate()
                 analyticsService.track(Event.Profile.changeWeek(state.toggleWeek))
@@ -197,8 +205,11 @@ struct ProfileHome: Reducer {
             case .dismissAlert:
                 state.alert = nil
                 return .none
+                
+            case .view(.forDevelopersButtonTapped):
+                return .send(.routeAction(.forDevelopers))
 
-            case .binding:
+            case .view(.binding):
                 return .none
 
             case .routeAction:

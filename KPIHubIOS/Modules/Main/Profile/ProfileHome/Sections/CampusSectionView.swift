@@ -8,20 +8,28 @@
 import SwiftUI
 import ComposableArchitecture
 
+/// Not ideal approach of ViewAction
 struct CampusSectionView: View {
-
     struct ViewState: Equatable {
         let campusState: CampusServiceState.State
         let fullName: String
         let cathedra: String
+        
+        init(state: ProfileHome.State) {
+            let campusUserInfoPath = /CampusServiceState.State.loggedIn
+            let campusUserInfo = campusUserInfoPath.extract(from: state.campusState)
+            
+            campusState = state.campusState
+            fullName = campusUserInfo?.fullName ?? "-"
+            cathedra = campusUserInfo?.subdivision.first?.name ?? "-"
+        }
     }
-
-    enum ViewAction {
-        case loginCampus
-        case logoutCampus
+    
+    @ObservedObject private var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    
+    init(store: StoreOf<ProfileHome>) {
+        self.viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
-
-    @ObservedObject var viewStore: ViewStore<ViewState, ViewAction>
 
     var body: some View {
         ProfileSectionView(
@@ -37,7 +45,7 @@ struct CampusSectionView: View {
         )
     }
 
-    var loggedInView: some View {
+    private var loggedInView: some View {
         VStack(alignment: .leading, spacing: 16) {
 
             ProfileCellView(
@@ -63,7 +71,7 @@ struct CampusSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.logoutCampus) },
+                action: { viewStore.send(.logoutCampusButtonTapped) },
                 label: {
                     Text("Вийти з аккаунту")
                         .font(.system(.body).bold())
@@ -76,12 +84,12 @@ struct CampusSectionView: View {
         }
     }
 
-    var loggedOutView: some View {
+    private var loggedOutView: some View {
         VStack(alignment: .leading, spacing: 16) {
             Divider()
 
             Button(
-                action: { viewStore.send(.loginCampus) },
+                action: { viewStore.send(.loginCampusButtonTapped) },
                 label: {
                     Text("Увійти у кампус")
                         .font(.system(.body).bold())
@@ -92,76 +100,31 @@ struct CampusSectionView: View {
             )
         }
     }
-
-}
-
-// MARK: - ViewState
-
-extension ProfileHome.State {
-
-    var campusSectionView: CampusSectionView.ViewState {
-        let campusUserInfoPath = /CampusServiceState.State.loggedIn
-        let campusUserInfo = campusUserInfoPath.extract(from: self.campusState)
-        return CampusSectionView.ViewState(
-            campusState: self.campusState,
-            fullName: campusUserInfo?.fullName ?? "-",
-            cathedra: campusUserInfo?.subdivision.first?.name ?? "-"
-        )
-    }
-
-}
-
-// MARK: - ViewAction
-
-extension ProfileHome.Action {
-
-    static func campusSectionView(_ viewAction: CampusSectionView.ViewAction) -> Self {
-        switch viewAction {
-        case .logoutCampus:
-            return .logoutCampusButtonTapped
-
-        case .loginCampus:
-            return .loginCampus
-        }
-    }
-
 }
 
 // MARK: - Preview
-
-struct CampusSectionView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        Group {
-            CampusSectionView(
-                viewStore: ViewStore(Store(
-                    initialState: CampusSectionView.ViewState(
-                        campusState: .loggedOut,
-                        fullName: "",
-                        cathedra: ""
-                    ),
-                    reducer: EmptyReducer()
-                ))
-            )
-            .smallPreview
-            .padding(16)
-            .background(Color.screenBackground)
-
-            CampusSectionView(
-                viewStore: ViewStore(Store(
-                    initialState: CampusSectionView.ViewState(
-                        campusState: .loggedIn(
-                            CampusUserInfo.mock
-                        ),
-                        fullName: CampusUserInfo.mock.fullName,
-                        cathedra: CampusUserInfo.mock.subdivision.first?.name ?? "-"
-                    ),
-                    reducer: EmptyReducer()
-                ))
-            )
-            .smallPreview
-            .padding(16)
-            .background(Color.screenBackground)
+#Preview {
+    CampusSectionView(
+        store: Store(
+            initialState: ProfileHome.State(campusState: .loggedIn(CampusUserInfo.mock)))
+        {
+            ProfileHome()
         }
-    }
+    )
+    .smallPreview
+    .padding(16)
+    .background(Color.screenBackground)
+}
+
+#Preview {
+    CampusSectionView(
+        store: Store(
+            initialState: ProfileHome.State(campusState: .loggedOut))
+        {
+            ProfileHome()
+        }
+    )
+    .smallPreview
+    .padding(16)
+    .background(Color.screenBackground)
 }

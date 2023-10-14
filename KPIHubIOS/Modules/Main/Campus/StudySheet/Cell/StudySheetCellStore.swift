@@ -8,9 +8,6 @@
 import ComposableArchitecture
 
 struct StudySheetCell: Reducer {
-
-    // MARK: - State
-
     struct State: Equatable, Identifiable {
         let item: StudySheetItem
 
@@ -18,14 +15,10 @@ struct StudySheetCell: Reducer {
             item.id
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable {
         case onTap
     }
-
-    // MARK: - Reducer
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in
