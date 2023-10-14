@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct LargeTagView: View {
-
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
 
     let icon: Image
     let text: String
@@ -39,18 +38,14 @@ struct LargeTagView: View {
                 .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
         }
     }
-
 }
 
 // MARK: - Preview
-
-struct LargeTagView_Previews: PreviewProvider {
-    static var previews: some View {
-        LargeTagView(
-            icon: Image(systemName: "graduationcap"),
-            text: "Практика",
-            color: .cyan
-        )
-        .previewLayout(.fixed(width: 200, height: 100))
-    }
+#Preview {
+    LargeTagView(
+        icon: Image(systemName: "graduationcap"),
+        text: "Практика",
+        color: .cyan
+    )
+    .previewLayout(.fixed(width: 200, height: 100))
 }

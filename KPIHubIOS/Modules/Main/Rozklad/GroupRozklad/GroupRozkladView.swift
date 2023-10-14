@@ -261,17 +261,13 @@ struct GroupRozkladView: View {
 }
 
 // MARK: - Preview
-
-struct GroupRozkladView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        NavigationView {
-            GroupRozkladView(
-                store: Store(initialState: GroupRozklad.State()) {
-                    GroupRozklad()
-                }
-            )
-            .navigationBarHidden(true)
-        }
+#Preview {
+    NavigationStack {
+        GroupRozkladView(
+            store: Store(initialState: GroupRozklad.State()) {
+                GroupRozklad()
+            }
+        )
+        .navigationBarHidden(true)
     }
 }
