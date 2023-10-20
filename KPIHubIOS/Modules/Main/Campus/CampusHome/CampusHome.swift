@@ -10,6 +10,7 @@ import Routes
 import Foundation
 import ConcurrencyExtras
 import Common
+import AnalyticsService
 
 struct CampusHome: Reducer {
     struct State: Equatable {

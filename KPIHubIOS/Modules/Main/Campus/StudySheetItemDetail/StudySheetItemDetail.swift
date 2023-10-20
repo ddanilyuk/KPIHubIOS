@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import IdentifiedCollections
 import Common
+import AnalyticsService
 
 struct StudySheetItemDetail: Reducer {
 

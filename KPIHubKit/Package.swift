@@ -19,13 +19,52 @@ let package = Package(
         .library(
             name: "Common",
             targets: ["Common"]
+        ),
+        .library(
+            name: "ForDevelopersFeature",
+            targets: ["ForDevelopersFeature"]
         )
     ],
     dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.0.0"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "10.16.0"),
         .package(url: "https://github.com/pointfreeco/swift-identified-collections", from: "1.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.0.0")
     ],
     targets: [
+        .target(
+            name: "Theme",
+            resources: [.process("Resources")],
+            swiftSettings: [.define("ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS")]
+        ),
+        .target(
+            name: "ForDevelopersFeature",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                "AnalyticsService",
+                "Theme",
+                "Common"
+            ],
+            resources: [
+                .process("Media.xcassets"),
+//                .process("Media.xcassets")
+            ],
+            packageAccess: true,
+            swiftSettings: [
+                .define("ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS"),
+                .define("ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS")
+            ]
+        ),
+        .target(
+            name: "AnalyticsService",
+            dependencies: [
+                .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+//                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+                "Common"
+            ]
+        ),
         .target(
             name: "RozkladServiceLessons",
             dependencies: [
@@ -44,7 +83,10 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Common"
+            name: "Common",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
         )
 //        .testTarget(
 //            name: "KPIHubKitTests",

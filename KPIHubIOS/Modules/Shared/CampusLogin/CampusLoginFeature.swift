@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 import Common
+import AnalyticsService
 
 struct CampusLoginFeature: Reducer {
     struct State: Equatable {

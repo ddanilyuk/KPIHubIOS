@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Combine
+import ForDevelopersFeature
 
 // ProfileFlowCoordinator
 struct Profile: Reducer {
@@ -40,7 +41,7 @@ struct Profile: Reducer {
                 return .send(.delegate(.selectCampusTab))
 
             case .profileHome(.routeAction(.forDevelopers)):
-                let forDevelopersState = ForDevelopers.State()
+                let forDevelopersState = ForDevelopersFeature.State()
                 state.path.append(.forDevelopers(forDevelopersState))
                 return .none
                 

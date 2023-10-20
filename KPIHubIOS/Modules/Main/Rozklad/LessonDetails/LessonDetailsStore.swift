@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import Common
+import AnalyticsService
 
 struct LessonDetails: Reducer {
     struct State: Equatable {

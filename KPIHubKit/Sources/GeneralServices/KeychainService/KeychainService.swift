@@ -7,7 +7,6 @@
 
 import Foundation
 import KeychainAccess
-import ComposableArchitecture
 
 final class KeychainService: KeychainServiceProtocol {
     private let keychain: Keychain

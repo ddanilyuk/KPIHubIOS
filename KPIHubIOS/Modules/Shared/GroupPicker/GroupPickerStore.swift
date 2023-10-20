@@ -10,6 +10,7 @@ import URLRouting
 import Foundation
 import UIKit
 import Common
+import AnalyticsService
 
 struct GroupPickerFeature: Reducer {
     struct State: Equatable {

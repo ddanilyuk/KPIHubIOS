@@ -11,6 +11,7 @@ import Foundation
 import Common
 import GeneralServices
 import RozkladServiceLessons
+import AnalyticsService
 
 struct ProfileHome: Reducer {
     struct State: Equatable {

@@ -9,6 +9,7 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 import Common
+import AnalyticsService
 
 struct GroupRozklad: Reducer {
     struct State: Equatable {

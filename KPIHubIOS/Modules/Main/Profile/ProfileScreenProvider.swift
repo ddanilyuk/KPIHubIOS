@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import ForDevelopersFeature
 
 extension Profile {
     struct ScreenProvider {}
@@ -14,12 +15,12 @@ extension Profile {
 extension Profile.ScreenProvider: Reducer {
     enum State: Equatable {
 //        case profileHome(ProfileHome.State)
-        case forDevelopers(ForDevelopers.State)
+        case forDevelopers(ForDevelopersFeature.State)
     }
     
     enum Action: Equatable {
 //        case profileHome(ProfileHome.Action)
-        case forDevelopers(ForDevelopers.Action)
+        case forDevelopers(ForDevelopersFeature.Action)
     }
     
     var body: some ReducerOf<Self> {
@@ -27,7 +28,7 @@ extension Profile.ScreenProvider: Reducer {
 //            ProfileHome()
 //        }
         Scope(state: /State.forDevelopers, action: /Action.forDevelopers) {
-            ForDevelopers()
+            ForDevelopersFeature()
         }
     }
 }
