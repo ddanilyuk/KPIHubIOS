@@ -9,7 +9,6 @@ import Foundation
 import ComposableArchitecture
 
 extension AlertState {
-
     static func error(_ error: Error) -> Self {
         AlertState(
             title: TextState("Помилка"),
@@ -17,5 +16,4 @@ extension AlertState {
             dismissButton: .default(TextState("Ok"))
         )
     }
-    
 }

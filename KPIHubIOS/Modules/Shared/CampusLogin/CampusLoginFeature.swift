@@ -14,10 +14,10 @@ struct CampusLoginFeature: Reducer {
         @BindingState var focusedField: Field?
         @BindingState var username: String = ""
         @BindingState var password: String = ""
-        @BindingState var isLoading: Bool = false
+        @BindingState var isLoading = false
         @PresentationState var alert: AlertState<Action.Alert>?
         
-        var loginButtonEnabled: Bool = false
+        var loginButtonEnabled = false
         let mode: Mode
     }
     

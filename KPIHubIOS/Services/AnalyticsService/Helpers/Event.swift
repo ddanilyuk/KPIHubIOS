@@ -7,6 +7,7 @@
 
 import Foundation
 
+// swiftlint:disable let_var_whitespace
 struct Event: Equatable {
     let name: String
     var parameters: [String: String]?
@@ -102,3 +103,4 @@ extension Event {
         static let forDevelopersAppeared = Event(name: "profile_for_developers_appeared")
     }
 }
+// swiftlint:enable let_var_whitespace

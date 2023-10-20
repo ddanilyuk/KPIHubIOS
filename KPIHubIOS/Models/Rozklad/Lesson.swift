@@ -118,7 +118,7 @@ extension Lesson {
 
         var minutesFromDayStart: Int {
             func calculate(hour: Int, minute: Int) -> Int {
-                return hour * 60 + minute
+                hour * 60 + minute
             }
             switch self {
             case .first:
@@ -137,11 +137,11 @@ extension Lesson {
         }
 
         var minutesFromDayStartEnd: Int {
-            return minutesFromDayStart + Position.lessonDuration
+            minutesFromDayStart + Position.lessonDuration
         }
 
         var range: Range<Int> {
-            return minutesFromDayStart..<minutesFromDayStart + Position.lessonDuration
+            minutesFromDayStart..<minutesFromDayStart + Position.lessonDuration
         }
 
         init(lessonResponsePosition: LessonResponse.Position) {
@@ -157,7 +157,7 @@ extension Lesson {
 
     enum Day: Int, Codable, CaseIterable, Equatable, Comparable {
         static func < (lhs: Lesson.Day, rhs: Lesson.Day) -> Bool {
-            return lhs.rawValue < rhs.rawValue
+            lhs.rawValue < rhs.rawValue
         }
 
         case monday = 1
@@ -259,7 +259,7 @@ extension Lesson: Codable {
 extension Lesson: Identifiable {
 
     var id: LessonResponse.ID {
-        return lessonResponse.id
+        lessonResponse.id
     }
     
 }

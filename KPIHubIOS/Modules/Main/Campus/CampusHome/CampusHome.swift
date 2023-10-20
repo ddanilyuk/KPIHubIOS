@@ -12,10 +12,10 @@ import ConcurrencyExtras
 
 struct CampusHome: Reducer {
     struct State: Equatable {
-        var openStudySheetOnLoad: Bool = false
+        var openStudySheetOnLoad = false
         var studySheetState: CampusServiceStudySheet.State = .notLoading
 
-        @BindingState var isLoading: Bool = false
+        @BindingState var isLoading = false
     }
 
     enum Action: Equatable {

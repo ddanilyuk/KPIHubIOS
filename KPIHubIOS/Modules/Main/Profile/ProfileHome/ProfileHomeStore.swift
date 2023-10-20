@@ -17,8 +17,8 @@ struct ProfileHome: Reducer {
         var completeAppVersion: String = ""
         
         @PresentationState var destination: Destination.State?
-        @BindingState var toggleWeek: Bool = false
-        @BindingState var isLoading: Bool = false
+        @BindingState var toggleWeek = false
+        @BindingState var isLoading = false
     }
     
     enum Action: Equatable {

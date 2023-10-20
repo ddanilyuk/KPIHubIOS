@@ -12,7 +12,7 @@ struct LessonDetailsDateAndTimeSection: View {
     enum Constants {
         static let lineHeight: CGFloat = 4
         static var lineCornerRadius: CGFloat {
-            return Constants.lineHeight / 2
+            Constants.lineHeight / 2
         }
     }
 

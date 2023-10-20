@@ -12,9 +12,9 @@ struct LessonDetailsSectionView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
 
     let title: String
-    var shadowColor: Color = Color.black.opacity(0.05)
+    var shadowColor = Color.black.opacity(0.05)
     var shadowRadius: CGFloat = 4
-    var isEditing: Bool = false
+    var isEditing = false
     @ViewBuilder var content: Content
 
     var body: some View {

@@ -20,9 +20,9 @@ struct GroupRozklad: Reducer {
         var lessons: IdentifiedArrayOf<Lesson> = []
         var sections: [Section] = []
 
-        var isAppeared: Bool = false
+        var isAppeared = false
 
-        @BindingState var needToScrollOnAppear: Bool = false
+        @BindingState var needToScrollOnAppear = false
         var scrollTo: Lesson.ID?
         
         // Animations
@@ -243,7 +243,7 @@ func calculateIndex(
         return compareWithTarget(element: element, index: index)
 
     case 0:
-        guard let lastShownElement = lastShownElement else {
+        guard let lastShownElement else {
             return 0
         }
         return compareWithTarget(element: lastShownElement.value, index: lastShownElement.index)

@@ -146,10 +146,10 @@ struct GroupRozkladView: View {
                     content: { store in
                         LessonCellView(store: store)
                             .if(section.index == 11) { view in
-                                view.modifier(RectModifier {
+                                view.modifier(RectModifier { frame in
                                     lastSectionOffsetModifiers(
                                         index: store.withState { $0.lesson.position.rawValue },
-                                        height: $0.height
+                                        height: frame.height
                                     )
                                 })
                             }

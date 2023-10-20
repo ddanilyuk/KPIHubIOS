@@ -39,14 +39,13 @@ struct UserDefaultsService: UserDefaultsServiceProtocol {
     func get<T: Codable>(
         for defaultKey: UserDefaultKey<T>
     ) -> T? {
-        
-        return get(for: defaultKey.key)
+        get(for: defaultKey.key)
     }
     
     func get(
         for defaultKey: UserDefaultKey<Bool>
     ) -> Bool {
-        return get(for: defaultKey) ?? false
+        get(for: defaultKey) ?? false
     }
     
     private func get<T: Codable>(

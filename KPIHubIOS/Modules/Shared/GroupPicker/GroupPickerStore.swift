@@ -16,9 +16,9 @@ struct GroupPickerFeature: Reducer {
         var groups: [GroupResponse] = []
         var searchedGroups: [GroupResponse] = []
         var selectedGroup: GroupResponse?
-        @BindingState var searchPresented: Bool = false
+        @BindingState var searchPresented = false
         @BindingState var searchedText: String = ""
-        @BindingState var isLoading: Bool = true
+        @BindingState var isLoading = true
         @PresentationState var alert: AlertState<Action.Alert>?
     }
     

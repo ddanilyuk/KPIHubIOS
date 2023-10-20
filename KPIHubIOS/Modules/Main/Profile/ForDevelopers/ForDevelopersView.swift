@@ -12,6 +12,7 @@ struct ForDevelopersView: View {
     struct ViewState: Equatable {
         init(state: ForDevelopers.State) { }
     }
+    
     @ObservedObject private var viewStore: ViewStore<ViewState, ForDevelopers.Action.View>
     
     init(store: StoreOf<ForDevelopers>) {

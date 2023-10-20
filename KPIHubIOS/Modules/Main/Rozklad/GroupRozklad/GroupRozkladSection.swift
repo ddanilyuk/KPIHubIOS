@@ -103,9 +103,9 @@ extension Array where Element == GroupRozklad.State.Section {
         nextLesson: Lesson.ID? = nil
     ) {
         let emptySections = Self.combine(Lesson.Week.allCases, Lesson.Day.allCases)
-            .map {
+            .map { week, day in
                 GroupRozklad.State.Section(
-                    position: .init(week: $0, day: $1),
+                    position: .init(week: week, day: day),
                     lessonCells: []
                 )
             }

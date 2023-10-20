@@ -12,7 +12,7 @@ struct LessonDetails: Reducer {
     struct State: Equatable {
         var lesson: Lesson
         var mode: LessonMode = .default
-        @BindingState var isEditing: Bool = false
+        @BindingState var isEditing = false
         @PresentationState var destination: Destination.State?
     }
     
@@ -161,7 +161,7 @@ struct LessonDetails: Reducer {
         let currentLesson = currentDateService.currentLesson()
         let nextLessonID = currentDateService.nextLessonID()
 
-        if let currentLesson = currentLesson, lessonID == currentLesson.lessonID {
+        if let currentLesson, lessonID == currentLesson.lessonID {
             state.mode = .current(currentLesson.percent)
         } else if lessonID == nextLessonID {
             state.mode = .next

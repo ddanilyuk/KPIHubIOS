@@ -133,7 +133,7 @@ private extension CurrentDateService {
             currentDay: Lesson.Day?
         ) -> (current: CurrentLesson?, next: Lesson) {
 
-            guard let currentDay = currentDay else {
+            guard let currentDay else {
                 return (
                     current: nil,
                     next: lessons.first(where: { $0.week == currentWeek.toggled() }) ?? lessons[0]

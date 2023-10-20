@@ -1,25 +1,20 @@
 disabled_rules:
   - trailing_whitespace
-  # - force_try
   - todo
-  - for_where
-  - large_tuple
   - attributes
   - void_function_in_ternary
 
-included: # paths to include during linting. `--path` is ignored if present.
+included:
   - KPIHubIOS
 
-excluded: # paths to ignore during linting. Takes precedence over `included`.
+excluded:
   - Carthage
   - Pods
   - KPIHubIOS/Resources
 
 opt_in_rules:
-  - attributes
   - closure_end_indentation
   - conditional_returns_on_newline
-
   - explicit_init
   - fatal_error_message
   - first_where
@@ -31,6 +26,45 @@ opt_in_rules:
   - unneeded_parentheses_in_closure_argument
   - nesting
   - nimble_operator
+  - implicit_return
+  - empty_string
+  - shorthand_optional_binding
+  - direct_return
+  - anonymous_argument_in_multiline_closure
+  - let_var_whitespace
+  - untyped_error_in_catch
+  - multiline_arguments_brackets
+  - discouraged_none_name
+  - redundant_type_annotation
+  - vertical_whitespace
+  - for_where
+  - unavailable_function
+  - object_literal
+  - lower_acl_than_parent
+  - reduce_into
+  - contains_over_filter_is_empty
+  - return_value_from_void_function
+  - private_subject
+  - contains_over_first_not_nil
+  - modifier_order
+  - type_contents_order
+  - vertical_whitespace_between_cases
+  - vertical_whitespace_closing_braces
+  - vertical_whitespace_opening_braces
+  - yoda_condition
+  - duplicate_enum_cases
+  - toggle_bool
+  - prefer_self_type_over_type_of_self
+  - multiline_arguments
+  - multiline_function_chains
+  - multiline_literal_brackets
+  - multiline_parameters
+  - multiline_parameters_brackets
+  - last_where
+  - indentation_width
+  - closure_end_indentation
+  - colon
+
 
 force_cast: warning
 force_try:
