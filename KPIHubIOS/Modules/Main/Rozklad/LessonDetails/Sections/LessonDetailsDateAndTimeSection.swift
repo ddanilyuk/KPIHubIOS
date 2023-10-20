@@ -41,7 +41,7 @@ struct LessonDetailsDateAndTimeSection: View {
 
                         progressBar
                     }
-                    .modifier(RectModifier { rect in
+                    .modifier(RectModifier(coordinateSpace: .local) { rect in
                         width = rect.width
                     })
 

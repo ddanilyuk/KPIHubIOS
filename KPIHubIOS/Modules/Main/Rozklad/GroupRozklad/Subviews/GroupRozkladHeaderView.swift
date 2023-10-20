@@ -10,49 +10,47 @@ import ComposableArchitecture
 
 struct GroupRozkladHeaderView: View {
     struct ViewState: Equatable {
-        var position: GroupRozklad.State.Section.Position
+        var position: RozkladPosition?
         let groupName: String
         var currentDay: Lesson.Day?
         var currentWeek: Lesson.Week = .first
         
         init(_ groupRozklad: GroupRozklad.State) {
-            self.position = groupRozklad.position
-            self.groupName = groupRozklad.groupName
-            self.currentWeek = groupRozklad.currentWeek
-            self.currentDay = groupRozklad.currentDay
+            position = groupRozklad.position
+            groupName = groupRozklad.groupName
+            currentWeek = groupRozklad.currentWeek
+            currentDay = groupRozklad.currentDay
         }
     }
     
-    @ObservedObject var viewStore: ViewStore<ViewState, GroupRozklad.Action>    
-    @Binding var displayedWeek: Lesson.Week
-    @Binding var displayedDay: Lesson.Day
-    @Binding var headerBackgroundOpacity: CGFloat
-
-    var selectWeek: (Lesson.Week) -> Void
-    var selectDay: (Lesson.Day?) -> Void
-
-    @Environment(\.safeAreaInsets) var safeAreaInsets
-
-    @ViewBuilder
+    @ObservedObject private var viewStore: ViewStore<ViewState, GroupRozklad.Action.View>
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+    private let backgroundOpacity: CGFloat
+    
+    init(store: StoreOf<GroupRozklad>, backgroundOpacity: CGFloat) {
+        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.backgroundOpacity = backgroundOpacity
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
             HStack {
-                GroupRozkladTitleView(
-                    title: viewStore.groupName
-                )
+                GroupRozkladTitleView(title: viewStore.groupName)
 
                 GroupRozkladWeekPicker(
-                    displayedWeek: viewStore.position.week,
-                    currentWeek: viewStore.currentWeek,
-                    selectWeek: selectWeek
-                )
+                    displayedWeek: viewStore.position?.week ?? .first,
+                    currentWeek: viewStore.currentWeek
+                ) { newWeek in
+                    viewStore.send(.selectWeek(newWeek))
+                }
             }
 
             GroupRozkladDayPicker(
-                displayedDay: viewStore.position.day,
-                currentDay: viewStore.currentDay,
-                selectDay: selectDay
-            )
+                displayedDay: viewStore.position?.day ?? .monday,
+                currentDay: viewStore.currentDay
+            ) { newDay in
+                viewStore.send(.selectDay(newDay))
+            }
             .padding(.bottom, 4)
         }
         .padding(.top, safeAreaInsets.top)
@@ -60,12 +58,12 @@ struct GroupRozkladHeaderView: View {
             ZStack {
                 Color.clear
                     .background(.regularMaterial, in: Rectangle())
-                    .opacity(headerBackgroundOpacity)
+                    .opacity(backgroundOpacity)
                     .padding(.bottom, 4)
                     .overlay(alignment: .bottom) {
                         Image("shadow")
                             .resizable()
-                            .opacity(headerBackgroundOpacity)
+                            .opacity(backgroundOpacity)
                             .frame(height: 4)
                     }
             }

@@ -8,30 +8,39 @@
 import SwiftUI
 
 struct RectModifier: ViewModifier {
-    var onChange: (CGRect) -> Void
+    private let onChange: (CGRect) -> Void
+    private let coordinateSpace: CoordinateSpaceProtocol
+    
+    init(
+        coordinateSpace: some CoordinateSpaceProtocol,
+        onChange: @escaping (CGRect) -> Void
+    ) {
+        self.onChange = onChange
+        self.coordinateSpace = coordinateSpace
+    }
 
     func body(content: Content) -> some View {
         content
-            .overlay(
-                ZStack {
-                    GeometryReader { proxy in
-                        Color.clear.preference(
-                            key: RectPreferenceKey.self,
-                            value: proxy.frame(in: .local)
-                        )
-                    }
-                }
-            )
-            .onPreferenceChange(RectPreferenceKey.self) { value in
-                onChange(value)
+            .background(GeometryReader { geometry in
+                Color.clear.preference(
+                    key: RectPreferenceKey.self,
+                    value: geometry.frame(in: coordinateSpace)
+                )
+            })
+            .onPreferenceChange(RectPreferenceKey.self) { position in
+                print("!! position: \(position)")
             }
+//            .onPreferenceChange(RectPreferenceKey.self) { value in
+//                print("!! value: \(value)")
+//                onChange(value)
+//            }
     }
 }
 
-struct RectPreferenceKey: PreferenceKey {
+private struct RectPreferenceKey: PreferenceKey {
     static var defaultValue: CGRect = .zero
 
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
-        value = nextValue()
+        
     }
 }
