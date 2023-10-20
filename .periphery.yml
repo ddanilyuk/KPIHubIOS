@@ -1,0 +1,5 @@
+project: KPIHubIOS.xcodeproj
+schemes:
+- KPIHubIOS-Staging
+targets:
+- KPIHubIOS

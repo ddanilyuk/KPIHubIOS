@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct RectModifier: ViewModifier {
-
-    @State var value: CGRect = .zero
     var onChange: (CGRect) -> Void
 
     func body(content: Content) -> some View {
@@ -26,10 +24,8 @@ struct RectModifier: ViewModifier {
             )
             .onPreferenceChange(RectPreferenceKey.self) { value in
                 onChange(value)
-                self.value = value
             }
     }
-
 }
 
 struct RectPreferenceKey: PreferenceKey {

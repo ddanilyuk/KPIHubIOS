@@ -29,7 +29,6 @@ struct RozkladFlow: Reducer {
     
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
-    @Dependency(\.analyticsService) var analyticsService
     
     var core: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in

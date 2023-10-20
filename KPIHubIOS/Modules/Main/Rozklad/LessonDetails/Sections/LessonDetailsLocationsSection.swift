@@ -9,8 +9,6 @@ import SwiftUI
 
 struct LessonDetailsLocationsSection: View {
 
-    @Environment(\.colorScheme) var colorScheme
-
     var locations: [String]
 
     var body: some View {
@@ -41,42 +39,6 @@ struct LessonDetailsLocationsSection: View {
             }
         }
         .padding(16)
-    }
-
-}
-
-/// Not used for now
-private struct LinksView: View {
-
-    var body: some View {
-        Divider()
-            .padding(.horizontal, 8)
-
-        VStack {
-            HStack(spacing: 16) {
-                Circle()
-                    .fill(Color.orange.opacity(0.2))
-                    .frame(width: 24, height: 24)
-                Text("bbb.com")
-                Spacer()
-            }
-            .padding(.vertical, 9)
-
-            Divider()
-                .opacity(0.5)
-
-            HStack(spacing: 16) {
-                Circle()
-                    .fill(Color.orange.opacity(0.2))
-                    .frame(width: 24, height: 24)
-                Text("zoom.com")
-                Spacer()
-
-            }
-            .padding(.vertical, 9)
-        }
-        .padding(.bottom, 8)
-        .padding(.horizontal, 16)
     }
 
 }

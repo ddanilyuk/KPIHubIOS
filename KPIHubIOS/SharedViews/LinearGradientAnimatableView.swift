@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LinearGradientAnimatableView: View {
-    @State private var isAnimating = false
     @State private var progress: CGFloat = 0
 
     let startGradient = Gradient(colors: [.purple, .yellow])

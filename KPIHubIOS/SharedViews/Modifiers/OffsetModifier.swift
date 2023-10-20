@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct OffsetModifier: ViewModifier {
-
-    @State var offset: CGFloat = .zero
-
     var onChange: (CGFloat) -> Void
 
     func body(content: Content) -> some View {
@@ -27,10 +24,8 @@ struct OffsetModifier: ViewModifier {
             )
             .onPreferenceChange(OffsetPreferenceKey.self) { value in
                 onChange(value)
-                self.offset = value
             }
     }
-
 }
 
 struct OffsetPreferenceKey: PreferenceKey {

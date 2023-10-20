@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct LessonDetailsTeacherSection: View {
-
-    @Environment(\.colorScheme) var colorScheme
-
     var teachers: [String]
     var isEditing: Bool
 

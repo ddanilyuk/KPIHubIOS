@@ -13,15 +13,11 @@ struct GroupRozkladView: View {
     struct ViewState: Equatable {
         var sections: [GroupRozklad.State.Section] = []
         var scrollTo: Lesson.ID?
-        var currentDay: Lesson.Day?
-        var currentWeek: Lesson.Week = .first
         var currentLesson: CurrentLesson?
         
         init(_ state: GroupRozklad.State) {
             sections = state.sections
             scrollTo = state.scrollTo
-            currentDay = state.currentDay
-            currentWeek = state.currentWeek
             currentLesson = state.currentLesson
         }
     }

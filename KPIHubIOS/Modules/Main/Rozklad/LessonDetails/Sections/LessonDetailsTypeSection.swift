@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct LessonDetailsTypeSection: View {
-
-    @Environment(\.colorScheme) var colorScheme
-
     var type: String
 
     var body: some View {
@@ -29,5 +26,4 @@ struct LessonDetailsTypeSection: View {
             }
         )
     }
-
 }

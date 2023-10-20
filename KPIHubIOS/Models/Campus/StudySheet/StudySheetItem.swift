@@ -16,8 +16,6 @@ struct StudySheetItem: Identifiable, Equatable {
     let teachers: [String]
     let activities: [Activity]
 
-    let studySheetItemResponse: StudySheetItemResponse
-
     struct Activity: Codable, Equatable, Identifiable {
 
         let id: Int
@@ -50,8 +48,6 @@ extension StudySheetItem {
         self.activities = studySheetItemResponse.activities
             .enumerated()
             .map { Activity(id: $0, studySheetActivityResponse: $1) }
-
-        self.studySheetItemResponse = studySheetItemResponse
     }
 }
 

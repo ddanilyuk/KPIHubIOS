@@ -82,14 +82,14 @@ private extension View {
             searchable(
                 text: text,
                 isPresented: isPresented,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: Text("Пошук")
+                placement: placement,
+                prompt: prompt
             )
         } else {
             searchable(
                 text: text,
-                placement: .navigationBarDrawer(displayMode: .always),
-                prompt: Text("Пошук")
+                placement: placement,
+                prompt: prompt
             )
         }
     }

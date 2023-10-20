@@ -10,14 +10,6 @@ import Foundation
 enum APIError: Error {
     case serviceError(statusCode: Int, APIErrorPayload)
     case unknown
-
-    init(error: Error) {
-        if let apiError = error as? APIError {
-            self = apiError
-        } else {
-            self = .unknown
-        }
-    }
 }
 
 extension APIError: Equatable {
