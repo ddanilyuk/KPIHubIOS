@@ -94,7 +94,6 @@ struct EditLessonTeachersView: View {
                     .foregroundColor(.orange)
             }
         )
-        
     }
     
     private var saveButton: some View {

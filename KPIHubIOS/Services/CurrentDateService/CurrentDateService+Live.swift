@@ -34,11 +34,13 @@ private extension CurrentDateService {
         private var lessonsTask: Task<Void, Never>?
         private var notificationCenterTask: Task<Void, Never>?
         
+        // swiftlint:disable private_subject
         let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(nil)
         let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
         let currentLessonSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
         let nextLessonIDSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
         let updatedSubject = CurrentValueSubject<Date, Never>(Date())
+        // swiftlint:enable private_subject
         
         init() {
             calendar.timeZone = TimeZone(identifier: "Europe/Kiev")!
@@ -132,7 +134,6 @@ private extension CurrentDateService {
             currentWeek: Lesson.Week,
             currentDay: Lesson.Day?
         ) -> (current: CurrentLesson?, next: Lesson) {
-
             guard let currentDay else {
                 return (
                     current: nil,

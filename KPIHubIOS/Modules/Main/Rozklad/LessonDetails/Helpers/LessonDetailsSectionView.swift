@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LessonDetailsSectionView<Content: View>: View {
-
     @Environment(\.colorScheme) var colorScheme
 
     let title: String
@@ -38,7 +37,6 @@ struct LessonDetailsSectionView<Content: View>: View {
 }
 
 private struct SectionHeader: View {
-
     var title: String
 
     var body: some View {
@@ -47,5 +45,4 @@ private struct SectionHeader: View {
             .padding(.horizontal, 16)
             .frame(height: 25)
     }
-
 }

@@ -11,10 +11,6 @@ struct GroupsResponse {
     var groups: [GroupResponse]
 }
 
-extension GroupsResponse: Codable {
+extension GroupsResponse: Codable { }
 
-}
-
-extension GroupsResponse: Equatable {
-
-}
+extension GroupsResponse: Equatable { }

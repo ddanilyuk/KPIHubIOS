@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct Loadable: ViewModifier {
-    
     @Binding var isVisible: Bool
 
     func body(content: Content) -> some View {
@@ -17,13 +16,10 @@ struct Loadable: ViewModifier {
             .overlay(isVisible ? Loader() : nil)
             .animation(.easeInOut(duration: 0.3), value: isVisible)
     }
-
 }
 
 extension View {
-
     func loadable(_ isVisible: Binding<Bool>) -> some View {
         modifier(Loadable(isVisible: isVisible))
     }
-
 }

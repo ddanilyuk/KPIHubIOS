@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GroupRozkladHeaderView: View {
-    
     struct ViewState: Equatable {
         var position: GroupRozklad.State.Section.Position
         let groupName: String
@@ -72,5 +71,4 @@ struct GroupRozkladHeaderView: View {
             }
         )
     }
-
 }

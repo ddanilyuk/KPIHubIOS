@@ -8,7 +8,6 @@
 import Foundation
 
 struct StudySheetItem: Identifiable, Equatable {
-
     let id: Int
     let year: String
     let semester: Int
@@ -17,7 +16,6 @@ struct StudySheetItem: Identifiable, Equatable {
     let activities: [Activity]
 
     struct Activity: Codable, Equatable, Identifiable {
-
         let id: Int
         let date: String
         let mark: String
@@ -37,7 +35,6 @@ struct StudySheetItem: Identifiable, Equatable {
 }
 
 extension StudySheetItem {
-
     init(studySheetItemResponse: StudySheetItemResponse) {
         self.id = studySheetItemResponse.id
         self.year = studySheetItemResponse.year
@@ -54,7 +51,6 @@ extension StudySheetItem {
 // MARK: StudySheetItem + Mock
 
 extension StudySheetItem {
-
     static var mock1: StudySheetItem {
         StudySheetItem(
             studySheetItemResponse: StudySheetItemResponse(
@@ -67,7 +63,8 @@ extension StudySheetItem {
                 activities: [
                     .init(
                         date: "2018-2019",
-                        mark: "15", type: "Test",
+                        mark: "15", 
+                        type: "Test",
                         teacher: "Сергеєва Оксана Олексіївна",
                         note: ""
                     )
@@ -117,5 +114,4 @@ extension StudySheetItem {
             )
         )
     }
-
 }

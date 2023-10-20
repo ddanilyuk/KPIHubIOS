@@ -40,5 +40,4 @@ struct LessonDetailsTeacherSection: View {
         }
         .padding(16)
     }
-
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 struct CampusUserInfo: Codable, Equatable {
-
     // MARK: - StudyGroup
 
     struct InfoItem: Codable, Equatable {
@@ -41,11 +40,9 @@ struct CampusUserInfo: Codable, Equatable {
     let fullName: String
     let photo: String
     let credo: String
-
 }
 
 extension CampusUserInfo {
-
     static var mock = CampusUserInfo(
         modules: [],
         position: [],

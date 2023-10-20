@@ -47,7 +47,6 @@ opt_in_rules:
   - private_subject
   - contains_over_first_not_nil
   - modifier_order
-  - type_contents_order
   - vertical_whitespace_between_cases
   - vertical_whitespace_closing_braces
   - vertical_whitespace_opening_braces
@@ -62,8 +61,8 @@ opt_in_rules:
   - multiline_parameters_brackets
   - last_where
   - indentation_width
-  - closure_end_indentation
   - colon
+  - redundant_nil_coalescing
 
 
 force_cast: warning

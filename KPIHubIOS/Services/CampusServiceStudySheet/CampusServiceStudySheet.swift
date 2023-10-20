@@ -16,8 +16,7 @@ struct CampusServiceStudySheet {
         case loaded([StudySheetItem])
     }
 
-    let subject: CurrentValueSubject<State, Never>
-
-    let load: () async -> Void
-    let clean: () -> Void
+    var stateStream: () -> AsyncStream<State>
+    var load: () async -> Void
+    var clean: () -> Void
 }

@@ -14,12 +14,8 @@ struct LessonsResponse {
 
 // MARK: - Decodable
 
-extension LessonsResponse: Decodable {
-    
-}
+extension LessonsResponse: Decodable { }
 
 // MARK: - Equatable
 
-extension LessonsResponse: Equatable {
-
-}
+extension LessonsResponse: Equatable { }

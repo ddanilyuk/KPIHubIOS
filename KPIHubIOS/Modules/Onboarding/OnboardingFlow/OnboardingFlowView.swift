@@ -34,6 +34,7 @@ struct OnboardingFlowView: View {
                         action: OnboardingFlow.Path.Action.campusLogin,
                         then: CampusLoginView.init
                     )
+
                 case .groupPicker:
                     CaseLet(
                         /OnboardingFlow.Path.State.groupPicker,

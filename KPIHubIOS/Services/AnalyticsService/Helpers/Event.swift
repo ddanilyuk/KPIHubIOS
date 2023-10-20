@@ -14,7 +14,6 @@ struct Event: Equatable {
 }
 
 extension Event {
-    
     enum Onboarding {
         static let onboardingAppeared = Event(name: "onboarding_appeared")
         static let onboardingPassed = Event(name: "onboarding_passed")

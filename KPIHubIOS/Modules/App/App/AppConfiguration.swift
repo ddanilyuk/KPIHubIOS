@@ -18,7 +18,7 @@ extension AppConfiguration {
     static func live(bundle: Bundle) -> AppConfiguration {
         AppConfiguration(bundle: bundle)
     }
-
+    
     init(bundle: Bundle) {
         guard
             let appName = bundle.object(forInfoDictionaryKey: Keys.appName) as? String,
@@ -28,8 +28,9 @@ extension AppConfiguration {
             fatalError("Couldn't init environment from bundle: \(bundle.infoDictionary ?? [:])")
         }
 
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-           let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        if let version, let buildNumber {
             let appVersionString = "\(version) (\(buildNumber))"
             completeAppVersion = apiEnvironment.isTestEnvironment
             ? appVersionString + " (\(apiEnvironment.shortDescription))"

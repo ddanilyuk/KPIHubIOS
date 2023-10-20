@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileSectionView<Content: View>: View {
-
     @Environment(\.colorScheme) var colorScheme
 
     let title: String

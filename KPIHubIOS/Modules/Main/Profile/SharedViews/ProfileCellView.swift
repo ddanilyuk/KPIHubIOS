@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
-
     enum Value {
         case text(String)
         case date(Date?)
@@ -91,5 +90,4 @@ struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
 
         .frame(minHeight: 44)
     }
-
 }

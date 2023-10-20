@@ -118,7 +118,6 @@ struct StudySheetView: View {
                     Text("Будь який")
                 }
             )
-
         } label: {
             VStack {
                 Text("Семестр:")

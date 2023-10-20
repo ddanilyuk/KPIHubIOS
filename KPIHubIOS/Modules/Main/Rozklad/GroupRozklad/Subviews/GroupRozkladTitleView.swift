@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GroupRozkladTitleView: View {
-
     let title: String
 
     var body: some View {
@@ -24,5 +23,4 @@ struct GroupRozkladTitleView: View {
             )
             .shadow(color: .orange.opacity(0.4), radius: 4, x: 2, y: 0)
     }
-
 }

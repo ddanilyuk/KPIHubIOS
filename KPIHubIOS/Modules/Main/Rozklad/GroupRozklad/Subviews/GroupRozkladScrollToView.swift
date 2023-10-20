@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GroupRozkladScrollToView: View {
-
     enum Mode {
         case current
         case next

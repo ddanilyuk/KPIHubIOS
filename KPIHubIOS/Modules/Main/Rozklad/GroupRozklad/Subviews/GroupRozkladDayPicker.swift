@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GroupRozkladDayPicker: View {
-
     var displayedDay: Lesson.Day
     var currentDay: Lesson.Day?
     var selectDay: (Lesson.Day?) -> Void
@@ -40,5 +39,4 @@ struct GroupRozkladDayPicker: View {
         .padding(.horizontal, 16)
         .frame(height: 40)
     }
-    
 }

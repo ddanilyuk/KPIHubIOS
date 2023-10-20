@@ -38,5 +38,4 @@ struct LessonCell: Reducer {
             }
         }
     }
-
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 struct Lesson {
-
     var names: [String]
     var teachers: [String]?
     var locations: [String]?
@@ -26,7 +25,6 @@ struct Lesson {
 // MARK: Lesson + LessonResponse
 
 extension Lesson {
-
     init(lessonResponse: LessonResponse) {
         self.names = lessonResponse.names
         self.teachers = lessonResponse.teachers
@@ -40,13 +38,11 @@ extension Lesson {
 
         self.lessonResponse = lessonResponse
     }
-    
 }
 
 // MARK: Positon
 
 extension Lesson {
-
     enum Position: Int, Codable, CaseIterable, Equatable {
         case first = 1
         case second
@@ -71,6 +67,7 @@ extension Lesson {
                     secondPartStart: "9:20",
                     secondPartEnd: "10:05"
                 )
+
             case .second:
                 return Description(
                     firstPartStart: "10:25",
@@ -110,7 +107,6 @@ extension Lesson {
                     secondPartStart: "18:55",
                     secondPartEnd: "19:40"
                 )
-
             }
         }
 
@@ -123,14 +119,19 @@ extension Lesson {
             switch self {
             case .first:
                 return calculate(hour: 8, minute: 30)
+
             case .second:
                 return calculate(hour: 10, minute: 25)
+
             case .third:
                 return calculate(hour: 12, minute: 20)
+
             case .fourth:
                 return calculate(hour: 14, minute: 15)
+
             case .fifth:
                 return calculate(hour: 16, minute: 10)
+
             case .sixth:
                 return calculate(hour: 18, minute: 05)
             }
@@ -148,13 +149,11 @@ extension Lesson {
             self = .init(rawValue: lessonResponsePosition.rawValue) ?? .first
         }
     }
-
 }
 
 // MARK: - Day
 
 extension Lesson {
-
     enum Day: Int, Codable, CaseIterable, Equatable, Comparable {
         static func < (lhs: Lesson.Day, rhs: Lesson.Day) -> Bool {
             lhs.rawValue < rhs.rawValue
@@ -205,13 +204,11 @@ extension Lesson {
             }
         }
     }
-
 }
 
 // MARK: - Week
 
 extension Lesson {
-
     enum Week: Int, Codable, Equatable, CaseIterable {
         case first = 1
         case second
@@ -224,6 +221,7 @@ extension Lesson {
             switch self {
             case .first:
                 return .second
+
             case .second:
                 return .first
             }
@@ -238,34 +236,28 @@ extension Lesson {
             }
         }
     }
-
 }
 
 // MARK: - Equatable
 
 extension Lesson: Equatable {
-
 }
 
 // MARK: - Codable
 
 extension Lesson: Codable {
-
 }
 
 
 // MARK: - Identifiable
 
 extension Lesson: Identifiable {
-
     var id: LessonResponse.ID {
         lessonResponse.id
     }
-    
 }
 
 extension Lesson {
-    
     var isTeachersEmpty: Bool {
         (teachers ?? []).isContentEmpty
     }
@@ -275,5 +267,4 @@ extension Lesson {
     var isLocationsEmpty: Bool {
         (locations ?? []).isContentEmpty
     }
-
 }

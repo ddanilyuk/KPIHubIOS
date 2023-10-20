@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LessonDetailsDateAndTimeSection: View {
-
     enum Constants {
         static let lineHeight: CGFloat = 4
         static var lineCornerRadius: CGFloat {
@@ -32,7 +31,6 @@ struct LessonDetailsDateAndTimeSection: View {
             content: {
                 VStack(spacing: 16) {
                     ZStack(alignment: .center) {
-
                         backgroundLine
 
                         HStack(spacing: width * 5 / CGFloat(Lesson.Position.lessonDuration)) {
@@ -127,13 +125,11 @@ struct LessonDetailsDateAndTimeSection: View {
             EmptyView()
         }
     }
-
 }
 
 // MARK: - LessonMode + Colors
 
 private extension LessonMode {
-
     var shadowColor: Color {
         switch self {
         case .current:
@@ -172,5 +168,4 @@ private extension LessonMode {
             return .orange
         }
     }
-
 }

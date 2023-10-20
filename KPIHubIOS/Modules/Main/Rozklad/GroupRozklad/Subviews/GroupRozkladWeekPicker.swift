@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct GroupRozkladWeekPicker: View {
-
     var displayedWeek: Lesson.Week
     var currentWeek: Lesson.Week
     var selectWeek: (Lesson.Week) -> Void
@@ -40,5 +39,4 @@ struct GroupRozkladWeekPicker: View {
         .padding(.horizontal, 16)
         .frame(height: 40)
     }
-
 }

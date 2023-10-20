@@ -194,7 +194,6 @@ struct GroupRozklad: Reducer {
                 state.needToScrollOnAppear = true
                 return .none
             }
-
         } else {
             return .none
         }

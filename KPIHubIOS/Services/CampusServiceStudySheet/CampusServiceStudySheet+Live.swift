@@ -20,7 +20,7 @@ extension CampusServiceStudySheet {
         let subject = CurrentValueSubject<State, Never>(.notLoading)
 
         return CampusServiceStudySheet(
-            subject: subject,
+            stateStream: { subject.values.eraseToStream() },
             load: {
                 guard
                     let username = keychainService.get(key: .campusUsername),

@@ -9,7 +9,6 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GroupRozkladView: View {
-    
     struct ViewState: Equatable {
         var sections: [GroupRozklad.State.Section] = []
         var scrollTo: Lesson.ID?
@@ -253,7 +252,6 @@ struct GroupRozkladView: View {
         }
         selectedWeek = nil
     }
-
 }
 
 // MARK: - Preview

@@ -9,11 +9,9 @@ import ComposableArchitecture
 import IdentifiedCollections
 
 struct StudySheetItemDetail: Reducer {
-
     // MARK: - State
 
     struct State: Equatable, Identifiable {
-
         let item: StudySheetItem
         var cells: IdentifiedArrayOf<StudySheetActivity.State>
 
@@ -46,10 +44,10 @@ struct StudySheetItemDetail: Reducer {
             case .onAppear:
                 analyticsService.track(Event.Campus.studySheetItemDetailAppeared)
                 return .none
+
             case .cells:
                 return .none
             }
         }
     }
-
 }

@@ -12,9 +12,7 @@ enum APIError: Error {
     case unknown
 }
 
-extension APIError: Equatable {
-
-}
+extension APIError: Equatable { }
 
 struct APIErrorPayload: Codable, Equatable {
     let reason: String?

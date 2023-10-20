@@ -35,6 +35,7 @@ extension RozkladServiceState {
                 switch clientValue.value {
                 case let .selected(group):
                     userDefaultsService.set(group, for: .groupResponse)
+
                 case .notSelected:
                     userDefaultsService.remove(for: .groupResponse)
                 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LessonDetailsLocationsSection: View {
-
     var locations: [String]
 
     var body: some View {
@@ -40,5 +39,4 @@ struct LessonDetailsLocationsSection: View {
         }
         .padding(16)
     }
-
 }

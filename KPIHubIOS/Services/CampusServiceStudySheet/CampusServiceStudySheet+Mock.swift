@@ -11,7 +11,7 @@ import Combine
 extension CampusServiceStudySheet {
     static func mock() -> CampusServiceStudySheet {
         CampusServiceStudySheet(
-            subject: CurrentValueSubject<State, Never>(.notLoading),
+            stateStream: { .never },
             load: { },
             clean: { }
         )

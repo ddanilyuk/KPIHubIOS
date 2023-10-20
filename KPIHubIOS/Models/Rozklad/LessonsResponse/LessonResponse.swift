@@ -8,9 +8,8 @@
 import Foundation
 
 struct LessonResponse: Equatable {
-
     // MARK: - Position
-
+    
     enum Position: Int, Codable, CaseIterable, Equatable {
         case first = 1
         case second
@@ -21,7 +20,7 @@ struct LessonResponse: Equatable {
     }
 
     // MARK: - Day
-
+    
     enum Day: Int, Codable, CaseIterable, Equatable {
         case monday = 1
         case tuesday
@@ -32,7 +31,7 @@ struct LessonResponse: Equatable {
     }
 
     // MARK: - Week
-
+    
     enum Week: Int, Codable, Equatable, CaseIterable {
         case first = 1
         case second
@@ -50,30 +49,23 @@ struct LessonResponse: Equatable {
 
 // MARK: - Codable
 
-extension LessonResponse: Codable {
-
-}
+extension LessonResponse: Codable { }
 
 // MARK: - Hashable
 
-extension LessonResponse: Hashable {
-
-}
+extension LessonResponse: Hashable { }
 
 // MARK: - Identifiable
 
 extension LessonResponse: Identifiable {
-
     var id: Int {
         hashValue
     }
-
 }
 
 // MARK: - Mock
 
 extension LessonResponse {
-
     static let mocked: [LessonResponse] = [
         LessonResponse(
             names: ["First Monday very long", "First 2213 very long", "First aallala very long"],
@@ -180,5 +172,4 @@ extension LessonResponse {
             position: .second
         )
     ]
-
 }

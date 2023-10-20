@@ -73,10 +73,13 @@ struct StudySheet: Reducer {
                     switch (state.selectedYear, state.selectedSemester) {
                     case (.none, .none):
                         return true
+
                     case let (.some(selectedYear), .none):
                         return item.year == selectedYear
+
                     case let (.none, .some(selectedSemester)):
                         return item.semester == selectedSemester
+
                     case let (.some(selectedYear), .some(selectedSemester)):
                         return item.year == selectedYear && item.semester == selectedSemester
                     }

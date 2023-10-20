@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BorderGradientBackgroundView: View {
-
     @Environment(\.colorScheme) var colorScheme
 
     @State var gradientAngle: Double = 0

@@ -13,10 +13,6 @@ struct GroupResponse {
     let faculty: String?
 }
 
-extension GroupResponse: Codable {
+extension GroupResponse: Codable { }
 
-}
-
-extension GroupResponse: Equatable {
-
-}
+extension GroupResponse: Equatable { }

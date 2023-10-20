@@ -10,8 +10,8 @@ import XCTestDynamicOverlay
 extension AnalyticsService {
     static func failing() -> AnalyticsService {
         AnalyticsService(
-           track: XCTUnimplemented("\(Self.self).track"),
-           setUserProperty: XCTUnimplemented("\(Self.self).setUserProperty")
-       )
+            track: XCTUnimplemented("\(Self.self).track"),
+            setUserProperty: XCTUnimplemented("\(Self.self).setUserProperty")
+        )
     }
 }

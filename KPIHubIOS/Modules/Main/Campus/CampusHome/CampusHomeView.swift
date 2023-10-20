@@ -103,7 +103,6 @@ struct CampusHomeView: View {
             Text("Завантажено")
         }
     }
-
 }
 
 // MARK: - Preview

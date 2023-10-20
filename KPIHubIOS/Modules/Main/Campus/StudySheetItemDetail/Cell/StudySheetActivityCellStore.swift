@@ -8,7 +8,6 @@
 import ComposableArchitecture
 
 struct StudySheetActivity: Reducer {
-
     // MARK: - State
 
     struct State: Equatable, Identifiable {
@@ -35,5 +34,4 @@ struct StudySheetActivity: Reducer {
             }
         }
     }
-
 }

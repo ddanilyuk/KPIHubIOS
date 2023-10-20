@@ -13,7 +13,6 @@ struct UserProperty: Equatable {
 }
 
 extension UserProperty {
-    
     static func groupID(_ value: String?) -> UserProperty {
         UserProperty(name: "groupID", value: value)
     }
@@ -37,5 +36,4 @@ extension UserProperty {
     static func userEmail(_ value: String?) -> UserProperty {
         UserProperty(name: "userEmail", value: value)
     }
-
 }

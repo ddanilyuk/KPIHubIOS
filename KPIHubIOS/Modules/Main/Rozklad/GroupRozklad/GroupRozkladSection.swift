@@ -11,9 +11,7 @@ import IdentifiedCollections
 // MARK: - Section
 
 extension GroupRozklad.State {
-
     struct Section: Equatable, Identifiable {
-
         static func id(week: Lesson.Week, day: Lesson.Day) -> String {
             "\(Section.self)\(week.rawValue)\(day.rawValue)"
         }
@@ -29,15 +27,12 @@ extension GroupRozklad.State {
             position.index
         }
     }
-
 }
 
 // MARK: - Section.Position
 
 extension GroupRozklad.State.Section {
-
     struct Position: Equatable, Identifiable {
-
         static var count: Int {
             Lesson.Week.allCases.count * Lesson.Day.allCases.count
         }
@@ -57,13 +52,11 @@ extension GroupRozklad.State.Section {
             Position.index(week: week, day: day)
         }
     }
-
 }
 
 // MARK: - Section.Position init
 
 extension GroupRozklad.State.Section.Position {
-
     init(index: Int) {
         switch index {
         case (0..<6):
@@ -80,13 +73,11 @@ extension GroupRozklad.State.Section.Position {
             day = .monday
         }
     }
-
 }
 
 // MARK: - Array + GroupRozklad.State.Section
 
 extension Array where Element == GroupRozklad.State.Section {
-
     static func combine<T, V>(_ firsts: [T], _ seconds: [V]) -> [(T, V)] {
         var result: [(T, V)] = []
         for first in firsts {
@@ -128,5 +119,4 @@ extension Array where Element == GroupRozklad.State.Section {
             ].lessonCells.append(lessonState)
         }
     }
-
 }

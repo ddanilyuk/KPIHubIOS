@@ -38,6 +38,7 @@ struct CampusSectionView: View {
                 switch viewStore.campusState {
                 case .loggedIn:
                     loggedInView
+
                 case .loggedOut:
                     loggedOutView
                 }
@@ -47,7 +48,6 @@ struct CampusSectionView: View {
 
     private var loggedInView: some View {
         VStack(alignment: .leading, spacing: 16) {
-
             ProfileCellView(
                 title: "Ім'я:",
                 value: .text(viewStore.fullName),
@@ -80,7 +80,6 @@ struct CampusSectionView: View {
                     Spacer()
                 }
             )
-
         }
     }
 

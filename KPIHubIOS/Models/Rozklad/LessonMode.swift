@@ -16,6 +16,7 @@ enum LessonMode: Equatable {
         switch self {
         case .current:
             return true
+
         case .next, .default:
             return false
         }
@@ -25,8 +26,10 @@ enum LessonMode: Equatable {
         switch self {
         case let .current(value):
             return value
+
         case .default:
             return 0
+
         case .next:
             return 0
         }

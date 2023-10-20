@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct LessonDetailsTitleView: View {
-
     var title: String
     var isEditing: Bool
 
@@ -22,5 +21,4 @@ struct LessonDetailsTitleView: View {
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
         }
     }
-    
 }

@@ -151,8 +151,10 @@ private extension GroupPickerFeature {
         switch mode {
         case .onboarding:
             return .onboarding
+
         case .rozkladTab:
             return .rozkladTab
+
         case .campus:
             return .campusUserInput
         }

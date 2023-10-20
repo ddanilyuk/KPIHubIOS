@@ -34,6 +34,7 @@ struct RozkladSectionView: View {
                 switch viewStore.rozkladState {
                 case let .selected(group):
                     selectedView(with: group)
+
                 case .notSelected:
                     notSelectedView
                 }
@@ -111,7 +112,6 @@ struct RozkladSectionView: View {
             .frame(width: 35, height: 35)
 
             VStack(alignment: .leading, spacing: 6) {
-
                 Text("Зміна тижня:")
                     .font(.system(.body))
 
@@ -131,7 +131,6 @@ struct RozkladSectionView: View {
 
     var notSelectedView: some View {
         VStack(alignment: .leading, spacing: 16) {
-
             Divider()
 
             Button(

@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension View {
-
     var smallPreview: some View {
         self
             .previewLayout(.sizeThatFits)

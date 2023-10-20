@@ -8,17 +8,13 @@
 import SwiftUI
 
 struct BigButtonStyle: ButtonStyle {
-
     func makeBody(configuration: Self.Configuration) -> some View {
         BigButtonStyleView(configuration: configuration)
     }
-
 }
 
 private extension BigButtonStyle {
-
     struct BigButtonStyleView: View {
-
         @Environment(\.isEnabled) var isEnabled
 
         let configuration: BigButtonStyle.Configuration
@@ -38,5 +34,4 @@ private extension BigButtonStyle {
                 .animation(.easeOut(duration: 0.33), value: configuration.isPressed)
         }
     }
-
 }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BadgeView: View {
-
     let mode: LessonMode
 
     var body: some View {
@@ -28,11 +27,9 @@ struct BadgeView: View {
                 .cornerRadius(8, corners: [.topRight, .bottomLeft])
         )
     }
-
 }
 
 private extension LessonMode {
-
     var backgroundColor: Color {
         switch self {
         case .current:
@@ -45,5 +42,4 @@ private extension LessonMode {
             return .clear
         }
     }
-
 }

@@ -8,7 +8,6 @@
 import Foundation
 
 struct StudySheetItemResponse: Codable, Equatable {
-
     let id: Int
     let year: String
     let semester: Int

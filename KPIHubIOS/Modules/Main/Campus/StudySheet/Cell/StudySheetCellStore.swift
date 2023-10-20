@@ -28,5 +28,4 @@ struct StudySheetCell: Reducer {
             }
         }
     }
-
 }

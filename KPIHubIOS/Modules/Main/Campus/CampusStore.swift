@@ -85,6 +85,7 @@ struct Campus: Reducer {
         switch campusState {
         case .loggedOut:
             state.campusRoot = .campusLogin(CampusLoginFeature.State(mode: .onlyCampus))
+
         case .loggedIn:
             state.campusRoot = .campusHome(CampusHome.State())
         }

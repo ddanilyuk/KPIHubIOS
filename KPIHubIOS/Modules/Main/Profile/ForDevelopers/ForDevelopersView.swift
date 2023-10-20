@@ -53,7 +53,6 @@ struct ForDevelopersView: View {
             title: "Github",
             content: {
                 VStack(alignment: .leading, spacing: 20) {
-
                     ProfileCellView(
                         title: "Додаток:",
                         value: .link(
@@ -79,7 +78,6 @@ struct ForDevelopersView: View {
                         },
                         imageBackgroundColor: .white
                     )
-
                 }
             }
         )
@@ -90,7 +88,6 @@ struct ForDevelopersView: View {
             title: "Контакти",
             content: {
                 VStack(alignment: .leading, spacing: 20) {
-
                     ProfileCellView(
                         title: "Telegram:",
                         value: .link(
@@ -116,7 +113,6 @@ struct ForDevelopersView: View {
                         },
                         imageBackgroundColor: .green
                     )
-
                 }
             }
         )

@@ -82,7 +82,7 @@ struct CampusHome: Reducer {
         case .onAppear:
             analyticsService.track(Event.Campus.campusHomeAppeared)
             return .run { send in
-                for await state in campusServiceStudySheet.subject.values.eraseToStream() {
+                for await state in campusServiceStudySheet.stateStream() {
                     await send(.setStudySheetState(state))
                 }
             }
@@ -90,11 +90,11 @@ struct CampusHome: Reducer {
 
         case .refresh:
             switch state.studySheetState {
-            case .notLoading,
-                 .loaded:
+            case .notLoading, .loaded:
                 return .run { _ in
                     await campusServiceStudySheet.load()
                 }
+
             case .loading:
                 return .none
             }
