@@ -16,7 +16,19 @@ public struct AppView: View {
     }
     
     public var body: some View {
-        EmptyView()
+        switch store.destination {
+        case .onboarding:
+            if let onboardingStore = store.scope(
+                state: \.destination?.onboarding,
+                action: \.destination.onboarding
+            ) {
+                OnboardingFlowView(store: onboardingStore)
+            }
+            
+        case .none:
+            EmptyView()
+        }
+
 //        IfLetStore(store.scope(state: \.path, action: { .path($0) })) { store in
 //            SwitchStore(store) { state in
 //                switch state {

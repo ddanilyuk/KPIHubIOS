@@ -8,6 +8,7 @@
 import Foundation
 @_exported import ComposableArchitecture
 
+@DependencyClient
 struct FirebaseService {
     var setup: () -> Void
 }

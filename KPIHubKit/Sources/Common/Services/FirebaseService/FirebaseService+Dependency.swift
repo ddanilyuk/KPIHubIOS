@@ -10,7 +10,7 @@ import Dependencies
 extension DependencyValues {
     private enum FirebaseServiceKey: DependencyKey {
         static let liveValue = FirebaseService.live()
-        static let testValue = FirebaseService.failing()
+        static let testValue = FirebaseService()
     }
     
     var firebaseService: FirebaseService {

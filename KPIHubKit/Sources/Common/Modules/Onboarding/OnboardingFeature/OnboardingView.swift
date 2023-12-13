@@ -41,15 +41,15 @@ struct OnboardingView: View {
             .ignoresSafeArea()
             
             // TODO: asset
-//            Color.screenBackground
-//                .frame(
-//                    maxWidth: .infinity,
-//                    maxHeight: .infinity
-//                )
-//                .overlay {
-//                    bottomView
-//                }
-//                .ignoresSafeArea()
+            Color.blue
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity
+                )
+                .overlay {
+                    bottomView
+                }
+                .ignoresSafeArea()
         }
         .navigationBarHidden(true)
         // TODO: asset
