@@ -11,18 +11,19 @@ import Foundation
 
 @Reducer
 public struct ProfileHome: Reducer {
+    @ObservableState
     public struct State: Equatable {
         var rozkladState: RozkladServiceState.State = .notSelected
         var campusState: CampusServiceState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
         var completeAppVersion: String = ""
         
-        @PresentationState var destination: Destination.State?
-        @BindingState var toggleWeek = false
-        @BindingState var isLoading = false
+        @Presents var destination: Destination.State?
+        var toggleWeek = false
+        var isLoading = false
     }
     
-    public enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
         case setRozkladState(RozkladServiceState.State)
         case setCampusState(CampusServiceState.State)
         case setLessonsUpdatedAtDate(Date?)
@@ -152,7 +153,7 @@ public struct ProfileHome: Reducer {
                 analyticsService.track(Event.Profile.campusLogin)
                 return .send(.routeAction(.campus))
 
-            case .view(.binding(\.$toggleWeek)):
+            case .view(.binding(\.toggleWeek)):
                 userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
                 currentDateService.forceUpdate()
                 analyticsService.track(Event.Profile.changeWeek(state.toggleWeek))

@@ -8,18 +8,15 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct ForDevelopersView: View {
-    struct ViewState: Equatable {
-        init(state: ForDevelopers.State) { }
-    }
-    
-    @ObservedObject private var viewStore: ViewStore<ViewState, ForDevelopers.Action.View>
+@ViewAction(for: ForDevelopers.self)
+public struct ForDevelopersView: View {
+    public let store: StoreOf<ForDevelopers>
     
     init(store: StoreOf<ForDevelopers>) {
-        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.store = store
     }
     
-    var body: some View {
+    public var body: some View {
         ScrollView(.vertical) {
             VStack(alignment: .leading, spacing: 32) {
                 header
@@ -31,7 +28,7 @@ struct ForDevelopersView: View {
             .padding(16)
         }
         .onAppear {
-            viewStore.send(.onAppear)
+            send(.onAppear)
         }
         // TODO: assets
 //        .background(Color.screenBackground)

@@ -11,9 +11,10 @@ import Combine
 // ProfileFlowCoordinator
 @Reducer
 public struct Profile: Reducer {
+    @ObservableState
     public struct State: Equatable {
         var profileHome: ProfileHome.State
-        // var path = StackState<ScreenProvider.State>()
+        var path = StackState<Path.State>()
         
         init() {
             profileHome = ProfileHome.State()
@@ -23,7 +24,7 @@ public struct Profile: Reducer {
     public enum Action: Equatable {
         case profileHome(ProfileHome.Action)
         case delegate(Delegate)
-        // case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
+        case path(StackAction<Path.State, Path.Action>)
         
         public enum Delegate: Equatable {
             case selectRozkladTab
@@ -42,14 +43,14 @@ public struct Profile: Reducer {
 
             case .profileHome(.routeAction(.forDevelopers)):
                 let forDevelopersState = ForDevelopers.State()
-//                state.path.append(.forDevelopers(forDevelopersState))
+                state.path.append(.forDevelopers(forDevelopersState))
                 return .none
                 
             case .profileHome:
                 return .none
                 
-//            case .path:
-//                return .none
+            case .path:
+                return .none
                 
             case .delegate:
                 return .none
@@ -58,12 +59,12 @@ public struct Profile: Reducer {
     }
     
     public var body: some ReducerOf<Self> {
-        Scope(state: \.profileHome, action: /Action.profileHome) {
+        Scope(state: \.profileHome, action: \.profileHome) {
             ProfileHome()
         }
         core
-//            .forEach(\.path, action: /Action.path) {
-//                ScreenProvider()
-//            }
+            .forEach(\.path, action: \.path) {
+                Path()
+            }
     }
 }

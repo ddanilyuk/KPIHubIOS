@@ -8,34 +8,19 @@
 import SwiftUI
 import ComposableArchitecture
 
-/// Not ideal approach of ViewAction
+@ViewAction(for: ProfileHome.self)
 struct CampusSectionView: View {
-    struct ViewState: Equatable {
-        let campusState: CampusServiceState.State
-        let fullName: String
-        let cathedra: String
-        
-        init(state: ProfileHome.State) {
-            let campusUserInfoPath = /CampusServiceState.State.loggedIn
-            let campusUserInfo = campusUserInfoPath.extract(from: state.campusState)
-            
-            campusState = state.campusState
-            fullName = campusUserInfo?.fullName ?? "-"
-            cathedra = campusUserInfo?.subdivision.first?.name ?? "-"
-        }
-    }
-    
-    @ObservedObject private var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    public let store: StoreOf<ProfileHome>
     
     init(store: StoreOf<ProfileHome>) {
-        self.viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.store = store
     }
 
     var body: some View {
         ProfileSectionView(
             title: "Кампус",
             content: {
-                switch viewStore.campusState {
+                switch store.campusState {
                 case .loggedIn:
                     loggedInView
 
@@ -50,7 +35,7 @@ struct CampusSectionView: View {
         VStack(alignment: .leading, spacing: 16) {
             ProfileCellView(
                 title: "Ім'я:",
-                value: .text(viewStore.fullName),
+                value: .text(store.fullName),
                 image: {
                     Image(systemName: "person")
                         .foregroundColor(Color.mint.lighter(by: 0.9))
@@ -60,7 +45,7 @@ struct CampusSectionView: View {
 
             ProfileCellView(
                 title: "Кафедра:",
-                value: .text(viewStore.cathedra),
+                value: .text(store.cathedra),
                 image: {
                     Image(systemName: "graduationcap")
                         .foregroundColor(Color.cyan.lighter(by: 0.9))
@@ -71,7 +56,7 @@ struct CampusSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.logoutCampusButtonTapped) },
+                action: { send(.logoutCampusButtonTapped) },
                 label: {
                     Text("Вийти з аккаунту")
                         .font(.system(.body).bold())
@@ -88,7 +73,7 @@ struct CampusSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.loginCampusButtonTapped) },
+                action: { send(.loginCampusButtonTapped) },
                 label: {
                     Text("Увійти у кампус")
                         .font(.system(.body).bold())
@@ -98,6 +83,22 @@ struct CampusSectionView: View {
                 }
             )
         }
+    }
+}
+
+extension ProfileHome.State {
+    // TODO: Fix
+    var fullName: String {
+        let campusUserInfoPath = /CampusServiceState.State.loggedIn
+        let campusUserInfo = campusUserInfoPath.extract(from: campusState)
+        return campusUserInfo?.fullName ?? "-"
+    }
+    
+    // TODO: Fix
+    var cathedra: String {
+        let campusUserInfoPath = /CampusServiceState.State.loggedIn
+        let campusUserInfo = campusUserInfoPath.extract(from: campusState)
+        return campusUserInfo?.subdivision.first?.name ?? "-"
     }
 }
 

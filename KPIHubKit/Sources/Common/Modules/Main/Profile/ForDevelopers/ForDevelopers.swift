@@ -7,20 +7,21 @@
 
 import ComposableArchitecture
 
-struct ForDevelopers: Reducer {
-    struct State: Equatable { }
+@Reducer
+public struct ForDevelopers: Reducer {
+    public struct State: Equatable { }
     
-    enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
         case view(View)
         
-        enum View: Equatable {
+        public enum View: Equatable {
             case onAppear
         }
     }
     
     @Dependency(\.analyticsService) var analyticsService
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case .view(.onAppear):

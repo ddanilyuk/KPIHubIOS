@@ -8,30 +8,19 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: ProfileHome.self)
 struct RozkladSectionView: View {
-    struct ViewState: Equatable {
-        let updatedAt: Date?
-        let rozkladState: RozkladServiceState.State
-        @BindingViewState var toggleWeek: Bool
-        
-        init(state: BindingViewStore<ProfileHome.State>) {
-            updatedAt = state.lessonsUpdatedAtDate
-            rozkladState = state.rozkladState
-            _toggleWeek = state.$toggleWeek
-        }
-    }
-
-    @ObservedObject var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    @Bindable var store: StoreOf<ProfileHome>
     
     init(store: StoreOf<ProfileHome>) {
-        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.store = store
     }
 
     var body: some View {
         ProfileSectionView(
             title: "Розклад",
             content: {
-                switch viewStore.rozkladState {
+                switch store.rozkladState {
                 case let .selected(group):
                     selectedView(with: group)
 
@@ -53,7 +42,7 @@ struct RozkladSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.changeGroupButtonTapped) },
+                action: { send(.changeGroupButtonTapped) },
                 label: {
                     Text("Змінити групу")
                         .font(.system(.body).bold())
@@ -80,7 +69,7 @@ struct RozkladSectionView: View {
     var lastUpdatedAtView: some View {
         ProfileCellView(
             title: "Останнє оновлення:",
-            value: .date(viewStore.updatedAt),
+            value: .date(store.lessonsUpdatedAtDate),
             image: {
                 Image(systemName: "clock")
                     .foregroundColor(.yellow.lighter(by: 0.9))
@@ -88,7 +77,7 @@ struct RozkladSectionView: View {
             imageBackgroundColor: .yellow,
             rightView: {
                 Button(
-                    action: { viewStore.send(.updateRozkladButtonTapped) },
+                    action: { send(.updateRozkladButtonTapped) },
                     label: {
                         Image(systemName: "arrow.triangle.2.circlepath")
                             .foregroundColor(.red)
@@ -122,7 +111,7 @@ struct RozkladSectionView: View {
             }
 
             Toggle(
-                isOn: viewStore.$toggleWeek,
+                isOn: $store.toggleWeek,
                 label: { Text("") }
             )
             .labelsHidden()
@@ -134,7 +123,7 @@ struct RozkladSectionView: View {
             Divider()
 
             Button(
-                action: { viewStore.send(.selectGroupButtonTapped) },
+                action: { send(.selectGroupButtonTapped) },
                 label: {
                     Text("Обрати групу")
                         .font(.system(.body).bold())

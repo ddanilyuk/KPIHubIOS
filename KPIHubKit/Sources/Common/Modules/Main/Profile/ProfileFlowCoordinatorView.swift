@@ -9,34 +9,31 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ProfileFlowCoordinatorView: View {
-    private let store: StoreOf<Profile>
+    @Bindable private var store: StoreOf<Profile>
     
     init(store: StoreOf<Profile>) {
         self.store = store
     }
 
     var body: some View {
-        Color.blue
-//        NavigationStackStore(
-//            store.scope(state: \.path, action: Profile.Action.path),
-//            root: {
-//                ProfileHomeView(
-//                    store: store.scope(
-//                        state: \.profileHome,
-//                        action: Profile.Action.profileHome
-//                    )
-//                )
-//            },
-//            destination: { destination in
-//                switch destination {
-//                case .forDevelopers:
-//                    CaseLet(
-//                        /Profile.ScreenProvider.State.forDevelopers,
-//                        action: Profile.ScreenProvider.Action.forDevelopers,
-//                        then: ForDevelopersView.init(store:)
-//                    )
-//                }
-//            }
-//        )
+        NavigationStack(
+            path: $store.scope(state: \.path, action: \.path),
+            root: {
+                ProfileHomeView(
+                    store: store.scope(
+                        state: \.profileHome,
+                        action: \.profileHome
+                    )
+                )
+            },
+            destination: { store in
+                switch store.withState({ $0 }) {
+                case .forDevelopers:
+                    if let store = store.scope(state: \.forDevelopers, action: \.forDevelopers) {
+                        ForDevelopersView(store: store)
+                    }
+                }
+            }
+        )
     }
 }

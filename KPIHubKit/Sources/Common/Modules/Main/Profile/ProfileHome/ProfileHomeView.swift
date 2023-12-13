@@ -8,21 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: ProfileHome.self)
 struct ProfileHomeView: View {
-    struct ViewState: Equatable {
-        @BindingViewState var isLoading: Bool
-        
-        init(state: BindingViewStore<ProfileHome.State>) {
-            _isLoading = state.$isLoading
-        }
-    }
-    
-    private let store: StoreOf<ProfileHome>
-    @ObservedObject private var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    @Bindable var store: StoreOf<ProfileHome>
 
     init(store: StoreOf<ProfileHome>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
     
     var body: some View {
@@ -39,21 +30,23 @@ struct ProfileHomeView: View {
         .navigationBarBackButtonHidden(true)
         .navigationTitle("Профіль")
         .onAppear {
-            viewStore.send(.onAppear)
+            send(.onAppear)
         }
         // TODO: assets
 //        .background(Color.screenBackground)
-        .loadable(viewStore.$isLoading)
-        .alert(
-            store: store.scope(state: \.$destination, action: { .destination($0) }),
-            state: /ProfileHome.Destination.State.alert,
-            action: ProfileHome.Destination.Action.alert
-        )
-        .confirmationDialog(
-            store: store.scope(state: \.$destination, action: { .destination($0) }),
-            state: /ProfileHome.Destination.State.confirmationDialog,
-            action: ProfileHome.Destination.Action.confirmationDialog
-        )
+        .loadable($store.isLoading)
+        // TODO: Alerts
+//        .alert($store.scope(state: \.desto, action: <#T##CaseKeyPath<Action, PresentationAction<ChildAction>>#>))
+//        .alert(
+//            store: store.scope(state: \.$destination, action: { .destination($0) }),
+//            state: /ProfileHome.Destination.State.alert,
+//            action: ProfileHome.Destination.Action.alert
+//        )
+//        .confirmationDialog(
+//            store: store.scope(state: \.$destination, action: { .destination($0) }),
+//            state: /ProfileHome.Destination.State.confirmationDialog,
+//            action: ProfileHome.Destination.Action.confirmationDialog
+//        )
     }
 }
 

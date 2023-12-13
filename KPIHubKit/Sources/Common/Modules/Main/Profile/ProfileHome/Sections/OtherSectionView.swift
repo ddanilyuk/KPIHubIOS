@@ -8,19 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: ProfileHome.self)
 struct OtherSectionView: View {
-    struct ViewState: Equatable {
-        let completeAppVersion: String
-        
-        init(state: ProfileHome.State) {
-            completeAppVersion = state.completeAppVersion
-        }
-    }
-    
-    @ObservedObject private var viewStore: ViewStore<ViewState, ProfileHome.Action.View>
+    public let store: StoreOf<ProfileHome>
     
     init(store: StoreOf<ProfileHome>) {
-        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.store = store
     }
 
     var body: some View {
@@ -37,11 +30,11 @@ struct OtherSectionView: View {
                         },
                         imageBackgroundColor: .red
                     )
-                    .onTapGesture { viewStore.send(.forDevelopersButtonTapped) }
+                    .onTapGesture { send(.forDevelopersButtonTapped) }
 
                     ProfileCellView(
                         title: "Версія:",
-                        value: .text(viewStore.completeAppVersion),
+                        value: .text(store.completeAppVersion),
                         image: {
                             Image(systemName: "number")
                                 .foregroundColor(.blue.lighter(by: 0.9))
