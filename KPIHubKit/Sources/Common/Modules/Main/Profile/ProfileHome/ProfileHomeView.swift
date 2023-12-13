@@ -35,18 +35,8 @@ struct ProfileHomeView: View {
         // TODO: assets
 //        .background(Color.screenBackground)
         .loadable($store.isLoading)
-        // TODO: Alerts
-//        .alert($store.scope(state: \.desto, action: <#T##CaseKeyPath<Action, PresentationAction<ChildAction>>#>))
-//        .alert(
-//            store: store.scope(state: \.$destination, action: { .destination($0) }),
-//            state: /ProfileHome.Destination.State.alert,
-//            action: ProfileHome.Destination.Action.alert
-//        )
-//        .confirmationDialog(
-//            store: store.scope(state: \.$destination, action: { .destination($0) }),
-//            state: /ProfileHome.Destination.State.confirmationDialog,
-//            action: ProfileHome.Destination.Action.confirmationDialog
-//        )
+        .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+        .confirmationDialog($store.scope(state: \.destination?.confirmationDialog, action: \.destination.confirmationDialog))
     }
 }
 

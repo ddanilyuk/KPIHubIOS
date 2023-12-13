@@ -247,7 +247,9 @@ public struct ProfileHome: Reducer {
 }
 
 extension ProfileHome {
+    @Reducer
     public struct Destination: Reducer {
+        @ObservableState
         public enum State: Equatable {
             case alert(AlertState<Action.Alert>)
             case confirmationDialog(ConfirmationDialogState<Action.ConfirmationDialogAction>)
