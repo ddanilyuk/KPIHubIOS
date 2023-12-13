@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LessonResponse: Equatable {
+public struct LessonResponse: Equatable {
     // MARK: - Position
     
     enum Position: Int, Codable, CaseIterable, Equatable {
@@ -58,7 +58,7 @@ extension LessonResponse: Hashable { }
 // MARK: - Identifiable
 
 extension LessonResponse: Identifiable {
-    var id: Int {
+    public var id: Int {
         hashValue
     }
 }

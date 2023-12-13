@@ -8,18 +8,19 @@
 import ComposableArchitecture
 import Combine
 
-struct Campus: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct Campus: Reducer {
+    public struct State: Equatable {
         var campusRoot: CampusRoot.State?
         var path = StackState<Path.State>()
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case onSetup
         case updateCampusState(CampusServiceState.State)
         
         case campusRoot(CampusRoot.Action)
-        case path(StackAction<Path.State, Path.Action>)
+        // case path(StackAction<Path.State, Path.Action>)
     }
     
     @Dependency(\.campusClientState) var campusClientState
@@ -57,28 +58,28 @@ struct Campus: Reducer {
                 state.path.append(.studySheet(studySheetState))
                 return .none
                 
-            case let .path(.element(_, .studySheet(.routeAction(.openDetail(item))))):
-                let studySheetItemDetailState = StudySheetItemDetail.State(item: item)
-                state.path.append(.studySheetItemDetail(studySheetItemDetailState))
-                return .none
-                
+//            case let .path(.element(_, .studySheet(.routeAction(.openDetail(item))))):
+//                let studySheetItemDetailState = StudySheetItemDetail.State(item: item)
+//                state.path.append(.studySheetItemDetail(studySheetItemDetailState))
+//                return .none
+//                
             case .campusRoot:
                 return .none
 
-            case .path:
-                return .none
+//            case .path:
+//                return .none
             }
         }
     }
 
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         core
-            .ifLet(\.campusRoot, action: /Action.campusRoot) {
+            .ifLet(\.campusRoot, action: \.campusRoot) {
                 CampusRoot()
             }
-            .forEach(\.path, action: /Action.path) {
-                Path()
-            }
+//            .forEach(\.path, action: \.path) {
+//                Path()
+//            }
     }
     
     private func updateCampusState(with campusState: CampusServiceState.State, state: inout State) {
@@ -98,18 +99,19 @@ extension Campus {
     }
 }
 
-struct CampusRoot: Reducer {
-    enum State: Equatable {
+
+public struct CampusRoot: Reducer {
+    public enum State: Equatable {
         case campusLogin(CampusLoginFeature.State)
         case campusHome(CampusHome.State)
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case campusLogin(CampusLoginFeature.Action)
         case campusHome(CampusHome.Action)
     }
 
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: /State.campusLogin, action: /Action.campusLogin) {
             CampusLoginFeature()
         }

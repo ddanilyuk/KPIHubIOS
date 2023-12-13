@@ -9,22 +9,24 @@ import SwiftUI
 import ComposableArchitecture
 
 extension RozkladFlow {
-    struct RozkladRoot: Reducer {
-        enum State: Equatable {
+    @Reducer
+    public struct RozkladRoot: Reducer {
+        @ObservableState
+        public enum State: Equatable {
             case groupRozklad(GroupRozklad.State)
             case groupPicker(GroupPickerFeature.State)
         }
         
-        enum Action: Equatable {
+        public enum Action: Equatable {
             case groupRozklad(GroupRozklad.Action)
             case groupPicker(GroupPickerFeature.Action)
         }
 
-        var body: some ReducerOf<Self> {
-            Scope(state: /State.groupRozklad, action: /Action.groupRozklad) {
+        public var body: some ReducerOf<Self> {
+            Scope(state: \.groupRozklad, action: \.groupRozklad) {
                 GroupRozklad()
             }
-            Scope(state: /State.groupPicker, action: /Action.groupPicker) {
+            Scope(state: \.groupPicker, action: \.groupPicker) {
                 GroupPickerFeature()
             }
         }
@@ -38,21 +40,15 @@ extension RozkladFlow {
         }
         
         var body: some View {
-            SwitchStore(store) { state in
-                switch state {
-                case .groupRozklad:
-                    CaseLet(
-                        /RozkladRoot.State.groupRozklad,
-                        action: RozkladRoot.Action.groupRozklad,
-                        then: GroupRozkladView.init(store:)
-                    )
-                    
-                case .groupPicker:
-                    CaseLet(
-                        /RozkladRoot.State.groupPicker,
-                        action: RozkladRoot.Action.groupPicker,
-                        then: GroupPickerView.init(store:)
-                    )
+            switch store.withState({$0}) {
+            case .groupRozklad:
+                if let childStore = store.scope(state: \.groupRozklad, action: \.groupRozklad) {
+                    GroupRozkladView(store: childStore)
+                }
+                
+            case .groupPicker:
+                if let childStore = store.scope(state: \.groupPicker, action: \.groupPicker) {
+                    GroupPickerView(store: childStore)
                 }
             }
         }

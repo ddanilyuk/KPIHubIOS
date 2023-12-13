@@ -9,8 +9,8 @@ import IdentifiedCollections
 import ComposableArchitecture
 import Foundation
 
-struct GroupRozklad: Reducer {
-    struct State: Equatable {
+public struct GroupRozklad: Reducer {
+    public struct State: Equatable {
         var currentDay: Lesson.Day?
         var currentWeek: Lesson.Week = .first
         var currentLesson: CurrentLesson?
@@ -51,7 +51,7 @@ struct GroupRozklad: Reducer {
         }
     }
     
-    enum Action: Equatable, BindableAction {
+    public enum Action: Equatable, BindableAction {
         case onAppear
         case onDisappear
 
@@ -67,7 +67,7 @@ struct GroupRozklad: Reducer {
         
         case setOffset(index: Int, value: CGFloat?, headerHeight: CGFloat)
         
-        enum RouteAction: Equatable {
+        public enum RouteAction: Equatable {
             case openDetails(Lesson)
         }
     }
@@ -77,7 +77,7 @@ struct GroupRozklad: Reducer {
     @Dependency(\.currentDateService) var currentDateService
     @Dependency(\.analyticsService) var analyticsService
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in

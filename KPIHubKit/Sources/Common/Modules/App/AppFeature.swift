@@ -57,16 +57,16 @@ public struct AppFeature: Reducer {
         Reduce { state, action in
             switch action {
             case .appDelegate(.didFinishLaunching):
-//                if userDefaultsService.get(for: .onboardingPassed) {
-////                    state.path = .main(MainFlow.State())
-//                } else {
-//                }
-                state.destination = .onboarding(OnboardingFlow.State())
+                if userDefaultsService.get(for: .onboardingPassed) {
+                    state.destination = .main(MainFlow.State())
+                } else {
+                    state.destination = .onboarding(OnboardingFlow.State())
+                }
                 return .none
                                 
-//            case .path(.onboarding(.output(.done))):
-//                state.path = .main(MainFlow.State())
-//                return .none
+            case .destination(.onboarding(.output(.done))):
+                state.destination = .main(MainFlow.State())
+                return .none
                 
             case .appDelegate:
                 return .none
@@ -81,9 +81,6 @@ public struct AppFeature: Reducer {
         Scope(state: \.appDelegate, action: \.appDelegate) {
             AppDelegateFeature()
         }
-//        Scope(state: \.path, action: \.path) {
-//            Path()
-//        }
         core
             .ifLet(\.destination, action: \.destination) {
                 Destination()

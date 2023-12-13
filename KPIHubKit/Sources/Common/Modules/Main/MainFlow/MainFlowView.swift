@@ -9,28 +9,19 @@ import SwiftUI
 import ComposableArchitecture
 
 struct MainFlowView: View {
-    struct ViewState: Equatable {
-        @BindingViewState var selectedTab: MainFlow.Tab
-        
-        init(state: BindingViewStore<MainFlow.State>) {
-            _selectedTab = state.$selectedTab
-        }
-    }
-    
-    private let store: StoreOf<MainFlow>
-    @ObservedObject private var viewStore: ViewStore<ViewState, MainFlow.Action>
+    // TODO: Check this view re-render
+    @Bindable var store: StoreOf<MainFlow>
     
     init(store: StoreOf<MainFlow>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: ViewState.init)
     }
-
+    
     var body: some View {
-        TabView(selection: viewStore.$selectedTab) {
+        TabView(selection: $store.selectedTab) {
             RozkladFlowView(
                 store: store.scope(
                     state: \.rozklad,
-                    action: MainFlow.Action.rozklad
+                    action: \.rozklad
                 )
             )
             .tabItem {
@@ -44,7 +35,7 @@ struct MainFlowView: View {
             CampusFlowCoordinatorView(
                 store: store.scope(
                     state: \.campus,
-                    action: MainFlow.Action.campus
+                    action: \.campus
                 )
             )
             .tabItem {
@@ -58,7 +49,7 @@ struct MainFlowView: View {
             ProfileFlowCoordinatorView(
                 store: store.scope(
                     state: \.profile,
-                    action: MainFlow.Action.profile
+                    action: \.profile
                 )
             )
             .tabItem {
@@ -70,8 +61,8 @@ struct MainFlowView: View {
             .tag(MainFlow.Tab.profile)
         }
         .onAppear {
-            viewStore.send(.rozklad(.onSetup))
-            viewStore.send(.campus(.onSetup))
+            store.send(.rozklad(.onSetup))
+            store.send(.campus(.onSetup))
         }
     }
 }

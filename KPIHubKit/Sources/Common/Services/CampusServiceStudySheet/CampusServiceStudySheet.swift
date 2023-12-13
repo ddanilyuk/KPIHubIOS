@@ -9,8 +9,8 @@ import Foundation
 import Combine
 import ComposableArchitecture
 
-struct CampusServiceStudySheet {
-    enum State: Equatable {
+public struct CampusServiceStudySheet {
+    public enum State: Equatable {
         case notLoading
         case loading
         case loaded([StudySheetItem])

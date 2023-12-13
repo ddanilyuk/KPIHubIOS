@@ -8,8 +8,8 @@
 import Combine
 import Foundation
 
-struct RozkladServiceState {
-    enum State: Equatable {
+public struct RozkladServiceState {
+    public enum State: Equatable {
         case selected(GroupResponse)
         case notSelected
     }

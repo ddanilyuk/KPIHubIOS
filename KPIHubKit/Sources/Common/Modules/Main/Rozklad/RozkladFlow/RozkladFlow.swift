@@ -9,22 +9,24 @@ import ComposableArchitecture
 import IdentifiedCollections
 import Foundation
 
-struct RozkladFlow: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct RozkladFlow: Reducer {
+    @ObservableState
+    public struct State: Equatable {
         var rozkladRoot: RozkladRoot.State
-        var path = StackState<Path.State>()
+        // var path = StackState<Path.State>()
 
         init() {
             self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
         }
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case onSetup
         
         case updateRozkladState(RozkladServiceState.State)
         case rozkladRoot(RozkladRoot.Action)
-        case path(StackAction<Path.State, Path.Action>)
+        // case path(StackAction<Path.State, Path.Action>)
     }
     
     @Dependency(\.rozkladServiceState) var rozkladServiceState
@@ -49,7 +51,7 @@ struct RozkladFlow: Reducer {
                 let lessonDetailsState = LessonDetails.State(
                     lesson: lesson
                 )
-                state.path.append(.lessonDetails(lessonDetailsState))
+                // state.path.append(.lessonDetails(lessonDetailsState))
                 return .none
                 
             case .rozkladRoot(.groupPicker(.route(.done))):
@@ -57,8 +59,8 @@ struct RozkladFlow: Reducer {
                 rozkladServiceLessons.commit()
                 return .none
                 
-            case .path:
-                return .none
+//            case .path:
+//                return .none
                 
             case .rozkladRoot:
                 return .none
@@ -66,13 +68,14 @@ struct RozkladFlow: Reducer {
         }
     }
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.rozkladRoot, action: /Action.rozkladRoot) {
             RozkladRoot()
         }
-        core.forEach(\.path, action: /Action.path) {
-            Path()
-        }
+        core
+//            .forEach(\.path, action: /Action.path) {
+//                Path()
+//            }
     }
     
     private func setRootRozkladState(from rozkladState: RozkladServiceState.State, state: inout State) {

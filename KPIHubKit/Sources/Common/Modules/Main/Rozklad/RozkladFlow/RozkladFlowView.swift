@@ -16,26 +16,27 @@ struct RozkladFlowView: View {
     }
     
     var body: some View {
-        NavigationStackStore(
-            store.scope(state: \.path, action: { .path($0) }),
-            root: {
-                RozkladFlow.RozkladRootView(
-                    store: store.scope(
-                        state: \.rozkladRoot,
-                        action: RozkladFlow.Action.rozkladRoot
-                    )
-                )
-            },
-            destination: { destination in
-                switch destination {
-                case .lessonDetails:
-                    CaseLet(
-                        /RozkladFlow.Path.State.lessonDetails,
-                        action: RozkladFlow.Path.Action.lessonDetails,
-                        then: LessonDetailsView.init
-                    )
-                }
-            }
-        )
+        Color.red
+//        NavigationStackStore(
+//            store.scope(state: \.path, action: { .path($0) }),
+//            root: {
+//                RozkladFlow.RozkladRootView(
+//                    store: store.scope(
+//                        state: \.rozkladRoot,
+//                        action: RozkladFlow.Action.rozkladRoot
+//                    )
+//                )
+//            },
+//            destination: { destination in
+//                switch destination {
+//                case .lessonDetails:
+//                    CaseLet(
+//                        /RozkladFlow.Path.State.lessonDetails,
+//                        action: RozkladFlow.Path.Action.lessonDetails,
+//                        then: LessonDetailsView.init
+//                    )
+//                }
+//            }
+//        )
     }
 }

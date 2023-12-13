@@ -16,26 +16,27 @@ struct ProfileFlowCoordinatorView: View {
     }
 
     var body: some View {
-        NavigationStackStore(
-            store.scope(state: \.path, action: Profile.Action.path),
-            root: {
-                ProfileHomeView(
-                    store: store.scope(
-                        state: \.profileHome,
-                        action: Profile.Action.profileHome
-                    )
-                )
-            },
-            destination: { destination in
-                switch destination {
-                case .forDevelopers:
-                    CaseLet(
-                        /Profile.ScreenProvider.State.forDevelopers,
-                        action: Profile.ScreenProvider.Action.forDevelopers,
-                        then: ForDevelopersView.init(store:)
-                    )
-                }
-            }
-        )
+        Color.blue
+//        NavigationStackStore(
+//            store.scope(state: \.path, action: Profile.Action.path),
+//            root: {
+//                ProfileHomeView(
+//                    store: store.scope(
+//                        state: \.profileHome,
+//                        action: Profile.Action.profileHome
+//                    )
+//                )
+//            },
+//            destination: { destination in
+//                switch destination {
+//                case .forDevelopers:
+//                    CaseLet(
+//                        /Profile.ScreenProvider.State.forDevelopers,
+//                        action: Profile.ScreenProvider.Action.forDevelopers,
+//                        then: ForDevelopersView.init(store:)
+//                    )
+//                }
+//            }
+//        )
     }
 }

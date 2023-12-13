@@ -9,8 +9,9 @@ import ComposableArchitecture
 import Routes
 import Foundation
 
-struct ProfileHome: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct ProfileHome: Reducer {
+    public struct State: Equatable {
         var rozkladState: RozkladServiceState.State = .notSelected
         var campusState: CampusServiceState.State = .loggedOut
         var lessonsUpdatedAtDate: Date?
@@ -21,7 +22,7 @@ struct ProfileHome: Reducer {
         @BindingState var isLoading = false
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case setRozkladState(RozkladServiceState.State)
         case setCampusState(CampusServiceState.State)
         case setLessonsUpdatedAtDate(Date?)
@@ -32,13 +33,13 @@ struct ProfileHome: Reducer {
         case view(View)
         case routeAction(RouteAction)
 
-        enum RouteAction: Equatable {
+        public enum RouteAction: Equatable {
             case rozklad
             case campus
             case forDevelopers
         }
         
-        enum View: Equatable, BindableAction {
+        public enum View: Equatable, BindableAction {
             case binding(BindingAction<State>)
             
             case updateRozkladButtonTapped
@@ -64,7 +65,7 @@ struct ProfileHome: Reducer {
     @Dependency(\.appConfiguration) var appConfiguration
     @Dependency(\.analyticsService) var analyticsService
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         BindingReducer(action: /Action.view)
         
         Reduce { state, action in
@@ -245,26 +246,26 @@ struct ProfileHome: Reducer {
 }
 
 extension ProfileHome {
-    struct Destination: Reducer {
-        enum State: Equatable {
+    public struct Destination: Reducer {
+        public enum State: Equatable {
             case alert(AlertState<Action.Alert>)
             case confirmationDialog(ConfirmationDialogState<Action.ConfirmationDialogAction>)
         }
         
-        enum Action: Equatable, Sendable {
+        public enum Action: Equatable {
             case alert(Alert)
             case confirmationDialog(ConfirmationDialogAction)
             
-            enum Alert: Equatable { }
+            public enum Alert: Equatable { }
             
-            enum ConfirmationDialogAction {
+            public enum ConfirmationDialogAction {
                 case confirmUpdateRozklad
                 case confirmLogoutCampus
                 case confirmChangeGroup
             }
         }
         
-        var body: some ReducerOf<Self> {
+        public var body: some ReducerOf<Self> {
             EmptyReducer()
         }
     }

@@ -7,24 +7,24 @@
 
 import ComposableArchitecture
 
-struct MainFlow: Reducer {
-    struct State: Equatable {
-        @BindingState var selectedTab: Tab
-        
+@Reducer
+public struct MainFlow: Reducer {
+    @ObservableState
+    public struct State: Equatable {
+        var selectedTab: Tab
         var rozklad: RozkladFlow.State
         var campus: Campus.State
         var profile: Profile.State
         
         init() {
+            selectedTab = .rozklad
             rozklad = RozkladFlow.State()
             campus = Campus.State()
             profile = Profile.State()
-            
-            selectedTab = .rozklad
         }
     }
     
-    enum Action: Equatable, BindableAction {
+    public enum Action: Equatable, BindableAction {
         case rozklad(RozkladFlow.Action)
         case campus(Campus.Action)
         case profile(Profile.Action)
@@ -58,7 +58,7 @@ struct MainFlow: Reducer {
         }
     }
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         BindingReducer()
         Scope(state: \State.rozklad, action: /Action.rozklad) {
             RozkladFlow()

@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct StudySheetItem: Identifiable, Equatable {
-    let id: Int
+public struct StudySheetItem: Identifiable, Equatable {
+    public let id: Int
     let year: String
     let semester: Int
     let name: String

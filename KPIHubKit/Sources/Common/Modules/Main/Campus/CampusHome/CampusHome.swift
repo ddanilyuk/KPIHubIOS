@@ -10,25 +10,25 @@ import Routes
 import Foundation
 import ConcurrencyExtras
 
-struct CampusHome: Reducer {
-    struct State: Equatable {
+public struct CampusHome: Reducer {
+    public struct State: Equatable {
         var openStudySheetOnLoad = false
         var studySheetState: CampusServiceStudySheet.State = .notLoading
 
         @BindingState var isLoading = false
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case setStudySheetState(CampusServiceStudySheet.State)
         
         case view(View)
         case routeAction(RouteAction)
 
-        enum RouteAction: Equatable {
+        public enum RouteAction: Equatable {
             case studySheet([StudySheetItem])
         }
         
-        enum View: Equatable, BindableAction {
+        public enum View: Equatable, BindableAction {
             case onAppear
             case refresh
             case studySheetTap
@@ -39,7 +39,7 @@ struct CampusHome: Reducer {
     @Dependency(\.campusServiceStudySheet) var campusServiceStudySheet
     @Dependency(\.analyticsService) var analyticsService
 
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         BindingReducer(action: /Action.view)
         
         Reduce { state, action in

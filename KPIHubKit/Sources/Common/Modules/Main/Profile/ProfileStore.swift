@@ -9,22 +9,23 @@ import ComposableArchitecture
 import Combine
 
 // ProfileFlowCoordinator
-struct Profile: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct Profile: Reducer {
+    public struct State: Equatable {
         var profileHome: ProfileHome.State
-        var path = StackState<ScreenProvider.State>()
+        // var path = StackState<ScreenProvider.State>()
         
         init() {
             profileHome = ProfileHome.State()
         }
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case profileHome(ProfileHome.Action)
         case delegate(Delegate)
-        case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
+        // case path(StackAction<ScreenProvider.State, ScreenProvider.Action>)
         
-        enum Delegate: Equatable {
+        public enum Delegate: Equatable {
             case selectRozkladTab
             case selectCampusTab
         }
@@ -41,14 +42,14 @@ struct Profile: Reducer {
 
             case .profileHome(.routeAction(.forDevelopers)):
                 let forDevelopersState = ForDevelopers.State()
-                state.path.append(.forDevelopers(forDevelopersState))
+//                state.path.append(.forDevelopers(forDevelopersState))
                 return .none
                 
             case .profileHome:
                 return .none
                 
-            case .path:
-                return .none
+//            case .path:
+//                return .none
                 
             case .delegate:
                 return .none
@@ -56,12 +57,13 @@ struct Profile: Reducer {
         }
     }
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Scope(state: \.profileHome, action: /Action.profileHome) {
             ProfileHome()
         }
-        core.forEach(\.path, action: /Action.path) {
-            ScreenProvider()
-        }
+        core
+//            .forEach(\.path, action: /Action.path) {
+//                ScreenProvider()
+//            }
     }
 }

@@ -10,8 +10,8 @@ import Routes
 import ComposableArchitecture
 import KeychainAccess
 
-struct CampusServiceState {
-    enum State: Equatable {
+public struct CampusServiceState {
+    public enum State: Equatable {
         case loggedIn(CampusUserInfo)
         case loggedOut
     }

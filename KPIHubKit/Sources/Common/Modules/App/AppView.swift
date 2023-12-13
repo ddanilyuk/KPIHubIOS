@@ -25,28 +25,16 @@ public struct AppView: View {
                 OnboardingFlowView(store: onboardingStore)
             }
             
+        case .main:
+            if let mainStore = store.scope(
+                state: \.destination?.main,
+                action: \.destination.main
+            ) {
+                MainFlowView(store: mainStore)
+            }
+            
         case .none:
             EmptyView()
         }
-
-//        IfLetStore(store.scope(state: \.path, action: { .path($0) })) { store in
-//            SwitchStore(store) { state in
-//                switch state {
-//                case .main:
-//                    CaseLet(
-//                        /AppFeature.Path.State.main,
-//                        action: AppFeature.Path.Action.main,
-//                        then: MainFlowView.init
-//                    )
-//
-//                case .onboarding:
-//                    CaseLet(
-//                        /AppFeature.Path.State.onboarding,
-//                        action: AppFeature.Path.Action.onboarding,
-//                        then: OnboardingFlowView.init
-//                    )
-//                }
-//            }
-//        }
     }
 }
