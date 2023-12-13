@@ -9,19 +9,21 @@ import ComposableArchitecture
 import Routes
 import Foundation
 
-struct CampusLoginFeature: Reducer {
-    struct State: Equatable {
-        @BindingState var focusedField: Field?
-        @BindingState var username: String = ""
-        @BindingState var password: String = ""
-        @BindingState var isLoading = false
-        @PresentationState var alert: AlertState<Action.Alert>?
+@Reducer
+public struct CampusLoginFeature: Reducer {
+    @ObservableState
+    public struct State: Equatable {
+        var focusedField: Field?
+        var username: String = ""
+        var password: String = ""
+        var isLoading = false
+        @Presents var alert: AlertState<Action.Alert>?
         
         var loginButtonEnabled = false
         let mode: Mode
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
         case view(View)
         case alert(PresentationAction<Alert>)
         case route(Route)
@@ -151,11 +153,11 @@ extension CampusLoginFeature {
             analyticsService.track(Event.Onboarding.campusLoginAppeared)
             return .none
             
-        case .binding(\.$username):
+        case .binding(\.username):
             state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
             return .none
 
-        case .binding(\.$password):
+        case .binding(\.password):
             state.loginButtonEnabled = !state.username.isEmpty && !state.password.isEmpty
             return .none
             

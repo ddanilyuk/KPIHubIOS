@@ -20,16 +20,18 @@ extension AppConfiguration {
     }
     
     init(bundle: Bundle) {
-        guard
-            let appName = bundle.object(forInfoDictionaryKey: Keys.appName) as? String,
-            let apiEnvironmentKey = bundle.object(forInfoDictionaryKey: Keys.apiEnvironment) as? String,
-            let apiEnvironment = ApiEnvironment(rawValue: apiEnvironmentKey)
-        else {
-            fatalError("Couldn't init environment from bundle: \(bundle.infoDictionary ?? [:])")
-        }
+// TODO: Bundle is not working too
+//        guard
+//            let appName = bundle.object(forInfoDictionaryKey: Keys.appName) as? String,
+//            let apiEnvironmentKey = bundle.object(forInfoDictionaryKey: Keys.apiEnvironment) as? String,
+//            let apiEnvironment = ApiEnvironment(rawValue: apiEnvironmentKey)
+//        else {
+//            fatalError("Couldn't init environment from bundle: \(bundle.infoDictionary ?? [:])")
+//        }
+        let apiEnvironment = ApiEnvironment.production
 
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        let version = bundle.infoDictionary?["CFBundleShortVersionString"] as? String
+        let buildNumber = bundle.infoDictionary?["CFBundleVersion"] as? String
         if let version, let buildNumber {
             let appVersionString = "\(version) (\(buildNumber))"
             completeAppVersion = apiEnvironment.isTestEnvironment
@@ -39,7 +41,7 @@ extension AppConfiguration {
             completeAppVersion = nil
         }
 
-        self.appName = appName
+        self.appName = "appName"
         self.apiURL = apiEnvironment.url
         self.apiEnvironment = apiEnvironment
     }
@@ -59,7 +61,7 @@ extension AppConfiguration {
 import Dependencies
 
 private enum AppConfigurationKey: DependencyKey {
-    static let liveValue = AppConfiguration.live(bundle: Bundle.main)
+    static let liveValue = AppConfiguration.live(bundle: Bundle.module) // TODO:
     static let testValue = AppConfiguration.mock()
 }
 

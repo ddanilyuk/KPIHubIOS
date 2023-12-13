@@ -8,37 +8,16 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct CampusLoginView: View {
-    struct ViewState: Equatable {
-        @BindingViewState var username: String
-        @BindingViewState var password: String
-        @BindingViewState var isLoading: Bool
-        @BindingViewState var focusedField: CampusLoginFeature.Field?
-        let loginButtonEnabled: Bool
-        
-        init(state: BindingViewStore<CampusLoginFeature.State>) {
-            _username = state.$username
-            _password = state.$password
-            _isLoading = state.$isLoading
-            _focusedField = state.$focusedField
-            loginButtonEnabled = state.loginButtonEnabled
-        }
-    }
-    
-    private let store: StoreOf<CampusLoginFeature>
-    @ObservedObject private var viewStore: ViewStore<ViewState, CampusLoginFeature.Action.View>
+@ViewAction(for: CampusLoginFeature.self)
+public struct CampusLoginView: View {
+    @Bindable public var store: StoreOf<CampusLoginFeature>
     @FocusState private var focusedField: CampusLoginFeature.Field?
     
     init(store: StoreOf<CampusLoginFeature>) {
         self.store = store
-        self.viewStore = ViewStore(
-            store,
-            observe: ViewState.init,
-            send: CampusLoginFeature.Action.view
-        )
     }
     
-    var body: some View {
+    public var body: some View {
         GeometryReader { proxy in
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
@@ -51,12 +30,12 @@ struct CampusLoginView: View {
                     Spacer()
                     
                     VStack(spacing: 24) {
-                        TextField("Логін", text: viewStore.$username)
+                        TextField("Логін", text: $store.username)
                             .focused($focusedField, equals: .username)
                             .onSubmit { focusedField = .password }
                             .keyboardType(.default)
                         
-                        SecureField("Пароль", text: viewStore.$password)
+                        SecureField("Пароль", text: $store.password)
                             .focused($focusedField, equals: .password)
                     }
                     .autocapitalization(.none)
@@ -77,12 +56,12 @@ struct CampusLoginView: View {
                     
                     HStack(spacing: 20.0) {
                         Button(
-                            action: { viewStore.send(.loginButtonTapped) },
+                            action: { send(.loginButtonTapped) },
                             label: { Text("Увійти") }
                         )
                         .buttonStyle(BigButtonStyle())
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .disabled(!viewStore.loginButtonEnabled)
+                        .disabled(!store.loginButtonEnabled)
                     }
                     .padding(20)
                 }
@@ -92,11 +71,11 @@ struct CampusLoginView: View {
         .navigationBarTitle("Кампус")
         // TODO: assets
 //        .background(Color.screenBackground)
-        .loadable(viewStore.$isLoading)
-        .alert(store: store.scope(state: \.$alert, action: CampusLoginFeature.Action.alert))
-        .synchronize(viewStore.$focusedField, $focusedField)
+        .loadable($store.isLoading)
+        .alert($store.scope(state: \.alert, action: \.alert))
+        .synchronize($store.focusedField, $focusedField)
         .onAppear {
-            viewStore.send(.onAppear)
+            send(.onAppear)
         }
     }
 }

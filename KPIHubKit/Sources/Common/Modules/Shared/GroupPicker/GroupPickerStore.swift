@@ -10,19 +10,21 @@ import URLRouting
 import Foundation
 import UIKit
 
-struct GroupPickerFeature: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct GroupPickerFeature: Reducer {
+    @ObservableState
+    public struct State: Equatable {
         let mode: Mode
         var groups: [GroupResponse] = []
         var searchedGroups: [GroupResponse] = []
         var selectedGroup: GroupResponse?
-        @BindingState var searchPresented = false
-        @BindingState var searchedText: String = ""
-        @BindingState var isLoading = true
-        @PresentationState var alert: AlertState<Action.Alert>?
+        var searchPresented = false
+        var searchedText: String = ""
+        var isLoading = true
+        @Presents var alert: AlertState<Action.Alert>?
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
         case route(Route)
         case alert(PresentationAction<Alert>)
         case view(View)
@@ -30,13 +32,13 @@ struct GroupPickerFeature: Reducer {
         case allGroupsResult(TaskResult<[GroupResponse]>)
         case lessonsResult(TaskResult<[Lesson]>)
         
-        enum Route: Equatable {
+        public enum Route: Equatable {
             case done
         }
         
-        enum Alert: Equatable { }
+        public enum Alert: Equatable { }
         
-        enum View: BindableAction, Equatable {
+        public enum View: BindableAction, Equatable {
             case onAppear
             case refresh
             case groupSelected(GroupResponse)
@@ -50,7 +52,7 @@ struct GroupPickerFeature: Reducer {
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.analyticsService) var analyticsService
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         BindingReducer(action: /Action.view)
         
         Reduce { state, action in
@@ -113,12 +115,12 @@ private extension GroupPickerFeature {
             
         case let .groupSelected(group):
             state.isLoading = true
-            hideSearch(state: &state)
+            state.searchPresented = false
             state.selectedGroup = group
             analyticsService.track(Event.Onboarding.groupPickerSelect)
             return getLessons(for: group)
             
-        case .binding(\.$searchedText):
+        case .binding(\.searchedText):
             if state.searchedText.isEmpty {
                 state.searchedGroups = state.groups
             } else {
@@ -133,14 +135,6 @@ private extension GroupPickerFeature {
             
         case .binding:
             return .none
-        }
-    }
-    
-    private func hideSearch(state: inout State) {
-        if #available(iOS 17, *) {
-            state.searchPresented = false
-        } else {
-            UIApplication.shared.endEditing()
         }
     }
 }

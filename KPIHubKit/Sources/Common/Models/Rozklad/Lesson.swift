@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Lesson {
+public struct Lesson {
     var names: [String]
     var teachers: [String]?
     var locations: [String]?
@@ -252,7 +252,7 @@ extension Lesson: Codable {
 // MARK: - Identifiable
 
 extension Lesson: Identifiable {
-    var id: LessonResponse.ID {
+    public var id: Int {
         lessonResponse.id
     }
 }

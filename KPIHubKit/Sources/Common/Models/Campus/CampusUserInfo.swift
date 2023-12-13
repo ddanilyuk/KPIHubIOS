@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CampusUserInfo: Codable, Equatable {
+public struct CampusUserInfo: Codable, Equatable {
     // MARK: - StudyGroup
 
     struct InfoItem: Codable, Equatable {

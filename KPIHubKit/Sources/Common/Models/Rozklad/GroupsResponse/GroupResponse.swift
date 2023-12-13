@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GroupResponse {
+public struct GroupResponse {
     let id: UUID
     let name: String
     let faculty: String?

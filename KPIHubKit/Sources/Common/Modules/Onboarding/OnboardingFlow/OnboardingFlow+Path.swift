@@ -9,22 +9,23 @@ import ComposableArchitecture
 
 extension OnboardingFlow {
     @Reducer
-    struct Destination: Reducer {
-        enum State: Equatable {
+    public struct Path: Reducer {
+        @ObservableState
+        public enum State: Equatable {
             case campusLogin(CampusLoginFeature.State)
             case groupPicker(GroupPickerFeature.State)
         }
         
-        enum Action: Equatable {
+        public enum Action: Equatable {
             case campusLogin(CampusLoginFeature.Action)
             case groupPicker(GroupPickerFeature.Action)
         }
         
-        var body: some ReducerOf<Self> {
-            Scope(state: /State.campusLogin, action: /Action.campusLogin) {
+        public var body: some ReducerOf<Self> {
+            Scope(state: \.campusLogin, action: \.campusLogin) {
                 CampusLoginFeature()
             }
-            Scope(state: /State.groupPicker, action: /Action.groupPicker) {
+            Scope(state: \.groupPicker, action: \.groupPicker) {
                 GroupPickerFeature()
             }
         }

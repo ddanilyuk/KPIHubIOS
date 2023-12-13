@@ -29,6 +29,10 @@ let package = Package(
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "Routes", package: "KPIHubServer"),
+             ],
+             resources: [
+                .copy("Configs")
+//                .process("Configs")
              ]
          ),
          .testTarget(
