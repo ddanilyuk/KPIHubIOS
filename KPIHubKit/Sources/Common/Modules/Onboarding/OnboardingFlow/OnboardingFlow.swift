@@ -57,7 +57,7 @@ public struct OnboardingFlow: Reducer {
                 userDefaultsService.set(true, for: .onboardingPassed)
                 analyticsService.track(Event.Onboarding.onboardingPassed)
                 return .send(.output(.done))
-//                
+
             case .path(.element(_, .groupPicker(.route(.done)))):
                 campusClientState.commit()
                 rozkladServiceState.commit()
