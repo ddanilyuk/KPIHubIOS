@@ -7,8 +7,10 @@
 
 import ComposableArchitecture
 
-struct EditLessonTeachers: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct EditLessonTeachers: Reducer {
+    @ObservableState
+    public struct State: Equatable {
         let lesson: Lesson
         let teachers: [String]
         var selected: [String]
@@ -20,10 +22,10 @@ struct EditLessonTeachers: Reducer {
         }
     }
     
-    enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
         case view(View)
         
-        enum View: Equatable {
+        public enum View: Equatable {
             case onAppear
             case saveButtonTapped
             case cancelButtonTapped
@@ -35,7 +37,7 @@ struct EditLessonTeachers: Reducer {
     @Dependency(\.analyticsService) var analyticsService
     @Dependency(\.dismiss) var dismiss
     
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .view(.onAppear):

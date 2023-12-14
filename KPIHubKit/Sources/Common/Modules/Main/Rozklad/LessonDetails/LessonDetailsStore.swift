@@ -8,15 +8,21 @@
 import ComposableArchitecture
 import Foundation
 
-struct LessonDetails: Reducer {
-    struct State: Equatable {
+@Reducer
+public struct LessonDetails: Reducer {
+    @ObservableState
+    public struct State: Equatable {
         var lesson: Lesson
         var mode: LessonMode = .default
-        @BindingState var isEditing = false
-        @PresentationState var destination: Destination.State?
+        var isEditing = false
+        @Presents var destination: Destination.State?
+        
+        init(lesson: Lesson) {
+            self.lesson = lesson
+        }
     }
     
-    enum Action: Equatable, BindableAction {
+    public enum Action: Equatable, BindableAction, ViewAction {
         case updateCurrentDate
         case updateLesson(Lesson)
 
@@ -24,7 +30,7 @@ struct LessonDetails: Reducer {
         case view(View)
         case binding(BindingAction<State>)
         
-        enum View: Equatable {
+        public enum View: Equatable {
             case onAppear
             case startEditingButtonTapped
             case endEditingButtonTapped
@@ -39,7 +45,7 @@ struct LessonDetails: Reducer {
     @Dependency(\.analyticsService) var analyticsService
     @Dependency(\.dismiss) var dismiss
 
-    var body: some ReducerOf<Self> {
+    public var body: some ReducerOf<Self> {
         BindingReducer()
         
         Reduce { state, action in
@@ -68,7 +74,7 @@ struct LessonDetails: Reducer {
                 )
                 .cancellable(id: CancelID.onAppear, cancelInFlight: true)
                 
-            case .binding(\.$isEditing):
+            case .binding(\.isEditing):
                 if state.isEditing {
                     analyticsService.track(Event.LessonDetails.editTapped)
                 }
@@ -176,28 +182,30 @@ struct LessonDetails: Reducer {
 }
 
 extension LessonDetails {
-    struct Destination: Reducer {
-        enum State: Equatable {
+    @Reducer
+    public struct Destination: Reducer {
+        @ObservableState
+        public enum State: Equatable {
             case alert(AlertState<Action.Alert>)
             case editLessonNames(EditLessonNames.State)
             case editLessonTeachers(EditLessonTeachers.State)
         }
         
-        enum Action: Equatable, Sendable {
+        public enum Action: Equatable {
             case alert(Alert)
             case editLessonNames(EditLessonNames.Action)
             case editLessonTeachers(EditLessonTeachers.Action)
             
-            enum Alert: Equatable {
+            public enum Alert: Equatable {
                 case deleteLessonConfirm
             }
         }
         
-        var body: some ReducerOf<Self> {
-            Scope(state: /State.editLessonNames, action: /Action.editLessonNames) {
+        public var body: some ReducerOf<Self> {
+            Scope(state: \.editLessonNames, action: \.editLessonNames) {
                 EditLessonNames()
             }
-            Scope(state: /State.editLessonTeachers, action: /Action.editLessonTeachers) {
+            Scope(state: \.editLessonTeachers, action: \.editLessonTeachers) {
                 EditLessonTeachers()
             }
         }

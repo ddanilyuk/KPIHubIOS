@@ -8,80 +8,57 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: LessonDetails.self)
 struct LessonDetailsView: View {
-    struct ViewState: Equatable {
-        let lesson: Lesson
-        let mode: LessonMode
-        let isEditing: Bool
-        
-        var showTeachers: Bool {
-            !lesson.isTeachersEmpty
-        }
-        var showLocations: Bool {
-            !lesson.isLocationsEmpty
-        }
-        var showType: Bool {
-            !lesson.isTypeEmpty
-        }
-        
-        init(state: LessonDetails.State) {
-            lesson = state.lesson
-            mode = state.mode
-            isEditing = state.isEditing
-        }
-    }
-    
-    private let store: StoreOf<LessonDetails>
-    @ObservedObject private var viewStore: ViewStore<ViewState, LessonDetails.Action.View>
+    @Bindable var store: StoreOf<LessonDetails>
     
     init(store: StoreOf<LessonDetails>) {
         self.store = store
-        self.viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
     }
-
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 LessonDetailsTitleView(
-                    title: viewStore.lesson.names.joined(separator: ", "),
-                    isEditing: viewStore.isEditing
+                    title: store.lesson.names.joined(separator: ", "),
+                    isEditing: store.isEditing
                 )
                 .onTapGesture {
-                    viewStore.send(.editNamesButtonTapped)
+                    send(.editNamesButtonTapped)
                 }
 
                 LessonDetailsDateAndTimeSection(
-                    lessonPositionDescription: viewStore.lesson.position.description,
-                    lessonWeek: viewStore.lesson.week,
-                    lessonDay: viewStore.lesson.day,
-                    mode: viewStore.mode
+                    lessonPositionDescription: store.lesson.position.description,
+                    lessonWeek: store.lesson.week,
+                    lessonDay: store.lesson.day,
+                    mode: store.mode
                 )
 
-                if viewStore.showTeachers {
+                if !store.lesson.isTeachersEmpty {
                     LessonDetailsTeacherSection(
-                        teachers: viewStore.lesson.teachers ?? [],
-                        isEditing: viewStore.isEditing
+                        teachers: store.lesson.teachers ?? [],
+                        isEditing: store.isEditing
                     )
                     .onTapGesture {
-                        viewStore.send(.editTeachersButtonTapped)
+                        send(.editTeachersButtonTapped)
                     }
                 }
 
-                if viewStore.showType {
+                if !store.lesson.isTypeEmpty {
                     LessonDetailsTypeSection(
-                        type: viewStore.lesson.type
+                        type: store.lesson.type
                     )
                 }
 
-                if viewStore.showLocations {
+                if !store.lesson.isLocationsEmpty {
                     LessonDetailsLocationsSection(
-                        locations: viewStore.lesson.locations ?? []
+                        locations: store.lesson.locations ?? []
                     )
                 }
                 
-                if viewStore.isEditing {
+                if store.isEditing {
                     Button("ВИДАЛИТИ", role: .destructive) {
-                        viewStore.send(.deleteLessonButtonTapped)
+                        send(.deleteLessonButtonTapped)
                     }
                     .buttonStyle(.borderedProminent)
                 }
@@ -93,30 +70,22 @@ struct LessonDetailsView: View {
                 toolbar
             }
         }
-        .animation(.default, value: viewStore.state.isEditing)
+        .animation(.default, value: store.isEditing)
         .onAppear {
-            viewStore.send(.onAppear)
+            send(.onAppear)
         }
         // TODO: assets
 //        .background(Color.screenBackground)
-        .alert(
-            store: store.scope(state: \.$destination, action: { .destination($0) }),
-            state: /LessonDetails.Destination.State.alert,
-            action: LessonDetails.Destination.Action.alert
-        )
+        .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
         .sheet(
-            store: store.scope(state: \.$destination, action: { .destination($0) }),
-            state: /LessonDetails.Destination.State.editLessonNames,
-            action: LessonDetails.Destination.Action.editLessonNames
+            item: $store.scope(state: \.destination?.editLessonNames, action: \.destination.editLessonNames)
         ) { store in
             NavigationStack {
                 EditLessonNamesView(store: store)
             }
         }
         .sheet(
-            store: store.scope(state: \.$destination, action: { .destination($0) }),
-            state: /LessonDetails.Destination.State.editLessonTeachers,
-            action: LessonDetails.Destination.Action.editLessonTeachers
+            item: $store.scope(state: \.destination?.editLessonTeachers, action: \.destination.editLessonTeachers)
         ) { store in
             NavigationStack {
                 EditLessonTeachersView(store: store)
@@ -128,10 +97,10 @@ struct LessonDetailsView: View {
 
     @ViewBuilder
     var toolbar: some View {
-        switch viewStore.state.isEditing {
+        switch store.isEditing {
         case true:
             Button(
-                action: { viewStore.send(.endEditingButtonTapped) },
+                action: { send(.endEditingButtonTapped) },
                 label: { Text("Готово") }
             )
 
@@ -139,7 +108,7 @@ struct LessonDetailsView: View {
             Menu(
                 content: {
                     Button(
-                        action: { viewStore.send(.startEditingButtonTapped) },
+                        action: { send(.startEditingButtonTapped) },
                         label: {
                             Text("Редагувати")
                             Image(systemName: "pencil")

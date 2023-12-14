@@ -14,7 +14,7 @@ public struct RozkladFlow: Reducer {
     @ObservableState
     public struct State: Equatable {
         var rozkladRoot: RozkladRoot.State
-        // var path = StackState<Path.State>()
+         var path = StackState<Path.State>()
 
         init() {
             self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
@@ -26,7 +26,7 @@ public struct RozkladFlow: Reducer {
         
         case updateRozkladState(RozkladServiceState.State)
         case rozkladRoot(RozkladRoot.Action)
-        // case path(StackAction<Path.State, Path.Action>)
+        case path(StackAction<Path.State, Path.Action>)
     }
     
     @Dependency(\.rozkladServiceState) var rozkladServiceState
@@ -51,7 +51,7 @@ public struct RozkladFlow: Reducer {
                 let lessonDetailsState = LessonDetails.State(
                     lesson: lesson
                 )
-                // state.path.append(.lessonDetails(lessonDetailsState))
+                state.path.append(.lessonDetails(lessonDetailsState))
                 return .none
                 
             case .rozkladRoot(.groupPicker(.route(.done))):
@@ -59,8 +59,8 @@ public struct RozkladFlow: Reducer {
                 rozkladServiceLessons.commit()
                 return .none
                 
-//            case .path:
-//                return .none
+            case .path:
+                return .none
                 
             case .rozkladRoot:
                 return .none
@@ -73,9 +73,9 @@ public struct RozkladFlow: Reducer {
             RozkladRoot()
         }
         core
-//            .forEach(\.path, action: /Action.path) {
-//                Path()
-//            }
+            .forEach(\.path, action: /Action.path) {
+                Path()
+            }
     }
     
     private func setRootRozkladState(from rozkladState: RozkladServiceState.State, state: inout State) {

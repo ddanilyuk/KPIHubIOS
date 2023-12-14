@@ -8,22 +8,13 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: EditLessonNames.self)
 struct EditLessonNamesView: View {
-    struct ViewState: Equatable {
-        let names: [String]
-        let selected: [String]
-        
-        init(state: EditLessonNames.State) {
-            self.names = state.names
-            self.selected = state.selected
-        }
-    }
-    
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject private var viewStore: ViewStore<ViewState, EditLessonNames.Action.View>
+    let store: StoreOf<EditLessonNames>
 
     init(store: StoreOf<EditLessonNames>) {
-        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.store = store
     }
 
     var body: some View {
@@ -42,15 +33,15 @@ struct EditLessonNamesView: View {
         // TODO: assets
 //            .background(Color.screenBackground)
             .onAppear {
-                viewStore.send(.onAppear)
+                send(.onAppear)
             }
     }
     
     private var content: some View {
         ScrollView {
             VStack {
-                ForEach(viewStore.names, id: \.self) { name in
-                    let isSelected = viewStore.selected.contains(name)
+                ForEach(store.names, id: \.self) { name in
+                    let isSelected = store.selected.contains(name)
                     ZStack {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
@@ -77,7 +68,7 @@ struct EditLessonNamesView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 4)
                     .onTapGesture {
-                        viewStore.send(.toggleLessonNameTapped(name: name))
+                        send(.toggleLessonNameTapped(name: name))
                     }
                 }
             }
@@ -86,7 +77,7 @@ struct EditLessonNamesView: View {
     
     private var cancelButton: some View {
         Button(
-            action: { viewStore.send(.cancelButtonTapped) },
+            action: { send(.cancelButtonTapped) },
             label: {
                 Text("Скасувати")
                     .foregroundColor(.orange)
@@ -96,7 +87,7 @@ struct EditLessonNamesView: View {
     
     private var saveButton: some View {
         Button(
-            action: { viewStore.send(.saveButtonTapped) },
+            action: { send(.saveButtonTapped) },
             label: {
                 Text("Зберегти")
                     .foregroundColor(.orange)

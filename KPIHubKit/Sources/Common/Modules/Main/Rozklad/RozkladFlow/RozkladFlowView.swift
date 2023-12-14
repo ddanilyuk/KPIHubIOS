@@ -9,34 +9,31 @@ import SwiftUI
 import ComposableArchitecture
 
 struct RozkladFlowView: View {
-    private let store: StoreOf<RozkladFlow>
+    @Bindable var store: StoreOf<RozkladFlow>
     
     init(store: StoreOf<RozkladFlow>) {
         self.store = store
     }
     
     var body: some View {
-        Color.red
-//        NavigationStackStore(
-//            store.scope(state: \.path, action: { .path($0) }),
-//            root: {
-//                RozkladFlow.RozkladRootView(
-//                    store: store.scope(
-//                        state: \.rozkladRoot,
-//                        action: RozkladFlow.Action.rozkladRoot
-//                    )
-//                )
-//            },
-//            destination: { destination in
-//                switch destination {
-//                case .lessonDetails:
-//                    CaseLet(
-//                        /RozkladFlow.Path.State.lessonDetails,
-//                        action: RozkladFlow.Path.Action.lessonDetails,
-//                        then: LessonDetailsView.init
-//                    )
-//                }
-//            }
-//        )
+        NavigationStack(
+            path: $store.scope(state: \.path, action: \.path),
+            root: {
+                RozkladFlow.RozkladRootView(
+                    store: store.scope(
+                        state: \.rozkladRoot,
+                        action: \.rozkladRoot
+                    )
+                )
+            },
+            destination: { store in
+                switch store.withState({ $0 }) {
+                case .lessonDetails:
+                    if let store = store.scope(state: \.lessonDetails, action: \.lessonDetails) {
+                        LessonDetailsView(store: store)
+                    }
+                }
+            }
+        )
     }
 }

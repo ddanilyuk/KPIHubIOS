@@ -8,24 +8,15 @@
 import SwiftUI
 import ComposableArchitecture
 
+@ViewAction(for: EditLessonTeachers.self)
 struct EditLessonTeachersView: View {
-    struct ViewState: Equatable {
-        let teachers: [String]
-        var selected: [String]
-        
-        init(state: EditLessonTeachers.State) {
-            teachers = state.teachers
-            selected = state.selected
-        }
-    }
-    
     @Environment(\.colorScheme) private var colorScheme
-    @ObservedObject private var viewStore: ViewStore<ViewState, EditLessonTeachers.Action.View>
+    let store: StoreOf<EditLessonTeachers>
     
     init(store: StoreOf<EditLessonTeachers>) {
-        viewStore = ViewStore(store, observe: ViewState.init, send: { .view($0) })
+        self.store = store
     }
-
+    
     var body: some View {
         content
             .toolbar {
@@ -38,18 +29,18 @@ struct EditLessonTeachersView: View {
             }
             .navigationTitle("Редагувати вчителів")
             .navigationBarTitleDisplayMode(.inline)
-        // TODO: 
+        // TODO: assets
 //            .background(Color.screenBackground)
             .onAppear {
-                viewStore.send(.onAppear)
+                send(.onAppear)
             }
     }
     
     private var content: some View {
         ScrollView {
             VStack {
-                ForEach(viewStore.teachers, id: \.self) { teacher in
-                    let isSelected = viewStore.selected.contains(teacher)
+                ForEach(store.teachers, id: \.self) { teacher in
+                    let isSelected = store.selected.contains(teacher)
                     ZStack {
                         RoundedRectangle(cornerRadius: 8)
                             .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
@@ -80,7 +71,7 @@ struct EditLessonTeachersView: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 4)
                     .onTapGesture {
-                        viewStore.send(.toggleLessonTeacherTapped(name: teacher))
+                        send(.toggleLessonTeacherTapped(name: teacher))
                     }
                 }
             }
@@ -89,7 +80,7 @@ struct EditLessonTeachersView: View {
     
     private var cancelButton: some View {
         Button(
-            action: { viewStore.send(.cancelButtonTapped) },
+            action: { send(.cancelButtonTapped) },
             label: {
                 Text("Скасувати")
                     .foregroundColor(.orange)
@@ -99,7 +90,7 @@ struct EditLessonTeachersView: View {
     
     private var saveButton: some View {
         Button(
-            action: { viewStore.send(.saveButtonTapped) },
+            action: { send(.saveButtonTapped) },
             label: {
                 Text("Зберегти")
                     .foregroundColor(.orange)

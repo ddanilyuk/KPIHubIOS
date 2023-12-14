@@ -8,21 +8,21 @@
 import ComposableArchitecture
 
 extension RozkladFlow {
-    struct Path {}
-}
-
-extension RozkladFlow.Path: Reducer {
-    enum State: Equatable {
-        case lessonDetails(LessonDetails.State)
-    }
-    
-    enum Action: Equatable {
-        case lessonDetails(LessonDetails.Action)
-    }
-    
-    var body: some ReducerOf<Self> {
-        Scope(state: /State.lessonDetails, action: /Action.lessonDetails) {
-            LessonDetails()
+    @Reducer
+    public struct Path: Reducer {
+        @ObservableState
+        public enum State: Equatable {
+            case lessonDetails(LessonDetails.State)
+        }
+        
+        public enum Action: Equatable {
+            case lessonDetails(LessonDetails.Action)
+        }
+        
+        public var body: some ReducerOf<Self> {
+            Scope(state: \.lessonDetails, action: \.lessonDetails) {
+                LessonDetails()
+            }
         }
     }
 }
