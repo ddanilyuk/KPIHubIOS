@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SharedViews
 
 struct OnboardingView: View {
     struct ViewState: Equatable { }

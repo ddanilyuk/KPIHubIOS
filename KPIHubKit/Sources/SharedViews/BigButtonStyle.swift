@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct BigButtonStyle: ButtonStyle {
-    func makeBody(configuration: Self.Configuration) -> some View {
+public struct BigButtonStyle: ButtonStyle {
+    public init() { } // TODO: Make extension?
+    
+    public func makeBody(configuration: Self.Configuration) -> some View {
         BigButtonStyleView(configuration: configuration)
     }
 }

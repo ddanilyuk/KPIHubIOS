@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import Extensions
 
-struct BorderGradientBackgroundView: View {
+public struct BorderGradientBackgroundView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @State var gradientAngle: Double = 0
+    
+    public init() { }
 
-    var body: some View {
+    public var body: some View {
         RoundedRectangle(cornerRadius: 8)
             .fill(
                 colorScheme == .light ? Color.white : Color(.tertiarySystemFill),

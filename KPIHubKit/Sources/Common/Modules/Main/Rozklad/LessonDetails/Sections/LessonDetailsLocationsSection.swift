@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedViews
 
 struct LessonDetailsLocationsSection: View {
     var locations: [String]

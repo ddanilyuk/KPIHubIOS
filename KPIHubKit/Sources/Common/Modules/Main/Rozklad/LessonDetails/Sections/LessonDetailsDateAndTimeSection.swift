@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SharedViews
 import Services // TODO: ?
 
 struct LessonDetailsDateAndTimeSection: View {

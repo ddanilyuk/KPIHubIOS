@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct RectModifier: ViewModifier {
-    var onChange: (CGRect) -> Void
+public struct RectModifier: ViewModifier {
+    public var onChange: (CGRect) -> Void
+    
+    public init(onChange: @escaping (CGRect) -> Void) {
+        self.onChange = onChange
+    }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .overlay(
                 ZStack {

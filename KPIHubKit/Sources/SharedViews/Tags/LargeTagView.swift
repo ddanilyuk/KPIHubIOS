@@ -1,46 +1,54 @@
 //
-//  SmallTagView.swift
+//  LargeTagView.swift
 //  KPIHubIOS
 //
-//  Created by Denys Danyliuk on 31.05.2022.
+//  Created by Denys Danyliuk on 01.06.2022.
 //
 
 import SwiftUI
 
-struct SmallTagView: View {
+public struct LargeTagView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     let icon: Image
     let text: String
     let color: Color
+    
+    public init(icon: Image, text: String, color: Color) {
+        self.icon = icon
+        self.text = text
+        self.color = color
+    }
 
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .center, spacing: 0) {
             ZStack {
                 Circle()
                     .fill(color)
 
                 icon
-                    .font(.system(.footnote))
+                    .font(.system(.body))
                     .foregroundColor(.white)
             }
-            .frame(width: 24, height: 24)
+            .frame(width: 30, height: 30)
 
             Text("\(text)")
-                .lineLimit(1)
-                .font(.system(.footnote))
                 .foregroundColor(.black)
-                .padding(.vertical, 3)
-                .padding(.horizontal, 6)
+                .padding(.vertical, 4)
+                .padding(.horizontal, 8)
         }
         .background(color.lighter(by: colorScheme == .light ? 0.9 : 0.7))
-        .cornerRadius(12)
+        .cornerRadius(15)
+        .if(colorScheme == .light) { view in
+            view
+                .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 2)
+        }
     }
 }
 
 // MARK: - Preview
 #Preview {
-    SmallTagView(
+    LargeTagView(
         icon: Image(systemName: "graduationcap"),
         text: "Практика",
         color: .cyan

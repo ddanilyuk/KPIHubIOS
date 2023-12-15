@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct OffsetModifier: ViewModifier {
-    var onChange: (CGFloat) -> Void
+public struct OffsetModifier: ViewModifier {
+    public var onChange: (CGFloat) -> Void
+    
+    public init(onChange: @escaping (CGFloat) -> Void) {
+        self.onChange = onChange
+    }
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .overlay(
                 ZStack {

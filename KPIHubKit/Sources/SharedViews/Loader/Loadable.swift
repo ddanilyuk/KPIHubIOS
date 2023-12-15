@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct Loadable: ViewModifier {
+public struct Loadable: ViewModifier {
     @Binding var isVisible: Bool
 
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .disabled(isVisible)
             .overlay(isVisible ? Loader() : nil)
@@ -19,7 +19,7 @@ struct Loadable: ViewModifier {
 }
 
 extension View {
-    func loadable(_ isVisible: Binding<Bool>) -> some View {
+    public func loadable(_ isVisible: Binding<Bool>) -> some View {
         modifier(Loadable(isVisible: isVisible))
     }
 }

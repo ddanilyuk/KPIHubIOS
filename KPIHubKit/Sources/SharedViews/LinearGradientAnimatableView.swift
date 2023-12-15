@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct LinearGradientAnimatableView: View {
+public struct LinearGradientAnimatableView: View {
     @State private var progress: CGFloat = 0
 
     let startGradient = Gradient(colors: [.purple, .yellow])
     let endGradient = Gradient(colors: [.blue, .purple])
+    
+    public init() { }
 
-    var body: some View {
+    public var body: some View {
         RoundedRectangle(cornerRadius: 2)
             .animatableGradient(
                 fromGradient: startGradient,

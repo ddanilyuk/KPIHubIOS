@@ -29,6 +29,7 @@ let package = Package(
              name: "Common",
              dependencies: [
                 "Services",
+                "SharedViews",
                 "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
@@ -37,6 +38,12 @@ let package = Package(
              ],
              resources: [
                 .copy("Configs")
+             ]
+         ),
+         .target(
+             name: "SharedViews",
+             dependencies: [
+                "Extensions",
              ]
          ),
          .target(
