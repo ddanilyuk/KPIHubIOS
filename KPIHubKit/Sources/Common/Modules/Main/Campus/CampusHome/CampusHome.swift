@@ -10,6 +10,7 @@ import Routes
 import Foundation
 import ConcurrencyExtras
 
+@Reducer
 public struct CampusHome: Reducer {
     public struct State: Equatable {
         var openStudySheetOnLoad = false
@@ -40,7 +41,7 @@ public struct CampusHome: Reducer {
     @Dependency(\.analyticsService) var analyticsService
 
     public var body: some ReducerOf<Self> {
-        BindingReducer(action: /Action.view)
+        BindingReducer(action: \.view)
         
         Reduce { state, action in
             switch action {

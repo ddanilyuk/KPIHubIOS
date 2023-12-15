@@ -167,7 +167,7 @@ public struct GroupRozklad: Reducer {
                 return .none
             }
         }
-        .forEach(\State.lessonCells, action: /Action.lessonCells) {
+        .forEach(\.lessonCells, action: /Action.lessonCells) {
             LessonCell()
         }
     }

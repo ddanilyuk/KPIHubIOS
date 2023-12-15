@@ -53,7 +53,7 @@ public struct GroupPickerFeature: Reducer {
     @Dependency(\.analyticsService) var analyticsService
     
     public var body: some ReducerOf<Self> {
-        BindingReducer(action: /Action.view)
+        BindingReducer(action: \.view)
         
         Reduce { state, action in
             switch action {
@@ -98,7 +98,7 @@ public struct GroupPickerFeature: Reducer {
                 return .none
             }
         }
-        .ifLet(\.$alert, action: /Action.alert)
+        .ifLet(\.$alert, action: \.alert)
     }
 }
 

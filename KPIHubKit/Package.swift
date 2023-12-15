@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "observation-beta"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk", exact: "10.16.0"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", exact: "10.19.0"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", exact: "4.2.2"),
         .package(url: "https://github.com/ddanilyuk/KPIHubServer", branch: "master"),
     ],

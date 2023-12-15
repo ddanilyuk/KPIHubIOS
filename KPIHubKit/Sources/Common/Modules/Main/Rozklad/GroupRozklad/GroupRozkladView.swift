@@ -97,9 +97,13 @@ struct GroupRozkladView: View {
                         .padding(.top, 8)
                         .padding(.horizontal, 16)
                     }
-                    .onChange(of: selectedDay) { changeSelectedDay($0, proxy: proxy) }
-                    .onChange(of: selectedWeek) { changeSelectedWeek($0, proxy: proxy) }
-                    .onChange(of: viewStore.scrollTo) { newValue in
+                    .onChange(of: selectedDay) { _, newValue in
+                        changeSelectedDay(newValue, proxy: proxy)
+                    }
+                    .onChange(of: selectedWeek) { _, newValue in
+                        changeSelectedWeek(newValue, proxy: proxy)
+                    }
+                    .onChange(of: viewStore.scrollTo) { _, newValue in
                         guard let scrollPosition = newValue else {
                             return
                         }

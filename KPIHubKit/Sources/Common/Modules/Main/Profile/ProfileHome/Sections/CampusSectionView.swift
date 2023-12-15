@@ -10,7 +10,7 @@ import ComposableArchitecture
 
 @ViewAction(for: ProfileHome.self)
 struct CampusSectionView: View {
-    public let store: StoreOf<ProfileHome>
+    let store: StoreOf<ProfileHome>
     
     init(store: StoreOf<ProfileHome>) {
         self.store = store

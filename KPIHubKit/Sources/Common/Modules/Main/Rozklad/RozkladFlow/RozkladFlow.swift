@@ -69,11 +69,11 @@ public struct RozkladFlow: Reducer {
     }
     
     public var body: some ReducerOf<Self> {
-        Scope(state: \.rozkladRoot, action: /Action.rozkladRoot) {
+        Scope(state: \.rozkladRoot, action: \.rozkladRoot) {
             RozkladRoot()
         }
         core
-            .forEach(\.path, action: /Action.path) {
+            .forEach(\.path, action: \.path) {
                 Path()
             }
     }

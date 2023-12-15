@@ -157,7 +157,7 @@ public struct LessonDetails: Reducer {
                 return .none
             }
         }
-        .ifLet(\.$destination, action: /Action.destination) {
+        .ifLet(\.$destination, action: \.destination) {
             Destination()
         }
     }

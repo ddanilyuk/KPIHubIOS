@@ -32,7 +32,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
 
     private lazy var appDelegateStore = store.scope(
         state: \.appDelegate,
-        action: { .appDelegate($0) }
+        action: \.appDelegate
     )
 
     // MARK: - Methods

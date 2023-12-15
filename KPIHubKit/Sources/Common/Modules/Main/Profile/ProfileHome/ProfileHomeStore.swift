@@ -67,7 +67,7 @@ public struct ProfileHome: Reducer {
     @Dependency(\.analyticsService) var analyticsService
     
     public var body: some ReducerOf<Self> {
-        BindingReducer(action: /Action.view)
+        BindingReducer(action: \.view)
         
         Reduce { state, action in
             switch action {
@@ -212,7 +212,7 @@ public struct ProfileHome: Reducer {
                 return .none
             }
         }
-        .ifLet(\.$destination, action: /Action.destination) {
+        .ifLet(\.$destination, action: \.destination) {
             Destination()
         }
     }

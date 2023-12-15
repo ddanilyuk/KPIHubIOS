@@ -60,13 +60,13 @@ public struct MainFlow: Reducer {
     
     public var body: some ReducerOf<Self> {
         BindingReducer()
-        Scope(state: \State.rozklad, action: /Action.rozklad) {
+        Scope(state: \.rozklad, action: \.rozklad) {
             RozkladFlow()
         }
-        Scope(state: \State.campus, action: /Action.campus) {
+        Scope(state: \.campus, action: \.campus) {
             Campus()
         }
-        Scope(state: \State.profile, action: /Action.profile) {
+        Scope(state: \.profile, action: \.profile) {
             Profile()
         }
         core
