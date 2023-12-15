@@ -17,7 +17,7 @@ public struct RozkladFlow: Reducer {
         var rozkladRoot: RozkladRoot.State
          var path = StackState<Path.State>()
 
-        init() {
+        public init() {
             self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
         }
     }
@@ -32,6 +32,8 @@ public struct RozkladFlow: Reducer {
     
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
+    
+    public init() { }
     
     var core: some ReducerOf<Self> {
         Reduce<State, Action> { state, action in

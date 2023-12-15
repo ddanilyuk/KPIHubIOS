@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 @ViewAction(for: GroupPickerFeature.self)
-struct GroupPickerView: View {
-    @Bindable var store: StoreOf<GroupPickerFeature>
+public struct GroupPickerView: View {
+    @Bindable public var store: StoreOf<GroupPickerFeature>
     
-    init(store: StoreOf<GroupPickerFeature>) {
+    public init(store: StoreOf<GroupPickerFeature>) {
         self.store = store
     }
 
-    var body: some View {
+    public var body: some View {
         List {
             ForEach(store.searchedGroups, id: \.id) { group in
                 ZStack {

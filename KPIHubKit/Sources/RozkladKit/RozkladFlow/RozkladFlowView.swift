@@ -8,14 +8,14 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct RozkladFlowView: View {
-    @Bindable var store: StoreOf<RozkladFlow>
+public struct RozkladFlowView: View {
+    @Bindable public var store: StoreOf<RozkladFlow>
     
-    init(store: StoreOf<RozkladFlow>) {
+    public init(store: StoreOf<RozkladFlow>) {
         self.store = store
     }
     
-    var body: some View {
+    public var body: some View {
         NavigationStack(
             path: $store.scope(state: \.path, action: \.path),
             root: {

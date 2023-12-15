@@ -31,13 +31,22 @@ let package = Package(
                 "Services",
                 "SharedViews",
                 "Extensions",
+                "RozkladKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
-                .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "Routes", package: "KPIHubServer"),
              ],
              resources: [
                 .copy("Configs")
+             ]
+         ),
+         .target(
+             name: "RozkladKit",
+             dependencies: [
+                "Services",
+                "SharedViews",
+                "Extensions",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Routes", package: "KPIHubServer"),
              ]
          ),
          .target(
@@ -62,7 +71,6 @@ let package = Package(
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
              ]
          ),
-
          .testTarget(
              name: "KPIHubKitTests",
              dependencies: ["Common"]

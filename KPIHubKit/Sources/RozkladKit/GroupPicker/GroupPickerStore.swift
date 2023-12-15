@@ -23,6 +23,10 @@ public struct GroupPickerFeature: Reducer {
         var searchedText: String = ""
         var isLoading = true
         @Presents var alert: AlertState<Action.Alert>?
+        
+        public init(mode: Mode) {
+            self.mode = mode
+        }
     }
     
     public enum Action: Equatable, ViewAction {
@@ -52,6 +56,8 @@ public struct GroupPickerFeature: Reducer {
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.analyticsService) var analyticsService
+    
+    public init() { }
     
     public var body: some ReducerOf<Self> {
         BindingReducer(action: \.view)
@@ -190,7 +196,7 @@ private extension GroupPickerFeature {
 
 // MARK: - Helper models
 extension GroupPickerFeature {
-    enum Mode {
+    public enum Mode {
         case onboarding
         case rozkladTab
         case campus
