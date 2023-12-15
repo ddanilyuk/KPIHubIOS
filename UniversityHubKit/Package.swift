@@ -12,6 +12,14 @@ let package = Package(
         .library(
             name: "UniversityHubKit",
             targets: ["UniversityHubKit"]
+        ),
+        .library(
+            name: "GroupPickerFeature",
+            targets: ["GroupPickerFeature"]
+        ),
+        .library(
+            name: "RozkladKit",
+            targets: ["RozkladKit"]
         )
     ],
     dependencies: [
@@ -28,6 +36,17 @@ let package = Package(
                 "SharedViews",
                 "Extensions",
                 "RozkladKit",
+                "GroupPickerFeature",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "Routes", package: "KPIHubServer"),
+            ]
+        ),
+        .target(
+            name: "GroupPickerFeature",
+            dependencies: [
+                "Services",
+                "SharedViews",
+//                "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
             ]
@@ -38,6 +57,7 @@ let package = Package(
                 "Services",
                 "SharedViews",
                 "Extensions",
+                "GroupPickerFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
             ]

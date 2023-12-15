@@ -9,14 +9,15 @@ import ComposableArchitecture
 import IdentifiedCollections
 import Foundation
 import Services
+import GroupPickerFeature
 
 @Reducer
 public struct RozkladFlow: Reducer {
     @ObservableState
     public struct State: Equatable {
         var rozkladRoot: RozkladRoot.State
-         var path = StackState<Path.State>()
-
+        var path = StackState<Path.State>()
+        
         public init() {
             self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
         }

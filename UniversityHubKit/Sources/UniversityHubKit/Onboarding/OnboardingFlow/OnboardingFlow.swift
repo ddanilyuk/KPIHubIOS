@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Services
 import RozkladKit
+import GroupPickerFeature
 
 @Reducer
 public struct OnboardingFlow: Reducer {

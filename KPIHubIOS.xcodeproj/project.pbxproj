@@ -13,6 +13,13 @@
 		5F97B3D0283677C600350368 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3CF283677C600350368 /* ProfileTests.swift */; };
 		5F97B3DA283677C600350368 /* KPIHubIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */; };
 		5F97B3DC283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */; };
+		DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D02B2CF84200A439C0 /* AppView.swift */; };
+		DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */; };
+		DB2974D52B2CF84200A439C0 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D22B2CF84200A439C0 /* AppFeature.swift */; };
+		DB2974D72B2CFA4200A439C0 /* GroupPickerFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB2974D62B2CFA4200A439C0 /* GroupPickerFeature */; };
+		DB2974DC2B2CFAEB00A439C0 /* RozkladKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB2974DB2B2CFAEB00A439C0 /* RozkladKit */; };
+		DB2974DD2B2CFB0100A439C0 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974DA2B2CFAC000A439C0 /* MainFlow.swift */; };
+		DB2974DE2B2CFB0300A439C0 /* MainFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D92B2CFAC000A439C0 /* MainFlowView.swift */; };
 		DB3284E02ADB27B900A8AE26 /* ForDevelopersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */; };
 		DB3284FD2ADB2D2B00A8AE26 /* __Snapshots__ in Resources */ = {isa = PBXBuildFile; fileRef = DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */; };
 		DB3284FF2ADB2FE800A8AE26 /* SnapshotHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */; };
@@ -49,6 +56,11 @@
 		5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITests.swift; sourceTree = "<group>"; };
 		5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB2974D02B2CF84200A439C0 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
+		DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
+		DB2974D22B2CF84200A439C0 /* AppFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
+		DB2974D92B2CFAC000A439C0 /* MainFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowView.swift; sourceTree = "<group>"; };
+		DB2974DA2B2CFAC000A439C0 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
 		DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		DB3284D02ADAFBC400A8AE26 /* KPIHubIOS-Staging.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPIHubIOS-Staging.xctestplan"; sourceTree = "<group>"; };
 		DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersTests.swift; sourceTree = "<group>"; };
@@ -66,6 +78,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */,
+				DB2974D72B2CFA4200A439C0 /* GroupPickerFeature in Frameworks */,
+				DB2974DC2B2CFAEB00A439C0 /* RozkladKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +129,8 @@
 			isa = PBXGroup;
 			children = (
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
+				DB2974D82B2CFAC000A439C0 /* MainFlow */,
+				DB2974CF2B2CF83100A439C0 /* AppFlow */,
 				DB9A2C012B2CEFA4002B2AC8 /* Resources */,
 			);
 			path = KPIHubIOS;
@@ -153,6 +169,25 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB2974CF2B2CF83100A439C0 /* AppFlow */ = {
+			isa = PBXGroup;
+			children = (
+				DB2974D22B2CF84200A439C0 /* AppFeature.swift */,
+				DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */,
+				DB2974D02B2CF84200A439C0 /* AppView.swift */,
+			);
+			path = AppFlow;
+			sourceTree = "<group>";
+		};
+		DB2974D82B2CFAC000A439C0 /* MainFlow */ = {
+			isa = PBXGroup;
+			children = (
+				DB2974D92B2CFAC000A439C0 /* MainFlowView.swift */,
+				DB2974DA2B2CFAC000A439C0 /* MainFlow.swift */,
+			);
+			path = MainFlow;
 			sourceTree = "<group>";
 		};
 		DB3284CE2ADAFAC200A8AE26 /* ci_scripts */ = {
@@ -211,6 +246,8 @@
 			name = KPIHubIOS;
 			packageProductDependencies = (
 				DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */,
+				DB2974D62B2CFA4200A439C0 /* GroupPickerFeature */,
+				DB2974DB2B2CFAEB00A439C0 /* RozkladKit */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -357,6 +394,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB2974D52B2CF84200A439C0 /* AppFeature.swift in Sources */,
+				DB2974DE2B2CFB0300A439C0 /* MainFlowView.swift in Sources */,
+				DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */,
+				DB2974DD2B2CFB0100A439C0 /* MainFlow.swift in Sources */,
+				DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1001,6 +1043,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DB2974D62B2CFA4200A439C0 /* GroupPickerFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GroupPickerFeature;
+		};
+		DB2974DB2B2CFAEB00A439C0 /* RozkladKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RozkladKit;
+		};
 		DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;

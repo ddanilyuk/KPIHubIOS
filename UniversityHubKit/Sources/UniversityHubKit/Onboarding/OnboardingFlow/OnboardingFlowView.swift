@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import RozkladKit
+import GroupPickerFeature
 
 public struct OnboardingFlowView: View {
     @Bindable var store: StoreOf<OnboardingFlow>

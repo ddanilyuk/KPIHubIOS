@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import SharedViews
 
 @ViewAction(for: GroupPickerFeature.self)
 public struct GroupPickerView: View {

@@ -5,28 +5,25 @@
 //  Created by Denys Danyliuk on 29.05.2022.
 //
 
-import ComposableArchitecture
-import Routes
-import URLRouting
 import Foundation
 import Firebase
-import Services
+import UniversityHubKit
+import GroupPickerFeature
 
 @Reducer
-public struct AppDelegateFeature: Reducer {
-    public struct State: Equatable { }
+struct AppDelegateFeature: Reducer {
+    struct State: Equatable { }
     
-    public enum Action: Equatable {
+    enum Action: Equatable {
         case didFinishLaunching(Bundle)
     }
     
     @Dependency(\.firebaseService) var firebaseService
     
-    public var body: some ReducerOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
             case let .didFinishLaunching(bundle):
-                // TODO: info plist missing
                 firebaseService.setup(bundle)
                 return .none
             }
@@ -36,38 +33,34 @@ public struct AppDelegateFeature: Reducer {
 
 
 @Reducer
-public struct AppFeature: Reducer {
+struct AppFeature: Reducer {
     @ObservableState
-    public struct State: Equatable {
-        public var appDelegate = AppDelegateFeature.State()
+    struct State: Equatable {
+        var appDelegate = AppDelegateFeature.State()
         var destination: Destination.State?
-        public init() { }
     }
     
-    public enum Action: Equatable {
+    enum Action: Equatable {
         case appDelegate(AppDelegateFeature.Action)
         case destination(Destination.Action)
     }
     
     @Dependency(\.userDefaultsService) var userDefaultsService
-    
-    public init() { } 
-    
-    @ReducerBuilder<State, Action>
+        
     var core: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .appDelegate(.didFinishLaunching):
-                if userDefaultsService.get(for: .onboardingPassed) {
-                    state.destination = .main(MainFlow.State())
-                } else {
-                    state.destination = .onboarding(OnboardingFlow.State())
-                }
+//                if userDefaultsService.get(for: .onboardingPassed) {
+                state.destination = .main(MainFlow.State())
+//                } else {
+//                    state.destination = .onboarding(OnboardingFlow.State())
+//                }
                 return .none
                                 
-            case .destination(.onboarding(.output(.done))):
-                state.destination = .main(MainFlow.State())
-                return .none
+//            case .destination(.onboarding(.output(.done))):
+//                state.destination = .main(MainFlow.State())
+//                return .none
                 
             case .appDelegate:
                 return .none
