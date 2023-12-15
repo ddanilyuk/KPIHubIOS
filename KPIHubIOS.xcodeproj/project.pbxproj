@@ -13,12 +13,12 @@
 		5F97B3D0283677C600350368 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3CF283677C600350368 /* ProfileTests.swift */; };
 		5F97B3DA283677C600350368 /* KPIHubIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */; };
 		5F97B3DC283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */; };
-		DB13DC892B2A4D1400D37202 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = DB13DC882B2A4D1400D37202 /* Common */; };
 		DB3284E02ADB27B900A8AE26 /* ForDevelopersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */; };
 		DB3284FD2ADB2D2B00A8AE26 /* __Snapshots__ in Resources */ = {isa = PBXBuildFile; fileRef = DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */; };
 		DB3284FF2ADB2FE800A8AE26 /* SnapshotHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */; };
 		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
 		DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */; };
+		DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,7 @@
 		DB9A2BFA2B2CECC6002B2AC8 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		DB9A2BFB2B2CECC6002B2AC8 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		DBCD85512B2A4C55001A8E22 /* KPIHubKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KPIHubKit; sourceTree = "<group>"; };
+		DB9A2C032B2CF24D002B2AC8 /* UniversityHubKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UniversityHubKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB13DC892B2A4D1400D37202 /* Common in Frameworks */,
+				DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 		5F97B3B2283677C200350368 = {
 			isa = PBXGroup;
 			children = (
-				DBCD85512B2A4C55001A8E22 /* KPIHubKit */,
+				DB9A2C032B2CF24D002B2AC8 /* UniversityHubKit */,
 				5F97B3BD283677C200350368 /* KPIHubIOS */,
 				5F97B3CE283677C600350368 /* KPIHubIOSTests */,
 				5F97B3D8283677C600350368 /* KPIHubIOSUITests */,
@@ -210,7 +210,7 @@
 			);
 			name = KPIHubIOS;
 			packageProductDependencies = (
-				DB13DC882B2A4D1400D37202 /* Common */,
+				DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -1001,14 +1001,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DB13DC882B2A4D1400D37202 /* Common */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Common;
-		};
 		DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UniversityHubKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -4,19 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "KPIHubKit",
+    name: "UniversityHubKit",
     platforms: [
-      .iOS(.v17),
+        .iOS(.v17),
     ],
     products: [
         .library(
-            name: "Common",
-            targets: ["Common"]
-        ),
-        .library(
-            name: "Services",
-            targets: ["Services"]
-        ),
+            name: "UniversityHubKit",
+            targets: ["UniversityHubKit"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "observation-beta"),
@@ -25,55 +21,52 @@ let package = Package(
         .package(url: "https://github.com/ddanilyuk/KPIHubServer", branch: "master"),
     ],
     targets: [
-         .target(
-             name: "Common",
-             dependencies: [
+        .target(
+            name: "UniversityHubKit",
+            dependencies: [
                 "Services",
                 "SharedViews",
                 "Extensions",
                 "RozkladKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
-             ],
-             resources: [
-                .copy("Configs")
-             ]
-         ),
-         .target(
-             name: "RozkladKit",
-             dependencies: [
+            ]
+        ),
+        .target(
+            name: "RozkladKit",
+            dependencies: [
                 "Services",
                 "SharedViews",
                 "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
-             ]
-         ),
-         .target(
-             name: "SharedViews",
-             dependencies: [
+            ]
+        ),
+        .target(
+            name: "SharedViews",
+            dependencies: [
                 "Extensions",
-             ]
-         ),
-         .target(
-             name: "Services",
-             dependencies: [
+            ]
+        ),
+        .target(
+            name: "Services",
+            dependencies: [
                 "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "Routes", package: "KPIHubServer"),
-             ]
-         ),
-         .target(
-             name: "Extensions",
-             dependencies: [
+            ]
+        ),
+        .target(
+            name: "Extensions",
+            dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-             ]
-         ),
-         .testTarget(
-             name: "KPIHubKitTests",
-             dependencies: ["Common"]
-         ),
+            ]
+        ),
+        .testTarget(
+            name: "UniversityHubKitTests",
+            dependencies: ["UniversityHubKit"]
+        ),
     ]
 )

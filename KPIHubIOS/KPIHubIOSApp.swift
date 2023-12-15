@@ -6,8 +6,7 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
-import Common
+import UniversityHubKit
 
 @main
 struct KPIHubIOSApp: SwiftUI.App {

@@ -5,8 +5,9 @@
 //  Created by Denys Danyliuk on 18.09.2022.
 //
 
+import Dependencies
+import DependenciesMacros
 import Foundation
-@_exported import ComposableArchitecture
 
 @DependencyClient
 public struct FirebaseService {
