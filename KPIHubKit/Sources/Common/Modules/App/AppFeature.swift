@@ -10,6 +10,7 @@ import Routes
 import URLRouting
 import Foundation
 import Firebase
+import Services
 
 @Reducer
 public struct AppDelegateFeature: Reducer {

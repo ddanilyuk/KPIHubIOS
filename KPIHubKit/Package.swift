@@ -13,6 +13,10 @@ let package = Package(
             name: "Common",
             targets: ["Common"]
         ),
+        .library(
+            name: "Services",
+            targets: ["Services"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "observation-beta"),
@@ -24,17 +28,34 @@ let package = Package(
          .target(
              name: "Common",
              dependencies: [
+                "Services",
+                "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-//                .product(name: "Firebase", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "Routes", package: "KPIHubServer"),
              ],
              resources: [
                 .copy("Configs")
-//                .process("Configs")
              ]
          ),
+         .target(
+             name: "Services",
+             dependencies: [
+                "Extensions",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+                .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk"),
+                .product(name: "KeychainAccess", package: "KeychainAccess"),
+                .product(name: "Routes", package: "KPIHubServer"),
+             ]
+         ),
+         .target(
+             name: "Extensions",
+             dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+             ]
+         ),
+
          .testTarget(
              name: "KPIHubKitTests",
              dependencies: ["Common"]

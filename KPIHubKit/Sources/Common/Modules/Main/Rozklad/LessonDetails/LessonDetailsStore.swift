@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import Services
 
 @Reducer
 public struct LessonDetails: Reducer {

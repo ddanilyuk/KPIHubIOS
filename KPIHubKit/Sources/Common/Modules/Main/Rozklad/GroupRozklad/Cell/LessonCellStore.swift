@@ -6,7 +6,8 @@
 //
 
 import ComposableArchitecture
-import CoreGraphics
+import Foundation
+import Services
 
 public struct LessonCell: Reducer {
     public struct State: Equatable, Identifiable {

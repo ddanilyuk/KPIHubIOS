@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Services // TODO: ?
 
 struct BadgeView: View {
     let mode: LessonMode
