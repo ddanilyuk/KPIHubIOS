@@ -41,7 +41,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
-        appDelegateStore.send(.didFinishLaunching)
+        appDelegateStore.send(.didFinishLaunching(Bundle.main))
         return true
     }
 }

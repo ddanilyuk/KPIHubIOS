@@ -18,6 +18,7 @@
 		DB3284FD2ADB2D2B00A8AE26 /* __Snapshots__ in Resources */ = {isa = PBXBuildFile; fileRef = DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */; };
 		DB3284FF2ADB2FE800A8AE26 /* SnapshotHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */; };
 		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
+		DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,9 @@
 		DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersTests.swift; sourceTree = "<group>"; };
 		DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
 		DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelpers.swift; sourceTree = "<group>"; };
+		DB9A2BFA2B2CECC6002B2AC8 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
+		DB9A2BFB2B2CECC6002B2AC8 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
+		DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DBCD85512B2A4C55001A8E22 /* KPIHubKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KPIHubKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +114,8 @@
 		5F97B3BD283677C200350368 /* KPIHubIOS */ = {
 			isa = PBXGroup;
 			children = (
+				DB9A2BFE2B2CECF1002B2AC8 /* Firebase */,
+				DB9A2BF92B2CECC6002B2AC8 /* AppConfigs */,
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
 				5F97B3C4283677C500350368 /* Preview Content */,
 				5F97B3C2283677C500350368 /* Assets.xcassets */,
@@ -159,6 +165,23 @@
 				DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */,
 			);
 			path = ci_scripts;
+			sourceTree = "<group>";
+		};
+		DB9A2BF92B2CECC6002B2AC8 /* AppConfigs */ = {
+			isa = PBXGroup;
+			children = (
+				DB9A2BFA2B2CECC6002B2AC8 /* Development.xcconfig */,
+				DB9A2BFB2B2CECC6002B2AC8 /* Production.xcconfig */,
+			);
+			path = AppConfigs;
+			sourceTree = "<group>";
+		};
+		DB9A2BFE2B2CECF1002B2AC8 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */,
+			);
+			path = Firebase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +301,7 @@
 			files = (
 				5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */,
 				5F97B3C3283677C500350368 /* Assets.xcassets in Resources */,
+				DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

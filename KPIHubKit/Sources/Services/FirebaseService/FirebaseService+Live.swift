@@ -10,8 +10,13 @@ import Firebase
 extension FirebaseService {
     static func live() -> FirebaseService {
         FirebaseService(
-            setup: {
-                FirebaseApp.configure()
+            setup: { bundle in
+                let file = bundle.path(forResource: "GoogleService-Info", ofType: "plist")
+                if let file, let options = FirebaseOptions(contentsOfFile: file) {
+                    FirebaseApp.configure(options: options)
+                } else {
+                    fatalError("Can't configure firebase: \(bundle)")
+                }
             }
         )
     }

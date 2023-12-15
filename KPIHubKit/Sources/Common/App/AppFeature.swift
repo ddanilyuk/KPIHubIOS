@@ -17,7 +17,7 @@ public struct AppDelegateFeature: Reducer {
     public struct State: Equatable { }
     
     public enum Action: Equatable {
-        case didFinishLaunching
+        case didFinishLaunching(Bundle)
     }
     
     @Dependency(\.firebaseService) var firebaseService
@@ -25,9 +25,9 @@ public struct AppDelegateFeature: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce { _, action in
             switch action {
-            case .didFinishLaunching:
+            case let .didFinishLaunching(bundle):
                 // TODO: info plist missing
-                // firebaseService.setup()
+                firebaseService.setup(bundle)
                 return .none
             }
         }

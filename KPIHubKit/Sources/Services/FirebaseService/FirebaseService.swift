@@ -10,5 +10,5 @@ import Foundation
 
 @DependencyClient
 public struct FirebaseService {
-    public var setup: () -> Void
+    public var setup: (_ bundle: Bundle) -> Void
 }
