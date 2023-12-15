@@ -48,7 +48,7 @@
 		5F97B3D5283677C600350368 /* KPIHubIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITests.swift; sourceTree = "<group>"; };
 		5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		DB3284D02ADAFBC400A8AE26 /* KPIHubIOS-Staging.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPIHubIOS-Staging.xctestplan"; sourceTree = "<group>"; };
 		DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersTests.swift; sourceTree = "<group>"; };
@@ -114,12 +114,8 @@
 		5F97B3BD283677C200350368 /* KPIHubIOS */ = {
 			isa = PBXGroup;
 			children = (
-				DB9A2BFE2B2CECF1002B2AC8 /* Firebase */,
-				DB9A2BF92B2CECC6002B2AC8 /* AppConfigs */,
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
-				5F97B3C4283677C500350368 /* Preview Content */,
-				5F97B3C2283677C500350368 /* Assets.xcassets */,
-				5FD570B3283680D200D8E869 /* Info.plist */,
+				DB9A2C012B2CEFA4002B2AC8 /* Resources */,
 			);
 			path = KPIHubIOS;
 			sourceTree = "<group>";
@@ -182,6 +178,18 @@
 				DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */,
 			);
 			path = Firebase;
+			sourceTree = "<group>";
+		};
+		DB9A2C012B2CEFA4002B2AC8 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB9A2BFE2B2CECF1002B2AC8 /* Firebase */,
+				DB9A2BF92B2CECC6002B2AC8 /* AppConfigs */,
+				5F97B3C2283677C500350368 /* Assets.xcassets */,
+				5FD570B3283680D200D8E869 /* Info.plist */,
+				5F97B3C4283677C500350368 /* Preview Content */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,11 +469,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KPIHubIOS/Info.plist;
+				INFOPLIST_FILE = KPIHubIOS/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "KPIHub Dev";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -596,12 +604,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_BITCODE = "$(inherited)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KPIHubIOS/Info.plist;
+				INFOPLIST_FILE = KPIHubIOS/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "KPIHub Dev";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -794,11 +802,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KPIHubIOS/Info.plist;
+				INFOPLIST_FILE = KPIHubIOS/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "KPIHub Dev";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -827,12 +835,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"KPIHubIOS/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = M92VXVU7J9;
 				ENABLE_BITCODE = "$(inherited)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KPIHubIOS/Info.plist;
+				INFOPLIST_FILE = KPIHubIOS/Resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "KPIHub Dev";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -27,16 +27,12 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
             AppFeature()
         }
     }()
-
-    // MARK: - Store
-
+    
     private lazy var appDelegateStore = store.scope(
         state: \.appDelegate,
         action: \.appDelegate
     )
-
-    // MARK: - Methods
-
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
