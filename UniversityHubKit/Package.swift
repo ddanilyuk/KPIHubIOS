@@ -24,7 +24,11 @@ let package = Package(
         .library(
             name: "RozkladFeature",
             targets: ["RozkladFeature"]
-        )
+        ),
+        .library(
+            name: "DesignKit",
+            targets: ["DesignKit"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "observation-beta"),
@@ -37,7 +41,7 @@ let package = Package(
             name: "UniversityHubKit",
             dependencies: [
                 "Services",
-                "SharedViews",
+                "DesignKit",
                 "Extensions",
                 "RozkladKit",
                 "GroupPickerFeature",
@@ -49,7 +53,7 @@ let package = Package(
             name: "GroupPickerFeature",
             dependencies: [
                 "Services",
-                "SharedViews",
+                "DesignKit",
 //                "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
@@ -59,7 +63,7 @@ let package = Package(
             name: "RozkladFeature",
             dependencies: [
                 "Services",
-                "SharedViews",
+                "DesignKit",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
 //                .product(name: "Routes", package: "KPIHubServer"),
             ]
@@ -68,7 +72,7 @@ let package = Package(
             name: "RozkladKit",
             dependencies: [
                 "Services",
-                "SharedViews",
+                "DesignKit",
                 "Extensions",
                 "GroupPickerFeature",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -76,7 +80,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "SharedViews",
+            name: "DesignKit",
             dependencies: [
                 "Extensions",
             ]

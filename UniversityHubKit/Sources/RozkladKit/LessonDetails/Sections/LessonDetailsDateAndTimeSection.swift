@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SharedViews
+import DesignKit
 import Services // TODO: ?
 
 struct LessonDetailsDateAndTimeSection: View {
@@ -60,7 +60,16 @@ struct LessonDetailsDateAndTimeSection: View {
                 .if(mode != .default) { view in
                     view
                         .overlay(alignment: .topTrailing) {
-                            BadgeView(mode: mode)
+                            switch mode {
+                            case .current:
+                                LessonBadgeView(mode: .current)
+                                
+                            case .next:
+                                LessonBadgeView(mode: .next)
+                                
+                            case .default:
+                                EmptyView()
+                            }
                         }
                 }
             }

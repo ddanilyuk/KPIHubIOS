@@ -55,6 +55,7 @@ extension Lesson {
             public let secondPartEnd: String
         }
 
+        // TODO: This must be generic
         public var description: Description {
             switch self {
             case .first:

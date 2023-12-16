@@ -162,7 +162,7 @@ struct AppView: View {
                 action: \.destination.main
             ) {
                 RozkladView(store: childStore) { cellStore in
-                    RozkladLessonExtendedView(store: cellStore)
+                    RozkladLessonView(store: cellStore)
                 }
             }
             

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import SharedViews
+import DesignKit
 import Services // TODO: ?
 
 struct StudySheetActivityCellView: View {

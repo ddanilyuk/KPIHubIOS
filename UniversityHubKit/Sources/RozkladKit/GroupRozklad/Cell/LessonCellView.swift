@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import SharedViews
+import DesignKit
 import Services // TODO: ?
 
 struct LessonCellView: View {
@@ -92,14 +92,14 @@ struct LessonCellView: View {
         case .current:
             BorderGradientBackgroundView()
                 .overlay(alignment: .topTrailing) {
-                    BadgeView(mode: viewStore.mode)
+                    LessonBadgeView(mode: .current)
                 }
 
         case .next:
             RoundedRectangle(cornerRadius: 8)
                 .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
                 .overlay(alignment: .topTrailing) {
-                    BadgeView(mode: .next)
+                    LessonBadgeView(mode: .next)
                 }
                 .shadow(color: Color.blue.opacity(colorScheme == .light ? 0.2 : 0.5), radius: 8, x: 0, y: 4)
 

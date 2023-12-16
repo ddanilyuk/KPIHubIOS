@@ -10,13 +10,17 @@ import Services
 
 public struct RozkladLessonModel: Identifiable, Equatable {
     public let id: Int
-    public let name: String
-    public let teacher: String
-    
+    public var names: [String]
+    public var teachers: [String]?
+    public var locations: [String]?
+    public var type: String
+
     public init(lesson: Lesson) {
         self.id = lesson.id
-        self.name = lesson.names.first ?? "-"
-        self.teacher = lesson.teachers?.first ?? "-"
+        self.names = lesson.names
+        self.teachers = lesson.teachers
+        self.locations = lesson.locations
+        self.type = lesson.type
     }
 }
 
@@ -24,15 +28,17 @@ public struct RozkladLessonModel: Identifiable, Equatable {
 public struct RozkladFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        let lessons: IdentifiedArrayOf<RozkladLessonModel>
-        var rows: IdentifiedArrayOf<RozkladLessonFeature.State>
+        public let lessons: IdentifiedArrayOf<RozkladLessonModel>
+        public var rows: IdentifiedArrayOf<RozkladLessonFeature.State>
         
         public init() {
             let mock = LessonResponse.mocked.map { Lesson(lessonResponse: $0) }
             let models = mock.map { RozkladLessonModel(lesson: $0) }
             lessons = IdentifiedArray(uniqueElements: models)
             
-            let array = lessons.map { RozkladLessonFeature.State(lesson: $0) }
+            let array = lessons.enumerated().map { index, lesson in
+                RozkladLessonFeature.State(lesson: lesson, status: index == 1 ? .current : .idle)
+            }
             rows = IdentifiedArray(uniqueElements: array)
         }
     }
@@ -42,9 +48,9 @@ public struct RozkladFeature: Reducer {
         case local(Local)
         case output(Output)
 
-        case rows(IdentifiedActionOf<RozkladLessonFeature>)
-
+        @CasePathable
         public enum View: Equatable {
+            case rows(IdentifiedActionOf<RozkladLessonFeature>)
         }
         
         public enum Local: Equatable {
@@ -52,7 +58,7 @@ public struct RozkladFeature: Reducer {
         }
         
         public enum Output: Equatable {
-            
+            case openLessonDetails(Int)
         }
     }
     
@@ -61,9 +67,6 @@ public struct RozkladFeature: Reducer {
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-            case .rows:
-                return .none
-                
             case let .view(viewAction):
                 return handleViewAction(state: &state, action: viewAction)
                 
@@ -74,7 +77,7 @@ public struct RozkladFeature: Reducer {
                 return .none
             }
         }
-        .forEach(\.rows, action: \.rows) {
+        .forEach(\.rows, action: \.view.rows) {
             RozkladLessonFeature()
         }
     }
@@ -83,7 +86,26 @@ public struct RozkladFeature: Reducer {
 // MARK: - View
 extension RozkladFeature {
     private func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
-        return .none
+        switch action {
+        case let .rows(rowAction):
+            return handleViewRowsAction(state: &state, action: rowAction)
+        }
+    }
+    
+    private func handleViewRowsAction(
+        state: inout State,
+        action: IdentifiedActionOf<RozkladLessonFeature>
+    ) -> Effect<Action> {
+        switch action {
+        case let .element(id, .output(outputAction)):
+            switch outputAction {
+            case .openLesson:
+                return .send(.output(.openLessonDetails(id)))
+            }
+            
+        case .element:
+            return .none
+        }
     }
 }
 
@@ -95,11 +117,14 @@ extension RozkladFeature {
 }
 
 import SwiftUI
+import DesignKit
 
 @ViewAction(for: RozkladFeature.self)
 public struct RozkladView<Cell: View>: View {
     public let store: StoreOf<RozkladFeature>
     public var cell: (StoreOf<RozkladLessonFeature>) -> Cell
+    
+    @Environment(\.designKit) private var designKit
     
     public init(
         store: StoreOf<RozkladFeature>,
@@ -111,9 +136,10 @@ public struct RozkladView<Cell: View>: View {
     
     public var body: some View {
         ScrollView {
-            ForEach(store.scope(state: \.rows, action: \.rows)) { childStore in
+            ForEach(store.scope(state: \.rows, action: \.view.rows)) { childStore in
                 cell(childStore)
             }
         }
+        .background(designKit.backgroundColor)
     }
 }

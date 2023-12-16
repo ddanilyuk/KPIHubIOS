@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UniversityHubKit
+import DesignKit
 
 @main
 struct KPIHubIOSApp: SwiftUI.App {
@@ -16,8 +17,18 @@ struct KPIHubIOSApp: SwiftUI.App {
         WindowGroup {
             AppView(store: appDelegate.store)
                 .accentColor(Color.orange)
+                .environment(\.designKit, DesignKit.custom)
         }
     }
+}
+
+extension DesignKit {
+    static let custom = DesignKit(
+        primaryColor: .orange,
+        backgroundColor: .white,
+        currentLessonColor: .pink,
+        nextLessonColor: .green
+    )
 }
 
 final class AppDelegate: NSObject, UIApplicationDelegate {

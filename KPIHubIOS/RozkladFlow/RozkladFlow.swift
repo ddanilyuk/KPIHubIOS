@@ -57,8 +57,6 @@ struct RozkladFlow: Reducer {
 //                return .none
                 
             case .rozkladRoot(.groupPicker(.route(.done))):
-                print("!!! DONE")
-
                 rozkladServiceState.commit()
                 rozkladServiceLessons.commit()
                 return .none

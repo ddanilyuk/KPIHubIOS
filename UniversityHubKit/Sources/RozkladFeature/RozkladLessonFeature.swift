@@ -7,64 +7,53 @@
 
 import ComposableArchitecture
 
-// Supplementary features? Views?
 @Reducer
 public struct RozkladLessonFeature: Reducer {
     @ObservableState
     public struct State: Identifiable, Equatable {
-        let lesson: RozkladLessonModel
+        public let lesson: RozkladLessonModel
+        public let status: Status
+        
+        public enum Status {
+            case idle
+            case current
+            case next
+        }
         
         public var id: RozkladLessonModel.ID {
             lesson.id
         }
         
-        init(lesson: RozkladLessonModel) {
+        public init(lesson: RozkladLessonModel, status: Status) {
             self.lesson = lesson
+            self.status = status
         }
     }
     
-    public enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
+        case view(View)
+        case output(Output)
         
+        public enum View: Equatable {
+            case onTap
+        }
+        
+        public enum Output: Equatable {
+            case openLesson
+        }
     }
+    
+    public init() { }
     
     public var body: some ReducerOf<Self> {
-        EmptyReducer()
-    }
-}
-
-import SwiftUI
-
-public struct RozkladLessonView: View {
-    public let store: StoreOf<RozkladLessonFeature>
-    
-    public init(store: StoreOf<RozkladLessonFeature>) {
-        self.store = store
-    }
-    
-    public var body: some View {
-        VStack {
-            Text(store.lesson.name)
-                .fontWeight(.bold)
-            Text(store.lesson.teacher)
+        Reduce { state, action in
+            switch action {
+            case .view(.onTap):
+                return .send(.output(.openLesson))
+                
+            case .output:
+                return .none
+            }
         }
-    }
-}
-
-public struct RozkladLessonExtendedView: View {
-    public let store: StoreOf<RozkladLessonFeature>
-    
-    public init(store: StoreOf<RozkladLessonFeature>) {
-        self.store = store
-    }
-    
-    public var body: some View {
-        VStack {
-            Text(store.lesson.id.description)
-            Text(store.lesson.name)
-                .fontWeight(.bold)
-            Text(store.lesson.teacher)
-        }
-        .padding()
-        .background(Color.orange.opacity(0.5))
     }
 }

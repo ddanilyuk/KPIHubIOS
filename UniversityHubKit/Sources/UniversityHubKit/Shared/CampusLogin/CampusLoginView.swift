@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import SharedViews
+import DesignKit
 
 @ViewAction(for: CampusLoginFeature.self)
 public struct CampusLoginView: View {

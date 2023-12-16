@@ -24,6 +24,7 @@
 		DB24B1F92B2E3866008FB620 /* RozkladRootFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */; };
 		DB24B1FB2B2E3883008FB620 /* RozkladFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B1FA2B2E3883008FB620 /* RozkladFeature */; };
 		DB24B1FD2B2E40E6008FB620 /* RozkladFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B1FC2B2E40E6008FB620 /* RozkladFeature */; };
+		DB24B2002B2E4E71008FB620 /* RozkladLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */; };
 		DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D02B2CF84200A439C0 /* AppView.swift */; };
 		DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */; };
 		DB2974D52B2CF84200A439C0 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D22B2CF84200A439C0 /* AppFeature.swift */; };
@@ -76,6 +77,7 @@
 		DB24B1D72B2E3222008FB620 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DB24B1F62B2E380E008FB620 /* RozkladFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlow.swift; sourceTree = "<group>"; };
 		DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladRootFlow.swift; sourceTree = "<group>"; };
+		DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladLessonView.swift; sourceTree = "<group>"; };
 		DB2974D02B2CF84200A439C0 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
 		DB2974D22B2CF84200A439C0 /* AppFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				DB24B1F62B2E380E008FB620 /* RozkladFlow.swift */,
 				DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */,
+				DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */,
 			);
 			path = RozkladFlow;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */,
 				DB2974DD2B2CFB0100A439C0 /* MainFlow.swift in Sources */,
 				DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */,
+				DB24B2002B2E4E71008FB620 /* RozkladLessonView.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

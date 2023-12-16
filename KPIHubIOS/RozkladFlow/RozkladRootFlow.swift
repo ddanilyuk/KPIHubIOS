@@ -8,6 +8,8 @@
 import ComposableArchitecture
 import GroupPickerFeature
 import RozkladFeature
+import Services
+import DesignKit
 
 @Reducer
 struct RozkladRootFlow: Reducer {
@@ -42,7 +44,7 @@ struct RozkladRootView: View {
     }
     
     var body: some View {
-        switch store.withState({$0}) {
+        switch store.withState({ $0 }) {
         case .groupRozklad:
             if let childStore = store.scope(state: \.groupRozklad, action: \.groupRozklad) {
                 RozkladView(store: childStore) { cellStore in
