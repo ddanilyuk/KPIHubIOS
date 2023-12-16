@@ -8,6 +8,7 @@
 import SwiftUI
 import UniversityHubKit
 import GroupPickerFeature
+import RozkladFeature
 
 @main
 struct GenericUniversityHubApp: SwiftUI.App {
@@ -84,7 +85,7 @@ struct AppFeature: Reducer {
             switch action {
             case .appDelegate(.didFinishLaunching):
 //                if userDefaultsService.get(for: .onboardingPassed) {
-                state.destination = .main(GroupPickerFeature.State(mode: .rozkladTab))
+                state.destination = .main(RozkladFeature.State())
 //                } else {
 //                    state.destination = .onboarding(OnboardingFlow.State())
 //                }
@@ -119,12 +120,12 @@ extension AppFeature {
     struct Destination: Reducer {
         enum State: Equatable {
 //            case onboarding(OnboardingFlow.State)
-            case main(GroupPickerFeature.State)
+            case main(RozkladFeature.State)
         }
         
         enum Action: Equatable {
 //            case onboarding(OnboardingFlow.Action)
-            case main(GroupPickerFeature.Action)
+            case main(RozkladFeature.Action)
         }
         
         var body: some ReducerOf<Self> {
@@ -132,7 +133,7 @@ extension AppFeature {
 //                OnboardingFlow()
 //            }
             Scope(state: \.main, action: \.main) {
-                GroupPickerFeature()
+                RozkladFeature()
             }
         }
     }
@@ -160,7 +161,9 @@ struct AppView: View {
                 state: \.destination?.main,
                 action: \.destination.main
             ) {
-                GroupPickerView(store: childStore)
+                RozkladView(store: childStore) { cellStore in
+                    RozkladLessonExtendedView(store: cellStore)
+                }
             }
             
         case .none:

@@ -97,17 +97,22 @@ extension RozkladFeature {
 import SwiftUI
 
 @ViewAction(for: RozkladFeature.self)
-public struct RozkladView: View {
+public struct RozkladView<Cell: View>: View {
     public let store: StoreOf<RozkladFeature>
+    public var cell: (StoreOf<RozkladLessonFeature>) -> Cell
     
-    public init(store: StoreOf<RozkladFeature>) {
+    public init(
+        store: StoreOf<RozkladFeature>,
+        @ViewBuilder cell: @escaping (StoreOf<RozkladLessonFeature>) -> Cell
+    ) {
         self.store = store
+        self.cell = cell
     }
     
     public var body: some View {
         ScrollView {
             ForEach(store.scope(state: \.rows, action: \.rows)) { childStore in
-                RozkladLessonView(store: childStore)
+                cell(childStore)
             }
         }
     }

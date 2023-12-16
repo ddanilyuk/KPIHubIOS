@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 
+// Supplementary features? Views?
 @Reducer
 public struct RozkladLessonFeature: Reducer {
     @ObservableState
@@ -15,6 +16,10 @@ public struct RozkladLessonFeature: Reducer {
         
         public var id: RozkladLessonModel.ID {
             lesson.id
+        }
+        
+        init(lesson: RozkladLessonModel) {
+            self.lesson = lesson
         }
     }
     
@@ -42,5 +47,24 @@ public struct RozkladLessonView: View {
                 .fontWeight(.bold)
             Text(store.lesson.teacher)
         }
+    }
+}
+
+public struct RozkladLessonExtendedView: View {
+    public let store: StoreOf<RozkladLessonFeature>
+    
+    public init(store: StoreOf<RozkladLessonFeature>) {
+        self.store = store
+    }
+    
+    public var body: some View {
+        VStack {
+            Text(store.lesson.id.description)
+            Text(store.lesson.name)
+                .fontWeight(.bold)
+            Text(store.lesson.teacher)
+        }
+        .padding()
+        .background(Color.orange.opacity(0.5))
     }
 }
