@@ -79,14 +79,20 @@ struct LessonDetailsView: View {
 //        .background(Color.screenBackground)
         .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
         .sheet(
-            item: $store.scope(state: \.destination?.editLessonNames, action: \.destination.editLessonNames)
+            item: $store.scope(
+                state: \.destination?.editLessonNames,
+                action: \.destination.editLessonNames
+            )
         ) { store in
             NavigationStack {
                 EditLessonNamesView(store: store)
             }
         }
         .sheet(
-            item: $store.scope(state: \.destination?.editLessonTeachers, action: \.destination.editLessonTeachers)
+            item: $store.scope(
+                state: \.destination?.editLessonTeachers,
+                action: \.destination.editLessonTeachers
+            )
         ) { store in
             NavigationStack {
                 EditLessonTeachersView(store: store)

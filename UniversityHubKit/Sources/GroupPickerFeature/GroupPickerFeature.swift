@@ -82,6 +82,7 @@ public struct GroupPickerFeature: Reducer {
                 rozkladServiceLessons.set(.init(lessons, commitChanges: false))
                 let place = analyticsLessonsLoadPlace(from: state.mode)
                 analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: place))
+                print("!!! route send done")
                 return .send(.route(.done))
 
             case let .allGroupsResult(.failure(error)):
@@ -179,6 +180,7 @@ private extension GroupPickerFeature {
     
     func getLessons(for group: GroupResponse) -> Effect<Action> {
         .run { send in
+            print("!!! getLessons")
             let taskResult = await TaskResult {
                 let decodedResponse = try await apiClient.decodedResponse(
                     for: .api(.group(group.id, .lessons)),
@@ -188,6 +190,7 @@ private extension GroupPickerFeature {
             }
             // Make keyboard hide to prevent tabBar opacity bugs
             try await Task.sleep(for: .milliseconds(300))
+            print("!!! lessonsResult: \(taskResult)")
             await send(.lessonsResult(taskResult))
         }
     }

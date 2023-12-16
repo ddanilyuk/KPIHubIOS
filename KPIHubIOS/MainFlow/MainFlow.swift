@@ -50,11 +50,10 @@ struct MainFlow: Reducer {
 //                return .none
                 
             case .view(.onAppear):
-                return .none
-//                return .merge(
-//                    .send(.rozklad(.onSetup))
+                return .merge(
+                    .send(.rozklad(.onSetup))
 //                    .send(.campus(.onSetup))
-//                )
+                )
                 
             case .binding:
                 return .none

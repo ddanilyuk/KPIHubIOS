@@ -20,6 +20,10 @@ let package = Package(
         .library(
             name: "RozkladKit",
             targets: ["RozkladKit"]
+        ),
+        .library(
+            name: "RozkladFeature",
+            targets: ["RozkladFeature"]
         )
     ],
     dependencies: [
@@ -49,6 +53,15 @@ let package = Package(
 //                "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
+            ]
+        ),
+        .target(
+            name: "RozkladFeature",
+            dependencies: [
+                "Services",
+                "SharedViews",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+//                .product(name: "Routes", package: "KPIHubServer"),
             ]
         ),
         .target(

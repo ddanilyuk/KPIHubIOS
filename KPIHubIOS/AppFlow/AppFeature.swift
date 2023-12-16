@@ -71,7 +71,7 @@ struct AppFeature: Reducer {
         }
     }
     
-    public var body: some ReducerOf<Self> {
+    var body: some ReducerOf<Self> {
         Scope(state: \.appDelegate, action: \.appDelegate) {
             AppDelegateFeature()
         }
