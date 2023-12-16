@@ -6,13 +6,17 @@
 //
 
 import SwiftUI
-import DesignKit
 
-struct LessonDetailsTeacherSection: View {
+public struct LessonDetailsTeacherSection: View {
     var teachers: [String]
     var isEditing: Bool
+    
+    public init(teachers: [String], isEditing: Bool) {
+        self.teachers = teachers
+        self.isEditing = isEditing
+    }
 
-    var body: some View {
+    public var body: some View {
         LessonDetailsSectionView(
             title: "Викладач",
             isEditing: isEditing,

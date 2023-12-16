@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
-import DesignKit
 
-struct LessonDetailsLocationsSection: View {
-    var locations: [String]
+public struct LessonDetailsLocationsSection: View {
+    public var locations: [String]
+    
+    public init(locations: [String]) {
+        self.locations = locations
+    }
 
-    var body: some View {
+    public var body: some View {
         LessonDetailsSectionView(
             title: "Локація",
             content: { content }

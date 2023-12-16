@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import RozkladModels
 
 @Reducer
 public struct RozkladLessonFeature: Reducer {

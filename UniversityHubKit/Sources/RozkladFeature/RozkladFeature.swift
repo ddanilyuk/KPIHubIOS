@@ -6,23 +6,8 @@
 //
 
 import ComposableArchitecture
+import RozkladModels
 import Services
-
-public struct RozkladLessonModel: Identifiable, Equatable {
-    public let id: Int
-    public var names: [String]
-    public var teachers: [String]?
-    public var locations: [String]?
-    public var type: String
-
-    public init(lesson: Lesson) {
-        self.id = lesson.id
-        self.names = lesson.names
-        self.teachers = lesson.teachers
-        self.locations = lesson.locations
-        self.type = lesson.type
-    }
-}
 
 @Reducer
 public struct RozkladFeature: Reducer {
@@ -58,7 +43,7 @@ public struct RozkladFeature: Reducer {
         }
         
         public enum Output: Equatable {
-            case openLessonDetails(Int)
+            case openLessonDetails(RozkladLessonModel)
         }
     }
     
@@ -100,7 +85,10 @@ extension RozkladFeature {
         case let .element(id, .output(outputAction)):
             switch outputAction {
             case .openLesson:
-                return .send(.output(.openLessonDetails(id)))
+                guard let model = state.lessons[id: id] else {
+                    return .none
+                }
+                return .send(.output(.openLessonDetails(model)))
             }
             
         case .element:
@@ -141,5 +129,6 @@ public struct RozkladView<Cell: View>: View {
             }
         }
         .background(designKit.backgroundColor)
+        .navigationTitle("Розклад")
     }
 }

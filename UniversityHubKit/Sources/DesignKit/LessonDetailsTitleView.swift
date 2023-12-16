@@ -7,11 +7,16 @@
 
 import SwiftUI
 
-struct LessonDetailsTitleView: View {
+public struct LessonDetailsTitleView: View {
     var title: String
     var isEditing: Bool
+    
+    public init(title: String, isEditing: Bool) {
+        self.title = title
+        self.isEditing = isEditing
+    }
 
-    var body: some View {
+    public var body: some View {
         HStack {
             if isEditing {
                 EditingView()

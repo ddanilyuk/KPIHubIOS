@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct EditingView: View {
-    var body: some View {
+public struct EditingView: View {
+    @Environment(\.designKit) var designKit
+    
+    public init() { }
+    
+    public var body: some View {
         Image(systemName: "pencil.circle.fill")
             .font(.system(size: 25))
-            .foregroundColor(Color.orange)
+            .foregroundColor(designKit.primaryColor)
     }
 }

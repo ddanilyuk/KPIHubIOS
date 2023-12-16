@@ -2,19 +2,20 @@
 //  LessonDetailsView.swift
 //  KPIHubIOS
 //
-//  Created by Denys Danyliuk on 29.05.2022.
+//  Created by Denys Danyliuk on 17.12.2023.
 //
 
 import SwiftUI
 import ComposableArchitecture
+import LessonDetailsFeature
 import DesignKit
 import Services // TODO: ?
 
-@ViewAction(for: LessonDetails.self)
+@ViewAction(for: LessonDetailsFeature.self)
 struct LessonDetailsView: View {
-    @Bindable var store: StoreOf<LessonDetails>
+    @Bindable var store: StoreOf<LessonDetailsFeature>
     
-    init(store: StoreOf<LessonDetails>) {
+    init(store: StoreOf<LessonDetailsFeature>) {
         self.store = store
     }
     
@@ -29,32 +30,32 @@ struct LessonDetailsView: View {
                     send(.editNamesButtonTapped)
                 }
 
-                LessonDetailsDateAndTimeSection(
-                    lessonPositionDescription: store.lesson.position.description,
-                    lessonWeek: store.lesson.week,
-                    lessonDay: store.lesson.day,
-                    mode: store.mode
-                )
+//                LessonDetailsDateAndTimeSection(
+//                    lessonPositionDescription: store.lesson.position.description,
+//                    lessonWeek: store.lesson.week,
+//                    lessonDay: store.lesson.day,
+//                    mode: store.mode
+//                )
 
-                if !store.lesson.isTeachersEmpty {
+                if let teachers = store.lesson.teachers, !teachers.isEmpty {
                     LessonDetailsTeacherSection(
-                        teachers: store.lesson.teachers ?? [],
+                        teachers: teachers,
                         isEditing: store.isEditing
                     )
                     .onTapGesture {
                         send(.editTeachersButtonTapped)
                     }
                 }
-
-                if !store.lesson.isTypeEmpty {
+//
+                if !store.lesson.type.isEmpty {
                     LessonDetailsTypeSection(
                         type: store.lesson.type
                     )
                 }
-
-                if !store.lesson.isLocationsEmpty {
+//
+                if let locations = store.lesson.locations, !locations.isEmpty {
                     LessonDetailsLocationsSection(
-                        locations: store.lesson.locations ?? []
+                        locations: locations
                     )
                 }
                 
@@ -79,26 +80,27 @@ struct LessonDetailsView: View {
         // TODO: assets
 //        .background(Color.screenBackground)
         .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
-        .sheet(
-            item: $store.scope(
-                state: \.destination?.editLessonNames,
-                action: \.destination.editLessonNames
-            )
-        ) { store in
-            NavigationStack {
-                EditLessonNamesView(store: store)
-            }
-        }
-        .sheet(
-            item: $store.scope(
-                state: \.destination?.editLessonTeachers,
-                action: \.destination.editLessonTeachers
-            )
-        ) { store in
-            NavigationStack {
-                EditLessonTeachersView(store: store)
-            }
-        }
+        // TODO: Generic destination?
+//        .sheet(
+//            item: $store.scope(
+//                state: \.destination?.editLessonNames,
+//                action: \.destination.editLessonNames
+//            )
+//        ) { store in
+//            NavigationStack {
+//                EditLessonNamesView(store: store)
+//            }
+//        }
+//        .sheet(
+//            item: $store.scope(
+//                state: \.destination?.editLessonTeachers,
+//                action: \.destination.editLessonTeachers
+//            )
+//        ) { store in
+//            NavigationStack {
+//                EditLessonTeachersView(store: store)
+//            }
+//        }
         .navigationTitle("Деталі")
         .navigationBarTitleDisplayMode(.inline)
     }
@@ -134,11 +136,11 @@ struct LessonDetailsView: View {
     NavigationStack {
         LessonDetailsView(
             store: Store(
-                initialState: LessonDetails.State(
-                    lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+                initialState: LessonDetailsFeature.State(
+                    lesson: .init(lesson: Lesson(lessonResponse: LessonResponse.mocked[0]))
                 )
             ) {
-                LessonDetails()
+                LessonDetailsFeature()
             }
         )
     }

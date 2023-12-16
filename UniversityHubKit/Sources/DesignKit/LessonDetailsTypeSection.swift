@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
-import DesignKit
 
-struct LessonDetailsTypeSection: View {
+public struct LessonDetailsTypeSection: View {
     var type: String
+    
+    public init(type: String) {
+        self.type = type
+    }
 
-    var body: some View {
+    public var body: some View {
         LessonDetailsSectionView(
             title: "Тип",
             content: {

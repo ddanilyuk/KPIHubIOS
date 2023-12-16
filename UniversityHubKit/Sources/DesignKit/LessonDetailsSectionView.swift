@@ -7,16 +7,29 @@
 
 import SwiftUI
 
-struct LessonDetailsSectionView<Content: View>: View {
-    @Environment(\.colorScheme) var colorScheme
-
+public struct LessonDetailsSectionView<Content: View>: View {
     let title: String
     var shadowColor = Color.black.opacity(0.05)
     var shadowRadius: CGFloat = 4
     var isEditing = false
     @ViewBuilder var content: Content
+    @Environment(\.colorScheme) var colorScheme
+    
+    public init(
+        title: String,
+        shadowColor: SwiftUI.Color = Color.black.opacity(0.05),
+        shadowRadius: CGFloat = 4,
+        isEditing: Bool = false,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.title = title
+        self.shadowColor = shadowColor
+        self.shadowRadius = shadowRadius
+        self.isEditing = isEditing
+        self.content = content()
+    }
 
-    var body: some View {
+    public var body: some View {
         HStack {
             if isEditing {
                 EditingView()

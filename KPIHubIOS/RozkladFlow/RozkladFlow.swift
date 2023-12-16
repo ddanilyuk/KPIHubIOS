@@ -9,13 +9,14 @@ import ComposableArchitecture
 import GroupPickerFeature
 import Services
 import RozkladFeature
+import LessonDetailsFeature
 
 @Reducer
 struct RozkladFlow: Reducer {
     @ObservableState
     struct State: Equatable {
         var rozkladRoot: RozkladRootFlow.State
-        // var path = StackState<Path.State>()
+        var path = StackState<Path.State>()
         
         init() {
             self.rozkladRoot = .groupPicker(GroupPickerFeature.State(mode: .rozkladTab))
@@ -49,6 +50,13 @@ struct RozkladFlow: Reducer {
                 setRootRozkladState(from: rozkladState, state: &state)
                 return .none
                 
+            case let .rozkladRoot(.groupRozklad(.output(.openLessonDetails(lesson)))):
+                let lessonDetailsState = LessonDetailsFeature.State(
+                    lesson: lesson
+                )
+                state.path.append(.lessonDetails(lessonDetailsState))
+                return .none
+
 //            case let .rozkladRoot(.groupRozklad(.routeAction(.openDetails(lesson)))):
 //                let lessonDetailsState = LessonDetails.State(
 //                    lesson: lesson
@@ -75,9 +83,9 @@ struct RozkladFlow: Reducer {
             RozkladRootFlow()
         }
         core
-//            .forEach(\.path, action: \.path) {
-//                Path()
-//            }
+            .forEach(\.path, action: \.path) {
+                Path()
+            }
     }
     
     private func setRootRozkladState(from rozkladState: RozkladServiceState.State, state: inout State) {
@@ -100,18 +108,17 @@ extension RozkladFlow {
     public struct Path: Reducer {
         @ObservableState
         public enum State: Equatable {
-            // case lessonDetails(LessonDetails.State)
+            case lessonDetails(LessonDetailsFeature.State)
         }
         
         public enum Action: Equatable {
-            // case lessonDetails(LessonDetails.Action)
+            case lessonDetails(LessonDetailsFeature.Action)
         }
         
         public var body: some ReducerOf<Self> {
-            EmptyReducer()
-//            Scope(state: \.lessonDetails, action: \.lessonDetails) {
-//                LessonDetails()
-//            }
+            Scope(state: \.lessonDetails, action: \.lessonDetails) {
+                LessonDetailsFeature()
+            }
         }
     }
 }
@@ -126,30 +133,24 @@ struct RozkladFlowView: View {
     }
     
     var body: some View {
-        RozkladRootView(
-            store: store.scope(
-                state: \.rozkladRoot,
-                action: \.rozkladRoot
-            )
+        NavigationStack(
+            path: $store.scope(state: \.path, action: \.path),
+            root: {
+                RozkladRootView(
+                    store: store.scope(
+                        state: \.rozkladRoot,
+                        action: \.rozkladRoot
+                    )
+                )
+            },
+            destination: { store in
+                switch store.withState({ $0 }) {
+                case .lessonDetails:
+                    if let store = store.scope(state: \.lessonDetails, action: \.lessonDetails) {
+                        LessonDetailsView(store: store)
+                    }
+                }
+            }
         )
-//        NavigationStack(
-//            path: $store.scope(state: \.path, action: \.path),
-//            root: {
-//                RozkladFlow.RozkladRootView(
-//                    store: store.scope(
-//                        state: \.rozkladRoot,
-//                        action: \.rozkladRoot
-//                    )
-//                )
-//            },
-//            destination: { store in
-//                switch store.withState({ $0 }) {
-//                case .lessonDetails:
-//                    if let store = store.scope(state: \.lessonDetails, action: \.lessonDetails) {
-//                        LessonDetailsView(store: store)
-//                    }
-//                }
-//            }
-//        )
     }
 }

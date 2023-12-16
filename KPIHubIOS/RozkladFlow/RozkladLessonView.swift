@@ -9,6 +9,7 @@ import ComposableArchitecture
 import RozkladFeature
 import SwiftUI
 import DesignKit
+import RozkladModels
 
 @ViewAction(for: RozkladLessonFeature.self)
 struct RozkladLessonView: View {

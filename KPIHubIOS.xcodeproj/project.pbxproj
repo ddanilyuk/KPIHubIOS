@@ -25,6 +25,8 @@
 		DB24B1FB2B2E3883008FB620 /* RozkladFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B1FA2B2E3883008FB620 /* RozkladFeature */; };
 		DB24B1FD2B2E40E6008FB620 /* RozkladFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B1FC2B2E40E6008FB620 /* RozkladFeature */; };
 		DB24B2002B2E4E71008FB620 /* RozkladLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */; };
+		DB24B2022B2E56FC008FB620 /* LessonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */; };
+		DB24B2042B2E572E008FB620 /* LessonDetailsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B2032B2E572E008FB620 /* LessonDetailsFeature */; };
 		DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D02B2CF84200A439C0 /* AppView.swift */; };
 		DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */; };
 		DB2974D52B2CF84200A439C0 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D22B2CF84200A439C0 /* AppFeature.swift */; };
@@ -78,6 +80,7 @@
 		DB24B1F62B2E380E008FB620 /* RozkladFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlow.swift; sourceTree = "<group>"; };
 		DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladRootFlow.swift; sourceTree = "<group>"; };
 		DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladLessonView.swift; sourceTree = "<group>"; };
+		DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsView.swift; sourceTree = "<group>"; };
 		DB2974D02B2CF84200A439C0 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
 		DB2974D22B2CF84200A439C0 /* AppFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 			files = (
 				DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */,
 				DB24B1FB2B2E3883008FB620 /* RozkladFeature in Frameworks */,
+				DB24B2042B2E572E008FB620 /* LessonDetailsFeature in Frameworks */,
 				DB2974D72B2CFA4200A439C0 /* GroupPickerFeature in Frameworks */,
 				DB2974DC2B2CFAEB00A439C0 /* RozkladKit in Frameworks */,
 			);
@@ -233,6 +237,7 @@
 				DB24B1F62B2E380E008FB620 /* RozkladFlow.swift */,
 				DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */,
 				DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */,
+				DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */,
 			);
 			path = RozkladFlow;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 				DB2974D62B2CFA4200A439C0 /* GroupPickerFeature */,
 				DB2974DB2B2CFAEB00A439C0 /* RozkladKit */,
 				DB24B1FA2B2E3883008FB620 /* RozkladFeature */,
+				DB24B2032B2E572E008FB620 /* LessonDetailsFeature */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -502,6 +508,7 @@
 				DB24B1F72B2E380E008FB620 /* RozkladFlow.swift in Sources */,
 				DB24B1F92B2E3866008FB620 /* RozkladRootFlow.swift in Sources */,
 				DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */,
+				DB24B2022B2E56FC008FB620 /* LessonDetailsView.swift in Sources */,
 				DB2974DD2B2CFB0100A439C0 /* MainFlow.swift in Sources */,
 				DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */,
 				DB24B2002B2E4E71008FB620 /* RozkladLessonView.swift in Sources */,
@@ -1548,6 +1555,10 @@
 		DB24B1FC2B2E40E6008FB620 /* RozkladFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RozkladFeature;
+		};
+		DB24B2032B2E572E008FB620 /* LessonDetailsFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LessonDetailsFeature;
 		};
 		DB2974D62B2CFA4200A439C0 /* GroupPickerFeature */ = {
 			isa = XCSwiftPackageProductDependency;
