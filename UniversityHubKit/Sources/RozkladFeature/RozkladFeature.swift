@@ -35,6 +35,7 @@ public struct RozkladFeature: Reducer {
 
         @CasePathable
         public enum View: Equatable {
+            case profileButtonTapped
             case rows(IdentifiedActionOf<RozkladLessonFeature>)
         }
         
@@ -43,6 +44,7 @@ public struct RozkladFeature: Reducer {
         }
         
         public enum Output: Equatable {
+            case openProfile
             case openLessonDetails(RozkladLessonModel)
         }
     }
@@ -74,6 +76,9 @@ extension RozkladFeature {
         switch action {
         case let .rows(rowAction):
             return handleViewRowsAction(state: &state, action: rowAction)
+            
+        case .profileButtonTapped:
+            return .send(.output(.openProfile))
         }
     }
     
@@ -101,34 +106,5 @@ extension RozkladFeature {
 extension RozkladFeature {
     private func handleLocalAction(state: inout State, action: Action.Local) -> Effect<Action> {
         return .none
-    }
-}
-
-import SwiftUI
-import DesignKit
-
-@ViewAction(for: RozkladFeature.self)
-public struct RozkladView<Cell: View>: View {
-    public let store: StoreOf<RozkladFeature>
-    public var cell: (StoreOf<RozkladLessonFeature>) -> Cell
-    
-    @Environment(\.designKit) private var designKit
-    
-    public init(
-        store: StoreOf<RozkladFeature>,
-        @ViewBuilder cell: @escaping (StoreOf<RozkladLessonFeature>) -> Cell
-    ) {
-        self.store = store
-        self.cell = cell
-    }
-    
-    public var body: some View {
-        ScrollView {
-            ForEach(store.scope(state: \.rows, action: \.view.rows)) { childStore in
-                cell(childStore)
-            }
-        }
-        .background(designKit.backgroundColor)
-        .navigationTitle("Розклад")
     }
 }

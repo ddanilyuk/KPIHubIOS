@@ -16,6 +16,7 @@ struct RozkladFlow: Reducer {
     @ObservableState
     struct State: Equatable {
         var rozkladRoot: RozkladRootFlow.State
+        @Presents var destination: Destination.State?
         var path = StackState<Path.State>()
         
         init() {
@@ -26,6 +27,7 @@ struct RozkladFlow: Reducer {
     enum Action: Equatable {
         case onSetup
         
+        case destination(PresentationAction<Destination.Action>)
         case updateRozkladState(RozkladServiceState.State)
         case rozkladRoot(RozkladRootFlow.Action)
         case path(StackAction<Path.State, Path.Action>)
@@ -45,26 +47,17 @@ struct RozkladFlow: Reducer {
                     }
                 }
                 
+            case let .destination(destinationAction):
+                return handleDestinationAction(state: &state, action: destinationAction)
+                
             case let .updateRozkladState(rozkladState):
                 setRootRozkladState(from: rozkladState, state: &state)
                 return .none
                 
-            case let .rozkladRoot(.groupRozklad(.output(.openLessonDetails(lesson)))):
-                let lessonDetailsState = LessonDetailsFeature.State(
-                    lesson: lesson
-                )
-                state.path.append(.lessonDetails(lessonDetailsState))
-                return .none
-                
-            case .rozkladRoot(.groupPicker(.route(.done))):
-                rozkladServiceState.commit()
-                rozkladServiceLessons.commit()
-                return .none
-                
+            case let .rozkladRoot(rozkladRootAction):
+                return handleRozkladRoot(state: &state, action: rozkladRootAction)
+                                
             case .path:
-                return .none
-                
-            case .rozkladRoot:
                 return .none
             }
         }
@@ -75,9 +68,70 @@ struct RozkladFlow: Reducer {
             RozkladRootFlow()
         }
         core
+            .ifLet(\.$destination, action: \.destination) {
+                Destination()
+            }
             .forEach(\.path, action: \.path) {
                 Path()
             }
+    }
+    
+    private func handleDestinationAction(state: inout State, action: PresentationAction<Destination.Action>) -> Effect<Action> {
+        switch action {
+        case .presented(.profile):
+            return .none
+            
+        case .presented:
+            return .none
+            
+        case .dismiss:
+            return .none
+        }
+    }
+    
+    private func handleRozkladRoot(state: inout State, action: RozkladRootFlow.Action) -> Effect<Action> {
+        switch action {
+        case let .groupPicker(groupPickerAction):
+            return handleGroupPickerAction(state: &state, action: groupPickerAction)
+            
+        case let .groupRozklad(groupRozkladAction):
+            return handleGroupRozkladAction(state: &state, action: groupRozkladAction)
+        }
+    }
+    
+    private func handleGroupPickerAction(state: inout State, action: GroupPickerFeature.Action) -> Effect<Action> {
+        switch action {
+        case let .route(route):
+            switch route {
+            case .done:
+                rozkladServiceState.commit()
+                rozkladServiceLessons.commit()
+                return .none
+            }
+        default:
+            return .none
+        }
+    }
+    
+    private func handleGroupRozkladAction(state: inout State, action: RozkladFeature.Action) -> Effect<Action> {
+        switch action {
+        case let .output(outputAction):
+            switch outputAction {
+            case let .openLessonDetails(lesson):
+                let lessonDetailsState = LessonDetailsFeature.State(
+                    lesson: lesson
+                )
+                state.path.append(.lessonDetails(lessonDetailsState))
+                return .none
+                
+            case .openProfile:
+                state.destination = .profile(ProfileFeature.State())
+                return .none
+            }
+            
+        default:
+            return .none
+        }
     }
     
     private func setRootRozkladState(from rozkladState: RozkladServiceState.State, state: inout State) {
@@ -113,6 +167,24 @@ extension RozkladFlow {
             }
         }
     }
+    
+    @Reducer
+    public struct Destination: Reducer {
+        @ObservableState
+        public enum State: Equatable {
+            case profile(ProfileFeature.State)
+        }
+        
+        public enum Action: Equatable {
+            case profile(ProfileFeature.Action)
+        }
+        
+        public var body: some ReducerOf<Self> {
+            Scope(state: \.profile, action: \.profile) {
+                ProfileFeature()
+            }
+        }
+    }
 }
 
 import SwiftUI
@@ -134,6 +206,14 @@ struct RozkladFlowView: View {
                         action: \.rozkladRoot
                     )
                 )
+                .sheet(
+                    item: $store.scope(
+                        state: \.destination?.profile,
+                        action: \.destination.profile
+                    )
+                ) { store in
+                    ProfileView(store: store)
+                }
             },
             destination: { store in
                 switch store.withState({ $0 }) {

@@ -49,22 +49,10 @@ struct RozkladFlow: Reducer {
                 setRootRozkladState(from: rozkladState, state: &state)
                 return .none
                 
-            case let .rozkladRoot(.groupRozklad(.output(.openLessonDetails(lesson)))):
-                let lessonDetailsState = LessonDetailsFeature.State(
-                    lesson: lesson
-                )
-                state.path.append(.lessonDetails(lessonDetailsState))
-                return .none
-                
-            case .rozkladRoot(.groupPicker(.route(.done))):
-                rozkladServiceState.commit()
-                rozkladServiceLessons.commit()
-                return .none
-                
+            case let .rozkladRoot(rozkladRootAction):
+                return handleRozkladRoot(state: &state, action: rozkladRootAction)
+                                
             case .path:
-                return .none
-                
-            case .rozkladRoot:
                 return .none
             }
         }
@@ -78,6 +66,50 @@ struct RozkladFlow: Reducer {
             .forEach(\.path, action: \.path) {
                 Path()
             }
+    }
+    
+    private func handleRozkladRoot(state: inout State, action: RozkladRootFlow.Action) -> Effect<Action> {
+        switch action {
+        case let .groupPicker(groupPickerAction):
+            return handleGroupPickerAction(state: &state, action: groupPickerAction)
+            
+        case let .groupRozklad(groupRozkladAction):
+            return handleGroupRozkladAction(state: &state, action: groupRozkladAction)
+        }
+    }
+    
+    private func handleGroupPickerAction(state: inout State, action: GroupPickerFeature.Action) -> Effect<Action> {
+        switch action {
+        case let .route(route):
+            switch route {
+            case .done:
+                rozkladServiceState.commit()
+                rozkladServiceLessons.commit()
+                return .none
+            }
+        default:
+            return .none
+        }
+    }
+    
+    private func handleGroupRozkladAction(state: inout State, action: RozkladFeature.Action) -> Effect<Action> {
+        switch action {
+        case let .output(outputAction):
+            switch outputAction {
+            case let .openLessonDetails(lesson):
+                let lessonDetailsState = LessonDetailsFeature.State(
+                    lesson: lesson
+                )
+                state.path.append(.lessonDetails(lessonDetailsState))
+                return .none
+                
+            case .openProfile:
+                return .none
+            }
+            
+        default:
+            return .none
+        }
     }
     
     private func setRootRozkladState(from rozkladState: RozkladServiceState.State, state: inout State) {
