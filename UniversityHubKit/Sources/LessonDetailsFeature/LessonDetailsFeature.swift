@@ -76,7 +76,7 @@ public struct LessonDetailsFeature: Reducer {
         }
     }
             
-    enum CancelID {
+    private enum CancelID {
         case onAppear
     }
 }

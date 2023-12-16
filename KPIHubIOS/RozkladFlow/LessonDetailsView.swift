@@ -46,13 +46,13 @@ struct LessonDetailsView: View {
                         send(.editTeachersButtonTapped)
                     }
                 }
-//
+                
                 if !store.lesson.type.isEmpty {
                     LessonDetailsTypeSection(
                         type: store.lesson.type
                     )
                 }
-//
+                
                 if let locations = store.lesson.locations, !locations.isEmpty {
                     LessonDetailsLocationsSection(
                         locations: locations

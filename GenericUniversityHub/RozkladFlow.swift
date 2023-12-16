@@ -1,8 +1,8 @@
 //
 //  RozkladFlow.swift
-//  KPIHubIOS
+//  GenericUniversityHub
 //
-//  Created by Denys Danyliuk on 16.12.2023.
+//  Created by Denys Danyliuk on 17.12.2023.
 //
 
 import ComposableArchitecture
@@ -138,11 +138,61 @@ struct RozkladFlowView: View {
             destination: { store in
                 switch store.withState({ $0 }) {
                 case .lessonDetails:
-                    if let store = store.scope(state: \.lessonDetails, action: \.lessonDetails) {
-                        LessonDetailsView(store: store)
-                    }
+                    EmptyView()
+//                    if let store = store.scope(state: \.lessonDetails, action: \.lessonDetails) {
+//                        LessonDetailsView(store: store)
+//                    }
                 }
             }
         )
+    }
+}
+
+@Reducer
+struct RozkladRootFlow: Reducer {
+    @ObservableState
+    enum State: Equatable {
+        case groupRozklad(RozkladFeature.State)
+        case groupPicker(GroupPickerFeature.State)
+    }
+    
+    enum Action: Equatable {
+        case groupRozklad(RozkladFeature.Action)
+        case groupPicker(GroupPickerFeature.Action)
+    }
+
+    var body: some ReducerOf<Self> {
+        Scope(state: \.groupRozklad, action: \.groupRozklad) {
+            RozkladFeature()
+        }
+        Scope(state: \.groupPicker, action: \.groupPicker) {
+            GroupPickerFeature()
+        }
+    }
+}
+
+import SwiftUI
+
+struct RozkladRootView: View {
+    private let store: StoreOf<RozkladRootFlow>
+    
+    init(store: StoreOf<RozkladRootFlow>) {
+        self.store = store
+    }
+    
+    var body: some View {
+        switch store.withState({ $0 }) {
+        case .groupRozklad:
+            if let childStore = store.scope(state: \.groupRozklad, action: \.groupRozklad) {
+                RozkladView(store: childStore) { cellStore in
+                    RozkladLessonView(store: cellStore)
+                }
+            }
+            
+        case .groupPicker:
+            if let childStore = store.scope(state: \.groupPicker, action: \.groupPicker) {
+                GroupPickerView(store: childStore)
+            }
+        }
     }
 }

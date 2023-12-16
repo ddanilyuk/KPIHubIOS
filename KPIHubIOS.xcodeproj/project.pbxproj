@@ -27,6 +27,10 @@
 		DB24B2002B2E4E71008FB620 /* RozkladLessonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */; };
 		DB24B2022B2E56FC008FB620 /* LessonDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */; };
 		DB24B2042B2E572E008FB620 /* LessonDetailsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B2032B2E572E008FB620 /* LessonDetailsFeature */; };
+		DB24B2062B2E607F008FB620 /* RozkladFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B2052B2E607F008FB620 /* RozkladFlow.swift */; };
+		DB24B2082B2E6149008FB620 /* DesignKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B2072B2E6149008FB620 /* DesignKit */; };
+		DB24B20A2B2E6149008FB620 /* GroupPickerFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B2092B2E6149008FB620 /* GroupPickerFeature */; };
+		DB24B20C2B2E6149008FB620 /* LessonDetailsFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B20B2B2E6149008FB620 /* LessonDetailsFeature */; };
 		DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D02B2CF84200A439C0 /* AppView.swift */; };
 		DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */; };
 		DB2974D52B2CF84200A439C0 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB2974D22B2CF84200A439C0 /* AppFeature.swift */; };
@@ -81,6 +85,7 @@
 		DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladRootFlow.swift; sourceTree = "<group>"; };
 		DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladLessonView.swift; sourceTree = "<group>"; };
 		DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonDetailsView.swift; sourceTree = "<group>"; };
+		DB24B2052B2E607F008FB620 /* RozkladFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladFlow.swift; sourceTree = "<group>"; };
 		DB2974D02B2CF84200A439C0 /* AppView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppFeature+Path.swift"; sourceTree = "<group>"; };
 		DB2974D22B2CF84200A439C0 /* AppFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
@@ -130,7 +135,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB24B1D62B2E30EA008FB620 /* UniversityHubKit in Frameworks */,
+				DB24B20A2B2E6149008FB620 /* GroupPickerFeature in Frameworks */,
+				DB24B20C2B2E6149008FB620 /* LessonDetailsFeature in Frameworks */,
 				DB24B1FD2B2E40E6008FB620 /* RozkladFeature in Frameworks */,
+				DB24B2082B2E6149008FB620 /* DesignKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,6 +227,7 @@
 				DB24B1CA2B2E3099008FB620 /* Assets.xcassets */,
 				DB24B1CC2B2E3099008FB620 /* GenericUniversityHub.entitlements */,
 				DB24B1CD2B2E3099008FB620 /* Preview Content */,
+				DB24B2052B2E607F008FB620 /* RozkladFlow.swift */,
 			);
 			path = GenericUniversityHub;
 			sourceTree = "<group>";
@@ -381,6 +390,9 @@
 			packageProductDependencies = (
 				DB24B1D52B2E30EA008FB620 /* UniversityHubKit */,
 				DB24B1FC2B2E40E6008FB620 /* RozkladFeature */,
+				DB24B2072B2E6149008FB620 /* DesignKit */,
+				DB24B2092B2E6149008FB620 /* GroupPickerFeature */,
+				DB24B20B2B2E6149008FB620 /* LessonDetailsFeature */,
 			);
 			productName = GenericUniversityHub;
 			productReference = DB24B1C42B2E3098008FB620 /* GenericUniversityHub.app */;
@@ -540,6 +552,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB24B1C92B2E3098008FB620 /* ContentView.swift in Sources */,
+				DB24B2062B2E607F008FB620 /* RozkladFlow.swift in Sources */,
 				DB24B1C72B2E3098008FB620 /* GenericUniversityHubApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1180,8 +1193,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1194,12 +1206,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.GenericUniversityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Debug-Development";
 		};
@@ -1275,8 +1288,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1289,12 +1301,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.GenericUniversityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Debug-Production";
 		};
@@ -1364,8 +1377,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1377,11 +1389,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.GenericUniversityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Release-Development";
 		};
@@ -1451,8 +1464,7 @@
 				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
@@ -1464,11 +1476,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ddanilyuk.GenericUniversityHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Release-Production";
 		};
@@ -1557,6 +1570,18 @@
 			productName = RozkladFeature;
 		};
 		DB24B2032B2E572E008FB620 /* LessonDetailsFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LessonDetailsFeature;
+		};
+		DB24B2072B2E6149008FB620 /* DesignKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DesignKit;
+		};
+		DB24B2092B2E6149008FB620 /* GroupPickerFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GroupPickerFeature;
+		};
+		DB24B20B2B2E6149008FB620 /* LessonDetailsFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LessonDetailsFeature;
 		};

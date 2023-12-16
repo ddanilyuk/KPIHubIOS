@@ -9,6 +9,8 @@ import SwiftUI
 import UniversityHubKit
 import GroupPickerFeature
 import RozkladFeature
+import DesignKit
+import ComposableArchitecture
 
 @main
 struct GenericUniversityHubApp: SwiftUI.App {
@@ -17,7 +19,8 @@ struct GenericUniversityHubApp: SwiftUI.App {
     var body: some Scene {
         WindowGroup {
             AppView(store: appDelegate.store)
-                .accentColor(Color.orange)
+                .accentColor(Color.red)
+                .environment(\.designKit, DesignKit.custom)
         }
     }
 }
@@ -41,6 +44,15 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         appDelegateStore.send(.didFinishLaunching(Bundle.main))
         return true
     }
+}
+
+extension DesignKit {
+    static let custom = DesignKit(
+        primaryColor: .red,
+        backgroundColor: .pink.opacity(0.1),
+        currentLessonColor: .red,
+        nextLessonColor: .green
+    )
 }
 
 @Reducer
@@ -85,11 +97,13 @@ struct AppFeature: Reducer {
             switch action {
             case .appDelegate(.didFinishLaunching):
 //                if userDefaultsService.get(for: .onboardingPassed) {
-                state.destination = .main(RozkladFeature.State())
+                state.destination = .main(RozkladFlow.State())
 //                } else {
 //                    state.destination = .onboarding(OnboardingFlow.State())
 //                }
-                return .none
+                return .run { send in
+                    await send(.destination(.main(.onSetup)))
+                }
                                 
 //            case .destination(.onboarding(.output(.done))):
 //                state.destination = .main(MainFlow.State())
@@ -120,12 +134,12 @@ extension AppFeature {
     struct Destination: Reducer {
         enum State: Equatable {
 //            case onboarding(OnboardingFlow.State)
-            case main(RozkladFeature.State)
+            case main(RozkladFlow.State)
         }
         
         enum Action: Equatable {
 //            case onboarding(OnboardingFlow.Action)
-            case main(RozkladFeature.Action)
+            case main(RozkladFlow.Action)
         }
         
         var body: some ReducerOf<Self> {
@@ -133,7 +147,7 @@ extension AppFeature {
 //                OnboardingFlow()
 //            }
             Scope(state: \.main, action: \.main) {
-                RozkladFeature()
+                RozkladFlow()
             }
         }
     }
@@ -161,13 +175,110 @@ struct AppView: View {
                 state: \.destination?.main,
                 action: \.destination.main
             ) {
-                RozkladView(store: childStore) { cellStore in
-                    RozkladLessonView(store: cellStore)
-                }
+                RozkladFlowView(store: childStore)
             }
             
         case .none:
             EmptyView()
         }
+    }
+}
+
+@ViewAction(for: RozkladLessonFeature.self)
+struct RozkladLessonView: View {
+    @Environment(\.colorScheme) var colorScheme
+    let store: StoreOf<RozkladLessonFeature>
+    
+    init(store: StoreOf<RozkladLessonFeature>) {
+        self.store = store
+    }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            backgroundView
+            contentView
+        }
+        .onTapGesture {
+            send(.onTap)
+        }
+        .padding()
+        // TODO: assets
+//        .background(Color.screenBackground)
+    }
+
+//    var timeView: some View {
+//        GeometryReader { proxy in
+//            RoundedRectangle(cornerRadius: 2)
+//                .fill(Color.gray.opacity(0.2))
+//                .if(viewStore.mode.isCurrent) { view in
+//                    view.overlay(alignment: .top) {
+//                        LinearGradientAnimatableView()
+//                            .frame(height: viewStore.mode.percent * proxy.frame(in: .local).height)
+//                    }
+//                }
+//        }
+//        .frame(width: viewStore.mode.isCurrent ? 4 : 2, alignment: .center)
+//        .frame(minHeight: 20)
+//    }
+
+    @ViewBuilder
+    var backgroundView: some View {
+        switch store.status {
+        case .current:
+            BorderGradientBackgroundView()
+                .overlay(alignment: .topTrailing) {
+                    LessonBadgeView(mode: .current)
+                }
+
+        case .next:
+            Rectangle()
+                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+                .overlay(alignment: .topTrailing) {
+                    LessonBadgeView(mode: .next)
+                }
+
+        case .idle:
+            Rectangle()
+                .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))
+        }
+    }
+
+    var contentView: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("\(store.lesson.names.joined(separator: ", "))")
+                .font(.system(.callout).bold())
+                .lineLimit(2)
+            
+            if let teachers = store.lesson.teachers, !teachers.isEmpty {
+                ForEach(teachers, id: \.self) { teacher in
+                    SmallTagView(
+                        icon: Image(systemName: "person"),
+                        text: teacher,
+                        color: .pink
+                    )
+                }
+            }
+            
+            if store.lesson.locations != nil || !store.lesson.type.isEmpty {
+                HStack {
+                    if let locations = store.lesson.locations {
+                        SmallTagView(
+                            icon: Image(systemName: "location"),
+                            text: locations.first ?? "-",
+                            color: .teal
+                        )
+                    }
+                    if !store.lesson.type.isEmpty {
+                        SmallTagView(
+                            icon: Image(systemName: "graduationcap"),
+                            text: store.lesson.type,
+                            color: .cyan
+                        )
+                    }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(16)
     }
 }
