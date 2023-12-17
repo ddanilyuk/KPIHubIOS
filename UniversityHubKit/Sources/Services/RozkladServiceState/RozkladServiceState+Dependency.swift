@@ -9,7 +9,7 @@ import Dependencies
 
 extension DependencyValues {
     private enum RozkladClientStateKey: DependencyKey {
-        static let testValue = RozkladServiceState.mock()
+        static let testValue = RozkladServiceState()
         static let liveValue = RozkladServiceState.live()
     }
     

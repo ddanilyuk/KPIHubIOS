@@ -19,7 +19,7 @@ struct RozkladRootFlow: Reducer {
         case groupPicker(GroupPickerFeature.State)
     }
     
-    enum Action: Equatable {
+    enum Action {
         case groupRozklad(RozkladFeature.Action)
         case groupPicker(GroupPickerFeature.Action)
     }

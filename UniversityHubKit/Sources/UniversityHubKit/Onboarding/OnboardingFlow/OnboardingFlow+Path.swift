@@ -14,19 +14,19 @@ extension OnboardingFlow {
     public struct Path: Reducer {
         @ObservableState
         public enum State: Equatable {
-            case campusLogin(CampusLoginFeature.State)
+//            case campusLogin(CampusLoginFeature.State)
             case groupPicker(GroupPickerFeature.State)
         }
         
-        public enum Action: Equatable {
-            case campusLogin(CampusLoginFeature.Action)
+        public enum Action {
+//            case campusLogin(CampusLoginFeature.Action)
             case groupPicker(GroupPickerFeature.Action)
         }
         
         public var body: some ReducerOf<Self> {
-            Scope(state: \.campusLogin, action: \.campusLogin) {
-                CampusLoginFeature()
-            }
+//            Scope(state: \.campusLogin, action: \.campusLogin) {
+//                CampusLoginFeature()
+//            }
             Scope(state: \.groupPicker, action: \.groupPicker) {
                 GroupPickerFeature()
             }

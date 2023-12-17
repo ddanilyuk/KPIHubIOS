@@ -26,7 +26,7 @@ struct MainFlow: Reducer {
         }
     }
     
-    enum Action: Equatable, BindableAction, ViewAction {
+    enum Action: BindableAction, ViewAction {
         case rozklad(RozkladFlow.Action)
         case campus(Campus.Action)
         case profile(ProfileFlow.Action)

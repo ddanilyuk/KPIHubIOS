@@ -8,15 +8,15 @@
 import Foundation
 import Combine
 
-extension RozkladServiceState {
-    static func mock() -> RozkladServiceState {
-        let group = GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")
-        return RozkladServiceState(
-            stateStream: { .never },
-            currentState: { .selected(group) },
-            group: { group },
-            setState: { _ in },
-            commit: { }
-        )
-    }
-}
+//extension RozkladServiceState {
+//    static func mock() -> RozkladServiceState {
+//        let group = GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")
+//        return RozkladServiceState(
+//            stateStream: { .never },
+//            currentState: { .selected(group) },
+//            group: { group },
+//            setState: { _ in },
+//            commit: { }
+//        )
+//    }
+//}

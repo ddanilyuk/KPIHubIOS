@@ -6,17 +6,19 @@
 //
 
 import Combine
-import Foundation
+import DependenciesMacros
 
+@DependencyClient
 public struct RozkladServiceState {
     public enum State: Equatable {
         case selected(GroupResponse)
         case notSelected
     }
 
-    public var stateStream: () -> AsyncStream<State>
-    public var currentState: () -> State
+    public var stateStream: () -> AsyncStream<State> = { .never }
+    public var currentState: () -> State = { .notSelected }
     public var group: () -> GroupResponse?
     public var setState: (ClientValue<State>) -> Void
     public var commit: () -> Void
+    public var loadGroups: () async throws -> [GroupResponse]
 }

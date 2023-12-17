@@ -23,7 +23,7 @@ struct RozkladFlow: Reducer {
         }
     }
     
-    enum Action: Equatable {
+    enum Action {
         case onSetup
         
         case updateRozkladState(RozkladServiceState.State)
@@ -58,7 +58,7 @@ struct RozkladFlow: Reducer {
         }
     }
     
-    public var body: some ReducerOf<Self> {
+    var body: some ReducerOf<Self> {
         Scope(state: \.rozkladRoot, action: \.rozkladRoot) {
             RozkladRootFlow()
         }
@@ -80,13 +80,14 @@ struct RozkladFlow: Reducer {
     
     private func handleGroupPickerAction(state: inout State, action: GroupPickerFeature.Action) -> Effect<Action> {
         switch action {
-        case let .route(route):
-            switch route {
+        case let .output(outputAction):
+            switch outputAction {
             case .done:
                 rozkladServiceState.commit()
                 rozkladServiceLessons.commit()
                 return .none
             }
+            
         default:
             return .none
         }

@@ -40,7 +40,7 @@ struct AppFeature: Reducer {
         var destination: Destination.State?
     }
     
-    enum Action: Equatable {
+    enum Action {
         case appDelegate(AppDelegateFeature.Action)
         case destination(Destination.Action)
     }

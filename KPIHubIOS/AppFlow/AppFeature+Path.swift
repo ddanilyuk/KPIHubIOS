@@ -16,7 +16,7 @@ extension AppFeature {
             case main(MainFlow.State)
         }
         
-        enum Action: Equatable {
+        enum Action {
 //            case onboarding(OnboardingFlow.Action)
             case main(MainFlow.Action)
         }

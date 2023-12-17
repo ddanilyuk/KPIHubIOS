@@ -7,7 +7,6 @@
 
 import ComposableArchitecture
 import URLRouting
-import UIKit
 import Services
 
 @Reducer
@@ -28,21 +27,24 @@ public struct GroupPickerFeature: Reducer {
         }
     }
     
-    public enum Action: Equatable, ViewAction {
-        case route(Route)
+    public enum Action: ViewAction {
         case alert(PresentationAction<Alert>)
         case view(View)
+        case local(Local)
+        case output(Output)
         
-        case allGroupsResult(TaskResult<[GroupResponse]>)
-        case lessonsResult(TaskResult<[Lesson]>)
-        
-        public enum Route: Equatable {
+        public enum Output {
             case done
+        }
+        
+        public enum Local {
+            case allGroupsResult(Result<[GroupResponse], Error>)
+            case lessonsResult(Result<[Lesson], Error>)
         }
         
         public enum Alert: Equatable { }
         
-        public enum View: BindableAction, Equatable {
+        public enum View: BindableAction {
             case onAppear
             case refresh
             case groupSelected(GroupResponse)
@@ -50,8 +52,6 @@ public struct GroupPickerFeature: Reducer {
         }
     }
 
-    @Dependency(\.apiService) var apiClient
-    @Dependency(\.userDefaultsService) var userDefaultsService
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.rozkladServiceState) var rozkladServiceState
     @Dependency(\.analyticsService) var analyticsService
@@ -66,39 +66,10 @@ public struct GroupPickerFeature: Reducer {
             case let .view(viewAction):
                 return handleViewAction(state: &state, action: viewAction)
                 
-            case let .allGroupsResult(.success(groups)):
-                state.isLoading = false
-                state.groups = groups
-                state.searchedGroups = groups
-                analyticsService.track(Event.Onboarding.groupsLoadSuccess)
-                return .none
-
-            case let .lessonsResult(.success(lessons)):
-                if let selectedGroup = state.selectedGroup {
-                    rozkladServiceState.setState(ClientValue(.selected(selectedGroup), commitChanges: false))
-                    analyticsService.setGroup(selectedGroup)
-                }
-                state.isLoading = false
-                rozkladServiceLessons.set(.init(lessons, commitChanges: false))
-                let place = analyticsLessonsLoadPlace(from: state.mode)
-                analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: place))
-                print("!!! route send done")
-                return .send(.route(.done))
-
-            case let .allGroupsResult(.failure(error)):
-                state.isLoading = false
-                state.alert = AlertState.error(error)
-                analyticsService.track(Event.Onboarding.groupsLoadFailed)
-                return .none
+            case let .local(localAction):
+                return handleLocalAction(state: &state, action: localAction)
                 
-            case let .lessonsResult(.failure(error)):
-                state.isLoading = false
-                state.alert = AlertState.error(error)
-                let place = analyticsLessonsLoadPlace(from: state.mode)
-                analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: place))
-                return .none
-
-            case .route:
+            case .output:
                 return .none
                 
             case .alert:
@@ -109,7 +80,7 @@ public struct GroupPickerFeature: Reducer {
     }
 }
 
-// MARK: - View
+// MARK: - ViewAction
 private extension GroupPickerFeature {
     func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
         switch action {
@@ -146,18 +117,38 @@ private extension GroupPickerFeature {
     }
 }
 
-// MARK: Analytics
+// MARK: - LocalAction
 private extension GroupPickerFeature {
-    func analyticsLessonsLoadPlace(from mode: Mode) -> Event.Rozklad.Place {
-        switch mode {
-        case .onboarding:
-            return .onboarding
+    func handleLocalAction(state: inout State, action: Action.Local) -> Effect<Action> {
+        switch action {
+        case let .allGroupsResult(.success(groups)):
+            state.isLoading = false
+            state.groups = groups
+            state.searchedGroups = groups
+            analyticsService.track(Event.Onboarding.groupsLoadSuccess)
+            return .none
 
-        case .rozkladTab:
-            return .rozkladTab
+        case let .lessonsResult(.success(lessons)):
+            if let selectedGroup = state.selectedGroup {
+                rozkladServiceState.setState(ClientValue(.selected(selectedGroup), commitChanges: false))
+                analyticsService.setGroup(selectedGroup)
+            }
+            state.isLoading = false
+            rozkladServiceLessons.set(.init(lessons, commitChanges: false))
+            analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: state.mode.eventPlace))
+            return .send(.output(.done))
 
-        case .campus:
-            return .campusUserInput
+        case let .allGroupsResult(.failure(error)):
+            state.isLoading = false
+            state.alert = AlertState.error(error)
+            analyticsService.track(Event.Onboarding.groupsLoadFailed)
+            return .none
+            
+        case let .lessonsResult(.failure(error)):
+            state.isLoading = false
+            state.alert = AlertState.error(error)
+            analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: state.mode.eventPlace))
+            return .none
         }
     }
 }
@@ -166,41 +157,43 @@ private extension GroupPickerFeature {
 private extension GroupPickerFeature {
     func loadGroups() -> Effect<Action> {
         .run { send in
-            let taskResult = await TaskResult {
-                try await apiClient
-                    .decodedResponse(
-                        for: .api(.groups(.all)),
-                        as: GroupsResponse.self
-                    )
-                    .value.groups
+            let groupsResult = await Result {
+                try await rozkladServiceState.loadGroups()
             }
-            await send(.allGroupsResult(taskResult))
+            await send(.local(.allGroupsResult(groupsResult)))
         }
     }
     
     func getLessons(for group: GroupResponse) -> Effect<Action> {
         .run { send in
-            print("!!! getLessons")
-            let taskResult = await TaskResult {
-                let decodedResponse = try await apiClient.decodedResponse(
-                    for: .api(.group(group.id, .lessons)),
-                    as: LessonsResponse.self
-                )
-                return decodedResponse.value.lessons.map(Lesson.init)
+            let result = await Result {
+                try await rozkladServiceLessons.getLessons(group)
             }
             // Make keyboard hide to prevent tabBar opacity bugs
             try await Task.sleep(for: .milliseconds(300))
-            print("!!! lessonsResult: \(taskResult)")
-            await send(.lessonsResult(taskResult))
+            await send(.local(.lessonsResult(result)))
         }
     }
 }
 
-// MARK: - Helper models
+// MARK: - Mode
 extension GroupPickerFeature {
     public enum Mode {
         case onboarding
         case rozkladTab
         case campus
+        
+        var eventPlace: Event.Rozklad.Place {
+            switch self {
+            case .campus:
+                return .campus
+                
+            case .rozkladTab:
+                return .rozkladTab
+                
+            case .onboarding:
+                return .onboarding
+            }
+        }
     }
 }

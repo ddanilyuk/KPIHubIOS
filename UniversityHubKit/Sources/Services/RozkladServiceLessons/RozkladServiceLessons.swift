@@ -7,16 +7,19 @@
 
 import Foundation
 import IdentifiedCollections
-import Combine
+import DependenciesMacros
 
+@DependencyClient
 public struct RozkladServiceLessons {
-    public var lessonsStream: () -> AsyncStream<IdentifiedArrayOf<Lesson>>
-    public var currentLessons: () -> IdentifiedArrayOf<Lesson>
+    public var lessonsStream: () -> AsyncStream<IdentifiedArrayOf<Lesson>> = { .never }
+    public var currentLessons: () -> IdentifiedArrayOf<Lesson> = { [] }
     
-    public var updatedAtStream: () -> AsyncStream<Date?>
+    public var updatedAtStream: () -> AsyncStream<Date?> = { .never }
     public var currentUpdatedAt: () -> Date?
-
+    
     public var set: (ClientValue<[Lesson]>) -> Void
     public var modify: (ClientValue<Lesson>) -> Void
     public var commit: () -> Void
+    
+    public var getLessons: (GroupResponse) async throws -> [Lesson]
 }

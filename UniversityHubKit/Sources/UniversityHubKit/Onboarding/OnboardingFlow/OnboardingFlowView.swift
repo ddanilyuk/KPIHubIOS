@@ -31,10 +31,10 @@ public struct OnboardingFlowView: View {
                         GroupPickerView(store: store)
                     }
                     
-                case .campusLogin:
-                    if let store = store.scope(state: \.campusLogin, action: \.campusLogin) {
-                        CampusLoginView(store: store)
-                    }
+//                case .campusLogin:
+//                    if let store = store.scope(state: \.campusLogin, action: \.campusLogin) {
+//                        CampusLoginView(store: store)
+//                    }
                 }
             }
         )

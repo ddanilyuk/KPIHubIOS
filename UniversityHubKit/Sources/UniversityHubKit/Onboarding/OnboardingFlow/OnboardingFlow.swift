@@ -18,7 +18,7 @@ public struct OnboardingFlow: Reducer {
         var onboarding = OnboardingFeature.State()
     }
     
-    public enum Action: Equatable {
+    public enum Action {
         case onboarding(OnboardingFeature.Action)
         case path(StackAction<Path.State, Path.Action>)
         case output(Output)
@@ -44,24 +44,24 @@ public struct OnboardingFlow: Reducer {
                 return .none
                 
             case .onboarding(.output(.campusLogin)):
-                let campusLoginState = CampusLoginFeature.State(mode: .campusAndGroup)
-                 state.path.append(.campusLogin(campusLoginState))
+//                let campusLoginState = CampusLoginFeature.State(mode: .campusAndGroup)
+//                 state.path.append(.campusLogin(campusLoginState))
                 return .none
                 
-            case .path(.element(_, .campusLogin(.route(.groupPicker)))):
-                let groupPickerState = GroupPickerFeature.State(mode: .campus)
-                state.path.append(.groupPicker(groupPickerState))
-                return .none
-                
-            case .path(.element(_, .campusLogin(.route(.done)))):
-                campusClientState.commit()
-                rozkladServiceState.commit()
-                rozkladServiceLessons.commit()
-                userDefaultsService.set(true, for: .onboardingPassed)
-                analyticsService.track(Event.Onboarding.onboardingPassed)
-                return .send(.output(.done))
+//            case .path(.element(_, .campusLogin(.route(.groupPicker)))):
+//                let groupPickerState = GroupPickerFeature.State(mode: .campus)
+//                state.path.append(.groupPicker(groupPickerState))
+//                return .none
+//                
+//            case .path(.element(_, .campusLogin(.route(.done)))):
+//                campusClientState.commit()
+//                rozkladServiceState.commit()
+//                rozkladServiceLessons.commit()
+//                userDefaultsService.set(true, for: .onboardingPassed)
+//                analyticsService.track(Event.Onboarding.onboardingPassed)
+//                return .send(.output(.done))
 
-            case .path(.element(_, .groupPicker(.route(.done)))):
+            case .path(.element(_, .groupPicker(.output(.done)))):
                 campusClientState.commit()
                 rozkladServiceState.commit()
                 rozkladServiceLessons.commit()
