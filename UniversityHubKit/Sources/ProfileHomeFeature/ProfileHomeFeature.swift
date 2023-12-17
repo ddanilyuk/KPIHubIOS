@@ -11,125 +11,6 @@ import Foundation
 import Services
 
 @Reducer
-public struct ProfileHomeRozkladFeature: Reducer {
-    @ObservableState
-    public struct State: Equatable {
-        public var rozkladState: RozkladServiceState.State = .notSelected
-        public var lessonsUpdatedAtDate: Date?
-        public var toggleWeek = false
-        
-        public init(
-            rozkladState: RozkladServiceState.State,
-            lessonsUpdatedAtDate: Date? = nil,
-            toggleWeek: Bool = false
-        ) {
-            self.rozkladState = rozkladState
-            self.lessonsUpdatedAtDate = lessonsUpdatedAtDate
-            self.toggleWeek = toggleWeek
-        }
-    }
-    
-    public enum Action: Equatable, ViewAction {
-        case view(View)
-        case local(Local)
-        
-        public enum View: Equatable, BindableAction {
-            case binding(BindingAction<State>)
-            case onAppear
-            case updateRozkladButtonTapped
-            case changeGroupButtonTapped
-            case selectGroupButtonTapped
-        }
-        
-        public enum Local: Equatable {
-            case setRozkladState(RozkladServiceState.State)
-            case setLessonsUpdatedAtDate(Date?)
-        }
-    }
-    
-    @Dependency(\.userDefaultsService) var userDefaultsService
-    @Dependency(\.currentDateService) var currentDateService
-    @Dependency(\.analyticsService) var analyticsService
-    @Dependency(\.rozkladServiceState) var rozkladServiceState
-    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
-
-    public var body: some ReducerOf<Self> {
-        BindingReducer(action: \.view)
-        
-        Reduce { state, action in
-            switch action {
-            case let .view(viewAction):
-                return handleViewAction(state: &state, action: viewAction)
-                
-            case let .local(localAction):
-                print("local: \(localAction)")
-                return .none
-            }
-        }
-    }
-    
-    private func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
-        switch action {
-        case .onAppear:
-            return onAppear(state: &state)
-            
-        case .binding(\.toggleWeek):
-            userDefaultsService.set(state.toggleWeek, for: .toggleWeek)
-            currentDateService.forceUpdate()
-            analyticsService.track(Event.Profile.changeWeek(state.toggleWeek))
-            return .none
-            
-        case .changeGroupButtonTapped:
-            return .none
-            
-        case .selectGroupButtonTapped:
-            return .none
-            
-        case .updateRozkladButtonTapped:
-            return .none
-            
-        case .binding:
-            return .none
-        }
-    }
-    
-    private func handleLocalAction(state: inout State, action: Action.Local) -> Effect<Action> {
-        switch action {
-        case let .setRozkladState(rozkladState):
-            state.rozkladState = rozkladState
-            return .none
-
-        case let .setLessonsUpdatedAtDate(date):
-            state.lessonsUpdatedAtDate = date
-            return .none
-        }
-    }
-    
-    private func onAppear(state: inout State) -> Effect<Action> {
-        state.rozkladState = rozkladServiceState.currentState()
-        state.lessonsUpdatedAtDate = rozkladServiceLessons.currentUpdatedAt()
-        state.toggleWeek = userDefaultsService.get(for: .toggleWeek)
-        return .merge(
-            .run { send in
-                for await state in rozkladServiceState.stateStream().dropFirst() {
-                    await send(.local(.setRozkladState(state)))
-                }
-            },
-            .run { send in
-                for await updatedAt in rozkladServiceLessons.updatedAtStream().dropFirst() {
-                    await send(.local(.setLessonsUpdatedAtDate(updatedAt)))
-                }
-            }
-        )
-        .cancellable(id: CancelID.onAppear, cancelInFlight: true)
-    }
-    
-    private enum CancelID {
-        case onAppear
-    }
-}
-
-@Reducer
 public struct ProfileHomeFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
@@ -150,9 +31,7 @@ public struct ProfileHomeFeature: Reducer {
     
     public enum Action: Equatable, ViewAction {
         case rozklad(ProfileHomeRozkladFeature.Action)
-//        case setRozkladState(RozkladServiceState.State)
         case setCampusState(CampusServiceState.State)
-//        case setLessonsUpdatedAtDate(Date?)
         
         case lessonsResult(TaskResult<[Lesson]>)
         
@@ -167,12 +46,6 @@ public struct ProfileHomeFeature: Reducer {
         }
         
         public enum View: Equatable {
-//            case binding(BindingAction<State>)
-            
-            case updateRozkladButtonTapped
-            case changeGroupButtonTapped
-            case selectGroupButtonTapped
-            
             case logoutCampusButtonTapped
             case loginCampusButtonTapped
             
@@ -213,20 +86,20 @@ public struct ProfileHomeFeature: Reducer {
                 return .none
                 
 
-            case .view(.updateRozkladButtonTapped):
-                analyticsService.track(Event.Profile.reloadRozkladTapped)
-                state.destination = .confirmationDialog(
-                    ConfirmationDialogState(
-                        title: TextState("Ви впевнені?"),
-                        titleVisibility: .visible,
-                        message: TextState("Оновлення розкладу видалить всі редагування!"),
-                        buttons: [
-                            .destructive(TextState("Оновити розклад"), action: .send(.confirmUpdateRozklad)),
-                            .cancel(TextState("Назад"))
-                        ]
-                    )
-                )
-                return .none
+//            case .view(.updateRozkladButtonTapped):
+//                analyticsService.track(Event.Profile.reloadRozkladTapped)
+//                state.destination = .confirmationDialog(
+//                    ConfirmationDialogState(
+//                        title: TextState("Ви впевнені?"),
+//                        titleVisibility: .visible,
+//                        message: TextState("Оновлення розкладу видалить всі редагування!"),
+//                        buttons: [
+//                            .destructive(TextState("Оновити розклад"), action: .send(.confirmUpdateRozklad)),
+//                            .cancel(TextState("Назад"))
+//                        ]
+//                    )
+//                )
+//                return .none
 
             case let .lessonsResult(.success(lessons)):
                 state.isLoading = false
@@ -240,24 +113,24 @@ public struct ProfileHomeFeature: Reducer {
                 analyticsService.track(Event.Rozklad.lessonsLoadFailed(place: .profileReload))
                 return .none
 
-            case .view(.changeGroupButtonTapped):
-                analyticsService.track(Event.Profile.changeGroupTapped)
-                state.destination = .confirmationDialog(
-                    ConfirmationDialogState(
-                        title: TextState("Ви впевнені?"),
-                        titleVisibility: .visible,
-                        message: TextState("Зміна групи видалить всі редагування!"),
-                        buttons: [
-                            .destructive(TextState("Змінити"), action: .send(.confirmChangeGroup)),
-                            .cancel(TextState("Назад"))
-                        ]
-                    )
-                )
-                return .none
+//            case .view(.changeGroupButtonTapped):
+//                analyticsService.track(Event.Profile.changeGroupTapped)
+//                state.destination = .confirmationDialog(
+//                    ConfirmationDialogState(
+//                        title: TextState("Ви впевнені?"),
+//                        titleVisibility: .visible,
+//                        message: TextState("Зміна групи видалить всі редагування!"),
+//                        buttons: [
+//                            .destructive(TextState("Змінити"), action: .send(.confirmChangeGroup)),
+//                            .cancel(TextState("Назад"))
+//                        ]
+//                    )
+//                )
+//                return .none
                 
-            case .view(.selectGroupButtonTapped):
-                analyticsService.track(Event.Profile.selectGroup)
-                return .send(.routeAction(.rozklad))
+//            case .view(.selectGroupButtonTapped):
+//                analyticsService.track(Event.Profile.selectGroup)
+//                return .send(.routeAction(.rozklad))
 
             case .view(.logoutCampusButtonTapped):
                 analyticsService.track(Event.Profile.campusLogoutTapped)

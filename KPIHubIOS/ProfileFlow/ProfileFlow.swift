@@ -36,6 +36,9 @@ struct ProfileFlow: Reducer {
     }
     
     var body: some ReducerOf<Self> {
+        Scope(state: \.profileHome, action: \.profileHome) {
+            ProfileHomeFeature()
+        }
         Reduce { state, action in
             switch action {
             case .onSetup:
@@ -58,11 +61,10 @@ struct ProfileFlowView: View {
     var body: some View {
         NavigationStack {
             ProfileHomeView(store: store.scope(state: \.profileHome, action: \.profileHome))
-                .navigationTitle("Профіль")
+                .navigationTitle("Профіль КПІ")
         }
     }
 }
-
 
 struct ProfileHomeView: View {
     let store: StoreOf<ProfileHomeFeature>
@@ -102,6 +104,8 @@ struct ProfileHomeRozkladView: View {
         .onAppear {
             send(.onAppear)
         }
+        .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
+        .confirmationDialog($store.scope(state: \.destination?.confirmationDialog, action: \.destination.confirmationDialog))
     }
 
     func selectedView(with group: GroupResponse) -> some View {
