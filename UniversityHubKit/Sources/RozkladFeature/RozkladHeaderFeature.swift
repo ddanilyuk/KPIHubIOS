@@ -11,15 +11,11 @@ import RozkladModels
 @Reducer
 public struct RozkladHeaderFeature: Reducer {
     @ObservableState
-    public struct State: Identifiable, Equatable {
-        let lesson: RozkladLessonModel
+    public struct State: Equatable {
+        var currentLessonDay: LessonDay
         
-        public var id: RozkladLessonModel.ID {
-            lesson.id
-        }
-        
-        init(lesson: RozkladLessonModel) {
-            self.lesson = lesson
+        init(currentLessonDay: LessonDay) {
+            self.currentLessonDay = currentLessonDay
         }
     }
     

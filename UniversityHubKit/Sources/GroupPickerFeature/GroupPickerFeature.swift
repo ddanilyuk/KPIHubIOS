@@ -6,7 +6,6 @@
 //
 
 import ComposableArchitecture
-import URLRouting
 import Services
 
 @Reducer
@@ -167,7 +166,7 @@ private extension GroupPickerFeature {
     func getLessons(for group: GroupResponse) -> Effect<Action> {
         .run { send in
             let result = await Result {
-                try await rozkladServiceLessons.getLessons(group)
+                try await rozkladServiceLessons.getLessons(group: group)
             }
             // Make keyboard hide to prevent tabBar opacity bugs
             try await Task.sleep(for: .milliseconds(300))

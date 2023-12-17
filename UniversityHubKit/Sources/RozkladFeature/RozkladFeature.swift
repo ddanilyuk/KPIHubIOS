@@ -13,30 +13,49 @@ import Services
 public struct RozkladFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        public let lessons: IdentifiedArrayOf<RozkladLessonModel>
-        public var rows: IdentifiedArrayOf<RozkladLessonFeature.State>
+        public var lessons: IdentifiedArrayOf<RozkladLessonModel>
+        public var rows: IdentifiedArrayOf<RozkladRowProviderFeature.State>
+        public var lessonDay: LessonDay?
         
         public init() {
-            let mock = LessonResponse.mocked.map { Lesson(lessonResponse: $0) }
-            let models = mock.map { RozkladLessonModel(lesson: $0) }
+            @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
+            
+            let models = rozkladServiceLessons.currentLessons().map { RozkladLessonModel(lesson: $0) }
             lessons = IdentifiedArray(uniqueElements: models)
             
-            let array = lessons.enumerated().map { index, lesson in
+            let array = models.enumerated().map { index, lesson in
                 RozkladLessonFeature.State(lesson: lesson, status: index == 1 ? .current : .idle)
             }
-            rows = IdentifiedArray(uniqueElements: array)
+            
+            let result: [RozkladRowProviderFeature.State] = models.reduce(into: []) { partialResult, lesson in
+                if let last = partialResult.last, last.lessonDay.day == lesson.day && last.lessonDay.week == lesson.week {
+                    partialResult.append(
+                        .rozkladLesson(RozkladLessonFeature.State(lesson: lesson))
+                    )
+                } else {
+                    partialResult.append(
+                        .sectionHeader(RozkladSectionHeaderFeature.State(day: lesson.day, week: lesson.week))
+                    )
+                    partialResult.append(
+                        .rozkladLesson(RozkladLessonFeature.State(lesson: lesson))
+                    )
+                }
+            }
+            
+            rows = IdentifiedArray(uniqueElements: result)
         }
     }
     
-    public enum Action: Equatable, ViewAction {
+    public enum Action: ViewAction {
         case view(View)
         case local(Local)
         case output(Output)
 
         @CasePathable
-        public enum View: Equatable {
+        public enum View: BindableAction {
+            case binding(BindingAction<State>)
             case profileButtonTapped
-            case rows(IdentifiedActionOf<RozkladLessonFeature>)
+            case rows(IdentifiedActionOf<RozkladRowProviderFeature>)
         }
         
         public enum Local: Equatable {
@@ -52,6 +71,8 @@ public struct RozkladFeature: Reducer {
     public init() { }
     
     public var body: some ReducerOf<Self> {
+        BindingReducer(action: \.view)
+        
         Reduce { state, action in
             switch action {
             case let .view(viewAction):
@@ -65,7 +86,7 @@ public struct RozkladFeature: Reducer {
             }
         }
         .forEach(\.rows, action: \.view.rows) {
-            RozkladLessonFeature()
+            RozkladRowProviderFeature()
         }
     }
 }
@@ -79,18 +100,23 @@ extension RozkladFeature {
             
         case .profileButtonTapped:
             return .send(.output(.openProfile))
+            
+        case .binding:
+            print("!!! binding")
+            return .none
         }
     }
     
     private func handleViewRowsAction(
         state: inout State,
-        action: IdentifiedActionOf<RozkladLessonFeature>
+        action: IdentifiedActionOf<RozkladRowProviderFeature>
     ) -> Effect<Action> {
         switch action {
-        case let .element(id, .output(outputAction)):
+        case let .element(id, .rozkladLesson(.output(outputAction))):
             switch outputAction {
             case .openLesson:
-                guard let model = state.lessons[id: id] else {
+                // TODO: Fix
+                guard let model = state.lessons[id: Int(id) ?? 0] else {
                     return .none
                 }
                 return .send(.output(.openLessonDetails(model)))

@@ -21,5 +21,5 @@ public struct RozkladServiceLessons {
     public var modify: (ClientValue<Lesson>) -> Void
     public var commit: () -> Void
     
-    public var getLessons: (GroupResponse) async throws -> [Lesson]
+    public var getLessons: (_ group: GroupResponse) async throws -> [Lesson]
 }

@@ -66,9 +66,7 @@ let package = Package(
             dependencies: [
                 "Services",
                 "DesignKit",
-//                "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-                .product(name: "Routes", package: "KPIHubServer"),
             ]
         ),
         .target(

@@ -11,6 +11,7 @@ import GroupPickerFeature
 import RozkladFeature
 import DesignKit
 import ComposableArchitecture
+import Services
 
 @main
 struct GenericUniversityHubApp: SwiftUI.App {
@@ -29,6 +30,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     let store: StoreOf<AppFeature> = {
         Store(initialState: AppFeature.State()) {
             AppFeature()
+        } withDependencies: { dependencies in
+            dependencies.rozkladServiceState = .mock()
         }
     }()
     
@@ -85,7 +88,7 @@ struct AppFeature: Reducer {
         var destination: Destination.State?
     }
     
-    enum Action: Equatable {
+    enum Action {
         case appDelegate(AppDelegateFeature.Action)
         case destination(Destination.Action)
     }
@@ -137,7 +140,7 @@ extension AppFeature {
             case main(RozkladFlow.State)
         }
         
-        enum Action: Equatable {
+        enum Action {
 //            case onboarding(OnboardingFlow.Action)
             case main(RozkladFlow.Action)
         }

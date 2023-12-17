@@ -9,17 +9,17 @@ import SwiftUI
 
 struct Loader: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.designKit) var designKit
     
     var body: some View {
         ZStack {
             colorScheme == .light ? Color.secondary.opacity(0.3) : Color.primary.opacity(0.3)
 
             ProgressView("Завантаження...")
-                .foregroundColor(Color.orange)
+                .foregroundColor(designKit.primaryColor)
                 .font(.caption)
-                .tint(Color.orange)
-                .controlSize(.large)
-                .scaleEffect(1.5)
+                .tint(designKit.primaryColor)
+                .controlSize(.extraLarge)
                 .progressViewStyle(.circular)
         }
         .edgesIgnoringSafeArea(.all)

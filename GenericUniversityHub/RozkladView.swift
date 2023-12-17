@@ -12,7 +12,7 @@ import RozkladFeature
 
 @ViewAction(for: RozkladFeature.self)
 public struct RozkladView<Cell: View>: View {
-    public let store: StoreOf<RozkladFeature>
+    @Binding public var store: StoreOf<RozkladFeature>
     public var cell: (StoreOf<RozkladLessonFeature>) -> Cell
     
     @Environment(\.designKit) private var designKit

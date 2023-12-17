@@ -25,7 +25,7 @@ struct KPIHubIOSApp: SwiftUI.App {
 extension DesignKit {
     static let custom = DesignKit(
         primaryColor: .orange,
-        backgroundColor: .white,
+        backgroundColor: .orange.opacity(0.2),
         currentLessonColor: .pink,
         nextLessonColor: .green
     )
@@ -35,6 +35,8 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
     let store: StoreOf<AppFeature> = {
         Store(initialState: AppFeature.State()) {
             AppFeature()
+        } withDependencies: { _ in
+            
         }
     }()
     

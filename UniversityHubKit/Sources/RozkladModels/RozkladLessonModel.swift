@@ -13,6 +13,8 @@ public struct RozkladLessonModel: Identifiable, Equatable {
     public var teachers: [String]?
     public var locations: [String]?
     public var type: String
+    public var day: Int
+    public var week: Int
 
     public init(lesson: Lesson) {
         self.id = lesson.id
@@ -20,6 +22,8 @@ public struct RozkladLessonModel: Identifiable, Equatable {
         self.teachers = lesson.teachers
         self.locations = lesson.locations
         self.type = lesson.type
+        self.day = lesson.day.rawValue
+        self.week = lesson.week.rawValue
     }
 }
 
@@ -49,5 +53,15 @@ public enum RozkladLessonMode: Equatable {
         case .next:
             return 0
         }
+    }
+}
+
+public struct LessonDay: Equatable, Hashable {
+    public let day: Int
+    public let week: Int
+    
+    public init(day: Int, week: Int) {
+        self.day = day
+        self.week = week
     }
 }

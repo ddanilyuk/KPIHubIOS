@@ -8,10 +8,12 @@
 import SwiftUI
 import ComposableArchitecture
 import DesignKit
+import Services // TODO:
 
 @ViewAction(for: GroupPickerFeature.self)
 public struct GroupPickerView: View {
     @Bindable public var store: StoreOf<GroupPickerFeature>
+    @Environment(\.designKit) var designKit
     
     public init(store: StoreOf<GroupPickerFeature>) {
         self.store = store
@@ -20,24 +22,11 @@ public struct GroupPickerView: View {
     public var body: some View {
         List {
             ForEach(store.searchedGroups, id: \.id) { group in
-                ZStack {
-                    VStack {
-                        Text(group.name)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Text(group.faculty ?? "-")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .frame(height: 44)
-                .frame(maxWidth: .infinity)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    send(.groupSelected(group))
-                }
+                groupView(for: group)
             }
         }
+        .scrollContentBackground(.hidden)
+        .background(designKit.backgroundColor)
         .refreshable {
             send(.refresh)
         }
@@ -53,5 +42,26 @@ public struct GroupPickerView: View {
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("Пошук")
         )
+        .foregroundStyle(designKit.primaryColor)
+    }
+    
+    @ViewBuilder
+    private func groupView(for group: GroupResponse) -> some View {
+        ZStack {
+            VStack {
+                Text(group.name)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(group.faculty ?? "-")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .frame(height: 44)
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            send(.groupSelected(group))
+        }
     }
 }

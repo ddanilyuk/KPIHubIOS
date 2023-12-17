@@ -11,27 +11,30 @@ import ComposableArchitecture
 import RozkladFeature
 
 @ViewAction(for: RozkladFeature.self)
-public struct RozkladView<Cell: View>: View {
-    public let store: StoreOf<RozkladFeature>
-    public var cell: (StoreOf<RozkladLessonFeature>) -> Cell
+struct RozkladView: View {
+    @Bindable var store: StoreOf<RozkladFeature>
+//    public var cell: (StoreOf<RozkladLessonFeature>) -> Cell
     
     @Environment(\.designKit) private var designKit
     
-    public init(
-        store: StoreOf<RozkladFeature>,
-        @ViewBuilder cell: @escaping (StoreOf<RozkladLessonFeature>) -> Cell
-    ) {
-        self.store = store
-        self.cell = cell
-    }
-    
-    public var body: some View {
-        ScrollView {
-            ForEach(store.scope(state: \.rows, action: \.view.rows)) { childStore in
-                cell(childStore)
+    var body: some View {
+        VStack {
+            Text("store.lessonDay day: \(store.lessonDay?.day ?? 0) week: \(store.lessonDay?.week ?? 0)")
+            
+            ScrollView {
+                ForEach(store.scope(state: \.rows, action: \.view.rows)) { childStore in
+                    VStack {
+                        RozkladRowProviderView(store: childStore) { cellStore in
+                            RozkladLessonView(store: cellStore)
+                        }
+                        .id(childStore.withState { $0.lessonDay })
+                    }
+                    .scrollTargetLayout()
+                }
             }
+            .scrollPosition(id: $store.lessonDay, anchor: .top)
+            .background(designKit.backgroundColor)
         }
-        .background(designKit.backgroundColor)
         .navigationTitle("Розклад")
     }
 }

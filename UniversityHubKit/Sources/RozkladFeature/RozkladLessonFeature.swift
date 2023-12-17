@@ -25,7 +25,7 @@ public struct RozkladLessonFeature: Reducer {
             lesson.id
         }
         
-        public init(lesson: RozkladLessonModel, status: Status) {
+        public init(lesson: RozkladLessonModel, status: Status = .idle) {
             self.lesson = lesson
             self.status = status
         }
