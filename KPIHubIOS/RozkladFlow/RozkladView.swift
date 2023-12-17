@@ -60,6 +60,7 @@ private struct IDHolder: ViewModifier {
 }
 
 
+@ViewAction(for: RozkladHeaderFeature.self)
 struct RozkladHeaderView: View {
     let store: StoreOf<RozkladHeaderFeature>
     
@@ -72,22 +73,27 @@ struct RozkladHeaderView: View {
             HStack {
                 RozkladWeekPicker(
                     displayedWeek: RozkladWeekPicker.Week(rawValue: store.currentLessonDay.week) ?? .first,
-                    currentWeek: .second,
+                    currentWeek: .second, // TODO: Week
                     selectWeek: {
-                        store.send(.view(.selectWeekButtonTapped($0.rawValue)))
+                        send(
+                            .selectWeekButtonTapped($0.rawValue),
+                            animation: .default
+                        )
                     }
                 )
             }
             
             RozkladDayPicker(
                 displayedDay: RozkladDayPicker.Day(rawValue: store.currentLessonDay.day) ?? .monday,
-                currentDay: .thursday,
+                currentDay: .thursday, // TODO: Week
                 selectDay: {
-                    store.send(.view(.selectDayButtonTapped($0.rawValue)))
+                    send(
+                        .selectDayButtonTapped($0.rawValue),
+                        animation: .default
+                    )
                 }
             )
         }
-
     }
 }
 

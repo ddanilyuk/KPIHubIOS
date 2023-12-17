@@ -19,7 +19,7 @@ public struct RozkladHeaderFeature: Reducer {
         }
     }
     
-    public enum Action {
+    public enum Action: ViewAction {
         case view(View)
         case output(Output)
         
