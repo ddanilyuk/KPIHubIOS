@@ -15,7 +15,11 @@ public struct RozkladFeature: Reducer {
     public struct State: Equatable {
         public var lessons: IdentifiedArrayOf<RozkladLessonModel>
         public var rows: IdentifiedArrayOf<RozkladRowProviderFeature.State>
-        public var lessonDay: LessonDay?
+        public var selectedID: String?
+        public var header: RozkladHeaderFeature.State = .init(currentLessonDay: nil)
+        
+//        public var lessonDay: LessonDay? {
+//        }
         
         public init() {
             @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
@@ -23,9 +27,9 @@ public struct RozkladFeature: Reducer {
             let models = rozkladServiceLessons.currentLessons().map { RozkladLessonModel(lesson: $0) }
             lessons = IdentifiedArray(uniqueElements: models)
             
-            let array = models.enumerated().map { index, lesson in
-                RozkladLessonFeature.State(lesson: lesson, status: index == 1 ? .current : .idle)
-            }
+//            let array = models.enumerated().map { index, lesson in
+//                RozkladLessonFeature.State(lesson: lesson, status: index == 1 ? .current : .idle)
+//            }
             
             let result: [RozkladRowProviderFeature.State] = models.reduce(into: []) { partialResult, lesson in
                 if let last = partialResult.last, last.lessonDay.day == lesson.day && last.lessonDay.week == lesson.week {
@@ -55,6 +59,8 @@ public struct RozkladFeature: Reducer {
         public enum View: BindableAction {
             case binding(BindingAction<State>)
             case profileButtonTapped
+            case currentIDChanged(String?)
+            case header(RozkladHeaderFeature.Action)
             case rows(IdentifiedActionOf<RozkladRowProviderFeature>)
         }
         
@@ -72,6 +78,10 @@ public struct RozkladFeature: Reducer {
     
     public var body: some ReducerOf<Self> {
         BindingReducer(action: \.view)
+        
+        Scope(state: \.header, action: \.view.header) {
+            RozkladHeaderFeature()
+        }
         
         Reduce { state, action in
             switch action {
@@ -101,6 +111,18 @@ extension RozkladFeature {
         case .profileButtonTapped:
             return .send(.output(.openProfile))
             
+        case let .currentIDChanged(id):
+            state.selectedID = id
+            if let id, let row = state.rows[id: id] {
+                state.header = .init(currentLessonDay: row.lessonDay)
+            } else {
+                state.header = .init(currentLessonDay: nil)
+            }
+            return .none
+            
+        case let .header(headerAction):
+            return handleHeaderAction(state: &state, action: headerAction)
+            
         case .binding:
             print("!!! binding")
             return .none
@@ -123,6 +145,39 @@ extension RozkladFeature {
             }
             
         case .element:
+            return .none
+        }
+    }
+    
+    private func handleHeaderAction(
+        state: inout State,
+        action: RozkladHeaderFeature.Action
+    ) -> Effect<Action> {
+        switch action {
+        case let .output(outputAction):
+            switch outputAction {
+            case let .selectDay(day):
+                let row = state.rows.first(where: { row in
+                    row.lessonDay.day == day && row.lessonDay.week == state.header.currentLessonDay.week
+                })
+                guard let row else {
+                    return .none
+                }
+                state.selectedID = row.id
+                return .none
+                
+            case let .selectWeek(week):
+                let row = state.rows.first(where: { row in
+                    row.lessonDay.day == state.header.currentLessonDay.day && row.lessonDay.week == week
+                })
+                guard let row else {
+                    return .none
+                }
+                state.selectedID = row.id
+                return .none
+            }
+            
+        default:
             return .none
         }
     }

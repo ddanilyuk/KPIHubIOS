@@ -60,6 +60,10 @@ public struct LessonDay: Equatable, Hashable {
     public let day: Int
     public let week: Int
     
+    public var debugDescription: String {
+        "Week: \(week) | Day: \(day)"
+    }
+    
     public init(day: Int, week: Int) {
         self.day = day
         self.week = week
