@@ -31,7 +31,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         Store(initialState: AppFeature.State()) {
             AppFeature()
         } withDependencies: { dependencies in
-            dependencies.rozkladServiceState = .mock()
+//            dependencies.rozkladServiceState = .mock()
         }
     }()
     

@@ -48,14 +48,9 @@ struct RozkladView: View {
 private struct IDHolder: ViewModifier {
     @Binding var id: String?
     
-//    var onChange: (String?) -> Void
-    
     func body(content: Content) -> some View {
         content
             .scrollPosition(id: $id, anchor: .top)
-            .onChange(of: id) { _, newValue in
-                print("!! ID change: \(newValue)")
-            }
     }
 }
 
