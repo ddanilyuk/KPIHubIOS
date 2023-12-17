@@ -81,16 +81,16 @@ struct LessonDetailsView: View {
 //        .background(Color.screenBackground)
         .alert($store.scope(state: \.destination?.alert, action: \.destination.alert))
         // TODO: Generic destination?
-//        .sheet(
-//            item: $store.scope(
-//                state: \.destination?.editLessonNames,
-//                action: \.destination.editLessonNames
-//            )
-//        ) { store in
-//            NavigationStack {
-//                EditLessonNamesView(store: store)
-//            }
-//        }
+        .sheet(
+            item: $store.scope(
+                state: \.destination?.editLessonNames,
+                action: \.destination.editLessonNames
+            )
+        ) { store in
+            NavigationStack {
+                EditLessonNamesView(store: store)
+            }
+        }
 //        .sheet(
 //            item: $store.scope(
 //                state: \.destination?.editLessonTeachers,

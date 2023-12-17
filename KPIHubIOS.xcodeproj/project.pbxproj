@@ -50,6 +50,7 @@
 		DB3284FD2ADB2D2B00A8AE26 /* __Snapshots__ in Resources */ = {isa = PBXBuildFile; fileRef = DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */; };
 		DB3284FF2ADB2FE800A8AE26 /* SnapshotHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */; };
 		DB5BBD062ABCDD39003DFCE4 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB5BBD052ABCDD39003DFCE4 /* SnapshotTesting */; };
+		DB6024CF2B2FB028005F4116 /* RozkladServices in Frameworks */ = {isa = PBXBuildFile; productRef = DB6024CE2B2FB028005F4116 /* RozkladServices */; };
 		DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */; };
 		DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */; };
 /* End PBXBuildFile section */
@@ -155,6 +156,7 @@
 				DB24B20C2B2E6149008FB620 /* LessonDetailsFeature in Frameworks */,
 				DB24B1FD2B2E40E6008FB620 /* RozkladFeature in Frameworks */,
 				DB24B2082B2E6149008FB620 /* DesignKit in Frameworks */,
+				DB6024CF2B2FB028005F4116 /* RozkladServices in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,10 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
-				DB2974CF2B2CF83100A439C0 /* AppFlow */,
-				DB2974D82B2CFAC000A439C0 /* MainFlow */,
-				DB24B1F52B2E37F8008FB620 /* RozkladFlow */,
-				DB24B2132B2F1C74008FB620 /* ProfileFlow */,
+				DB6024CD2B2FADBA005F4116 /* Modules */,
 				DB9A2C012B2CEFA4002B2AC8 /* Resources */,
 			);
 			path = KPIHubIOS;
@@ -265,7 +264,6 @@
 				DB24B1F62B2E380E008FB620 /* RozkladFlow.swift */,
 				DB24B1F82B2E3866008FB620 /* RozkladRootFlow.swift */,
 				DB24B1FF2B2E4E71008FB620 /* RozkladLessonView.swift */,
-				DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */,
 				DB24B20D2B2E62ED008FB620 /* RozkladView.swift */,
 			);
 			path = RozkladFlow;
@@ -304,6 +302,26 @@
 				DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */,
 			);
 			path = ci_scripts;
+			sourceTree = "<group>";
+		};
+		DB6024CC2B2FAD94005F4116 /* LessonDetails */ = {
+			isa = PBXGroup;
+			children = (
+				DB24B2012B2E56FC008FB620 /* LessonDetailsView.swift */,
+			);
+			path = LessonDetails;
+			sourceTree = "<group>";
+		};
+		DB6024CD2B2FADBA005F4116 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				DB2974CF2B2CF83100A439C0 /* AppFlow */,
+				DB24B2132B2F1C74008FB620 /* ProfileFlow */,
+				DB6024CC2B2FAD94005F4116 /* LessonDetails */,
+				DB24B1F52B2E37F8008FB620 /* RozkladFlow */,
+				DB2974D82B2CFAC000A439C0 /* MainFlow */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		DB9A2BF92B2CECC6002B2AC8 /* AppConfigs */ = {
@@ -425,6 +443,7 @@
 				DB24B2092B2E6149008FB620 /* GroupPickerFeature */,
 				DB24B20B2B2E6149008FB620 /* LessonDetailsFeature */,
 				DB24B21A2B2F219C008FB620 /* ProfileHomeFeature */,
+				DB6024CE2B2FB028005F4116 /* RozkladServices */,
 			);
 			productName = GenericUniversityHub;
 			productReference = DB24B1C42B2E3098008FB620 /* GenericUniversityHub.app */;
@@ -1649,6 +1668,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		DB6024CE2B2FB028005F4116 /* RozkladServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RozkladServices;
 		};
 		DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -11,14 +11,14 @@ import RozkladModels
 import RozkladServices
 
 @Reducer
-public struct EditLessonTeachers: Reducer {
+public struct EditLessonTeachersFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        let lesson: RozkladLessonModel
-        let teachers: [String]
-        var selected: [String]
+        public let lesson: RozkladLessonModel
+        public let teachers: [String]
+        public var selected: [String]
 
-        init(lesson: RozkladLessonModel) {
+        public init(lesson: RozkladLessonModel) {
             self.lesson = lesson
             self.teachers = lesson.teachers ?? []
             self.selected = lesson.teachers ?? []
@@ -39,6 +39,8 @@ public struct EditLessonTeachers: Reducer {
     @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
     @Dependency(\.dismiss) var dismiss
+    
+    public init() { }
     
     public var body: some ReducerOf<Self> {
         Reduce { state, action in

@@ -121,6 +121,8 @@ let package = Package(
             dependencies: [
                 "Services",
                 "DesignKit",
+                "EditLessonNamesFeature",
+                "EditLessonTeachersFeature",
                 "RozkladModels",
                 "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),

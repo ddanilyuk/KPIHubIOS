@@ -10,16 +10,16 @@ import ComposableArchitecture
 import DesignKit
 import Services // TODO: ?
 
-@ViewAction(for: EditLessonTeachers.self)
-struct EditLessonTeachersView: View {
+@ViewAction(for: EditLessonTeachersFeature.self)
+public struct EditLessonTeachersView: View {
     @Environment(\.colorScheme) private var colorScheme
-    let store: StoreOf<EditLessonTeachers>
+    public let store: StoreOf<EditLessonTeachersFeature>
     
-    init(store: StoreOf<EditLessonTeachers>) {
+    public init(store: StoreOf<EditLessonTeachersFeature>) {
         self.store = store
     }
     
-    var body: some View {
+    public var body: some View {
         content
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -104,10 +104,10 @@ struct EditLessonTeachersView: View {
 // MARK: - Preview
 #Preview {
     EditLessonTeachersView(
-        store: Store(initialState: EditLessonTeachers.State(
-            lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+        store: Store(initialState: EditLessonTeachersFeature.State(
+            lesson: .init(lesson: Lesson(lessonResponse: LessonResponse.mocked[0]))
         )) {
-            EditLessonTeachers()
+            EditLessonTeachersFeature()
         }
     )
 }

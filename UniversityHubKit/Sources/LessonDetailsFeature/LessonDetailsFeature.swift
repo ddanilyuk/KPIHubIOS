@@ -9,6 +9,8 @@ import ComposableArchitecture
 import RozkladModels
 import RozkladServices
 import Services
+@_exported import EditLessonNamesFeature
+@_exported import EditLessonTeachersFeature
 
 @Reducer
 public struct LessonDetailsFeature: Reducer {
@@ -146,18 +148,18 @@ extension LessonDetailsFeature {
             guard state.isEditing else {
                 return .none
             }
-            // state.destination = .editLessonTeachers(
-            //     EditLessonTeachers.State(lesson: state.lesson)
-            // )
+            state.destination = .editLessonTeachers(
+                EditLessonTeachersFeature.State(lesson: state.lesson)
+            )
             return .none
             
         case .editNamesButtonTapped:
             guard state.isEditing else {
                 return .none
             }
-            // state.destination = .editLessonNames(
-            //     EditLessonNames.State(lesson: state.lesson)
-            // )
+            state.destination = .editLessonNames(
+                EditLessonNamesFeature.State(lesson: state.lesson)
+            )
             return .none
         }
     }
@@ -211,11 +213,11 @@ extension LessonDetailsFeature {
                 await dismiss()
             }
             
-        // case .destination(.presented(.editLessonNames)):
-        //     return .none
+         case .presented(.editLessonNames):
+             return .none
 
-        // case .destination(.presented(.editLessonTeachers)):
-        //     return .none
+         case .presented(.editLessonTeachers):
+             return .none
             
         case .dismiss:
             return .none
@@ -229,14 +231,14 @@ extension LessonDetailsFeature {
         @ObservableState
         public enum State: Equatable {
             case alert(AlertState<Action.Alert>)
-//            case editLessonNames(EditLessonNames.State)
-//            case editLessonTeachers(EditLessonTeachers.State)
+            case editLessonNames(EditLessonNamesFeature.State)
+            case editLessonTeachers(EditLessonTeachersFeature.State)
         }
         
         public enum Action: Equatable {
             case alert(Alert)
-//            case editLessonNames(EditLessonNames.Action)
-//            case editLessonTeachers(EditLessonTeachers.Action)
+            case editLessonNames(EditLessonNamesFeature.Action)
+            case editLessonTeachers(EditLessonTeachersFeature.Action)
             
             public enum Alert: Equatable {
                 case deleteLessonConfirm
@@ -244,13 +246,12 @@ extension LessonDetailsFeature {
         }
         
         public var body: some ReducerOf<Self> {
-            EmptyReducer()
-//            Scope(state: \.editLessonNames, action: \.editLessonNames) {
-//                EditLessonNames()
-//            }
-//            Scope(state: \.editLessonTeachers, action: \.editLessonTeachers) {
-//                EditLessonTeachers()
-//            }
+            Scope(state: \.editLessonNames, action: \.editLessonNames) {
+                EditLessonNamesFeature()
+            }
+            Scope(state: \.editLessonTeachers, action: \.editLessonTeachers) {
+                EditLessonTeachersFeature()
+            }
         }
     }
 }

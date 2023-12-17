@@ -6,6 +6,7 @@
 //
 
 import Services
+import RozkladServices
 import Foundation
 
 extension RozkladServiceState {

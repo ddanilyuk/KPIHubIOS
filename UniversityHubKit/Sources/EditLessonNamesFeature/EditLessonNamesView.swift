@@ -7,18 +7,20 @@
 
 import SwiftUI
 import ComposableArchitecture
+import DesignKit
 import Services // TODO: ?
 
-@ViewAction(for: EditLessonNames.self)
-struct EditLessonNamesView: View {
+@ViewAction(for: EditLessonNamesFeature.self)
+public struct EditLessonNamesView: View {
     @Environment(\.colorScheme) private var colorScheme
-    let store: StoreOf<EditLessonNames>
+    @Environment(\.designKit) private var designKit
+    public let store: StoreOf<EditLessonNamesFeature>
 
-    init(store: StoreOf<EditLessonNames>) {
+    public init(store: StoreOf<EditLessonNamesFeature>) {
         self.store = store
     }
 
-    var body: some View {
+    public var body: some View {
         content
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -31,8 +33,7 @@ struct EditLessonNamesView: View {
             }
             .navigationTitle("Редагувати назву")
             .navigationBarTitleDisplayMode(.inline)
-        // TODO: assets
-//            .background(Color.screenBackground)
+            .background(designKit.backgroundColor)
             .onAppear {
                 send(.onAppear)
             }
@@ -100,10 +101,10 @@ struct EditLessonNamesView: View {
 // MARK: - Preview
 #Preview {
     EditLessonNamesView(
-        store: Store(initialState: EditLessonNames.State(
-            lesson: Lesson(lessonResponse: LessonResponse.mocked[0])
+        store: Store(initialState: EditLessonNamesFeature.State(
+            lesson: .init(lesson: Lesson(lessonResponse: LessonResponse.mocked[0]))
         )) {
-            EditLessonNames()
+            EditLessonNamesFeature()
         }
     )
 }
