@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import RozkladKit
+import CampusFeature
 
 @Reducer
 struct MainFlow: Reducer {
@@ -14,20 +15,20 @@ struct MainFlow: Reducer {
     struct State: Equatable {
         var selectedTab: Tab
         var rozklad: RozkladFlow.State
-//        var campus: Campus.State
+        var campus: Campus.State
         var profile: ProfileFlow.State
         
         init() {
             selectedTab = .rozklad
             rozklad = RozkladFlow.State()
-//            campus = Campus.State()
+            campus = Campus.State()
             profile = ProfileFlow.State()
         }
     }
     
     enum Action: Equatable, BindableAction, ViewAction {
         case rozklad(RozkladFlow.Action)
-//        case campus(Campus.Action)
+        case campus(Campus.Action)
         case profile(ProfileFlow.Action)
         
         case binding(BindingAction<State>)
@@ -61,8 +62,8 @@ struct MainFlow: Reducer {
             case .rozklad:
                 return .none
                 
-//            case .campus:
-//                return .none
+            case .campus:
+                return .none
 //                
             case .profile:
                 return .none
@@ -75,9 +76,9 @@ struct MainFlow: Reducer {
         Scope(state: \.rozklad, action: \.rozklad) {
             RozkladFlow()
         }
-//        Scope(state: \.campus, action: \.campus) {
-//            Campus()
-//        }
+        Scope(state: \.campus, action: \.campus) {
+            Campus()
+        }
         Scope(state: \.profile, action: \.profile) {
             ProfileFlow()
         }

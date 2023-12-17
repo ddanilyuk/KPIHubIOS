@@ -8,14 +8,14 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct CampusFlowCoordinatorView: View {
+public struct CampusFlowCoordinatorView: View {
     private let store: StoreOf<Campus>
 
-    init(store: StoreOf<Campus>) {
+    public init(store: StoreOf<Campus>) {
         self.store = store
     }
 
-    var body: some View {
+    public var body: some View {
         Color.green
 //        NavigationStackStore(
 //            store.scope(state: \.path, action: Campus.Action.path),

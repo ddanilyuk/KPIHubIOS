@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import CampusFeature
 
 @ViewAction(for: MainFlow.self)
 struct MainFlowView: View {
@@ -33,19 +34,19 @@ struct MainFlowView: View {
             }
             .tag(MainFlow.Tab.rozklad)
             
-//            CampusFlowCoordinatorView(
-//                store: store.scope(
-//                    state: \.campus,
-//                    action: \.campus
-//                )
-//            )
-//            .tabItem {
-//                VStack {
-//                    Image(systemName: "graduationcap")
-//                    Text("Кампус")
-//                }
-//            }
-//            .tag(MainFlow.Tab.campus)
+            CampusFlowCoordinatorView(
+                store: store.scope(
+                    state: \.campus,
+                    action: \.campus
+                )
+            )
+            .tabItem {
+                VStack {
+                    Image(systemName: "graduationcap")
+                    Text("Кампус")
+                }
+            }
+            .tag(MainFlow.Tab.campus)
 //            
             ProfileFlowView(
                 store: store.scope(

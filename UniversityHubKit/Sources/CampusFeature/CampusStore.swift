@@ -14,6 +14,8 @@ public struct Campus: Reducer {
     public struct State: Equatable {
         var campusRoot: CampusRoot.State?
         var path = StackState<Path.State>()
+        
+        public init() { }
     }
     
     public enum Action: Equatable {
@@ -26,6 +28,8 @@ public struct Campus: Reducer {
     
     @Dependency(\.campusClientState) var campusClientState
     @Dependency(\.campusServiceStudySheet) var campusServiceStudySheet
+    
+    public init() { }
     
     var core: some ReducerOf<Self> {
         Reduce { state, action in
@@ -48,11 +52,11 @@ public struct Campus: Reducer {
                 updateCampusState(with: campusState, state: &state)
                 return .none
                 
-            case .campusRoot(.campusLogin(.route(.done))):
-                campusClientState.commit()
-                return .run { _ in
-                    await campusServiceStudySheet.load()
-                }
+//            case .campusRoot(.campusLogin(.route(.done))):
+//                campusClientState.commit()
+//                return .run { _ in
+//                    await campusServiceStudySheet.load()
+//                }
                 
             case let .campusRoot(.campusHome(.routeAction(.studySheet(items)))):
                 let studySheetState = StudySheet.State(items: items)
@@ -86,7 +90,8 @@ public struct Campus: Reducer {
     private func updateCampusState(with campusState: CampusServiceState.State, state: inout State) {
         switch campusState {
         case .loggedOut:
-            state.campusRoot = .campusLogin(CampusLoginFeature.State(mode: .onlyCampus))
+            break
+//            state.campusRoot = .campusLogin(CampusLoginFeature.State(mode: .onlyCampus))
 
         case .loggedIn:
             state.campusRoot = .campusHome(CampusHome.State())
@@ -103,19 +108,19 @@ extension Campus {
 
 public struct CampusRoot: Reducer {
     public enum State: Equatable {
-        case campusLogin(CampusLoginFeature.State)
+//        case campusLogin(CampusLoginFeature.State)
         case campusHome(CampusHome.State)
     }
     
     public enum Action: Equatable {
-        case campusLogin(CampusLoginFeature.Action)
+//        case campusLogin(CampusLoginFeature.Action)
         case campusHome(CampusHome.Action)
     }
 
     public var body: some ReducerOf<Self> {
-        Scope(state: /State.campusLogin, action: /Action.campusLogin) {
-            CampusLoginFeature()
-        }
+//        Scope(state: /State.campusLogin, action: /Action.campusLogin) {
+//            CampusLoginFeature()
+//        }
         Scope(state: /State.campusHome, action: /Action.campusHome) {
             CampusHome()
         }
@@ -129,12 +134,12 @@ struct CampusRootView: View {
     var body: some View {
         SwitchStore(store) { state in
             switch state {
-            case .campusLogin:
-                CaseLet(
-                    /CampusRoot.State.campusLogin,
-                    action: CampusRoot.Action.campusLogin,
-                    then: CampusLoginView.init(store:)
-                )
+//            case .campusLogin:
+//                CaseLet(
+//                    /CampusRoot.State.campusLogin,
+//                    action: CampusRoot.Action.campusLogin,
+//                    then: CampusLoginView.init(store:)
+//                )
                 
             case .campusHome:
                 CaseLet(
