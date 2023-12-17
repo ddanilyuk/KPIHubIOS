@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import RozkladModels
+import RozkladServices
 import Services
 
 @Reducer
@@ -101,8 +102,7 @@ extension LessonDetailsFeature {
                         guard let lesson = lessons[id: lessonID] else {
                             continue
                         }
-                        let some = RozkladLessonModel(lesson: lesson)
-                        await send(.local(.updateLesson(some)))
+                        await send(.local(.updateLesson(lesson)))
                     }
                 },
                 .run { send in
@@ -205,7 +205,7 @@ extension LessonDetailsFeature {
         case .presented(.alert(.deleteLessonConfirm)):
             var lessons = rozkladServiceLessons.currentLessons()
             lessons.remove(id: state.lesson.id)
-            rozkladServiceLessons.set(ClientValue<[Lesson]>(lessons.elements, commitChanges: true))
+            rozkladServiceLessons.set(ClientValue<[RozkladLessonModel]>(lessons.elements, commitChanges: true))
             analyticsService.track(Event.LessonDetails.removeLessonApply)
             return .run { _ in
                 await dismiss()

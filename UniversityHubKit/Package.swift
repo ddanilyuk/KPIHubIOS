@@ -41,6 +41,12 @@ let package = Package(
             name: "DesignKit",
             targets: ["DesignKit"]
         ),
+        .library(
+            name: "RozkladServices",
+            targets: ["RozkladServices"]
+        ),
+
+        
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "observation-beta"),
@@ -66,6 +72,7 @@ let package = Package(
             dependencies: [
                 "Services",
                 "DesignKit",
+                "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -90,6 +97,16 @@ let package = Package(
             ]
         ),
         .target(
+            name: "RozkladServices",
+            dependencies: [
+                "Services",
+                "RozkladModels",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+//                .product(name: "Routes", package: "KPIHubServer"),
+            ]
+        ),
+
+        .target(
             name: "ProfileHomeFeature",
             dependencies: [
                 "Services",
@@ -101,6 +118,25 @@ let package = Package(
         ),
         .target(
             name: "LessonDetailsFeature",
+            dependencies: [
+                "Services",
+                "DesignKit",
+                "RozkladModels",
+                "RozkladServices",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "EditLessonNamesFeature",
+            dependencies: [
+                "Services",
+                "DesignKit",
+                "RozkladModels",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "EditLessonTeachersFeature",
             dependencies: [
                 "Services",
                 "DesignKit",

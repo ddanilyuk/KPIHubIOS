@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import RozkladModels
+import RozkladServices
 import Services
 
 @Reducer
@@ -24,7 +25,7 @@ public struct RozkladFeature: Reducer {
         public init() {
             @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
             
-            let models = rozkladServiceLessons.currentLessons().map { RozkladLessonModel(lesson: $0) }
+            let models = rozkladServiceLessons.currentLessons()
             lessons = IdentifiedArray(uniqueElements: models)
             
 //            let array = models.enumerated().map { index, lesson in

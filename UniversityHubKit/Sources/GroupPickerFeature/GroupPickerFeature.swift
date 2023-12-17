@@ -7,6 +7,8 @@
 
 import ComposableArchitecture
 import Services
+import RozkladServices
+import RozkladModels
 
 @Reducer
 public struct GroupPickerFeature: Reducer {
@@ -38,7 +40,7 @@ public struct GroupPickerFeature: Reducer {
         
         public enum Local {
             case allGroupsResult(Result<[GroupResponse], Error>)
-            case lessonsResult(Result<[Lesson], Error>)
+            case lessonsResult(Result<[RozkladLessonModel], Error>)
         }
         
         public enum Alert: Equatable { }
@@ -166,7 +168,7 @@ private extension GroupPickerFeature {
     func getLessons(for group: GroupResponse) -> Effect<Action> {
         .run { send in
             let result = await Result {
-                try await rozkladServiceLessons.getLessons(group: group)
+                try await rozkladServiceLessons.getLessons(groupID: group.id)
             }
             // Make keyboard hide to prevent tabBar opacity bugs
             try await Task.sleep(for: .milliseconds(300))

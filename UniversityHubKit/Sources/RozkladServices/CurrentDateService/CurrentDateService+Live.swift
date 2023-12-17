@@ -11,6 +11,7 @@ import Combine
 import UIKit
 import IdentifiedCollections
 import Extensions
+import Services // TODO: Don't need here
 
 extension CurrentDateService {
     static func live() -> CurrentDateService {
@@ -76,16 +77,16 @@ private extension CurrentDateService {
             currentWeekSubject.value = currentWeek
 
             let currentLessons = rozkladServiceLessons.currentLessons()
-            if !currentLessons.isEmpty {
-                let (currentLesson, nextLesson) = currentAndNextLesson(
-                    lessons: currentLessons,
-                    currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
-                    currentWeek: currentWeek,
-                    currentDay: currentDay
-                )
-                currentLessonSubject.value = currentLesson
-                nextLessonIDSubject.value = nextLesson.id
-            }
+//            if !currentLessons.isEmpty {
+//                let (currentLesson, nextLesson) = currentAndNextLesson(
+//                    lessons: currentLessons,
+//                    currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
+//                    currentWeek: currentWeek,
+//                    currentDay: currentDay
+//                )
+//                currentLessonSubject.value = currentLesson
+//                nextLessonIDSubject.value = nextLesson.id
+//            }
 
             updatedSubject.send(Date())
         }
@@ -129,50 +130,50 @@ private extension CurrentDateService {
             return (dayNumber: dayNumber, weekNumber: weekNumber)
         }
 
-        private func currentAndNextLesson(
-            lessons: IdentifiedArrayOf<Lesson>,
-            currentTimeFromDayStart: Int,
-            currentWeek: Lesson.Week,
-            currentDay: Lesson.Day?
-        ) -> (current: CurrentLesson?, next: Lesson) {
-            guard let currentDay else {
-                return (
-                    current: nil,
-                    next: lessons.first(where: { $0.week == currentWeek.toggled() }) ?? lessons[0]
-                )
-            }
-
-            for lesson in lessons {
-                guard lesson.week == currentWeek else {
-                    continue
-                }
-                switch lesson.day {
-                case currentDay:
-                    switch lesson.position {
-                    case let position where position.range.contains(currentTimeFromDayStart):
-                        let difference = CGFloat(currentTimeFromDayStart - position.minutesFromDayStart)
-                        let percent = difference / CGFloat(Lesson.Position.lessonDuration)
-                        return (
-                            current: CurrentLesson(lessonID: lesson.id, percent: percent),
-                            next: lessons[safe: lessons.index(id: lesson.id)! + 1] ?? lessons[0]
-                        )
-
-                    case let position where position.minutesFromDayStartEnd > currentTimeFromDayStart:
-                        return (current: nil, next: lesson)
-
-                    default:
-                        continue
-                    }
-
-                case let lessonDay where lessonDay > currentDay:
-                    return (current: nil, next: lesson)
-
-                default:
-                    continue
-                }
-            }
-            return (current: nil, next: lessons[0])
-        }
+//        private func currentAndNextLesson(
+//            lessons: IdentifiedArrayOf<Lesson>,
+//            currentTimeFromDayStart: Int,
+//            currentWeek: Lesson.Week,
+//            currentDay: Lesson.Day?
+//        ) -> (current: CurrentLesson?, next: Lesson) {
+//            guard let currentDay else {
+//                return (
+//                    current: nil,
+//                    next: lessons.first(where: { $0.week == currentWeek.toggled() }) ?? lessons[0]
+//                )
+//            }
+//
+//            for lesson in lessons {
+//                guard lesson.week == currentWeek else {
+//                    continue
+//                }
+//                switch lesson.day {
+//                case currentDay:
+//                    switch lesson.position {
+//                    case let position where position.range.contains(currentTimeFromDayStart):
+//                        let difference = CGFloat(currentTimeFromDayStart - position.minutesFromDayStart)
+//                        let percent = difference / CGFloat(Lesson.Position.lessonDuration)
+//                        return (
+//                            current: CurrentLesson(lessonID: lesson.id, percent: percent),
+//                            next: lessons[safe: lessons.index(id: lesson.id)! + 1] ?? lessons[0]
+//                        )
+//
+//                    case let position where position.minutesFromDayStartEnd > currentTimeFromDayStart:
+//                        return (current: nil, next: lesson)
+//
+//                    default:
+//                        continue
+//                    }
+//
+//                case let lessonDay where lessonDay > currentDay:
+//                    return (current: nil, next: lesson)
+//
+//                default:
+//                    continue
+//                }
+//            }
+//            return (current: nil, next: lessons[0])
+//        }
 
         private func currentTimeFromDayStart(calendar: Calendar, date: Date) -> Int {
             let components = calendar.dateComponents(

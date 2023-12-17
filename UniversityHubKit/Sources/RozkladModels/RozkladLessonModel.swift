@@ -27,6 +27,8 @@ public struct RozkladLessonModel: Identifiable, Equatable {
     }
 }
 
+extension RozkladLessonModel: Codable { }
+
 public enum RozkladLessonMode: Equatable {
     case current(Double)
     case next

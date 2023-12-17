@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 import Services
+import RozkladModels
 
 @Reducer
 public struct ProfileHomeFeature: Reducer {
@@ -33,7 +34,7 @@ public struct ProfileHomeFeature: Reducer {
         case rozklad(ProfileHomeRozkladFeature.Action)
         case setCampusState(CampusServiceState.State)
         
-        case lessonsResult(TaskResult<[Lesson]>)
+        case lessonsResult(TaskResult<[RozkladLessonModel]>)
         
         case destination(PresentationAction<Destination.Action>)
         case view(View)

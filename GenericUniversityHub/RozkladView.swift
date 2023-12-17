@@ -37,7 +37,7 @@ struct RozkladView: View {
             }
             .modifier(
                 IDHolder(id: $store.selectedID.sending(\.view.currentIDChanged))
-                )
+            )
 //            .scrollPosition(id: $id, anchor: .top)
             .background(designKit.backgroundColor)
         }
@@ -219,4 +219,3 @@ struct RozkladDayPicker: View {
             }
     }
 }
-

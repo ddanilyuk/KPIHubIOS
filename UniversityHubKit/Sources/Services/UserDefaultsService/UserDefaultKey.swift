@@ -9,9 +9,13 @@ import IdentifiedCollections
 import Foundation
 
 public struct UserDefaultKey<T: Codable> {
-    var key: String
+    public var key: String
+    
+    public init(key: String) {
+        self.key = key
+    }
 
-    init(key: String = #function) {
+    public init(_ key: String = #function) {
         self.key = key
     }
 }
@@ -19,7 +23,7 @@ public struct UserDefaultKey<T: Codable> {
 extension UserDefaultKey {
     public static var groupResponse: UserDefaultKey<GroupResponse> { .init() }
 
-    public static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> { .init() }
+//    public static var lessons: UserDefaultKey<IdentifiedArrayOf<Lesson>> { .init() }
 
     public static var lessonsUpdatedAt: UserDefaultKey<Date> { .init() }
 

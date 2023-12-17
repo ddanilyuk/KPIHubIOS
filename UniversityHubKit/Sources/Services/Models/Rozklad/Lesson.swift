@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Extensions
 
 public struct Lesson {
     public var names: [String]

@@ -1,28 +1,30 @@
 //
-//  EditLessonTeachersStore.swift
-//  KPIHubIOS
+//  EditLessonNamesFeature.swift
+//
 //
 //  Created by Denys Danyliuk on 06.06.2022.
 //
 
 import ComposableArchitecture
+import RozkladModels
+import RozkladServices
 import Services
 
 @Reducer
-public struct EditLessonTeachers: Reducer {
+public struct EditLessonNamesFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        let lesson: Lesson
-        let teachers: [String]
-        var selected: [String]
+        public let lesson: RozkladLessonModel
+        public let names: [String]
+        public var selected: [String]
 
-        init(lesson: Lesson) {
+        public init(lesson: RozkladLessonModel) {
             self.lesson = lesson
-            self.teachers = lesson.lessonResponse.teachers ?? []
-            self.selected = lesson.teachers ?? []
+            self.names = lesson.names
+            self.selected = lesson.names
         }
     }
-    
+
     public enum Action: Equatable, ViewAction {
         case view(View)
         
@@ -30,7 +32,7 @@ public struct EditLessonTeachers: Reducer {
             case onAppear
             case saveButtonTapped
             case cancelButtonTapped
-            case toggleLessonTeacherTapped(name: String)
+            case toggleLessonNameTapped(name: String)
         }
     }
     
@@ -38,18 +40,20 @@ public struct EditLessonTeachers: Reducer {
     @Dependency(\.analyticsService) var analyticsService
     @Dependency(\.dismiss) var dismiss
     
+    public init() { }
+
     public var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .view(.onAppear):
-                analyticsService.track(Event.LessonDetails.editTeachersAppeared)
+                analyticsService.track(Event.LessonDetails.editNamesAppeared)
                 return .none
-
+                
             case .view(.saveButtonTapped):
                 var newLesson = state.lesson
-                newLesson.teachers = state.selected
+                newLesson.names = state.selected
                 rozkladServiceLessons.modify(.init(newLesson, commitChanges: true))
-                analyticsService.track(Event.LessonDetails.editTeachersApply)
+                analyticsService.track(Event.LessonDetails.editNamesApply)
                 return .run { _ in
                     await dismiss()
                 }
@@ -59,13 +63,13 @@ public struct EditLessonTeachers: Reducer {
                     await dismiss()
                 }
 
-            case let .view(.toggleLessonTeacherTapped(element)):
-                if let index = state.selected.firstIndex(of: element) {
+            case let .view(.toggleLessonNameTapped(name)):
+                if let index = state.selected.firstIndex(of: name) {
                     if state.selected.count > 1 {
                         state.selected.remove(at: index)
                     }
                 } else {
-                    state.selected.append(element)
+                    state.selected.append(name)
                 }
                 return .none
             }

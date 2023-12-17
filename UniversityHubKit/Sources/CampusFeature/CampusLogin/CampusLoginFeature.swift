@@ -49,8 +49,8 @@ public struct CampusLoginFeature: Reducer {
     
     @Dependency(\.apiService) var apiClient
     @Dependency(\.campusClientState) var campusClientState
-    @Dependency(\.rozkladServiceState) var rozkladServiceState
-    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
+//    @Dependency(\.rozkladServiceState) var rozkladServiceState
+//    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     @Dependency(\.analyticsService) var analyticsService
     
     public var body: some ReducerOf<Self> {
@@ -93,7 +93,8 @@ public struct CampusLoginFeature: Reducer {
                 return getLesson(for: group)
                 
             case let .lessonsResult(.success(lessons)):
-                rozkladServiceLessons.set(.init(lessons, commitChanges: true))
+                // TODO:
+//                rozkladServiceLessons.set(.init(lessons, commitChanges: true))
                 analyticsService.track(Event.Rozklad.lessonsLoadSuccess(place: .campus))
                 return .send(.route(.done))
 
@@ -209,7 +210,8 @@ extension CampusLoginFeature {
                     as: LessonsResponse.self
                 )
             }
-            rozkladServiceState.setState(ClientValue(.selected(group), commitChanges: false))
+            // TODO: Fix
+//            rozkladServiceState.setState(ClientValue(.selected(group), commitChanges: false))
             let lessons = resultTask.map { $0.value.lessons.map(Lesson.init) }
             await send(.lessonsResult(lessons))
         }
