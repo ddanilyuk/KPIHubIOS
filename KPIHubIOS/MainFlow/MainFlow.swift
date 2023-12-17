@@ -15,20 +15,20 @@ struct MainFlow: Reducer {
         var selectedTab: Tab
         var rozklad: RozkladFlow.State
 //        var campus: Campus.State
-//        var profile: Profile.State
+        var profile: ProfileFlow.State
         
         init() {
             selectedTab = .rozklad
             rozklad = RozkladFlow.State()
 //            campus = Campus.State()
-//            profile = Profile.State()
+            profile = ProfileFlow.State()
         }
     }
     
     enum Action: Equatable, BindableAction, ViewAction {
         case rozklad(RozkladFlow.Action)
 //        case campus(Campus.Action)
-//        case profile(Profile.Action)
+        case profile(ProfileFlow.Action)
         
         case binding(BindingAction<State>)
         case view(View)
@@ -64,8 +64,8 @@ struct MainFlow: Reducer {
 //            case .campus:
 //                return .none
 //                
-//            case .profile:
-//                return .none
+            case .profile:
+                return .none
             }
         }
     }
@@ -78,9 +78,9 @@ struct MainFlow: Reducer {
 //        Scope(state: \.campus, action: \.campus) {
 //            Campus()
 //        }
-//        Scope(state: \.profile, action: \.profile) {
-//            Profile()
-//        }
+        Scope(state: \.profile, action: \.profile) {
+            ProfileFlow()
+        }
         core
     }
 }

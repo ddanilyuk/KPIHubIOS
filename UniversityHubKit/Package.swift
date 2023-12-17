@@ -30,6 +30,10 @@ let package = Package(
             targets: ["LessonDetailsFeature"]
         ),
         .library(
+            name: "ProfileHomeFeature",
+            targets: ["ProfileHomeFeature"]
+        ),
+        .library(
             name: "DesignKit",
             targets: ["DesignKit"]
         ),
@@ -65,6 +69,16 @@ let package = Package(
         ),
         .target(
             name: "RozkladFeature",
+            dependencies: [
+                "Services",
+                "DesignKit",
+                "RozkladModels",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+//                .product(name: "Routes", package: "KPIHubServer"),
+            ]
+        ),
+        .target(
+            name: "ProfileHomeFeature",
             dependencies: [
                 "Services",
                 "DesignKit",

@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct ProfileSectionView<Content: View>: View {
+public struct ProfileSectionView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
 
     let title: String
     let content: Content
 
-    init(
+    public init(
         title: String,
         @ViewBuilder content: () -> Content
     ) {
@@ -21,7 +21,7 @@ struct ProfileSectionView<Content: View>: View {
         self.content = content()
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
                 .fill(colorScheme == .light ? Color.white : Color(.tertiarySystemFill))

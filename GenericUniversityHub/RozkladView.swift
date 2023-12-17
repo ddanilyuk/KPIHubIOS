@@ -43,6 +43,5 @@ public struct RozkladView<Cell: View>: View {
                     }
             }
         }
-//        .toolbar(.automatic, for: .navigationBar)
     }
 }

@@ -125,7 +125,7 @@ struct RozkladFlow: Reducer {
                 return .none
                 
             case .openProfile:
-                state.destination = .profile(ProfileFeature.State())
+                state.destination = .profile(ProfileFlow.State())
                 return .none
             }
             
@@ -172,16 +172,16 @@ extension RozkladFlow {
     public struct Destination: Reducer {
         @ObservableState
         public enum State: Equatable {
-            case profile(ProfileFeature.State)
+            case profile(ProfileFlow.State)
         }
         
         public enum Action: Equatable {
-            case profile(ProfileFeature.Action)
+            case profile(ProfileFlow.Action)
         }
         
         public var body: some ReducerOf<Self> {
             Scope(state: \.profile, action: \.profile) {
-                ProfileFeature()
+                ProfileFlow()
             }
         }
     }
@@ -212,7 +212,7 @@ struct RozkladFlowView: View {
                         action: \.destination.profile
                     )
                 ) { store in
-                    ProfileView(store: store)
+                    ProfileFlowView(store: store)
                 }
             },
             destination: { store in

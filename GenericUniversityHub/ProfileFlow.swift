@@ -1,20 +1,88 @@
 //
-//  RozkladSectionView.swift
-//  KPIHubIOS
+//  ProfileFlow.swift
+//  GenericUniversityHub
 //
-//  Created by Denys Danyliuk on 07.06.2022.
+//  Created by Denys Danyliuk on 17.12.2023.
 //
+
+import ComposableArchitecture
+import ProfileHomeFeature
+
+@Reducer
+struct ProfileFlow: Reducer {
+    @ObservableState
+    struct State: Equatable {
+        var profileHome: ProfileHomeFeature.State
+//        var path = StackState<Path.State>()
+        
+        init() {
+            profileHome = ProfileHomeFeature.State(rozklad: .init(
+                rozkladState: .selected(
+                    GroupResponse(
+                        id: UUID(),
+                        name: "ІВ-82",
+                        faculty: "ФІОТ"
+                    )
+                )
+            ))
+        }
+    }
+    
+    enum Action: Equatable {
+        case onSetup
+        
+        case profileHome(ProfileHomeFeature.Action)
+//        case path(StackAction<Path.State, Path.Action>)
+    }
+    
+    var body: some ReducerOf<Self> {
+        Reduce { state, action in
+            switch action {
+            case .onSetup:
+                return .none
+                
+            case .profileHome:
+                return .none
+            }
+        }
+    }
+}
 
 import SwiftUI
-import ComposableArchitecture
-import Services // TODO: ?
 import DesignKit
+import Services // TODO: Fix
 
-@ViewAction(for: ProfileHome.self)
-struct RozkladSectionView: View {
-    @Bindable var store: StoreOf<ProfileHome>
+struct ProfileFlowView: View {
+    let store: StoreOf<ProfileFlow>
     
-    init(store: StoreOf<ProfileHome>) {
+    var body: some View {
+        NavigationStack {
+            ProfileHomeView(store: store.scope(state: \.profileHome, action: \.profileHome))
+                .navigationTitle("Профіль")
+        }
+    }
+}
+
+
+struct ProfileHomeView: View {
+    let store: StoreOf<ProfileHomeFeature>
+    @Environment(\.designKit) var designKit
+
+    var body: some View {
+        ScrollView {
+            ProfileHomeRozkladView(store: store.scope(state: \.rozklad, action: \.rozklad))
+                .background(designKit.backgroundColor)
+            
+            Spacer()
+        }
+    }
+}
+
+@ViewAction(for: ProfileHomeRozkladFeature.self)
+struct ProfileHomeRozkladView: View {
+    @Bindable var store: StoreOf<ProfileHomeRozkladFeature>
+    
+    init(store: StoreOf<ProfileHomeRozkladFeature>) {
         self.store = store
     }
 
@@ -31,6 +99,9 @@ struct RozkladSectionView: View {
                 }
             }
         )
+        .onAppear {
+            send(.onAppear)
+        }
     }
 
     func selectedView(with group: GroupResponse) -> some View {
@@ -136,43 +207,4 @@ struct RozkladSectionView: View {
             )
         }
     }
-}
-
-// MARK: - Preview
-#Preview {
-    RozkladSectionView(
-        store: Store(initialState: ProfileHome.State(
-            rozkladState: .notSelected,
-            lessonsUpdatedAtDate: Date(),
-            toggleWeek: true
-        )) {
-            ProfileHome()
-        }
-    )
-    .smallPreview
-    .padding(16)
-    // TODO: asset
-//    .background(Color.screenBackground)
-}
-
-#Preview {
-    RozkladSectionView(
-        store: Store(initialState: ProfileHome.State(
-            rozkladState: .selected(
-                GroupResponse(
-                    id: UUID(),
-                    name: "ІВ-82",
-                    faculty: "ФІОТ"
-                )
-            ),
-            lessonsUpdatedAtDate: Date(),
-            toggleWeek: false
-        )) {
-            ProfileHome()
-        }
-    )
-    .smallPreview
-    .padding(16)
-    // TODO: asset
-//    .background(Color.screenBackground)
 }

@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Services
+import DesignKit
 
 @ViewAction(for: ProfileHome.self)
 struct CampusSectionView: View {

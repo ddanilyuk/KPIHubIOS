@@ -47,19 +47,19 @@ struct MainFlowView: View {
 //            }
 //            .tag(MainFlow.Tab.campus)
 //            
-//            ProfileFlowCoordinatorView(
-//                store: store.scope(
-//                    state: \.profile,
-//                    action: \.profile
-//                )
-//            )
-//            .tabItem {
-//                VStack {
-//                    Image(systemName: "person")
-//                    Text("Профіль")
-//                }
-//            }
-//            .tag(MainFlow.Tab.profile)
+            ProfileFlowView(
+                store: store.scope(
+                    state: \.profile,
+                    action: \.profile
+                )
+            )
+            .tabItem {
+                VStack {
+                    Image(systemName: "person")
+                    Text("Профіль")
+                }
+            }
+            .tag(MainFlow.Tab.profile)
         }
         .onAppear {
             send(.onAppear)

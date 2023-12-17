@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
-    enum Value {
+public struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
+    public enum Value {
         case text(String)
         case date(Date?)
         case link(name: String, url: URL)
@@ -21,7 +21,7 @@ struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
 
     var rightView: ButtonContent?
 
-    init(
+    public init(
         title: String,
         value: ProfileCellView<ImageContent, ButtonContent>.Value,
         @ViewBuilder image: () -> ImageContent,
@@ -35,7 +35,7 @@ struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
         self.rightView = rightView()
     }
 
-    init(
+    public init(
         title: String,
         value: ProfileCellView<ImageContent, ButtonContent>.Value,
         @ViewBuilder image: () -> ImageContent,
@@ -47,7 +47,7 @@ struct ProfileCellView<ImageContent: View, ButtonContent: View>: View {
         self.imageBackgroundColor = imageBackgroundColor
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 16) {
             ZStack {
                 Circle()

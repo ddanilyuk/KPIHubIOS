@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import DesignKit
 
 @ViewAction(for: ProfileHome.self)
 struct OtherSectionView: View {
