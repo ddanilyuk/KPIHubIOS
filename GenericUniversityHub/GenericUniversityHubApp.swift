@@ -13,6 +13,9 @@ import DesignKit
 import ComposableArchitecture
 import Services
 
+/// This app represent modularity of UniversityHubKit.
+/// New app for another university can be easily created
+/// using predefined modules and ui complements.
 @main
 struct GenericUniversityHubApp: SwiftUI.App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate

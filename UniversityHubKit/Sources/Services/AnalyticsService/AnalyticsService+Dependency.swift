@@ -10,7 +10,7 @@ import Dependencies
 extension DependencyValues {
     private enum AnalyticsServiceKey: DependencyKey {
         static let liveValue = AnalyticsService.live()
-        static let testValue = AnalyticsService.failing()
+        static let testValue = AnalyticsService()
     }
     
     public var analyticsService: AnalyticsService {

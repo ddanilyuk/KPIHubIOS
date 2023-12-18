@@ -42,15 +42,8 @@
     {
       "target" : {
         "containerPath" : "container:KPIHubIOS.xcodeproj",
-        "identifier" : "5F97B3CA283677C600350368",
-        "name" : "KPIHubIOSTests"
-      }
-    },
-    {
-      "target" : {
-        "containerPath" : "container:KPIHubIOS.xcodeproj",
-        "identifier" : "5F97B3D4283677C600350368",
-        "name" : "KPIHubIOSUITests"
+        "identifier" : "DB7153322B3104FB00A85747",
+        "name" : "KPIHubIOSSnapshotTests"
       }
     }
   ],

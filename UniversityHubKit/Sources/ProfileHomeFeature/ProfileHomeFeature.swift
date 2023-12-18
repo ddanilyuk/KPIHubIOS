@@ -24,7 +24,7 @@ public struct ProfileHomeFeature: Reducer {
         var isLoading = false
         
         public init(
-            rozklad: ProfileHomeRozkladFeature.State = .init(rozkladState: .notSelected)
+            rozklad: ProfileHomeRozkladFeature.State
         ) {
             self.rozklad = rozklad
         }

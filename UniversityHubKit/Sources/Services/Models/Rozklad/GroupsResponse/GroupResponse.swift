@@ -22,3 +22,9 @@ public struct GroupResponse {
 extension GroupResponse: Codable { }
 
 extension GroupResponse: Equatable { }
+
+extension GroupResponse {
+    public static var mock: GroupResponse {
+        GroupResponse(id: UUID(), name: "ІВ-82", faculty: "ФІОТ")
+    }
+}

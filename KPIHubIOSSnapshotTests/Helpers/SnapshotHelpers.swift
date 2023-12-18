@@ -16,12 +16,11 @@ public func assertAllSnapshots<Value: View>(
     testName: String = #function,
     line: UInt = #line
 ) {
-    isRecording = false
     let locales = [Locale(identifier: "en-US"), Locale(identifier: "uk-UA")]
     let configs = [ViewImageConfig.iPhone8, ViewImageConfig.iPhone13, ViewImageConfig.iPhone13ProMax]
     
     createPairs(configs, locales).forEach { config, locale in
-        myAssertSnapshot(
+        assertSnapshot(
             of: value().environment(\.locale, locale),
             as: .image(perceptualPrecision: 0.99, layout: .device(config: config)),
             named: "\(config.description)-\(locale.identifier)",
@@ -29,6 +28,14 @@ public func assertAllSnapshots<Value: View>(
             testName: testName,
             line: line
         )
+//        myAssertSnapshot(
+//            of: value().environment(\.locale, locale),
+//            as: .image(perceptualPrecision: 0.99, layout: .device(config: config)),
+//            named: "\(config.description)-\(locale.identifier)",
+//            file: file,
+//            testName: testName,
+//            line: line
+//        )
     }
 }
 

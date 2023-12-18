@@ -143,6 +143,7 @@ let package = Package(
                 "Services",
                 "DesignKit",
                 "RozkladModels",
+                "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

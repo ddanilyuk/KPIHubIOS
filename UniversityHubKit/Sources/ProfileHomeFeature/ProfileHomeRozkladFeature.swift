@@ -15,7 +15,7 @@ import Foundation
 public struct ProfileHomeRozkladFeature: Reducer {
     @ObservableState
     public struct State: Equatable {
-        public var rozkladState: RozkladServiceState.State = .notSelected
+        public var rozkladState: RozkladServiceState.State
         public var lessonsUpdatedAtDate: Date?
         public var toggleWeek = false
         @Presents public var destination: Destination.State?
