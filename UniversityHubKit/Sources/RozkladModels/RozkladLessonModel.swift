@@ -62,7 +62,7 @@ extension RozkladLessonModel {
         }
         
         public var description: String {
-            "\(hours):\(minutes)"
+            "\(hours):\(String(format: "%02d", minutes))"
         }
     }
     
