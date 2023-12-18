@@ -27,44 +27,16 @@ public struct RozkladFeature: Reducer {
             
             let currentLesson = currentDateService.currentLesson()
             let nextLessonID = currentDateService.nextLessonID()
+            let lessons = rozkladServiceLessons.currentLessons()
             
-            let models = rozkladServiceLessons.currentLessons()
-            lessons = IdentifiedArray(uniqueElements: models)
-            
-            let result: [RozkladRowProviderFeature.State] = models.reduce(into: []) { partialResult, lesson in
-                
-                let status: RozkladLessonFeature.State.Status
-                if let currentLesson, currentLesson.lessonID == lesson.id {
-                    status = .current(currentLesson.percent)
-                } else if let nextLessonID, nextLessonID == lesson.id {
-                    status = .next
-                } else {
-                    status = .idle
-                }
-                
-                if let last = partialResult.last, last.lessonDay.day == lesson.day && last.lessonDay.week == lesson.week {
-                    partialResult.append(
-                        .rozkladLesson(RozkladLessonFeature.State(
-                            lesson: lesson, 
-                            status: status
-                        ))
-                    )
-                } else {
-                    partialResult.append(
-                        .sectionHeader(RozkladSectionHeaderFeature.State(day: lesson.day, week: lesson.week))
-                    )
-                    partialResult.append(
-                        .rozkladLesson(RozkladLessonFeature.State(
-                            lesson: lesson,
-                            status: status
-                        ))
-                    )
-                }
-            }
-            
-            self.rows = IdentifiedArray(uniqueElements: result)
+            self.rows = RozkladFeature.generateRows(
+                lessons: lessons,
+                currentLesson: currentLesson,
+                nextLessonID: nextLessonID
+            )
             self.currentLesson = currentLesson
             self.nextLessonID = nextLessonID
+            self.lessons = lessons
         }
     }
     
@@ -94,6 +66,7 @@ public struct RozkladFeature: Reducer {
     }
     
     @Dependency(\.currentDateService) var currentDateService
+    @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
     
     public init() { }
     
@@ -127,11 +100,13 @@ extension RozkladFeature {
     private func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
         switch action {
         case .onTask:
-            return .run { send in
-                for await _ in currentDateService.updatedStream() {
-                    await send(.local(.updateCurrentAndNextLesson))
+            return .merge(
+                .run { send in
+                    for await _ in currentDateService.updatedStream() {
+                        await send(.local(.updateCurrentAndNextLesson))
+                    }
                 }
-            }
+            )
             
         case let .rows(rowAction):
             return handleViewRowsAction(state: &state, action: rowAction)
@@ -152,7 +127,6 @@ extension RozkladFeature {
             return handleHeaderAction(state: &state, action: headerAction)
             
         case .binding:
-            print("!!! binding")
             return .none
         }
     }
@@ -165,11 +139,13 @@ extension RozkladFeature {
         case let .element(id, .rozkladLesson(.output(outputAction))):
             switch outputAction {
             case .openLesson:
-                // TODO: Fix
-                guard let model = state.lessons[id: Int(id) ?? 0] else {
+                guard
+                    let row = state.rows[id: id],
+                    let lesson = row.rozkladLesson?.lesson
+                else {
                     return .none
                 }
-                return .send(.output(.openLessonDetails(model)))
+                return .send(.output(.openLessonDetails(lesson)))
             }
             
         case .element:
@@ -216,7 +192,58 @@ extension RozkladFeature {
     private func handleLocalAction(state: inout State, action: Action.Local) -> Effect<Action> {
         switch action {
         case .updateCurrentAndNextLesson:
+            let newLessons = rozkladServiceLessons.currentLessons()
+            let newCurrentLesson = currentDateService.currentLesson()
+            let newNextLessonID = currentDateService.nextLessonID()
+            
+            if let currentLesson = state.currentLesson,
+               let newCurrentLesson,
+               currentLesson.lessonID != newCurrentLesson.lessonID {
+                state.selectedID = newCurrentLesson.lessonID.stringValue
+            }
+            
+            state.currentLesson = newCurrentLesson
+            state.nextLessonID = newNextLessonID
+            state.rows = Self.generateRows(
+                lessons: newLessons,
+                currentLesson: newCurrentLesson,
+                nextLessonID: newNextLessonID
+            )
             return .none
+        }
+    }
+}
+
+extension RozkladFeature {
+    static func generateRows(
+        lessons: IdentifiedArrayOf<RozkladLessonModel>,
+        currentLesson: CurrentDateService.CurrentLesson?,
+        nextLessonID: Int?
+    ) -> IdentifiedArrayOf<RozkladRowProviderFeature.State> {
+        lessons.reduce(into: []) { partialResult, lesson in
+            let status: RozkladLessonFeature.State.Status
+            if let currentLesson, currentLesson.lessonID == lesson.id {
+                status = .current(currentLesson.percent)
+            } else if let nextLessonID, nextLessonID == lesson.id {
+                status = .next
+            } else {
+                status = .idle
+            }
+            
+            let lessonFeatureState = RozkladRowProviderFeature.State.rozkladLesson(
+                RozkladLessonFeature.State(
+                    lesson: lesson,
+                    status: status
+                )
+            )
+            if let last = partialResult.last, last.lessonDay.day == lesson.day && last.lessonDay.week == lesson.week {
+                partialResult.append(lessonFeatureState)
+            } else {
+                partialResult.append(
+                    .sectionHeader(RozkladSectionHeaderFeature.State(day: lesson.day, week: lesson.week))
+                )
+                partialResult.append(lessonFeatureState)
+            }
         }
     }
 }
