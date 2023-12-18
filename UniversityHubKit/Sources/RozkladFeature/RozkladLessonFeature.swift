@@ -15,9 +15,9 @@ public struct RozkladLessonFeature: Reducer {
         public let lesson: RozkladLessonModel
         public let status: Status
         
-        public enum Status {
+        public enum Status: Equatable {
             case idle
-            case current
+            case current(Double)
             case next
         }
         
@@ -25,7 +25,7 @@ public struct RozkladLessonFeature: Reducer {
             lesson.id
         }
         
-        public init(lesson: RozkladLessonModel, status: Status = .idle) {
+        public init(lesson: RozkladLessonModel, status: Status) {
             self.lesson = lesson
             self.status = status
         }

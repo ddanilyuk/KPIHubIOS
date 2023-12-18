@@ -11,11 +11,11 @@ import Combine
 import UIKit
 import IdentifiedCollections
 import Extensions
-import Services // TODO: Don't need here
+import RozkladModels
 
 extension CurrentDateService {
     static func live() -> CurrentDateService {
-        let helper = Helper()
+        let helper = LiveHelper()
         return CurrentDateService(
             updatedStream: { AsyncStream(helper.updatedSubject.values) },
             currentLesson: { helper.currentLessonSubject.value },
@@ -28,31 +28,33 @@ extension CurrentDateService {
 }
 
 private extension CurrentDateService {
-    final class Helper {
+    final class LiveHelper {
         @Dependency(\.userDefaultsService) private var userDefaultsService
         @Dependency(\.rozkladServiceLessons) private var rozkladServiceLessons
+        @Dependency(\.date) private var date
+
         private var calendar = Calendar(identifier: .gregorian)
         private var timer: Timer?
         private var lessonsTask: Task<Void, Never>?
         private var notificationCenterTask: Task<Void, Never>?
         
         // swiftlint:disable private_subject
-        let currentDaySubject = CurrentValueSubject<Lesson.Day?, Never>(nil)
-        let currentWeekSubject = CurrentValueSubject<Lesson.Week, Never>(.first)
+        let currentDaySubject = CurrentValueSubject<Int?, Never>(nil)
+        let currentWeekSubject = CurrentValueSubject<Int, Never>(1)
         let currentLessonSubject = CurrentValueSubject<CurrentLesson?, Never>(nil)
-        let nextLessonIDSubject = CurrentValueSubject<Lesson.ID?, Never>(nil)
+        let nextLessonIDSubject = CurrentValueSubject<Int?, Never>(nil)
         let updatedSubject = CurrentValueSubject<Date, Never>(Date())
         // swiftlint:enable private_subject
         
         init() {
             calendar.timeZone = TimeZone(identifier: "Europe/Kiev")!
-            updateSubjects(with: Date())
+            updateSubjects(with: date())
             setTimer()
             
             // Setup lesson changes update
             lessonsTask = Task {
                 for await _ in rozkladServiceLessons.lessonsStream() {
-                    updateSubjects(with: Date())
+                    updateSubjects(with: date())
                 }
             }
             
@@ -60,7 +62,7 @@ private extension CurrentDateService {
                 let name = await UIApplication.didBecomeActiveNotification
                 for await _ in NotificationCenter.default.notifications(named: name).dropFirst() {
                     setTimer()
-                    updateSubjects(with: Date())
+                    updateSubjects(with: date())
                 }
             }
         }
@@ -71,40 +73,39 @@ private extension CurrentDateService {
                 from: date,
                 toggleWeek: userDefaultsService.get(for: .toggleWeek)
             )
-            let currentDay = Lesson.Day(rawValue: dayNumber)
-            let currentWeek = Lesson.Week(rawValue: weekNumber) ?? .first
-            currentDaySubject.value = currentDay
-            currentWeekSubject.value = currentWeek
+            currentDaySubject.value = dayNumber
+            currentWeekSubject.value = weekNumber
 
             let currentLessons = rozkladServiceLessons.currentLessons()
-//            if !currentLessons.isEmpty {
-//                let (currentLesson, nextLesson) = currentAndNextLesson(
-//                    lessons: currentLessons,
-//                    currentTimeFromDayStart: currentTimeFromDayStart(calendar: calendar, date: date),
-//                    currentWeek: currentWeek,
-//                    currentDay: currentDay
-//                )
-//                currentLessonSubject.value = currentLesson
-//                nextLessonIDSubject.value = nextLesson.id
-//            }
+            if !currentLessons.isEmpty {
+                let currentTimeFromDayStart = currentTimeFromDayStart(calendar: calendar, date: date)
+                let (currentLesson, nextLesson) = currentAndNextLesson(
+                    lessons: currentLessons,
+                    currentTimeFromDayStart: currentTimeFromDayStart,
+                    currentWeek: weekNumber,
+                    currentDay: dayNumber
+                )
+                currentLessonSubject.value = currentLesson
+                nextLessonIDSubject.value = nextLesson
+            }
 
-            updatedSubject.send(Date())
+            updatedSubject.send(self.date())
         }
 
         func setTimer() {
             var components = calendar.dateComponents(
                 [.era, .year, .month, .day, .hour, .minute],
-                from: Date()
+                from: date()
             )
             components.second = 0
             let min = components.minute ?? 0
             components.minute = min + 1
-            let nextMinute = calendar.date(from: components) ?? Date()
+            let nextMinute = calendar.date(from: components) ?? date()
 
             timer?.invalidate()
             // Setup timer update
             timer = Timer(fire: nextMinute, interval: 60, repeats: true) { _ in
-                self.updateSubjects(with: Date())
+                self.updateSubjects(with: self.date())
             }
             RunLoop.main.add(timer!, forMode: .default)
         }
@@ -130,50 +131,49 @@ private extension CurrentDateService {
             return (dayNumber: dayNumber, weekNumber: weekNumber)
         }
 
-//        private func currentAndNextLesson(
-//            lessons: IdentifiedArrayOf<Lesson>,
-//            currentTimeFromDayStart: Int,
-//            currentWeek: Lesson.Week,
-//            currentDay: Lesson.Day?
-//        ) -> (current: CurrentLesson?, next: Lesson) {
-//            guard let currentDay else {
-//                return (
-//                    current: nil,
-//                    next: lessons.first(where: { $0.week == currentWeek.toggled() }) ?? lessons[0]
-//                )
-//            }
-//
-//            for lesson in lessons {
-//                guard lesson.week == currentWeek else {
-//                    continue
-//                }
-//                switch lesson.day {
-//                case currentDay:
-//                    switch lesson.position {
-//                    case let position where position.range.contains(currentTimeFromDayStart):
-//                        let difference = CGFloat(currentTimeFromDayStart - position.minutesFromDayStart)
-//                        let percent = difference / CGFloat(Lesson.Position.lessonDuration)
-//                        return (
-//                            current: CurrentLesson(lessonID: lesson.id, percent: percent),
-//                            next: lessons[safe: lessons.index(id: lesson.id)! + 1] ?? lessons[0]
-//                        )
-//
-//                    case let position where position.minutesFromDayStartEnd > currentTimeFromDayStart:
-//                        return (current: nil, next: lesson)
-//
-//                    default:
-//                        continue
-//                    }
-//
-//                case let lessonDay where lessonDay > currentDay:
-//                    return (current: nil, next: lesson)
-//
-//                default:
-//                    continue
-//                }
-//            }
-//            return (current: nil, next: lessons[0])
-//        }
+        private func currentAndNextLesson(
+            lessons: IdentifiedArrayOf<RozkladLessonModel>,
+            currentTimeFromDayStart: Int,
+            currentWeek: Int,
+            currentDay: Int?
+        ) -> (current: CurrentLesson?, next: Int) {
+            guard let currentDay else {
+                let next = lessons.first { $0.week != currentWeek }
+                return (current: nil, next: next?.id ?? lessons[0].id)
+            }
+
+            for lesson in lessons {
+                guard lesson.week == currentWeek else {
+                    continue
+                }
+                switch lesson.day {
+                case currentDay:
+                    switch lesson.position {
+                    case let position where position.range.contains(currentTimeFromDayStart):
+                        let timePassed = currentTimeFromDayStart - position.start.minutesFromDayStart
+                        let lessonDuration = position.end.minutesFromDayStart - position.start.minutesFromDayStart
+                        let percent = Double(timePassed) / Double(lessonDuration)
+                        return (
+                            current: CurrentLesson(lessonID: lesson.id, percent: percent),
+                            next: lessons[safe: lessons.index(id: lesson.id)! + 1]?.id ?? lessons[0].id
+                        )
+                        
+                    case let position where position.start.minutesFromDayStart > currentTimeFromDayStart:
+                        return (current: nil, next: lesson.id)
+
+                    default:
+                        continue
+                    }
+
+                case let lessonDay where lessonDay > currentDay:
+                    return (current: nil, next: lesson.id)
+
+                default:
+                    continue
+                }
+            }
+            return (current: nil, next: lessons[0].id)
+        }
 
         private func currentTimeFromDayStart(calendar: Calendar, date: Date) -> Int {
             let components = calendar.dateComponents(

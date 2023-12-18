@@ -7,14 +7,19 @@
 
 import Foundation
 import Combine
-import Dependencies
-import Services
+import DependenciesMacros
 
+@DependencyClient
 public struct CurrentDateService {
-    public var updatedStream: () -> AsyncStream<Date>
+    public struct CurrentLesson: Equatable {
+        public var lessonID: Int
+        public var percent: Double
+    }
+    
+    public var updatedStream: () -> AsyncStream<Date> = { .never }
     public var currentLesson: () -> CurrentLesson?
-    public var nextLessonID: () -> Lesson.ID?
-    public var currentDay: () -> Lesson.Day?
-    public var currentWeek: () -> Lesson.Week
+    public var nextLessonID: () -> Int?
+    public var currentDay: () -> Int?
+    public var currentWeek: () -> Int = { 1 }
     public var forceUpdate: () -> Void
 }

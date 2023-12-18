@@ -53,6 +53,9 @@ struct RozkladView: View {
                     }
             }
         }
+        .task {
+            await send(.onTask).finish()
+        }
     }
 }
 
@@ -78,11 +81,15 @@ struct RozkladHeaderView: View {
         VStack {
             HStack {
                 RozkladWeekPicker(
-                    displayedWeek: RozkladWeekPicker.Week(rawValue: store.currentLessonDay.week) ?? .first,
-                    currentWeek: .second, // TODO: Week
-                    selectWeek: {
+                    displayedWeek: RozkladWeekPicker.Week(
+                        rawValue: store.selectedLessonDay.week
+                    ) ?? .first,
+                    currentWeek: RozkladWeekPicker.Week(
+                        rawValue: store.currentWeek
+                    ) ?? .first,
+                    selectWeek: { week in
                         send(
-                            .selectWeekButtonTapped($0.rawValue),
+                            .selectWeekButtonTapped(week.rawValue),
                             animation: .default
                         )
                     }
@@ -90,15 +97,22 @@ struct RozkladHeaderView: View {
             }
             
             RozkladDayPicker(
-                displayedDay: RozkladDayPicker.Day(rawValue: store.currentLessonDay.day) ?? .monday,
-                currentDay: .thursday, // TODO: Week
-                selectDay: {
+                displayedDay: RozkladDayPicker.Day(
+                    rawValue: store.selectedLessonDay.day
+                ) ?? .monday,
+                currentDay: RozkladDayPicker.Day(
+                    rawValue: store.currentDay ?? 1
+                ) ?? .monday,
+                selectDay: { day in
                     send(
-                        .selectDayButtonTapped($0.rawValue),
+                        .selectDayButtonTapped(day.rawValue),
                         animation: .default
                     )
                 }
             )
+        }
+        .task {
+            await send(.onTask).finish()
         }
     }
 }

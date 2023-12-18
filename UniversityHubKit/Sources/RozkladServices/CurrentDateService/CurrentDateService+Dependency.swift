@@ -9,8 +9,8 @@ import Dependencies
 
 extension DependencyValues {
     private enum CurrentDateServiceKey: DependencyKey {
-        static let testValue = CurrentDateService.mock()
         static let liveValue = CurrentDateService.live()
+        static let testValue = CurrentDateService()
     }
     
     public var currentDateService: CurrentDateService {

@@ -17,37 +17,54 @@ public struct RozkladFeature: Reducer {
         public var lessons: IdentifiedArrayOf<RozkladLessonModel>
         public var rows: IdentifiedArrayOf<RozkladRowProviderFeature.State>
         public var selectedID: String?
-        public var header: RozkladHeaderFeature.State = .init(currentLessonDay: nil)
-        
-//        public var lessonDay: LessonDay? {
-//        }
-        
+        public var currentLesson: CurrentDateService.CurrentLesson?
+        public var nextLessonID: Int?
+        public var header: RozkladHeaderFeature.State = .init(selectedLessonDay: nil)
+                
         public init() {
             @Dependency(\.rozkladServiceLessons) var rozkladServiceLessons
+            @Dependency(\.currentDateService) var currentDateService
+            
+            let currentLesson = currentDateService.currentLesson()
+            let nextLessonID = currentDateService.nextLessonID()
             
             let models = rozkladServiceLessons.currentLessons()
             lessons = IdentifiedArray(uniqueElements: models)
             
-//            let array = models.enumerated().map { index, lesson in
-//                RozkladLessonFeature.State(lesson: lesson, status: index == 1 ? .current : .idle)
-//            }
-            
             let result: [RozkladRowProviderFeature.State] = models.reduce(into: []) { partialResult, lesson in
+                
+                let status: RozkladLessonFeature.State.Status
+                if let currentLesson, currentLesson.lessonID == lesson.id {
+                    status = .current(currentLesson.percent)
+                } else if let nextLessonID, nextLessonID == lesson.id {
+                    status = .next
+                } else {
+                    status = .idle
+                }
+                
                 if let last = partialResult.last, last.lessonDay.day == lesson.day && last.lessonDay.week == lesson.week {
                     partialResult.append(
-                        .rozkladLesson(RozkladLessonFeature.State(lesson: lesson))
+                        .rozkladLesson(RozkladLessonFeature.State(
+                            lesson: lesson, 
+                            status: status
+                        ))
                     )
                 } else {
                     partialResult.append(
                         .sectionHeader(RozkladSectionHeaderFeature.State(day: lesson.day, week: lesson.week))
                     )
                     partialResult.append(
-                        .rozkladLesson(RozkladLessonFeature.State(lesson: lesson))
+                        .rozkladLesson(RozkladLessonFeature.State(
+                            lesson: lesson,
+                            status: status
+                        ))
                     )
                 }
             }
             
-            rows = IdentifiedArray(uniqueElements: result)
+            self.rows = IdentifiedArray(uniqueElements: result)
+            self.currentLesson = currentLesson
+            self.nextLessonID = nextLessonID
         }
     }
     
@@ -58,6 +75,7 @@ public struct RozkladFeature: Reducer {
 
         @CasePathable
         public enum View: BindableAction {
+            case onTask
             case binding(BindingAction<State>)
             case profileButtonTapped
             case currentIDChanged(String?)
@@ -66,7 +84,7 @@ public struct RozkladFeature: Reducer {
         }
         
         public enum Local: Equatable {
-            
+            case updateCurrentAndNextLesson
         }
         
         public enum Output: Equatable {
@@ -74,6 +92,8 @@ public struct RozkladFeature: Reducer {
             case openLessonDetails(RozkladLessonModel)
         }
     }
+    
+    @Dependency(\.currentDateService) var currentDateService
     
     public init() { }
     
@@ -106,6 +126,13 @@ public struct RozkladFeature: Reducer {
 extension RozkladFeature {
     private func handleViewAction(state: inout State, action: Action.View) -> Effect<Action> {
         switch action {
+        case .onTask:
+            return .run { send in
+                for await _ in currentDateService.updatedStream() {
+                    await send(.local(.updateCurrentAndNextLesson))
+                }
+            }
+            
         case let .rows(rowAction):
             return handleViewRowsAction(state: &state, action: rowAction)
             
@@ -115,9 +142,9 @@ extension RozkladFeature {
         case let .currentIDChanged(id):
             state.selectedID = id
             if let id, let row = state.rows[id: id] {
-                state.header = .init(currentLessonDay: row.lessonDay)
+                state.header.selectedLessonDay = row.lessonDay
             } else {
-                state.header = .init(currentLessonDay: nil)
+                state.header.selectedLessonDay = .init(day: 1, week: 1)
             }
             return .none
             
@@ -159,7 +186,7 @@ extension RozkladFeature {
             switch outputAction {
             case let .selectDay(day):
                 let row = state.rows.first(where: { row in
-                    row.lessonDay.day == day && row.lessonDay.week == state.header.currentLessonDay.week
+                    row.lessonDay.day == day && row.lessonDay.week == state.header.selectedLessonDay.week
                 })
                 guard let row else {
                     return .none
@@ -169,7 +196,7 @@ extension RozkladFeature {
                 
             case let .selectWeek(week):
                 let row = state.rows.first(where: { row in
-                    row.lessonDay.day == state.header.currentLessonDay.day && row.lessonDay.week == week
+                    row.lessonDay.day == state.header.selectedLessonDay.day && row.lessonDay.week == week
                 })
                 guard let row else {
                     return .none
@@ -187,6 +214,9 @@ extension RozkladFeature {
 // MARK: - Local
 extension RozkladFeature {
     private func handleLocalAction(state: inout State, action: Action.Local) -> Effect<Action> {
-        return .none
+        switch action {
+        case .updateCurrentAndNextLesson:
+            return .none
+        }
     }
 }

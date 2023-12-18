@@ -9,8 +9,8 @@ import Dependencies
 
 extension DependencyValues {
     private enum RozkladClientStateKey: DependencyKey {
-        static let testValue = RozkladServiceState()
         static let liveValue = RozkladServiceState.live()
+        static let testValue = RozkladServiceState()
     }
     
     public var rozkladServiceState: RozkladServiceState {

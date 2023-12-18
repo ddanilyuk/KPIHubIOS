@@ -22,14 +22,11 @@ struct RozkladLessonView: View {
     
     var body: some View {
         HStack(spacing: 16) {
-//            VStack {
-//                Text(viewStore.lessonPositionFirstPart)
-//                timeView
-//                Text(viewStore.lessonPositionSecondPart)
-//            }
-            Color.gray.opacity(0.5)
-                .frame(width: 35)
-                .font(.system(.footnote))
+            VStack {
+                Text(store.lesson.position.start.description)
+                timeView
+                Text(store.lesson.position.end.description)
+            }
 
             ZStack(alignment: .leading) {
                 backgroundView
@@ -44,21 +41,27 @@ struct RozkladLessonView: View {
 //        .background(Color.screenBackground)
     }
 
-//    var timeView: some View {
-//        GeometryReader { proxy in
-//            RoundedRectangle(cornerRadius: 2)
-//                .fill(Color.gray.opacity(0.2))
-//                .if(viewStore.mode.isCurrent) { view in
-//                    view.overlay(alignment: .top) {
-//                        LinearGradientAnimatableView()
-//                            .frame(height: viewStore.mode.percent * proxy.frame(in: .local).height)
-//                    }
-//                }
-//        }
-//        .frame(width: viewStore.mode.isCurrent ? 4 : 2, alignment: .center)
-//        .frame(minHeight: 20)
-//    }
-
+    var timeView: some View {
+        GeometryReader { proxy in
+            RoundedRectangle(cornerRadius: 2)
+                .fill(Color.gray.opacity(0.2))
+                .overlay(alignment: .top) {
+                    switch store.status {
+                    case let .current(percent):
+                        LinearGradientAnimatableView()
+                            .frame(
+                                height: percent * proxy.frame(in: .local).height
+                            )
+                        
+                    case .next, .idle:
+                        EmptyView()
+                    }
+                }
+        }
+        .frame(width: 2, alignment: .center)
+        .frame(minHeight: 20)
+    }
+    
     @ViewBuilder
     var backgroundView: some View {
         switch store.status {
