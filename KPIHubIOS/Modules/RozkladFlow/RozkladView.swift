@@ -17,11 +17,7 @@ struct RozkladView: View {
         
     var body: some View {
         _ = Self._printChanges()
-        return VStack {
-            // TODO: For some reason this view cause re-render
-            RozkladHeaderView(
-                store: store.scope(state: \.header, action: \.view.header)
-            )
+        return VStack(spacing: 0) {
             ScrollView {
                 LazyVStack {
                     ForEach(
@@ -31,19 +27,39 @@ struct RozkladView: View {
                         RozkladRowProviderView(store: childStore) { cellStore in
                             RozkladLessonView(store: cellStore)
                         }
+                        .frame(width: UIScreen.main.bounds.width)
                     }
                 }
+//                .frame(maxWidth: .infinity)
                 .scrollTargetLayout()
             }
+            .overlay(alignment: .top) {
+                // TODO: For some reason this view cause re-render
+                RozkladHeaderView(
+                    store: store.scope(state: \.header, action: \.view.header)
+                )
+                .frame(maxWidth: .infinity)
+            }
+            .contentMargins(.top, 100, for: .scrollContent)
             .modifier(
                 IDHolder(id: $store.selectedID.sending(\.view.currentIDChanged))
             )
-            .background(designKit.backgroundColor)
+//            .background(BlurredBackgroundView())
+//            .background(designKit.backgroundColor)
         }
         .toolbar(.hidden)
         .task {
             await send(.onTask).finish()
         }
+    }
+}
+
+struct BlurredBackgroundView: View {
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .blur(radius: 15) // Adjust the blur radius as needed
+            .opacity(0.7) // Adjust opacity as needed
+            .edgesIgnoringSafeArea(.all) // Makes the gradient fill the entire screen
     }
 }
 
@@ -99,6 +115,8 @@ struct RozkladHeaderView: View {
                 }
             )
         }
+        .frame(height: 100)
+        .background(.thinMaterial, ignoresSafeAreaEdges: .top)
         .task {
             await send(.onTask).finish()
         }

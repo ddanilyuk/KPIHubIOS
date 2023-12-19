@@ -145,6 +145,44 @@ public struct LessonDay: Equatable, Hashable {
     public let day: Int
     public let week: Int
     
+    public var shortDayDescription: String {
+        switch day {
+        case 1:
+            return "ПН"
+        case 2:
+            return "ВТ"
+        case 3:
+            return "СР"
+        case 4:
+            return "ЧТ"
+        case 5:
+            return "ПТ"
+        case 6:
+            return "СБ"
+        default:
+            return ""
+        }
+    }
+
+    public var fullDayDescription: String {
+        switch day {
+        case 1:
+            return "Понеділок"
+        case 2:
+            return "Вівторок"
+        case 3:
+            return "Середа"
+        case 4:
+            return "Четвер"
+        case 5:
+            return "П'ятниця"
+        case 6:
+            return "Субота"
+        default:
+            return ""
+        }
+    }
+    
     public var debugDescription: String {
         "Week: \(week) | Day: \(day)"
     }

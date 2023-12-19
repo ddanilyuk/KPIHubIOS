@@ -107,6 +107,6 @@ public struct RozkladSectionHeaderView: View {
     }
     
     public var body: some View {
-        Text("Day: \(store.lessonDay.day) | Week: \(store.lessonDay.week)")
+        Text("\(store.lessonDay.fullDayDescription), \(store.lessonDay.week) тиждень")
     }
 }

@@ -49,6 +49,8 @@
 		DB7153452B31055C00A85747 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7153412B31052E00A85747 /* ProfileTests.swift */; };
 		DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */; };
 		DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */; };
+		DBE04FC62B3111B70088CA88 /* GroupRozklad.json in Resources */ = {isa = PBXBuildFile; fileRef = DBE04FC52B3111B70088CA88 /* GroupRozklad.json */; };
+		DBE04FC82B3111D30088CA88 /* RozkladTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE04FC72B3111D30088CA88 /* RozkladTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,9 +68,6 @@
 		5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSApp.swift; sourceTree = "<group>"; };
 		5F97B3C2283677C500350368 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F97B3C5283677C500350368 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5F97B3CF283677C600350368 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
-		5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITests.swift; sourceTree = "<group>"; };
-		5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPIHubIOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5FD570B3283680D200D8E869 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DB24B1C42B2E3098008FB620 /* GenericUniversityHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GenericUniversityHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB24B1C62B2E3098008FB620 /* GenericUniversityHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericUniversityHubApp.swift; sourceTree = "<group>"; };
@@ -93,8 +92,6 @@
 		DB2974DA2B2CFAC000A439C0 /* MainFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlow.swift; sourceTree = "<group>"; };
 		DB3284CF2ADAFAC200A8AE26 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		DB3284D02ADAFBC400A8AE26 /* KPIHubIOS-Staging.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "KPIHubIOS-Staging.xctestplan"; sourceTree = "<group>"; };
-		DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDevelopersTests.swift; sourceTree = "<group>"; };
-		DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
 		DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelpers.swift; sourceTree = "<group>"; };
 		DB7153332B3104FB00A85747 /* KPIHubIOSSnapshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSSnapshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7153412B31052E00A85747 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
@@ -102,6 +99,8 @@
 		DB9A2BFB2B2CECC6002B2AC8 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB9A2C032B2CF24D002B2AC8 /* UniversityHubKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UniversityHubKit; sourceTree = "<group>"; };
+		DBE04FC52B3111B70088CA88 /* GroupRozklad.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = GroupRozklad.json; sourceTree = "<group>"; };
+		DBE04FC72B3111D30088CA88 /* RozkladTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RozkladTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,8 +150,6 @@
 				DB9A2C032B2CF24D002B2AC8 /* UniversityHubKit */,
 				5F97B3BD283677C200350368 /* KPIHubIOS */,
 				DB7153342B3104FB00A85747 /* KPIHubIOSSnapshotTests */,
-				5F97B3CE283677C600350368 /* KPIHubIOSTests */,
-				5F97B3D8283677C600350368 /* KPIHubIOSUITests */,
 				DB24B1C52B2E3098008FB620 /* GenericUniversityHub */,
 				DB3284D02ADAFBC400A8AE26 /* KPIHubIOS-Staging.xctestplan */,
 				DB3284CE2ADAFAC200A8AE26 /* ci_scripts */,
@@ -187,25 +184,6 @@
 				5F97B3C5283677C500350368 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		5F97B3CE283677C600350368 /* KPIHubIOSTests */ = {
-			isa = PBXGroup;
-			children = (
-				5F97B3CF283677C600350368 /* ProfileTests.swift */,
-				DB3284DF2ADB27B900A8AE26 /* ForDevelopersTests.swift */,
-				DB3284FC2ADB2D2B00A8AE26 /* __Snapshots__ */,
-			);
-			path = KPIHubIOSTests;
-			sourceTree = "<group>";
-		};
-		5F97B3D8283677C600350368 /* KPIHubIOSUITests */ = {
-			isa = PBXGroup;
-			children = (
-				5F97B3D9283677C600350368 /* KPIHubIOSUITests.swift */,
-				5F97B3DB283677C600350368 /* KPIHubIOSUITestsLaunchTests.swift */,
-			);
-			path = KPIHubIOSUITests;
 			sourceTree = "<group>";
 		};
 		DB13DC872B2A4D1400D37202 /* Frameworks */ = {
@@ -308,6 +286,7 @@
 		DB7153342B3104FB00A85747 /* KPIHubIOSSnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
+				DBE04FC42B31118B0088CA88 /* Resources */,
 				DB7153432B31053A00A85747 /* Modules */,
 				DB7153442B31054200A85747 /* Helpers */,
 			);
@@ -318,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				DB7153412B31052E00A85747 /* ProfileTests.swift */,
+				DBE04FC72B3111D30088CA88 /* RozkladTests.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -355,6 +335,14 @@
 				5F97B3C2283677C500350368 /* Assets.xcassets */,
 				5FD570B3283680D200D8E869 /* Info.plist */,
 				5F97B3C4283677C500350368 /* Preview Content */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DBE04FC42B31118B0088CA88 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DBE04FC52B3111B70088CA88 /* GroupRozklad.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -509,6 +497,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBE04FC62B3111B70088CA88 /* GroupRozklad.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +562,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB7153402B31052000A85747 /* SnapshotHelpers.swift in Sources */,
+				DBE04FC82B3111D30088CA88 /* RozkladTests.swift in Sources */,
 				DB7153452B31055C00A85747 /* ProfileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

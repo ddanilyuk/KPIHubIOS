@@ -14,6 +14,11 @@ public struct CurrentDateService {
     public struct CurrentLesson: Equatable {
         public var lessonID: Int
         public var percent: Double
+        
+        public init(lessonID: Int, percent: Double) {
+            self.lessonID = lessonID
+            self.percent = percent
+        }
     }
     
     public var updatedStream: () -> AsyncStream<Date> = { .never }

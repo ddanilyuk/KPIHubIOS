@@ -73,10 +73,10 @@ struct ProfileHomeView: View {
     var body: some View {
         ScrollView {
             ProfileHomeRozkladView(store: store.scope(state: \.rozklad, action: \.rozklad))
-                .background(designKit.backgroundColor)
             
             Spacer()
         }
+        .background(designKit.backgroundColor)
     }
 }
 

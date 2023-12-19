@@ -29,6 +29,8 @@ public struct RozkladFeature: Reducer {
             let nextLessonID = currentDateService.nextLessonID()
             let lessons = rozkladServiceLessons.currentLessons()
             
+            print("!!! less: \(lessons)")
+            
             self.rows = RozkladFeature.generateRows(
                 lessons: lessons,
                 currentLesson: currentLesson,
