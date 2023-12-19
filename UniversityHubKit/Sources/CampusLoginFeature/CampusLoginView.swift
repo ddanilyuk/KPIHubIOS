@@ -11,10 +11,11 @@ import DesignKit
 
 @ViewAction(for: CampusLoginFeature.self)
 public struct CampusLoginView: View {
+    @Environment(\.designKit) var designKit
     @Bindable public var store: StoreOf<CampusLoginFeature>
     @FocusState private var focusedField: CampusLoginFeature.Field?
     
-    init(store: StoreOf<CampusLoginFeature>) {
+    public init(store: StoreOf<CampusLoginFeature>) {
         self.store = store
     }
     
@@ -70,8 +71,7 @@ public struct CampusLoginView: View {
             }
         }
         .navigationBarTitle("Кампус")
-        // TODO: assets
-//        .background(Color.screenBackground)
+        .background(designKit.backgroundColor)
         .loadable($store.isLoading)
         .alert($store.scope(state: \.alert, action: \.alert))
         .synchronize($store.focusedField, $focusedField)

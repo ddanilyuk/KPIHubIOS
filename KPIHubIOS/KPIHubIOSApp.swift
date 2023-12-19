@@ -21,35 +21,3 @@ struct KPIHubIOSApp: SwiftUI.App {
         }
     }
 }
-
-extension DesignKit {
-    static let custom = DesignKit(
-        primaryColor: .orange,
-        backgroundColor: .orange.opacity(0.2),
-        currentLessonColor: .pink,
-        nextLessonColor: .green
-    )
-}
-
-final class AppDelegate: NSObject, UIApplicationDelegate {
-    let store: StoreOf<AppFeature> = {
-        Store(initialState: AppFeature.State()) {
-            AppFeature()
-        } withDependencies: { _ in
-            
-        }
-    }()
-    
-    private lazy var appDelegateStore = store.scope(
-        state: \.appDelegate,
-        action: \.appDelegate
-    )
-    
-    func application(
-        _ application: UIApplication,
-        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
-    ) -> Bool {
-        appDelegateStore.send(.didFinishLaunching(Bundle.main))
-        return true
-    }
-}

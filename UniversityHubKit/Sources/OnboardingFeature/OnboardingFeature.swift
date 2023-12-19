@@ -8,10 +8,11 @@
 import ComposableArchitecture
 import Services
 
+@Reducer
 public struct OnboardingFeature: Reducer {
     public struct State: Equatable { }
     
-    public enum Action: Equatable {
+    public enum Action: Equatable, ViewAction {
         case view(View)
         case output(Output)
         
@@ -28,6 +29,8 @@ public struct OnboardingFeature: Reducer {
     }
     
     @Dependency(\.analyticsService) var analyticsService
+    
+    public init() { }
     
     public var body: some ReducerOf<Self> {
         Reduce { _, action in

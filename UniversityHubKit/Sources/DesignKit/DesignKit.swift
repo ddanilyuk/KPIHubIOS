@@ -13,18 +13,21 @@ public struct DesignKit {
     
     public let currentLessonColor: Color
     public let nextLessonColor: Color
-
+    
+    public let logoImage: Image
     
     public init(
         primaryColor: Color,
         backgroundColor: Color,
         currentLessonColor: Color,
-        nextLessonColor: Color
+        nextLessonColor: Color,
+        logoImage: Image
     ) {
         self.primaryColor = primaryColor
         self.backgroundColor = backgroundColor
         self.currentLessonColor = currentLessonColor
         self.nextLessonColor = nextLessonColor
+        self.logoImage = logoImage
     }
 }
 
@@ -35,7 +38,8 @@ extension EnvironmentValues {
             primaryColor: .orange,
             backgroundColor: .white,
             currentLessonColor: .orange,
-            nextLessonColor: .blue
+            nextLessonColor: .blue,
+            logoImage: Image(systemName: "graduationcap.circle")
         )
     }
     

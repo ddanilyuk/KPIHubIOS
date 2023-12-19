@@ -47,6 +47,14 @@
 		DB71533F2B31051200A85747 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = DB71533E2B31051200A85747 /* SnapshotTesting */; };
 		DB7153402B31052000A85747 /* SnapshotHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */; };
 		DB7153452B31055C00A85747 /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7153412B31052E00A85747 /* ProfileTests.swift */; };
+		DB9918DC2B324B7600A9D59A /* DesignKit+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918DB2B324B7600A9D59A /* DesignKit+Custom.swift */; };
+		DB9918DF2B324B9200A9D59A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918DE2B324B9200A9D59A /* AppDelegate.swift */; };
+		DB9918E32B324D5300A9D59A /* OnboardingFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918E12B324D5300A9D59A /* OnboardingFeature.swift */; };
+		DB9918E42B324D5300A9D59A /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918E22B324D5300A9D59A /* OnboardingView.swift */; };
+		DB9918EA2B324D6600A9D59A /* OnboardingFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918E72B324D6600A9D59A /* OnboardingFlow.swift */; };
+		DB9918EB2B324D6600A9D59A /* OnboardingFlow+Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918E82B324D6600A9D59A /* OnboardingFlow+Path.swift */; };
+		DB9918EC2B324D6600A9D59A /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9918E92B324D6600A9D59A /* OnboardingFlowView.swift */; };
+		DB9918F02B324F5700A9D59A /* CampusLoginFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB9918EF2B324F5700A9D59A /* CampusLoginFeature */; };
 		DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */; };
 		DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */; };
 		DBE04FC62B3111B70088CA88 /* GroupRozklad.json in Resources */ = {isa = PBXBuildFile; fileRef = DBE04FC52B3111B70088CA88 /* GroupRozklad.json */; };
@@ -95,6 +103,13 @@
 		DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotHelpers.swift; sourceTree = "<group>"; };
 		DB7153332B3104FB00A85747 /* KPIHubIOSSnapshotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPIHubIOSSnapshotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB7153412B31052E00A85747 /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
+		DB9918DB2B324B7600A9D59A /* DesignKit+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DesignKit+Custom.swift"; sourceTree = "<group>"; };
+		DB9918DE2B324B9200A9D59A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB9918E12B324D5300A9D59A /* OnboardingFeature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFeature.swift; sourceTree = "<group>"; };
+		DB9918E22B324D5300A9D59A /* OnboardingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		DB9918E72B324D6600A9D59A /* OnboardingFlow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlow.swift; sourceTree = "<group>"; };
+		DB9918E82B324D6600A9D59A /* OnboardingFlow+Path.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OnboardingFlow+Path.swift"; sourceTree = "<group>"; };
+		DB9918E92B324D6600A9D59A /* OnboardingFlowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingFlowView.swift; sourceTree = "<group>"; };
 		DB9A2BFA2B2CECC6002B2AC8 /* Development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Development.xcconfig; sourceTree = "<group>"; };
 		DB9A2BFB2B2CECC6002B2AC8 /* Production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Production.xcconfig; sourceTree = "<group>"; };
 		DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -108,6 +123,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB9918F02B324F5700A9D59A /* CampusLoginFeature in Frameworks */,
 				DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */,
 				DB24B1FB2B2E3883008FB620 /* RozkladFeature in Frameworks */,
 				DB24B2232B2FA8DA008FB620 /* RozkladServices in Frameworks */,
@@ -172,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */,
+				DB9918DA2B324B6B00A9D59A /* DesignKit */,
 				DB6024CD2B2FADBA005F4116 /* Modules */,
 				DB9A2C012B2CEFA4002B2AC8 /* Resources */,
 			);
@@ -242,6 +259,7 @@
 				DB2974D22B2CF84200A439C0 /* AppFeature.swift */,
 				DB2974D12B2CF84200A439C0 /* AppFeature+Path.swift */,
 				DB2974D02B2CF84200A439C0 /* AppView.swift */,
+				DB9918DE2B324B9200A9D59A /* AppDelegate.swift */,
 			);
 			path = AppFlow;
 			sourceTree = "<group>";
@@ -274,6 +292,7 @@
 		DB6024CD2B2FADBA005F4116 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				DB9918E02B324D3400A9D59A /* OnboardingFlow */,
 				DB2974CF2B2CF83100A439C0 /* AppFlow */,
 				DB24B2132B2F1C74008FB620 /* ProfileFlow */,
 				DB6024CC2B2FAD94005F4116 /* LessonDetails */,
@@ -308,6 +327,42 @@
 				DB3284FE2ADB2FE800A8AE26 /* SnapshotHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DB9918DA2B324B6B00A9D59A /* DesignKit */ = {
+			isa = PBXGroup;
+			children = (
+				DB9918DB2B324B7600A9D59A /* DesignKit+Custom.swift */,
+			);
+			path = DesignKit;
+			sourceTree = "<group>";
+		};
+		DB9918E02B324D3400A9D59A /* OnboardingFlow */ = {
+			isa = PBXGroup;
+			children = (
+				DB9918E62B324D5E00A9D59A /* OnboardingFlow */,
+				DB9918E52B324D5500A9D59A /* OnboardingFeature */,
+			);
+			path = OnboardingFlow;
+			sourceTree = "<group>";
+		};
+		DB9918E52B324D5500A9D59A /* OnboardingFeature */ = {
+			isa = PBXGroup;
+			children = (
+				DB9918E12B324D5300A9D59A /* OnboardingFeature.swift */,
+				DB9918E22B324D5300A9D59A /* OnboardingView.swift */,
+			);
+			path = OnboardingFeature;
+			sourceTree = "<group>";
+		};
+		DB9918E62B324D5E00A9D59A /* OnboardingFlow */ = {
+			isa = PBXGroup;
+			children = (
+				DB9918E72B324D6600A9D59A /* OnboardingFlow.swift */,
+				DB9918E82B324D6600A9D59A /* OnboardingFlow+Path.swift */,
+				DB9918E92B324D6600A9D59A /* OnboardingFlowView.swift */,
+			);
+			path = OnboardingFlow;
 			sourceTree = "<group>";
 		};
 		DB9A2BF92B2CECC6002B2AC8 /* AppConfigs */ = {
@@ -373,6 +428,7 @@
 				DB24B2162B2F1CAD008FB620 /* ProfileHomeFeature */,
 				DB24B21E2B2F297D008FB620 /* CampusFeature */,
 				DB24B2222B2FA8DA008FB620 /* RozkladServices */,
+				DB9918EF2B324F5700A9D59A /* CampusLoginFeature */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -530,16 +586,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB9918E32B324D5300A9D59A /* OnboardingFeature.swift in Sources */,
 				DB2974D52B2CF84200A439C0 /* AppFeature.swift in Sources */,
 				DB24B2152B2F1C7F008FB620 /* ProfileFlow.swift in Sources */,
 				DB2974DE2B2CFB0300A439C0 /* MainFlowView.swift in Sources */,
 				DB24B1F72B2E380E008FB620 /* RozkladFlow.swift in Sources */,
+				DB9918DF2B324B9200A9D59A /* AppDelegate.swift in Sources */,
 				DB24B1F92B2E3866008FB620 /* RozkladRootFlow.swift in Sources */,
 				DB2974D32B2CF84200A439C0 /* AppView.swift in Sources */,
 				DB24B20E2B2E62ED008FB620 /* RozkladView.swift in Sources */,
+				DB9918EA2B324D6600A9D59A /* OnboardingFlow.swift in Sources */,
 				DB24B2022B2E56FC008FB620 /* LessonDetailsView.swift in Sources */,
 				DB2974DD2B2CFB0100A439C0 /* MainFlow.swift in Sources */,
 				DB2974D42B2CF84200A439C0 /* AppFeature+Path.swift in Sources */,
+				DB9918EC2B324D6600A9D59A /* OnboardingFlowView.swift in Sources */,
+				DB9918DC2B324B7600A9D59A /* DesignKit+Custom.swift in Sources */,
+				DB9918E42B324D5300A9D59A /* OnboardingView.swift in Sources */,
+				DB9918EB2B324D6600A9D59A /* OnboardingFlow+Path.swift in Sources */,
 				DB24B2002B2E4E71008FB620 /* RozkladLessonView.swift in Sources */,
 				5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */,
 			);
@@ -1747,6 +1810,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB5BBD042ABCDD39003DFCE4 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
 			productName = SnapshotTesting;
+		};
+		DB9918EF2B324F5700A9D59A /* CampusLoginFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CampusLoginFeature;
 		};
 		DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */ = {
 			isa = XCSwiftPackageProductDependency;

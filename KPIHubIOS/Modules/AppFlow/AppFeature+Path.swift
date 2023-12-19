@@ -12,19 +12,19 @@ extension AppFeature {
     @Reducer
     struct Destination: Reducer {
         enum State: Equatable {
-//            case onboarding(OnboardingFlow.State)
+            case onboarding(OnboardingFlow.State)
             case main(MainFlow.State)
         }
         
         enum Action {
-//            case onboarding(OnboardingFlow.Action)
+            case onboarding(OnboardingFlow.Action)
             case main(MainFlow.Action)
         }
         
         var body: some ReducerOf<Self> {
-//            Scope(state: \.onboarding, action: \.onboarding) {
-//                OnboardingFlow()
-//            }
+            Scope(state: \.onboarding, action: \.onboarding) {
+                OnboardingFlow()
+            }
             Scope(state: \.main, action: \.main) {
                 MainFlow()
             }

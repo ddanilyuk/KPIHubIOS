@@ -45,8 +45,14 @@ let package = Package(
             name: "RozkladServices",
             targets: ["RozkladServices"]
         ),
-
-        
+        .library(
+            name: "OnboardingFeature",
+            targets: ["OnboardingFeature"]
+        ),
+        .library(
+            name: "CampusLoginFeature",
+            targets: ["CampusLoginFeature"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", branch: "observation-beta"),
@@ -84,6 +90,16 @@ let package = Package(
                 "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
+            ]
+        ),
+        .target(
+            name: "CampusLoginFeature",
+            dependencies: [
+                "Services",
+                "DesignKit",
+                "RozkladServices",
+                "RozkladModels",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
@@ -144,6 +160,16 @@ let package = Package(
                 "DesignKit",
                 "RozkladModels",
                 "RozkladServices",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "OnboardingFeature",
+            dependencies: [
+                "Services",
+                "DesignKit",
+//                "RozkladModels",
+//                "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

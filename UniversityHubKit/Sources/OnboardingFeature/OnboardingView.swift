@@ -9,31 +9,25 @@ import SwiftUI
 import ComposableArchitecture
 import DesignKit
 
-struct OnboardingView: View {
-    struct ViewState: Equatable { }
-    
-    @ObservedObject private var viewStore: ViewStore<ViewState, OnboardingFeature.Action.View>
+@ViewAction(for: OnboardingFeature.self)
+public struct OnboardingView: View {
+    public let store: StoreOf<OnboardingFeature>
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.designKit) var designKit
     
-    init(store: StoreOf<OnboardingFeature>) {
-        viewStore = ViewStore(
-            store,
-            observe: { _ in ViewState() },
-            send: { .view($0) }
-        )
-        viewStore.send(.onAppear)
+    public init(store: StoreOf<OnboardingFeature>) {
+        self.store = store
     }
     
-    var body: some View {
+    public var body: some View {
         VStack {
             ZStack(alignment: .center) {
                 colorScheme == .light ? Color.white : Color.black
                 
-                // TODO: asset
-//                Image(.kpiHubLogo)
-//                    .resizable()
-//                    .frame(width: 200, height: 200, alignment: .center)
-//                    .shadow(color: .orange.opacity(0.2), radius: 24, x: 0, y: 12)
+                designKit.logoImage
+                    .resizable()
+                    .frame(width: 200, height: 200, alignment: .center)
+                    .shadow(color: .orange.opacity(0.2), radius: 24, x: 0, y: 12)
             }
             .frame(
                 maxWidth: .infinity,
@@ -41,8 +35,7 @@ struct OnboardingView: View {
             )
             .ignoresSafeArea()
             
-            // TODO: asset
-            Color.blue
+            designKit.primaryColor
                 .frame(
                     maxWidth: .infinity,
                     maxHeight: .infinity
@@ -53,8 +46,10 @@ struct OnboardingView: View {
                 .ignoresSafeArea()
         }
         .navigationBarHidden(true)
-        // TODO: asset
-//        .background(Color.screenBackground)
+        .onAppear {
+            send(.onAppear)
+        }
+        .background(designKit.backgroundColor)
     }
     
     private var bottomView: some View {
@@ -63,14 +58,14 @@ struct OnboardingView: View {
                 Button(
                     "Увійти через кампус",
                     action: {
-                        viewStore.send(.loginButtonTapped)
+                        send(.loginButtonTapped)
                     }
                 )
                 
                 Button(
                     "Обрати группу",
                     action: {
-                        viewStore.send(.selectGroupButtonTapped)
+                        send(.selectGroupButtonTapped)
                     }
                 )
             }

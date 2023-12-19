@@ -18,13 +18,13 @@ struct AppView: View {
     
     var body: some View {
         switch store.destination {
-//        case .groupPicker:
-//            if let childStore = store.scope(
-//                state: \.destination?.groupPicker,
-//                action: \.destination.groupPicker
-//            ) {
-//                GroupPickerView(store: childStore)
-//            }
+        case .onboarding:
+            if let childStore = store.scope(
+                state: \.destination?.onboarding,
+                action: \.destination.onboarding
+            ) {
+                OnboardingFlowView(store: childStore)
+            }
 
         case .main:
             if let childStore = store.scope(
