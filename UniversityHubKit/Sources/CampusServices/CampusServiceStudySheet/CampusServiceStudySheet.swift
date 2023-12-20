@@ -6,9 +6,11 @@
 //
 
 import Foundation
-import Combine
+import DependenciesMacros
 import ComposableArchitecture
+import CampusModels
 
+@DependencyClient
 public struct CampusServiceStudySheet {
     public enum State: Equatable {
         case notLoading
@@ -16,7 +18,7 @@ public struct CampusServiceStudySheet {
         case loaded([StudySheetItem])
     }
 
-    public var stateStream: () -> AsyncStream<State>
+    public var stateStream: () -> AsyncStream<State> = { .never }
     public var load: () async -> Void
     public var clean: () -> Void
 }

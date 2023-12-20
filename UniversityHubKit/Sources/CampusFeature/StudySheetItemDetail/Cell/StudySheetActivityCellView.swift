@@ -9,6 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import DesignKit
 import Services // TODO: ?
+import CampusModels
 
 struct StudySheetActivityCellView: View {
     @Environment(\.colorScheme) private var colorScheme

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Services
+import CampusModels
 
 struct StudySheetCell: Reducer {
     struct State: Equatable, Identifiable {

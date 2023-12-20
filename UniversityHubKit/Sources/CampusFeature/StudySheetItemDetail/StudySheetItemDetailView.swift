@@ -8,6 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import Services // TODO: ?
+import CampusModels // TODO: ?
 
 struct StudySheetItemDetailView: View {
     struct ViewState: Equatable {

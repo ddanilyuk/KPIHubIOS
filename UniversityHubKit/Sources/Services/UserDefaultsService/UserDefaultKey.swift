@@ -27,7 +27,7 @@ extension UserDefaultKey {
 
     public static var lessonsUpdatedAt: UserDefaultKey<Date> { .init() }
 
-    public static var campusUserInfo: UserDefaultKey<CampusUserInfo> { .init() }
+//    public static var campusUserInfo: UserDefaultKey<CampusUserInfo> { .init() }
 
     public static var onboardingPassed: UserDefaultKey<Bool> { .init() }
 

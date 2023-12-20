@@ -9,7 +9,9 @@ import ComposableArchitecture
 import Routes
 import Foundation
 import Services
-import RozkladModels
+import RozkladModels // TODO: Fix
+import CampusModels // TODO: Fix
+import CampusServices  // TODO: Fix
 
 @Reducer
 public struct ProfileHomeFeature: Reducer {

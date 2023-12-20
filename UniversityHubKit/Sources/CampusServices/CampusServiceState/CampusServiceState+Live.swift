@@ -8,6 +8,8 @@
 import Foundation
 import Dependencies
 import Combine
+import Services
+import CampusModels
 
 extension CampusServiceState {
     static func live() -> CampusServiceState {
@@ -46,5 +48,12 @@ extension CampusServiceState {
             },
             commit: commit
         )
+    }
+}
+
+extension UserDefaultKey {
+    // TODO: Migration
+    public static var campusUserInfo: UserDefaultKey<CampusUserInfo> {
+        UserDefaultKey<CampusUserInfo>()
     }
 }

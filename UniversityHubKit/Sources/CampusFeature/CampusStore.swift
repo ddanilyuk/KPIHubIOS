@@ -8,6 +8,8 @@
 import ComposableArchitecture
 import Combine
 import Services
+import CampusModels
+import CampusServices
 
 @Reducer
 public struct Campus: Reducer {

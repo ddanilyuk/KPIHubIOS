@@ -12,10 +12,10 @@ extension AnalyticsService {
     static func live() -> AnalyticsService {
         AnalyticsService(
             track: { event in
-                // Analytics.logEvent(event.name, parameters: event.parameters)
+                Analytics.logEvent(event.name, parameters: event.parameters)
             },
             setUserProperty: { userProperty in
-                // Analytics.setUserProperty(userProperty.value, forName: userProperty.name)
+                Analytics.setUserProperty(userProperty.value, forName: userProperty.name)
             }
         )
     }

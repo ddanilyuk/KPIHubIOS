@@ -11,6 +11,8 @@ import Foundation
 import Services
 import RozkladModels
 import RozkladServices
+import CampusModels
+import CampusServices
 
 @Reducer
 public struct CampusLoginFeature: Reducer {

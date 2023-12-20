@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct StudySheetResponse: Codable, Equatable {
-    let studySheet: [StudySheetItemResponse]
+public struct StudySheetResponse: Codable, Equatable {
+    public let studySheet: [StudySheetItemResponse]
 }

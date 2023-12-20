@@ -46,12 +46,12 @@ let package = Package(
             targets: ["RozkladServices"]
         ),
         .library(
-            name: "OnboardingFeature",
-            targets: ["OnboardingFeature"]
-        ),
-        .library(
             name: "CampusLoginFeature",
             targets: ["CampusLoginFeature"]
+        ),
+        .library(
+            name: "CampusServices",
+            targets: ["CampusServices"]
         ),
     ],
     dependencies: [
@@ -88,6 +88,8 @@ let package = Package(
                 "Services",
                 "DesignKit",
                 "Extensions",
+                "CampusServices",
+                "CampusModels",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
                 .product(name: "Routes", package: "KPIHubServer"),
             ]
@@ -99,6 +101,8 @@ let package = Package(
                 "DesignKit",
                 "RozkladServices",
                 "RozkladModels",
+                "CampusModels",
+                "CampusServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
@@ -108,6 +112,7 @@ let package = Package(
                 "Services",
                 "DesignKit",
                 "RozkladModels",
+                "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
 //                .product(name: "Routes", package: "KPIHubServer"),
             ]
@@ -127,7 +132,8 @@ let package = Package(
             dependencies: [
                 "Services",
                 "DesignKit",
-                "RozkladModels",
+                "RozkladModels", // TODO: Remove i think
+                "CampusModels", // TODO: Remove i think
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
 //                .product(name: "Routes", package: "KPIHubServer"),
             ]
@@ -164,12 +170,19 @@ let package = Package(
             ]
         ),
         .target(
-            name: "OnboardingFeature",
+            name: "CampusModels",
+            dependencies: [
+                "Services",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+            ]
+        ),
+        .target(
+            name: "CampusServices",
             dependencies: [
                 "Services",
                 "DesignKit",
-//                "RozkladModels",
-//                "RozkladServices",
+                "CampusModels",
+                .product(name: "Routes", package: "KPIHubServer"),
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),

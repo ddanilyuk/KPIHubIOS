@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import IdentifiedCollections
 import Services
+import CampusModels
 
 struct StudySheetItemDetail: Reducer {
     // MARK: - State

@@ -7,10 +7,9 @@
 
 import ComposableArchitecture
 import Services
+import CampusModels
 
 struct StudySheetActivity: Reducer {
-    // MARK: - State
-
     struct State: Equatable, Identifiable {
         let activity: StudySheetItem.Activity
 
@@ -18,14 +17,10 @@ struct StudySheetActivity: Reducer {
             activity.id
         }
     }
-
-    // MARK: - Action
-
+    
     enum Action: Equatable {
         case onTap
     }
-
-    // MARK: - Reducer
     
     var body: some ReducerOf<Self> {
         Reduce { _, action in

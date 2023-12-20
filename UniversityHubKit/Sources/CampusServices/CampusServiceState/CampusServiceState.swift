@@ -5,11 +5,11 @@
 //  Created by Denys Danyliuk on 05.06.2022.
 //
 
-import Combine
-import Routes
-import ComposableArchitecture
-import KeychainAccess
+import CampusModels
+import DependenciesMacros
+import Services
 
+@DependencyClient
 public struct CampusServiceState {
     public enum State: Equatable {
         case loggedIn(CampusUserInfo)
@@ -26,8 +26,8 @@ public struct CampusServiceState {
         }
     }
 
-    public var stateStream: () -> AsyncStream<State>
-    public var currentState: () -> State
+    public var stateStream: () -> AsyncStream<State> = { .never }
+    public var currentState: () -> State = { .loggedOut }
     public var login: (ClientValue<LoginRequest>) -> Void
     public var logout: (ClientValue<Void>) -> Void
     public var commit: () -> Void

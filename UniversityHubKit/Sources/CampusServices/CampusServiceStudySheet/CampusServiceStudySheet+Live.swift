@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import Dependencies
 import Combine
 import Routes
 import ComposableArchitecture
+import CampusModels
 
 extension CampusServiceStudySheet {
     static func live() -> CampusServiceStudySheet {

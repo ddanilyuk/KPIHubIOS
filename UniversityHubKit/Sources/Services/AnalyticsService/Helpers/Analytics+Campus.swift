@@ -7,10 +7,10 @@
 
 import Foundation
 
-extension AnalyticsService {
-    public func setCampusUser(_ campusUserInfo: CampusUserInfo?) {
-        setUserProperty(UserProperty.cathedra(campusUserInfo?.subdivision.first?.name))
-        setUserProperty(UserProperty.userFullName(campusUserInfo?.fullName))
-        setUserProperty(UserProperty.userEmail(campusUserInfo?.email))
-    }
-}
+//extension AnalyticsService {
+//    public func setCampusUser(_ campusUserInfo: CampusUserInfo?) {
+//        setUserProperty(UserProperty.cathedra(campusUserInfo?.subdivision.first?.name))
+//        setUserProperty(UserProperty.userFullName(campusUserInfo?.fullName))
+//        setUserProperty(UserProperty.userEmail(campusUserInfo?.email))
+//    }
+//}

@@ -10,6 +10,8 @@ import Routes
 import Foundation
 import ConcurrencyExtras
 import Services
+import CampusModels
+import CampusServices
 
 @Reducer
 public struct CampusHome: Reducer {

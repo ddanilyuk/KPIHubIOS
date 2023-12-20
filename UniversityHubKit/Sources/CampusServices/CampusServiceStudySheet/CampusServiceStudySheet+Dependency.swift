@@ -9,7 +9,7 @@ import Dependencies
 
 extension DependencyValues {
     private enum CampusServiceStudySheetKey: DependencyKey {
-        static let testValue = CampusServiceStudySheet.mock()
+        static let testValue = CampusServiceStudySheet()
         static let liveValue = CampusServiceStudySheet.live()
     }
     
