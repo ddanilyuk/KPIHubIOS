@@ -5,7 +5,7 @@
 //  Created by Denys Danyliuk on 17.12.2023.
 //
 
-import Services
+import GeneralServices
 import RozkladServices
 import Foundation
 

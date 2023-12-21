@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
-import Services
+import GeneralServices
 
 public struct LessonCell: Reducer {
     public struct State: Equatable, Identifiable {

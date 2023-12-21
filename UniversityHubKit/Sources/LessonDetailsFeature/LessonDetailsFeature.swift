@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import RozkladModels
 import RozkladServices
-import Services
+import GeneralServices
 @_exported import EditLessonNamesFeature
 @_exported import EditLessonTeachersFeature
 

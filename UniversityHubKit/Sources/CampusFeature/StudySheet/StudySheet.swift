@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import IdentifiedCollections
-import Services
+import GeneralServices
 import CampusModels
 
 struct StudySheet: Reducer {

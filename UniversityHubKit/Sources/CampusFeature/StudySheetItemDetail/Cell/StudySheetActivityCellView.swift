@@ -8,7 +8,7 @@
 import SwiftUI
 import ComposableArchitecture
 import DesignKit
-import Services // TODO: ?
+import GeneralServices // TODO: ?
 import CampusModels
 
 struct StudySheetActivityCellView: View {

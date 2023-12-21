@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Services // TODO: ?
+import GeneralServices // TODO: ?
 
 struct GroupRozkladDayPicker: View {
     var displayedDay: Lesson.Day

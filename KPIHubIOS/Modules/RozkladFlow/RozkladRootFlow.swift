@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import GroupPickerFeature
 import RozkladFeature
-import Services
+import GeneralServices
 import DesignKit
 
 @Reducer

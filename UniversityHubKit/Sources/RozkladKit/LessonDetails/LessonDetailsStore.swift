@@ -7,7 +7,7 @@
 
 //import ComposableArchitecture
 //import Foundation
-//import Services
+//import GeneralServices
 //
 //@Reducer
 //public struct LessonDetails: Reducer {

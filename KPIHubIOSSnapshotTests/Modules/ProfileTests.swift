@@ -10,7 +10,7 @@ import ComposableArchitecture
 import SnapshotTesting
 import SwiftUI
 import ProfileHomeFeature
-import Services
+import GeneralServices
 @testable import KPIHubIOS
 
 class ProfileTests: XCTestCase {
@@ -29,11 +29,6 @@ class ProfileTests: XCTestCase {
             },
             withDependencies: {
                 $0.analyticsService = .none()
-                var rozkladServiceLessons = $0.rozkladServiceLessons
-                rozkladServiceLessons.currentUpdatedAt = {
-                    Date(timeIntervalSince1970: 1702674052)
-                }
-                $0.rozkladServiceLessons = rozkladServiceLessons
             }
         )
         assertAllSnapshots {

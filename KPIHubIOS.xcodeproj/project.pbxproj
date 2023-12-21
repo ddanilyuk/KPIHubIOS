@@ -13,7 +13,6 @@
 		DB24B1C72B2E3098008FB620 /* GenericUniversityHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1C62B2E3098008FB620 /* GenericUniversityHubApp.swift */; };
 		DB24B1CB2B2E3099008FB620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB24B1CA2B2E3099008FB620 /* Assets.xcassets */; };
 		DB24B1CF2B2E3099008FB620 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB24B1CE2B2E3099008FB620 /* Preview Assets.xcassets */; };
-		DB24B1D62B2E30EA008FB620 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB24B1D52B2E30EA008FB620 /* UniversityHubKit */; };
 		DB24B1D82B2E33E3008FB620 /* Development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFA2B2CECC6002B2AC8 /* Development.xcconfig */; };
 		DB24B1D92B2E33E5008FB620 /* Production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFB2B2CECC6002B2AC8 /* Production.xcconfig */; };
 		DB24B1F72B2E380E008FB620 /* RozkladFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1F62B2E380E008FB620 /* RozkladFlow.swift */; };
@@ -57,6 +56,8 @@
 		DB9918F02B324F5700A9D59A /* CampusLoginFeature in Frameworks */ = {isa = PBXBuildFile; productRef = DB9918EF2B324F5700A9D59A /* CampusLoginFeature */; };
 		DB9A2C002B2CECF1002B2AC8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DB9A2BFF2B2CECF1002B2AC8 /* GoogleService-Info.plist */; };
 		DB9A2C092B2CF41D002B2AC8 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */; };
+		DBCE5BA02B339B8400F2AA42 /* GeneralServices in Frameworks */ = {isa = PBXBuildFile; productRef = DBCE5B9F2B339B8400F2AA42 /* GeneralServices */; };
+		DBCE5BA22B34446200F2AA42 /* GeneralServices in Frameworks */ = {isa = PBXBuildFile; productRef = DBCE5BA12B34446200F2AA42 /* GeneralServices */; };
 		DBE04FC62B3111B70088CA88 /* GroupRozklad.json in Resources */ = {isa = PBXBuildFile; fileRef = DBE04FC52B3111B70088CA88 /* GroupRozklad.json */; };
 		DBE04FC82B3111D30088CA88 /* RozkladTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE04FC72B3111D30088CA88 /* RozkladTests.swift */; };
 /* End PBXBuildFile section */
@@ -128,6 +129,7 @@
 				DB24B1FB2B2E3883008FB620 /* RozkladFeature in Frameworks */,
 				DB24B2232B2FA8DA008FB620 /* RozkladServices in Frameworks */,
 				DB24B21F2B2F297D008FB620 /* CampusFeature in Frameworks */,
+				DBCE5BA02B339B8400F2AA42 /* GeneralServices in Frameworks */,
 				DB24B2172B2F1CAD008FB620 /* ProfileHomeFeature in Frameworks */,
 				DB24B2042B2E572E008FB620 /* LessonDetailsFeature in Frameworks */,
 				DB2974D72B2CFA4200A439C0 /* GroupPickerFeature in Frameworks */,
@@ -139,10 +141,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DB24B1D62B2E30EA008FB620 /* UniversityHubKit in Frameworks */,
 				DB24B20A2B2E6149008FB620 /* GroupPickerFeature in Frameworks */,
 				DB24B21B2B2F219C008FB620 /* ProfileHomeFeature in Frameworks */,
 				DB24B20C2B2E6149008FB620 /* LessonDetailsFeature in Frameworks */,
+				DBCE5BA22B34446200F2AA42 /* GeneralServices in Frameworks */,
 				DB24B1FD2B2E40E6008FB620 /* RozkladFeature in Frameworks */,
 				DB24B2082B2E6149008FB620 /* DesignKit in Frameworks */,
 				DB6024CF2B2FB028005F4116 /* RozkladServices in Frameworks */,
@@ -429,6 +431,7 @@
 				DB24B21E2B2F297D008FB620 /* CampusFeature */,
 				DB24B2222B2FA8DA008FB620 /* RozkladServices */,
 				DB9918EF2B324F5700A9D59A /* CampusLoginFeature */,
+				DBCE5B9F2B339B8400F2AA42 /* GeneralServices */,
 			);
 			productName = KPIHubIOS;
 			productReference = 5F97B3BB283677C200350368 /* KPIHubIOS.app */;
@@ -448,13 +451,13 @@
 			);
 			name = GenericUniversityHub;
 			packageProductDependencies = (
-				DB24B1D52B2E30EA008FB620 /* UniversityHubKit */,
 				DB24B1FC2B2E40E6008FB620 /* RozkladFeature */,
 				DB24B2072B2E6149008FB620 /* DesignKit */,
 				DB24B2092B2E6149008FB620 /* GroupPickerFeature */,
 				DB24B20B2B2E6149008FB620 /* LessonDetailsFeature */,
 				DB24B21A2B2F219C008FB620 /* ProfileHomeFeature */,
 				DB6024CE2B2FB028005F4116 /* RozkladServices */,
+				DBCE5BA12B34446200F2AA42 /* GeneralServices */,
 			);
 			productName = GenericUniversityHub;
 			productReference = DB24B1C42B2E3098008FB620 /* GenericUniversityHub.app */;
@@ -1750,10 +1753,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		DB24B1D52B2E30EA008FB620 /* UniversityHubKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = UniversityHubKit;
-		};
 		DB24B1FA2B2E3883008FB620 /* RozkladFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RozkladFeature;
@@ -1818,6 +1817,14 @@
 		DB9A2C082B2CF41D002B2AC8 /* UniversityHubKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UniversityHubKit;
+		};
+		DBCE5B9F2B339B8400F2AA42 /* GeneralServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GeneralServices;
+		};
+		DBCE5BA12B34446200F2AA42 /* GeneralServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GeneralServices;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

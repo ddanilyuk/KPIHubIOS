@@ -9,7 +9,7 @@ import Foundation
 import IdentifiedCollections
 import DependenciesMacros
 import RozkladModels
-import Services
+import GeneralServices
 
 @DependencyClient
 public struct RozkladServiceLessons {

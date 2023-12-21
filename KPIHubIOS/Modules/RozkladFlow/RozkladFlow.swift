@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import GroupPickerFeature
-import Services
+import GeneralServices
 import RozkladFeature
 import LessonDetailsFeature
 import RozkladServices

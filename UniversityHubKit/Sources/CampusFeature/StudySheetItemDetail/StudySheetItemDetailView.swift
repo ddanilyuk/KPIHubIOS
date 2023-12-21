@@ -7,7 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
-import Services // TODO: ?
+import GeneralServices // TODO: ?
 import CampusModels // TODO: ?
 
 struct StudySheetItemDetailView: View {

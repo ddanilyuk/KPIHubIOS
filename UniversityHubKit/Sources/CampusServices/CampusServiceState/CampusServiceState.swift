@@ -7,7 +7,7 @@
 
 import CampusModels
 import DependenciesMacros
-import Services
+import GeneralServices
 
 @DependencyClient
 public struct CampusServiceState {

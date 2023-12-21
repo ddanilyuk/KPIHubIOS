@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Routes
 import Foundation
 import ConcurrencyExtras
-import Services
+import GeneralServices
 import CampusModels
 import CampusServices
 

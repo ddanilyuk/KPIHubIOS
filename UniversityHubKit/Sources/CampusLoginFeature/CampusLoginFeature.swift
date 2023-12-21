@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import Routes
 import Foundation
-import Services
+import GeneralServices
 import RozkladModels
 import RozkladServices
 import CampusModels

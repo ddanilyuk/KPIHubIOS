@@ -7,7 +7,7 @@
 
 import ComposableArchitecture
 import Combine
-import Services
+import GeneralServices
 import CampusModels
 import CampusServices
 

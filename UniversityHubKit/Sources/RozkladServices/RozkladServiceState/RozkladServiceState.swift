@@ -7,7 +7,7 @@
 
 import Combine
 import DependenciesMacros
-import Services
+import GeneralServices
 
 @DependencyClient
 public struct RozkladServiceState {

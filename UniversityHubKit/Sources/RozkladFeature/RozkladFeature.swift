@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import RozkladModels
 import RozkladServices
-import Services
+import GeneralServices
 
 @Reducer
 public struct RozkladFeature: Reducer {

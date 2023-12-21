@@ -6,7 +6,7 @@
 //
 
 import ComposableArchitecture
-import Services
+import GeneralServices
 import RozkladServices
 import RozkladModels
 

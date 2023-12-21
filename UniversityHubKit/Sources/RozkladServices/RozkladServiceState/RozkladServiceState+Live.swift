@@ -9,7 +9,7 @@ import Foundation
 import Dependencies
 import Combine
 import CasePaths
-import Services
+import GeneralServices
 
 extension RozkladServiceState {
     static func live() -> RozkladServiceState {

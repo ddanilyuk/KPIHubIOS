@@ -10,25 +10,11 @@ import SwiftUI
 public struct DesignKit {
     public let primaryColor: Color
     public let backgroundColor: Color
-    
     public let currentLessonColor: Color
     public let nextLessonColor: Color
-    
     public let logoImage: Image
     
-    public init(
-        primaryColor: Color,
-        backgroundColor: Color,
-        currentLessonColor: Color,
-        nextLessonColor: Color,
-        logoImage: Image
-    ) {
-        self.primaryColor = primaryColor
-        self.backgroundColor = backgroundColor
-        self.currentLessonColor = currentLessonColor
-        self.nextLessonColor = nextLessonColor
-        self.logoImage = logoImage
-    }
+    ...
 }
 
 

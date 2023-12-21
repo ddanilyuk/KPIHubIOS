@@ -7,7 +7,7 @@
 
 import SwiftUI
 import DesignKit
-import Services // TODO: ?
+import GeneralServices // TODO: ?
 
 struct LessonDetailsDateAndTimeSection: View {
     enum Constants {

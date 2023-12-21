@@ -8,7 +8,7 @@
 //import IdentifiedCollections
 //import ComposableArchitecture
 //import Foundation
-//import Services
+//import GeneralServices
 
 //public struct GroupRozklad: Reducer {
 //    public struct State: Equatable {

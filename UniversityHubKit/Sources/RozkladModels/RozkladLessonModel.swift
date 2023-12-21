@@ -5,7 +5,7 @@
 //  Created by Denys Danyliuk on 16.12.2023.
 //
 
-import Services
+import GeneralServices
 
 public struct RozkladLessonModel: Identifiable, Equatable {
     public let id: Int

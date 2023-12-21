@@ -10,7 +10,7 @@ import Combine
 import Dependencies
 import IdentifiedCollections
 import RozkladModels
-import Services
+import GeneralServices
 
 extension RozkladServiceLessons {
     static func live() -> RozkladServiceLessons {

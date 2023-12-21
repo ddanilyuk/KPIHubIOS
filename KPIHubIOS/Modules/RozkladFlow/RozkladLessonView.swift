@@ -129,7 +129,7 @@ struct RozkladLessonView: View {
     }
 }
 
-import Services
+import GeneralServices
 
 #Preview {
     let lesson = RozkladLessonModel(lesson: Lesson(lessonResponse: LessonResponse.mocked[0]))

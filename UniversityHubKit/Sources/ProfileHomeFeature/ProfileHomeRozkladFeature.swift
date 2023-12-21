@@ -8,7 +8,7 @@
 import ComposableArchitecture
 import RozkladModels
 import RozkladServices
-import Services
+import GeneralServices
 import Foundation
 
 @Reducer

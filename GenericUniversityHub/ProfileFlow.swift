@@ -53,7 +53,7 @@ struct ProfileFlow: Reducer {
 
 import SwiftUI
 import DesignKit
-import Services // TODO: Fix
+import GeneralServices // TODO: Fix
 
 struct ProfileFlowView: View {
     let store: StoreOf<ProfileFlow>

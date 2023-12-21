@@ -5,7 +5,7 @@
 //  Created by Denys Danyliuk on 20.12.2023.
 //
 
-import Services
+import GeneralServices
 import CampusModels
 
 extension AnalyticsService {

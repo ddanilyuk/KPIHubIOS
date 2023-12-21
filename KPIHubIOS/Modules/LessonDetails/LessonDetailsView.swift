@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 import LessonDetailsFeature
 import DesignKit
-import Services // TODO: ?
+import GeneralServices // TODO: ?
 
 @ViewAction(for: LessonDetailsFeature.self)
 struct LessonDetailsView: View {

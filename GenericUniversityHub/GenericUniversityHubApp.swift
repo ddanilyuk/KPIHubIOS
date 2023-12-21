@@ -11,7 +11,7 @@ import GroupPickerFeature
 import RozkladFeature
 import DesignKit
 import ComposableArchitecture
-import Services
+import GeneralServices
 
 /// This app represent modularity of UniversityHubKit.
 /// New app for another university can be easily created
@@ -34,7 +34,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         Store(initialState: AppFeature.State()) {
             AppFeature()
         } withDependencies: { dependencies in
-//            dependencies.rozkladServiceState = .mock()
+            dependencies.rozkladServiceState = .mock()
         }
     }()
     

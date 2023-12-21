@@ -8,7 +8,7 @@
 import Foundation
 import Dependencies
 import Combine
-import Services
+import GeneralServices
 import CampusModels
 
 extension CampusServiceState {

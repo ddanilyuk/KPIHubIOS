@@ -11,7 +11,7 @@ import SnapshotTesting
 import SwiftUI
 import RozkladFeature
 import RozkladModels
-import Services
+import GeneralServices
 @testable import KPIHubIOS
 
 class RozkladTests: XCTestCase {

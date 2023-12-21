@@ -14,6 +14,10 @@ let package = Package(
             targets: ["UniversityHubKit"]
         ),
         .library(
+            name: "GeneralServices",
+            targets: ["GeneralServices"]
+        ),
+        .library(
             name: "GroupPickerFeature",
             targets: ["GroupPickerFeature"]
         ),
@@ -64,7 +68,7 @@ let package = Package(
         .target(
             name: "UniversityHubKit",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "Extensions",
                 "RozkladKit",
@@ -76,7 +80,7 @@ let package = Package(
         .target(
             name: "GroupPickerFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -85,7 +89,7 @@ let package = Package(
         .target(
             name: "CampusFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "Extensions",
                 "CampusServices",
@@ -97,7 +101,7 @@ let package = Package(
         .target(
             name: "CampusLoginFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "RozkladServices",
                 "RozkladModels",
@@ -109,18 +113,17 @@ let package = Package(
         .target(
             name: "RozkladFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "RozkladModels",
                 "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
-//                .product(name: "Routes", package: "KPIHubServer"),
             ]
         ),
         .target(
             name: "RozkladServices",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "RozkladModels",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
 //                .product(name: "Routes", package: "KPIHubServer"),
@@ -130,7 +133,7 @@ let package = Package(
         .target(
             name: "ProfileHomeFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "RozkladModels", // TODO: Remove i think
                 "CampusModels", // TODO: Remove i think
@@ -141,7 +144,7 @@ let package = Package(
         .target(
             name: "LessonDetailsFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "EditLessonNamesFeature",
                 "EditLessonTeachersFeature",
@@ -153,7 +156,7 @@ let package = Package(
         .target(
             name: "EditLessonNamesFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "RozkladModels",
                 "RozkladServices",
@@ -163,7 +166,7 @@ let package = Package(
         .target(
             name: "EditLessonTeachersFeature",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "RozkladModels",
                 "RozkladServices",
@@ -173,14 +176,14 @@ let package = Package(
         .target(
             name: "CampusModels",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
         ),
         .target(
             name: "CampusServices",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "CampusModels",
                 .product(name: "Routes", package: "KPIHubServer"),
@@ -190,13 +193,13 @@ let package = Package(
         .target(
             name: "RozkladModels",
             dependencies: [
-                "Services", // TODO: Used only because of legacy Lesson
+                "GeneralServices", // TODO: Used only because of legacy Lesson
             ]
         ),
         .target(
             name: "RozkladKit",
             dependencies: [
-                "Services",
+                "GeneralServices",
                 "DesignKit",
                 "Extensions",
                 "GroupPickerFeature",
@@ -211,7 +214,7 @@ let package = Package(
             ]
         ),
         .target(
-            name: "Services",
+            name: "GeneralServices",
             dependencies: [
                 "Extensions",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
@@ -225,6 +228,10 @@ let package = Package(
             dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
             ]
+        ),
+        .testTarget(
+            name: "EditLessonNamesFeatureTests",
+            dependencies: ["EditLessonNamesFeature"]
         ),
         .testTarget(
             name: "UniversityHubKitTests",
