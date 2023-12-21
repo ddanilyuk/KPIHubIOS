@@ -28,3 +28,16 @@ public struct CurrentDateService {
     public var currentWeek: () -> Int = { 1 }
     public var forceUpdate: () -> Void
 }
+
+extension CurrentDateService {
+    public static func none() -> CurrentDateService {
+        CurrentDateService(
+            updatedStream: { .never }, 
+            currentLesson: { nil },
+            nextLessonID: { nil },
+            currentDay: { nil },
+            currentWeek: { 0 },
+            forceUpdate: { }
+        )
+    }
+}

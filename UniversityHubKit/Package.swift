@@ -137,6 +137,7 @@ let package = Package(
                 "DesignKit",
                 "RozkladModels", // TODO: Remove i think
                 "CampusModels", // TODO: Remove i think
+                "RozkladServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
 //                .product(name: "Routes", package: "KPIHubServer"),
             ]
@@ -231,7 +232,10 @@ let package = Package(
         ),
         .testTarget(
             name: "EditLessonNamesFeatureTests",
-            dependencies: ["EditLessonNamesFeature"]
+            dependencies: [
+                "EditLessonNamesFeature",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture"), // TODO: ?
+            ]
         ),
         .testTarget(
             name: "UniversityHubKitTests",

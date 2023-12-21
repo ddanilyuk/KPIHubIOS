@@ -65,6 +65,17 @@
                ReferencedContainer = "container:KPIHubIOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DB4A5EB72B3453F8004F3E83"
+               BuildableName = "KPIHubIOSIntegrationTests.xctest"
+               BlueprintName = "KPIHubIOSIntegrationTests"
+               ReferencedContainer = "container:KPIHubIOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -249,3 +249,10 @@ extension RozkladLessonModel.Position {
         )
     }
 }
+
+
+public extension RozkladLessonModel {
+    static var mock: RozkladLessonModel {
+        RozkladLessonModel(lesson: Lesson.init(lessonResponse: LessonResponse.mocked[0]))
+    }
+}

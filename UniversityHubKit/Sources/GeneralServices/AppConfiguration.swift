@@ -6,6 +6,7 @@
 //
 
 import Foundation
+@_exported import ComposableArchitecture
 
 public struct AppConfiguration {
     public let appName: String

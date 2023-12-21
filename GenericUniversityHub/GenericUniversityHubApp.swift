@@ -57,7 +57,8 @@ extension DesignKit {
         primaryColor: .red,
         backgroundColor: .pink.opacity(0.1),
         currentLessonColor: .red,
-        nextLessonColor: .green
+        nextLessonColor: .green,
+        logoImage: Image(systemName: "graduationcap.circle")
     )
 }
 

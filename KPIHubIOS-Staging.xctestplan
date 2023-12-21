@@ -45,6 +45,13 @@
         "identifier" : "DB7153322B3104FB00A85747",
         "name" : "KPIHubIOSSnapshotTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:KPIHubIOS.xcodeproj",
+        "identifier" : "DB4A5EB72B3453F8004F3E83",
+        "name" : "KPIHubIOSIntegrationTests"
+      }
     }
   ],
   "version" : 1

@@ -31,6 +31,7 @@ public struct LessonDetailsFeature: Reducer {
         case local(Local)
         case destination(PresentationAction<Destination.Action>)
         
+        @CasePathable
         public enum View: Equatable {
             case onAppear
             case startEditingButtonTapped
