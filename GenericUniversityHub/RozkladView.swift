@@ -42,11 +42,15 @@ struct RozkladView: View {
             .background(designKit.backgroundColor)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle("Мій університет")
+        .navigationTitle("GenericUniversityHub")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Circle()
                     .fill(designKit.primaryColor)
+                    .overlay {
+                        Image(systemName: "graduationcap")
+                            .foregroundColor(.white)
+                    }
                     .frame(width: 40, height: 40)
                     .onTapGesture {
                         send(.profileButtonTapped)
@@ -160,7 +164,7 @@ struct RozkladWeekPicker: View {
             .overlay(alignment: .topTrailing) {
                 if currentWeek == week {
                     Circle()
-                        .fill(Color.orange)
+                        .fill(Color.red)
                         .frame(width: 8, height: 8)
                         .offset(x: 10)
                 } else {
@@ -224,7 +228,7 @@ struct RozkladDayPicker: View {
             .overlay(alignment: .topTrailing) {
                 if currentDay == day {
                     Circle()
-                        .fill(Color.orange)
+                        .fill(Color.red)
                         .frame(width: 8, height: 8)
                         .offset(x: 10)
                 } else {

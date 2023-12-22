@@ -10,6 +10,7 @@
 		5F97B3BF283677C200350368 /* KPIHubIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F97B3BE283677C200350368 /* KPIHubIOSApp.swift */; };
 		5F97B3C3283677C500350368 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C2283677C500350368 /* Assets.xcassets */; };
 		5F97B3C6283677C500350368 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F97B3C5283677C500350368 /* Preview Assets.xcassets */; };
+		DB19BFD12B363D61003A9316 /* UniversityHubKit in Frameworks */ = {isa = PBXBuildFile; productRef = DB19BFD02B363D61003A9316 /* UniversityHubKit */; };
 		DB24B1C72B2E3098008FB620 /* GenericUniversityHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB24B1C62B2E3098008FB620 /* GenericUniversityHubApp.swift */; };
 		DB24B1CB2B2E3099008FB620 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB24B1CA2B2E3099008FB620 /* Assets.xcassets */; };
 		DB24B1CF2B2E3099008FB620 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB24B1CE2B2E3099008FB620 /* Preview Assets.xcassets */; };
@@ -152,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DB24B20A2B2E6149008FB620 /* GroupPickerFeature in Frameworks */,
+				DB19BFD12B363D61003A9316 /* UniversityHubKit in Frameworks */,
 				DB24B21B2B2F219C008FB620 /* ProfileHomeFeature in Frameworks */,
 				DB24B20C2B2E6149008FB620 /* LessonDetailsFeature in Frameworks */,
 				DBCE5BA22B34446200F2AA42 /* GeneralServices in Frameworks */,
@@ -485,6 +487,7 @@
 				DB24B21A2B2F219C008FB620 /* ProfileHomeFeature */,
 				DB6024CE2B2FB028005F4116 /* RozkladServices */,
 				DBCE5BA12B34446200F2AA42 /* GeneralServices */,
+				DB19BFD02B363D61003A9316 /* UniversityHubKit */,
 			);
 			productName = GenericUniversityHub;
 			productReference = DB24B1C42B2E3098008FB620 /* GenericUniversityHub.app */;
@@ -2132,6 +2135,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		DB19BFD02B363D61003A9316 /* UniversityHubKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UniversityHubKit;
+		};
 		DB24B1FA2B2E3883008FB620 /* RozkladFeature */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RozkladFeature;

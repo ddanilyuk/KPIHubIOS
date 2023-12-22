@@ -138,6 +138,7 @@ let package = Package(
                 "RozkladModels", // TODO: Remove i think
                 "CampusModels", // TODO: Remove i think
                 "RozkladServices",
+                "CampusServices",
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
 //                .product(name: "Routes", package: "KPIHubServer"),
             ]

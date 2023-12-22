@@ -2,7 +2,7 @@
 //  DesignKit.swift
 //
 //
-//  Created by Denys Danyliuk on 16.12.2023.
+//  Created by Denys Danyliuk.
 //
 
 import SwiftUI
@@ -14,7 +14,19 @@ public struct DesignKit {
     public let nextLessonColor: Color
     public let logoImage: Image
     
-    ...
+    public init(
+        primaryColor: Color,
+        backgroundColor: Color,
+        currentLessonColor: Color,
+        nextLessonColor: Color,
+        logoImage: Image
+    ) {
+        self.primaryColor = primaryColor
+        self.backgroundColor = backgroundColor
+        self.currentLessonColor = currentLessonColor
+        self.nextLessonColor = nextLessonColor
+        self.logoImage = logoImage
+    }
 }
 
 

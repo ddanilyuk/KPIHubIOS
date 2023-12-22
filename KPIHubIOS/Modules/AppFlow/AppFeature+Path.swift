@@ -11,6 +11,7 @@ import GroupPickerFeature
 extension AppFeature {
     @Reducer
     struct Destination: Reducer {
+        @ObservableState
         enum State: Equatable {
             case onboarding(OnboardingFlow.State)
             case main(MainFlow.State)
