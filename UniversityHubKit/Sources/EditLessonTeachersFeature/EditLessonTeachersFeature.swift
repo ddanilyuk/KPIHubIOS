@@ -1,5 +1,5 @@
 //
-//  EditLessonTeachersStore.swift
+//  EditLessonTeachersFeature.swift
 //  KPIHubIOS
 //
 //  Created by Denys Danyliuk on 06.06.2022.
